@@ -14,16 +14,20 @@
 
 ### 用户表
 
-|     列名     |  数据类型   |      说明      |
-| :----------: | :---------: | :------------: |
-|    `uID`     |   int(9)    |  用户唯一 ID   |
-|  `userName`  | varchar(16) | 用户名（唯一） |
-|  `password`  | varchar(16) |    用户密码    |
-|  `nickName`  | varchar(16) |    用户昵称    |
-|  `birthday`  |  timestamp  |    用户生日    |
-| `boundEmail` | varchar(50) |   被绑定邮箱   |
-| `boundPhone` | varchar(11) |  被绑定手机号  |
-|  `boundQQ`   | varchar(15) |   被绑定 qq    |
+|     列名      |   数据类型   |      说明      |
+| :-----------: | :----------: | :------------: |
+|     `uID`     |    int(9)    |  用户唯一 ID   |
+|  `userName`   | varchar(16)  | 用户名（唯一） |
+|  `password`   | varchar(16)  |    用户密码    |
+|  `nickName`   | varchar(16)  |    用户昵称    |
+|     `sex`     |    int(1)    |    用户性别    |
+|  `birthday`   |  timestamp   |    用户生日    |
+| `boundEmail`  | varchar(50)  |   被绑定邮箱   |
+| `boundPhone`  | varchar(11)  |  被绑定手机号  |
+|   `boundQQ`   | varchar(15)  |   被绑定 qq    |
+| `headImgPath` | VARCHAR(255) |  用户头像路径  |
+
+> 性别说明：1 为男，2 为女，0 为私密
 
 ### 用户个人数据表
 
@@ -80,17 +84,17 @@
 
 ### 视频基础信息表
 
-|      列名      |   数据类型   |      说明       |       默认值        |
-| :------------: | :----------: | :-------------: | :-----------------: |
-|     `bvID`     |   int(10)    |      bv 号      |                     |
-|     `uID`      |    int(9)    |   视频作者 ID   |                     |
-|     `vfID`     |     int      | 视频文件路径 ID |                     |
-| `bvCoverImgID` |     int      |  视频封面图 ID  |                     |
-|   `bvTitle`    | varchar(40)  |    视频标题     |                     |
-|    `bvDesc`    |     text     |    视频简介     |                     |
-|  `bvPostTime`  |  timestamp   |  视频上传日期   | CURRENT_TIMESTAMP() |
-|    `bvTags`    | varchar(150) |    视频标签     |        '[]'         |
-|   `bvIsDel`    |   tinyint    |   是否已删除    |          0          |
+|       列名       |   数据类型   |     说明     |       默认值        |
+| :--------------: | :----------: | :----------: | :-----------------: |
+|      `bvID`      |   int(10)    |    bv 号     |                     |
+|      `uID`       |    int(9)    | 视频作者 ID  |                     |
+| `bvCoverImgPath` | varchar(255) |  视频封面图  |                     |
+|  `bvVideoPath`   | varchar(255) | 视频文件路径 |                     |
+|    `bvTitle`     | varchar(40)  |   视频标题   |                     |
+|     `bvDesc`     |     text     |   视频简介   |                     |
+|   `bvPostTime`   |  timestamp   | 视频上传日期 | CURRENT_TIMESTAMP() |
+|     `bvTags`     | varchar(150) |   视频标签   |        '[]'         |
+|    `bvIsDel`     |   tinyint    |  是否已删除  |          0          |
 
 > bvCoverImgID 列直接关联图片表 ID
 >
@@ -165,51 +169,6 @@
 |  `favTime`  | timestamp |    收藏时间     | CURRENT_TIMESTAMP() |
 
 > favTime 默认为当前时间
-
-### 番剧表
-
-|   列名   |  数据类型   |         说明          | 默认值 |
-| :------: | :---------: | :-------------------: | :----: |
-|  `bID`   | VARCHAR(7)  |     番剧 ID，唯一     |        |
-|  `bvID`  |   INT(10)   |      对应视频 ID      |        |
-| `bScore` | DOUBLE(1,1) | 番剧评分，最大 9.9 分 |  1.0   |
-
-> 该表存在价值存疑
->
-> 番剧为特殊视频，没有收藏选项
->
-> 番剧评分最大 9.9 分，最小 1.0 分（实际上可以写成 0.1 分 😀）
-
----
-
-## 文件类
-
-### 图片文件信息表
-
-|   列名    |   数据类型   |    说明     | 默认值 |
-| :-------: | :----------: | :---------: | :----: |
-|  `imgID`  |     int      | 图片唯一 ID |        |
-| `imgPath` | varchar(255) |  图片路径   |        |
-| `imgName` | varchar(100) |  图片名称   |        |
-| `imgType` |    int(1)    |  图片类型   |   0    |
-
-> 图片类型的区分：1 为用户头像，2 为动态图像，3 为视频标题，0 为其他
->
-> 图片需要预先上传才可以使用（传到 redis 中），不然在数据库中找不到引用
->
-> 动态图片和其他图片 以路径的形式 统一存放在图片表中
->
-> 在引用时可以使用 json 格式进行操作
-
-### 视频文件信息表
-
-|   列名   |   数据类型   |         说明          |
-| :------: | :----------: | :-------------------: |
-|  `vfID`  |     int      | 视频文件 ID，主键自增 |
-| `vfPath` | varchar(255) |     视频文件路径      |
-| `vfName` | varchar(200) |     视频文件名称      |
-
-> 视频和图片的规则差不多，都是预先上传。不多赘述
 
 ---
 
