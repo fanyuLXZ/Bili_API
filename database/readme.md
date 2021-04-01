@@ -14,22 +14,22 @@
 
 ### 用户表
 
-|     列名     |  数据类型   |      说明      |
-| :----------: | :---------: | :------------: |
-|    `uID`     |   int(9)    |  用户唯一 ID   |
-|  `userName`  | varchar(16) | 用户名（唯一） |
-|  `password`  | varchar(16) |    用户密码    |
-|  `nickName`  | varchar(16) |    用户昵称    |
-|    `sex`     |   int(1)    |    用户性别    |
-|  `birthday`  |  timestamp  |    用户生日    |
-| `boundEmail` | varchar(50) |   被绑定邮箱   |
-| `boundPhone` | varchar(11) |  被绑定手机号  |
-|  `boundQQ`   | varchar(15) |   被绑定 qq    |
+|     列名      |   数据类型   |      说明      |
+| :-----------: | :----------: | :------------: |
+|     `uID`     |    int(9)    |  用户唯一 ID   |
+|  `userName`   | varchar(16)  | 用户名（唯一） |
+|  `password`   | varchar(16)  |    用户密码    |
+|  `nickName`   | varchar(16)  |    用户昵称    |
+|     `sex`     |    int(1)    |    用户性别    |
+|  `birthday`   |  timestamp   |    用户生日    |
+| `boundEmail`  | varchar(50)  |   被绑定邮箱   |
+| `boundPhone`  | varchar(11)  |  被绑定手机号  |
+|   `boundQQ`   | varchar(15)  |   被绑定 qq    |
+| `headImgPath` | varchar(255) |    头像路径    |
 
->
-> 用户名和用户ID并不冲突，
+> 用户名和用户 ID 并不冲突，
 > 在用户发送信息时两者起到相互制约的作用
-> 用户名格式：bili_11位数字
+> 用户名格式：bili_11 位数字
 >
 > 性别说明：1 为男，2 为女，0 为私密
 
@@ -66,12 +66,12 @@
 
 ### 用户大会员信息表
 
-|        列名        | 数据类型  |        说明        | 默认值 |
-| :----------------: | :-------: | :----------------: | :----: |
-|       `bmID`       |    int    |     主键无意义     |        |
-|       `uID`        |  int(9)   |      用户 ID       |        |
-|  `ExpirationTime`  | timestamp |   大会员过期时间   |        |
-|   `MemberPoint`    |    int    |      会员积分      |   0    |
+|       列名       | 数据类型  |      说明      | 默认值 |
+| :--------------: | :-------: | :------------: | :----: |
+|      `bmID`      |    int    |   主键无意义   |        |
+|      `uID`       |  int(9)   |    用户 ID     |        |
+| `ExpirationTime` | timestamp | 大会员过期时间 |        |
+|  `MemberPoint`   |    int    |    会员积分    |   0    |
 
 > 大会员数据主要通过修改来操作
 > 每个用户对应一条大会员信息
