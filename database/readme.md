@@ -25,6 +25,7 @@
 | `boundEmail` | varchar(50) |   被绑定邮箱   |
 | `boundPhone` | varchar(11) |  被绑定手机号  |
 |  `boundQQ`   | varchar(15) |   被绑定 qq    |
+|  `headImgPath`   | VARCHAR(255) | 用户头像路径 |
 
 >
 > 用户名和用户ID并不冲突，
