@@ -4,6 +4,7 @@
 # Log file
 *.log
 */logs/*
+*/*/*/logPath_IS_UNDEFINED/*
 
 # BlueJ files
 *.ctxt
