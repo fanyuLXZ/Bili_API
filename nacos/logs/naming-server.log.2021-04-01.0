@@ -1,0 +1,212 @@
+2021-04-01 07:26:38,322 INFO open empty service auto clean job, initialDelay : 50000 ms, period : 30000 ms
+
+2021-04-01 07:26:38,323 INFO listen for service meta change
+
+2021-04-01 07:43:38,612 INFO open empty service auto clean job, initialDelay : 50000 ms, period : 30000 ms
+
+2021-04-01 07:43:38,613 INFO listen for service meta change
+
+2021-04-01 07:45:03,371 INFO Client connection 172.16.1.112:64784#true connect
+
+2021-04-01 07:45:03,741 INFO Client connection 172.16.1.112:8081#true connect
+
+2021-04-01 07:45:03,742 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='jmall-service', ephemeral=true, revision=0}, 172.16.1.112:8081#true
+
+2021-04-01 07:46:49,104 INFO Client connection 172.16.1.112:55605#true connect
+
+2021-04-01 07:46:49,161 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=0}, 172.16.1.112:8081#true
+
+2021-04-01 07:47:16,779 INFO Client connection 172.16.1.112:64784#true disconnect, remove instances and subscribers
+
+2021-04-01 07:47:18,896 INFO [AUTO-DELETE-IP] service: Service{namespace='public', group='DEFAULT_GROUP', name='jmall-service', ephemeral=true, revision=1}, ip: {"ip":"172.16.1.112","port":8081,"healthy":false,"cluster":"DEFAULT","extendDatum":{"preserved.register.source":"SPRING_CLOUD","customInstanceId":"172.16.1.112#8081#DEFAULT#DEFAULT_GROUP@@jmall-service"},"lastHeartBeatTime":1617234403951,"metadataId":"172.16.1.112:8081:DEFAULT"}
+
+2021-04-01 07:47:18,896 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='jmall-service', ephemeral=true, revision=1}, 172.16.1.112:8081#true
+
+2021-04-01 07:49:12,384 WARN namespace : public, [DEFAULT_GROUP@@jmall-service] services are automatically cleaned
+
+2021-04-01 07:53:12,950 INFO Client connection 172.16.1.112:50415#true connect
+
+2021-04-01 07:53:13,027 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=1}, 172.16.1.112:8081#true
+
+2021-04-01 07:53:32,347 INFO Client connection 172.16.1.112:55605#true disconnect, remove instances and subscribers
+
+2021-04-01 09:46:36,900 INFO Client connection 172.16.1.112:53905#true connect
+
+2021-04-01 09:46:36,994 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=2}, 172.16.1.112:8081#true
+
+2021-04-01 09:46:37,223 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=3}, 172.16.1.112:8081#true
+
+2021-04-01 09:46:53,104 INFO Client connection 172.16.1.112:50415#true disconnect, remove instances and subscribers
+
+2021-04-01 09:47:08,130 INFO Client connection 172.16.1.112:8081#true disconnect, remove instances and subscribers
+
+2021-04-01 09:47:13,143 INFO Client connection 172.16.1.112:53905#true disconnect, remove instances and subscribers
+
+2021-04-01 09:48:13,349 WARN namespace : public, [DEFAULT_GROUP@@client-deom-service] services are automatically cleaned
+
+2021-04-01 09:55:32,442 INFO Client connection 172.16.1.112:60023#true connect
+
+2021-04-01 09:55:32,512 INFO Client connection 172.16.1.112:8081#true connect
+
+2021-04-01 09:55:32,512 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=0}, 172.16.1.112:8081#true
+
+2021-04-01 09:55:32,711 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=1}, 172.16.1.112:8081#true
+
+2021-04-01 09:56:03,954 INFO Client connection 172.16.1.112:8081#true disconnect, remove instances and subscribers
+
+2021-04-01 09:56:07,464 INFO Client connection 172.16.1.112:52276#true connect
+
+2021-04-01 09:56:07,525 INFO Client connection 172.16.1.112:8081#true connect
+
+2021-04-01 09:56:07,525 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=2}, 172.16.1.112:8081#true
+
+2021-04-01 09:56:08,959 INFO Client connection 172.16.1.112:60023#true disconnect, remove instances and subscribers
+
+2021-04-01 09:59:09,179 INFO Client connection 172.16.1.112:52276#true disconnect, remove instances and subscribers
+
+2021-04-01 09:59:17,827 INFO [AUTO-DELETE-IP] service: Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=3}, ip: {"ip":"172.16.1.112","port":8081,"healthy":false,"cluster":"DEFAULT","extendDatum":{"preserved.register.source":"SPRING_CLOUD","customInstanceId":"172.16.1.112#8081#DEFAULT#DEFAULT_GROUP@@client-deom-service"},"lastHeartBeatTime":1617242322825,"metadataId":"172.16.1.112:8081:DEFAULT"}
+
+2021-04-01 09:59:17,827 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=3}, 172.16.1.112:8081#true
+
+2021-04-01 09:59:19,192 INFO Client connection 172.16.1.112:8081#true disconnect, remove instances and subscribers
+
+2021-04-01 09:59:45,678 INFO Client connection 172.16.1.112:53490#true connect
+
+2021-04-01 09:59:45,736 INFO Client connection 172.16.1.112:8081#true connect
+
+2021-04-01 09:59:45,736 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=4}, 172.16.1.112:8081#true
+
+2021-04-01 10:00:30,720 INFO Client connection 172.16.1.112:58291#true connect
+
+2021-04-01 10:00:30,809 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=5}, 172.16.1.112:8081#true
+
+2021-04-01 10:00:31,017 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=6}, 172.16.1.112:8081#true
+
+2021-04-01 10:00:49,328 INFO Client connection 172.16.1.112:53490#true disconnect, remove instances and subscribers
+
+2021-04-01 10:01:04,348 INFO Client connection 172.16.1.112:58291#true disconnect, remove instances and subscribers
+
+2021-04-01 10:01:04,348 INFO Client connection 172.16.1.112:8081#true disconnect, remove instances and subscribers
+
+2021-04-01 10:01:56,428 INFO Client connection 172.16.1.112:49153#true connect
+
+2021-04-01 10:01:56,509 INFO Client connection 172.16.1.112:8081#true connect
+
+2021-04-01 10:01:56,509 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=7}, 172.16.1.112:8081#true
+
+2021-04-01 10:01:56,766 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=8}, 172.16.1.112:8081#true
+
+2021-04-01 10:02:18,392 INFO Client connection 172.16.1.112:49162#true connect
+
+2021-04-01 10:02:18,466 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=9}, 172.16.1.112:8081#true
+
+2021-04-01 10:02:30,111 INFO Client connection 172.16.1.112:49167#true connect
+
+2021-04-01 10:02:30,198 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=10}, 172.16.1.112:8081#true
+
+2021-04-01 10:02:30,414 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=11}, 172.16.1.112:8081#true
+
+2021-04-01 10:02:34,461 INFO Client connection 172.16.1.112:49153#true disconnect, remove instances and subscribers
+
+2021-04-01 10:02:49,483 INFO Client connection 172.16.1.112:49162#true disconnect, remove instances and subscribers
+
+2021-04-01 10:03:04,515 INFO Client connection 172.16.1.112:8081#true disconnect, remove instances and subscribers
+
+2021-04-01 10:03:04,515 INFO Client connection 172.16.1.112:49167#true disconnect, remove instances and subscribers
+
+2021-04-01 10:04:13,484 WARN namespace : public, [DEFAULT_GROUP@@client-deom-service] services are automatically cleaned
+
+2021-04-01 10:04:45,949 INFO Client connection 172.16.1.112:55134#true connect
+
+2021-04-01 10:04:46,007 INFO Client connection 172.16.1.112:8081#true connect
+
+2021-04-01 10:04:46,008 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=0}, 172.16.1.112:8081#true
+
+2021-04-01 10:04:46,218 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=1}, 172.16.1.112:8081#true
+
+2021-04-01 10:05:19,697 INFO Client connection 172.16.1.112:55134#true disconnect, remove instances and subscribers
+
+2021-04-01 10:05:19,697 INFO Client connection 172.16.1.112:8081#true disconnect, remove instances and subscribers
+
+2021-04-01 10:06:13,505 WARN namespace : public, [DEFAULT_GROUP@@client-deom-service] services are automatically cleaned
+
+2021-04-01 10:06:47,697 INFO Client connection 172.16.1.112:56656#true connect
+
+2021-04-01 10:06:47,756 INFO Client connection 172.16.1.112:8081#true connect
+
+2021-04-01 10:06:47,756 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=0}, 172.16.1.112:8081#true
+
+2021-04-01 10:06:48,048 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=1}, 172.16.1.112:8081#true
+
+2021-04-01 10:07:19,887 INFO Client connection 172.16.1.112:8081#true disconnect, remove instances and subscribers
+
+2021-04-01 10:07:24,901 INFO Client connection 172.16.1.112:56656#true disconnect, remove instances and subscribers
+
+2021-04-01 10:07:59,320 INFO Client connection 172.16.1.112:53072#true connect
+
+2021-04-01 10:07:59,390 INFO Client connection 172.16.1.112:8081#true connect
+
+2021-04-01 10:07:59,390 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=2}, 172.16.1.112:8081#true
+
+2021-04-01 10:07:59,586 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=3}, 172.16.1.112:8081#true
+
+2021-04-01 10:08:29,988 INFO Client connection 172.16.1.112:8081#true disconnect, remove instances and subscribers
+
+2021-04-01 10:08:34,999 INFO Client connection 172.16.1.112:53072#true disconnect, remove instances and subscribers
+
+2021-04-01 10:09:13,527 WARN namespace : public, [DEFAULT_GROUP@@client-deom-service] services are automatically cleaned
+
+2021-04-01 10:19:32,577 INFO Client connection 172.16.1.112:50997#true connect
+
+2021-04-01 10:19:32,641 INFO Client connection 172.16.1.112:8081#true connect
+
+2021-04-01 10:19:32,641 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=0}, 172.16.1.112:8081#true
+
+2021-04-01 10:19:32,829 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=1}, 172.16.1.112:8081#true
+
+2021-04-01 10:20:06,120 INFO Client connection 172.16.1.112:8081#true disconnect, remove instances and subscribers
+
+2021-04-01 10:20:06,120 INFO Client connection 172.16.1.112:50997#true disconnect, remove instances and subscribers
+
+2021-04-01 10:21:13,642 WARN namespace : public, [DEFAULT_GROUP@@client-deom-service] services are automatically cleaned
+
+2021-04-01 10:33:26,853 INFO Client connection 172.16.1.112:61186#true connect
+
+2021-04-01 10:33:26,912 INFO Client connection 172.16.1.112:8081#true connect
+
+2021-04-01 10:33:26,912 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=0}, 172.16.1.112:8081#true
+
+2021-04-01 10:33:27,109 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=1}, 172.16.1.112:8081#true
+
+2021-04-01 10:33:57,489 INFO Client connection 172.16.1.112:8081#true disconnect, remove instances and subscribers
+
+2021-04-01 10:34:02,493 INFO Client connection 172.16.1.112:61186#true disconnect, remove instances and subscribers
+
+2021-04-01 10:34:13,832 INFO Client connection 172.16.1.112:53200#true connect
+
+2021-04-01 10:34:13,889 INFO Client connection 172.16.1.112:8081#true connect
+
+2021-04-01 10:34:13,889 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=2}, 172.16.1.112:8081#true
+
+2021-04-01 10:34:14,075 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=3}, 172.16.1.112:8081#true
+
+2021-04-01 10:34:47,589 INFO Client connection 172.16.1.112:8081#true disconnect, remove instances and subscribers
+
+2021-04-01 10:34:47,589 INFO Client connection 172.16.1.112:53200#true disconnect, remove instances and subscribers
+
+2021-04-01 10:36:13,747 WARN namespace : public, [DEFAULT_GROUP@@client-deom-service] services are automatically cleaned
+
+2021-04-01 10:37:15,540 INFO Client connection 172.16.1.112:59618#true connect
+
+2021-04-01 10:37:15,605 INFO Client connection 172.16.1.112:8081#true connect
+
+2021-04-01 10:37:15,605 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=0}, 172.16.1.112:8081#true
+
+2021-04-01 10:37:15,794 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='client-deom-service', ephemeral=true, revision=1}, 172.16.1.112:8081#true
+
+2021-04-01 10:37:47,831 INFO Client connection 172.16.1.112:8081#true disconnect, remove instances and subscribers
+
+2021-04-01 10:37:52,832 INFO Client connection 172.16.1.112:59618#true disconnect, remove instances and subscribers
+
+2021-04-01 10:39:13,767 WARN namespace : public, [DEFAULT_GROUP@@client-deom-service] services are automatically cleaned
+

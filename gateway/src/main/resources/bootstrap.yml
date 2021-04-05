@@ -1,0 +1,15 @@
+server:
+  port: 8000
+spring:
+  application:
+    #应用名
+    name: gateway-service
+  cloud:
+    nacos:
+      #注册服务地址
+      discovery:
+        server-addr: localhost:8848
+      #配置服务地址
+      config:
+        server-addr: localhost:8848
+        file-extension: yaml

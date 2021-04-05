@@ -1,0 +1,323 @@
+2021-04-01 11:13:40,264 WARN clearConfigHistory start
+
+2021-04-01 11:13:40,310 INFO [capacityManagement] start correct usage
+
+2021-04-01 11:13:40,312 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 11:23:40,280 WARN clearConfigHistory start
+
+2021-04-01 11:23:40,328 INFO [capacityManagement] start correct usage
+
+2021-04-01 11:23:40,328 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 11:33:40,290 WARN clearConfigHistory start
+
+2021-04-01 11:33:40,335 INFO [capacityManagement] start correct usage
+
+2021-04-01 11:33:40,335 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 11:43:40,293 WARN clearConfigHistory start
+
+2021-04-01 11:43:40,339 INFO [capacityManagement] start correct usage
+
+2021-04-01 11:43:40,341 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 11:53:40,299 WARN clearConfigHistory start
+
+2021-04-01 11:53:40,345 INFO [capacityManagement] start correct usage
+
+2021-04-01 11:53:40,346 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 12:03:40,313 WARN clearConfigHistory start
+
+2021-04-01 12:03:40,361 INFO [capacityManagement] start correct usage
+
+2021-04-01 12:03:40,361 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 12:10:55,760 ERROR CONSOLE
+
+com.alibaba.nacos.api.exception.NacosException: service DEFAULT_GROUP@@client-demo-service is not found!
+	at com.alibaba.nacos.naming.core.CatalogServiceV2Impl.getServiceDetail(CatalogServiceV2Impl.java:67)
+	at com.alibaba.nacos.naming.controllers.CatalogController.serviceDetail(CatalogController.java:85)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:190)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:105)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:892)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:797)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1040)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:943)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:626)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:733)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:97)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.boot.actuate.web.trace.servlet.HttpTraceFilter.doFilterInternal(HttpTraceFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at com.alibaba.nacos.naming.web.DistroFilter.doFilter(DistroFilter.java:96)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at com.alibaba.nacos.core.auth.AuthFilter.doFilter(AuthFilter.java:69)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at com.alibaba.nacos.naming.web.ServiceNameFilter.doFilter(ServiceNameFilter.java:68)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at com.alibaba.nacos.naming.web.TrafficReviseFilter.doFilter(TrafficReviseFilter.java:75)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:209)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:178)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:358)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:271)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:94)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.filterAndRecordMetrics(WebMvcMetricsFilter.java:114)
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:104)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:690)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:374)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+2021-04-01 12:13:40,318 WARN clearConfigHistory start
+
+2021-04-01 12:13:40,366 INFO [capacityManagement] start correct usage
+
+2021-04-01 12:13:40,366 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 12:23:40,329 WARN clearConfigHistory start
+
+2021-04-01 12:23:40,376 INFO [capacityManagement] start correct usage
+
+2021-04-01 12:23:40,377 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 12:33:40,335 WARN clearConfigHistory start
+
+2021-04-01 12:33:40,381 INFO [capacityManagement] start correct usage
+
+2021-04-01 12:33:40,381 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 12:43:40,336 WARN clearConfigHistory start
+
+2021-04-01 12:43:40,383 INFO [capacityManagement] start correct usage
+
+2021-04-01 12:43:40,383 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 12:53:40,351 WARN clearConfigHistory start
+
+2021-04-01 12:53:40,397 INFO [capacityManagement] start correct usage
+
+2021-04-01 12:53:40,397 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 13:03:40,357 WARN clearConfigHistory start
+
+2021-04-01 13:03:40,402 INFO [capacityManagement] start correct usage
+
+2021-04-01 13:03:40,402 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 13:13:40,361 WARN clearConfigHistory start
+
+2021-04-01 13:13:40,406 INFO [capacityManagement] start correct usage
+
+2021-04-01 13:13:40,406 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 13:23:40,394 WARN clearConfigHistory start
+
+2021-04-01 13:23:40,417 INFO [capacityManagement] start correct usage
+
+2021-04-01 13:23:40,418 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 13:33:40,410 WARN clearConfigHistory start
+
+2021-04-01 13:33:40,426 INFO [capacityManagement] start correct usage
+
+2021-04-01 13:33:40,427 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 13:43:40,424 WARN clearConfigHistory start
+
+2021-04-01 13:43:40,439 INFO [capacityManagement] start correct usage
+
+2021-04-01 13:43:40,440 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 13:53:40,439 WARN clearConfigHistory start
+
+2021-04-01 13:53:40,454 INFO [capacityManagement] start correct usage
+
+2021-04-01 13:53:40,464 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 14:03:40,467 INFO [capacityManagement] start correct usage
+
+2021-04-01 14:03:40,467 WARN clearConfigHistory start
+
+2021-04-01 14:03:40,467 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 14:13:40,473 INFO [capacityManagement] start correct usage
+
+2021-04-01 14:13:40,473 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 14:13:40,505 WARN clearConfigHistory start
+
+2021-04-01 14:23:40,478 INFO [capacityManagement] start correct usage
+
+2021-04-01 14:23:40,478 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 14:23:40,509 WARN clearConfigHistory start
+
+2021-04-01 14:33:40,484 INFO [capacityManagement] start correct usage
+
+2021-04-01 14:33:40,484 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 14:33:40,516 WARN clearConfigHistory start
+
+2021-04-01 14:43:40,498 INFO [capacityManagement] start correct usage
+
+2021-04-01 14:43:40,498 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 14:43:40,529 WARN clearConfigHistory start
+
+2021-04-01 14:53:40,500 INFO [capacityManagement] start correct usage
+
+2021-04-01 14:53:40,500 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 14:53:40,532 WARN clearConfigHistory start
+
+2021-04-01 15:03:40,503 INFO [capacityManagement] start correct usage
+
+2021-04-01 15:03:40,504 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 15:03:40,534 WARN clearConfigHistory start
+
+2021-04-01 22:11:41,530 INFO Transport failed
+
+java.io.IOException: 远程主机强迫关闭了一个现有的连接。
+	at sun.nio.ch.SocketDispatcher.read0(Native Method)
+	at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:43)
+	at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223)
+	at sun.nio.ch.IOUtil.read(IOUtil.java:192)
+	at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:378)
+	at io.grpc.netty.shaded.io.netty.buffer.PooledByteBuf.setBytes(PooledByteBuf.java:247)
+	at io.grpc.netty.shaded.io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1140)
+	at io.grpc.netty.shaded.io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:347)
+	at io.grpc.netty.shaded.io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:148)
+	at io.grpc.netty.shaded.io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:697)
+	at io.grpc.netty.shaded.io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:632)
+	at io.grpc.netty.shaded.io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:549)
+	at io.grpc.netty.shaded.io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:511)
+	at io.grpc.netty.shaded.io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:918)
+	at io.grpc.netty.shaded.io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.grpc.netty.shaded.io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.lang.Thread.run(Thread.java:748)
+2021-04-01 22:11:43,538 WARN clearConfigHistory start
+
+2021-04-01 22:11:53,883 WARN HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=7h3m55s680ms544µs900ns).
+
+2021-04-01 22:16:52,584 INFO [capacityManagement] start correct usage
+
+2021-04-01 22:16:52,584 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 22:21:43,548 WARN clearConfigHistory start
+
+2021-04-01 22:26:52,593 INFO [capacityManagement] start correct usage
+
+2021-04-01 22:26:52,594 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 22:31:43,554 WARN clearConfigHistory start
+
+2021-04-01 22:36:52,597 INFO [capacityManagement] start correct usage
+
+2021-04-01 22:36:52,597 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 22:41:43,561 WARN clearConfigHistory start
+
+2021-04-01 22:46:52,603 INFO [capacityManagement] start correct usage
+
+2021-04-01 22:46:52,604 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 22:51:43,566 WARN clearConfigHistory start
+
+2021-04-01 22:56:52,607 INFO [capacityManagement] start correct usage
+
+2021-04-01 22:56:52,607 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 23:01:43,576 WARN clearConfigHistory start
+
+2021-04-01 23:06:52,613 INFO [capacityManagement] start correct usage
+
+2021-04-01 23:06:52,613 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 23:11:43,589 WARN clearConfigHistory start
+
+2021-04-01 23:16:52,614 INFO [capacityManagement] start correct usage
+
+2021-04-01 23:16:52,614 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 23:21:43,596 WARN clearConfigHistory start
+
+2021-04-01 23:26:52,623 INFO [capacityManagement] start correct usage
+
+2021-04-01 23:26:52,624 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 23:31:43,601 WARN clearConfigHistory start
+
+2021-04-01 23:36:52,626 INFO [capacityManagement] start correct usage
+
+2021-04-01 23:36:52,626 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 23:41:43,607 WARN clearConfigHistory start
+
+2021-04-01 23:46:52,636 INFO [capacityManagement] start correct usage
+
+2021-04-01 23:46:52,636 INFO [capacityManagement] end correct usage, cost: 0s
+
+2021-04-01 23:51:43,621 WARN clearConfigHistory start
+
+2021-04-01 23:56:52,646 INFO [capacityManagement] start correct usage
+
+2021-04-01 23:56:52,646 INFO [capacityManagement] end correct usage, cost: 0s
+
