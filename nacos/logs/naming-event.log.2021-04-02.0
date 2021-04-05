@@ -1,4 +1,0 @@
-2021-04-02 17:43:13,917 INFO {POS} {IP-DISABLED} valid: 192.168.101.6:8081@DEFAULT@client-demo-service, region: unknown, msg: client last beat: 1617356574323
-
-2021-04-02 18:09:53,516 INFO {POS} {IP-DISABLED} valid: 192.168.101.6:8081@DEFAULT@client-demo-service, region: unknown, msg: client last beat: 1617358173557
-

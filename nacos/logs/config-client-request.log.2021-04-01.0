@@ -1,5 +1,0 @@
-2021-04-01 10:01:31,832|75|true|172.16.1.112|publish|1|DEFAULT_GROUP||e0494ad08924a3e7bae017825bd69933|null
-2021-04-01 10:07:04,418|53|true|172.16.1.112|remove|1|DEFAULT_GROUP||null|null
-2021-04-01 10:07:39,623|3|true|172.16.1.112|publish|client-deom-service|DEFAULT_GROUP||e0494ad08924a3e7bae017825bd69933|null
-2021-04-01 10:29:27,810|7|true|172.16.1.112|remove|client-deom-service|DEFAULT_GROUP||null|null
-2021-04-01 10:33:19,426|103|true|172.16.1.112|publish|client-deom-service.yml|DEFAULT_GROUP||910be62660a0c773e5229c13a3d64ca1|null
