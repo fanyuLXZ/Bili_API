@@ -495,6 +495,44 @@ ENGINE = InnoDB
 COMMENT = '视频收藏表';
 
 
+
+-- -----------------------------------------------------
+-- Table `BiliBili_db`.`videoComment`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `BiliBili_db`.`videoComment` ;
+
+CREATE TABLE
+IF NOT EXISTS `BiliBili_db`.`videoComment`
+(
+  `bvID` INT
+(10) ZEROFILL NOT NULL COMMENT '视频ID',
+  `cID` INT NOT NULL COMMENT '评论ID',
+  PRIMARY KEY
+(`bvID`, `cID`),
+  INDEX `fk_videoComment_Comment1_idx`
+(`cID` ASC) VISIBLE,
+  CONSTRAINT `fk_videoComment_Comment1`
+    FOREIGN KEY
+(`cID`)
+    REFERENCES `BiliBili_db`.`Comment`
+(`cID`)
+    ON
+DELETE NO ACTION
+    ON
+UPDATE NO ACTION,
+  CONSTRAINT `fk_videoComment_Video1`
+    FOREIGN KEY
+(`bvID`)
+    REFERENCES `BiliBili_db`.`Video`
+(`bvID`)
+    ON
+DELETE NO ACTION
+    ON
+UPDATE NO ACTION)
+ENGINE = InnoDB;
+COMMENT = '视频评论关系表';
+
+
 -- -----------------------------------------------------
 -- 评论模块
 -- 
@@ -590,79 +628,6 @@ COMMENT = '评论点赞表';
 
 
 -- -----------------------------------------------------
--- Table `BiliBili_db`.`videoComment`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `BiliBili_db`.`videoComment` ;
-
-CREATE TABLE
-IF NOT EXISTS `BiliBili_db`.`videoComment`
-(
-  `bvID` INT
-(10) ZEROFILL NOT NULL COMMENT '视频ID',
-  `cID` INT NOT NULL COMMENT '评论ID',
-  PRIMARY KEY
-(`bvID`, `cID`),
-  INDEX `fk_videoComment_Comment1_idx`
-(`cID` ASC) VISIBLE,
-  CONSTRAINT `fk_videoComment_Comment1`
-    FOREIGN KEY
-(`cID`)
-    REFERENCES `BiliBili_db`.`Comment`
-(`cID`)
-    ON
-DELETE NO ACTION
-    ON
-UPDATE NO ACTION,
-  CONSTRAINT `fk_videoComment_Video1`
-    FOREIGN KEY
-(`bvID`)
-    REFERENCES `BiliBili_db`.`Video`
-(`bvID`)
-    ON
-DELETE NO ACTION
-    ON
-UPDATE NO ACTION)
-ENGINE = InnoDB;
-COMMENT = '视频评论关系表';
-
-
--- -----------------------------------------------------
--- Table `BiliBili_db`.`dynamicComment`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `BiliBili_db`.`dynamicComment` ;
-
-CREATE TABLE
-IF NOT EXISTS `BiliBili_db`.`dynamicComment`
-(
-  `udID` INT NOT NULL COMMENT '动态ID',
-  `cID` INT NOT NULL COMMENT '评论ID',
-  PRIMARY KEY
-(`udID`, `cID`),
-  INDEX `fk_dynamicComment_Comment1_idx`
-(`cID` ASC) VISIBLE,
-  CONSTRAINT `fk_dynamicComment_userDynamic1`
-    FOREIGN KEY
-(`udID`)
-    REFERENCES `BiliBili_db`.`userDynamic`
-(`udID`)
-    ON
-DELETE NO ACTION
-    ON
-UPDATE NO ACTION,
-  CONSTRAINT `fk_dynamicComment_Comment1`
-    FOREIGN KEY
-(`cID`)
-    REFERENCES `BiliBili_db`.`Comment`
-(`cID`)
-    ON
-DELETE NO ACTION
-    ON
-UPDATE NO ACTION)
-ENGINE = InnoDB;
-COMMENT = '动态评论关系表';
-
-
--- -----------------------------------------------------
 -- 用户动态模块
 -- 
 -- Table `BiliBili_db`.`userDynamic`
@@ -746,6 +711,44 @@ DELETE NO ACTION
 UPDATE NO ACTION)
 ENGINE = InnoDB
 COMMENT = '动态点赞表，用于区分用户点赞';
+
+
+
+-- -----------------------------------------------------
+-- Table `BiliBili_db`.`dynamicComment`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `BiliBili_db`.`dynamicComment` ;
+
+CREATE TABLE
+IF NOT EXISTS `BiliBili_db`.`dynamicComment`
+(
+  `udID` INT NOT NULL COMMENT '动态ID',
+  `cID` INT NOT NULL COMMENT '评论ID',
+  PRIMARY KEY
+(`udID`, `cID`),
+  INDEX `fk_dynamicComment_Comment1_idx`
+(`cID` ASC) VISIBLE,
+  CONSTRAINT `fk_dynamicComment_userDynamic1`
+    FOREIGN KEY
+(`udID`)
+    REFERENCES `BiliBili_db`.`userDynamic`
+(`udID`)
+    ON
+DELETE NO ACTION
+    ON
+UPDATE NO ACTION,
+  CONSTRAINT `fk_dynamicComment_Comment1`
+    FOREIGN KEY
+(`cID`)
+    REFERENCES `BiliBili_db`.`Comment`
+(`cID`)
+    ON
+DELETE NO ACTION
+    ON
+UPDATE NO ACTION)
+ENGINE = InnoDB;
+COMMENT = '动态评论关系表';
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
