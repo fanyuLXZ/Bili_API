@@ -63,13 +63,12 @@
 
 ### 用户大会员信息表
 
-|        列名        | 数据类型  |        说明        | 默认值 |
-| :----------------: | :-------: | :----------------: | :----: |
-|       `bmID`       |    int    |     主键无意义     |        |
-|       `uID`        |  int(9)   |      用户 ID       |        |
-|  `ExpirationTime`  | timestamp |   大会员过期时间   |        |
-| `LastBeBigMembers` | timestamp | 上次开通大会员日期 |        |
-|   `MemberPoint`    |    int    |      会员积分      |   0    |
+|       列名       | 数据类型  |      说明      | 默认值 |
+| :--------------: | :-------: | :------------: | :----: |
+|      `bmID`      |    int    |   主键无意义   |        |
+|      `uID`       |  int(9)   |    用户 ID     |        |
+| `ExpirationTime` | timestamp | 大会员过期时间 |        |
+|  `MemberPoint`   |    int    |    会员积分    |   0    |
 
 > 大会员数据主要通过修改来操作
 > 每个用户对应一条大会员信息
@@ -84,25 +83,25 @@
 
 ### 视频基础信息表
 
-|       列名       |   数据类型   |     说明     |       默认值        |
-| :--------------: | :----------: | :----------: | :-----------------: |
-|      `bvID`      |   int(10)    |    bv 号     |                     |
-|      `uID`       |    int(9)    | 视频作者 ID  |                     |
-| `bvCoverImgPath` | varchar(255) |  视频封面图  |                     |
-|  `bvVideoPath`   | varchar(255) | 视频文件路径 |                     |
-|    `bvTitle`     | varchar(40)  |   视频标题   |                     |
-|     `bvDesc`     |     text     |   视频简介   |                     |
-|   `bvPostTime`   |  timestamp   | 视频上传日期 | CURRENT_TIMESTAMP() |
-|     `bvTags`     | varchar(150) |   视频标签   |        '[]'         |
-|    `bvIsDel`     |   tinyint    |  是否已删除  |          0          |
+|       列名       |   数据类型   |     说明      |       默认值        |
+| :--------------: | :----------: | :-----------: | :-----------------: |
+|      `bvID`      |   int(10)    |     bv 号     |                     |
+|      `uID`       |    int(9)    |  视频作者 ID  |                     |
+| `bvCoverImgPath` | varchar(255) |  视频封面图   |                     |
+|  `bvVideoPath`   | varchar(255) | 视频文件路径  |                     |
+|    `bvTitle`     | varchar(40)  |   视频标题    |                     |
+|     `bvDesc`     |     text     |   视频简介    |                     |
+|   `bvPostTime`   |  timestamp   | 视频上传日期  | CURRENT_TIMESTAMP() |
+|     `bvTags`     | varchar(150) | 视频子标签 ID |                     |
+|    `bvIsDel`     |   tinyint    |  是否已删除   |          0          |
 
+> bvID 使用 0 补足
+>
 > bvCoverImgID 列直接关联图片表 ID
 >
 > bvPostTime 列默认为当前时间
 >
 > bvIsDel 列说明：0 为未删除，1 为已删除
->
-> 标签列格式为[第一层标签 id,第二层标签 id,第三层标签 id,其他标签 ID...]
 >
 > 视频分 P 如何存储没有定论，先搁置。
 
@@ -156,7 +155,7 @@
 |   `status`   |  tinyint  |   点赞状态    |          0          |
 | `createTime` | timestamp |   点赞时间    | CURRENT_TIMESTAMP() |
 
-> 点赞状态的区分：未做任何操作为 0,点赞为 1。
+> 点赞状态的区分：0 为未点赞，1 为已点赞。
 >
 > 点赞时间默认为当前时间
 
@@ -181,23 +180,13 @@
 |  `TagID`  |     int     | 标签唯一 ID |
 | `TagName` | varchar(50) |  标签名称   |
 
-### 标签路径表
+### 标签关系表
 
-> 通过该表描述标签关系
-
-|     列名     | 数据类型 |     说明     |
-| :----------: | :------: | :----------: |
-|    `tpID`    |   int    | 主键，无意义 |
-|  `Ancestor`  |   int    |   祖先 id    |
-| `Descendant` |   int    |   后代 id    |
-|    `Dept`    |   int    |     深度     |
-
-> 标签表的第一层，也就是树根层，代表分区（动漫区，音乐区...）
-> 第二层细分，依此类推
->
-> 至于排序，结合 tag 条件和分数高低进行无脑排序即可
->
-> 如何使用 sql 具体操作，参见[mysql 文件](File://totorial.sql)
+|  列名   | 数据类型 |     说明     |
+| :-----: | :------: | :----------: |
+| `trID`  |   int    | 主键，无意义 |
+| `bvID`  | INT(10)  |   视频 id    |
+| `TagID` |   INT    |   标签 id    |
 
 ---
 
@@ -237,44 +226,46 @@
 
 ## 评论类
 
-### 用户评论表
+### 评论表
 
 |     列名     | 数据类型  |         说明          | 默认值 |
 | :----------: | :-------: | :-------------------: | :----: |
-|    `ucID`    |    int    | 用户评论 ID，主键自增 |        |
+|    `cID`     |    int    | 用户评论 ID，主键自增 |        |
 |    `uID`     |  int(9)   |   撰写评论的用户 ID   |        |
-| `artworkID`  |  bigint   |     评论的作品 ID     |        |
-|   `ucType`   |    int    |   用户评论对应区域    |        |
-| `ucID_reply` |    int    |     回复的评论 ID     |        |
+| `cID_reply`  |    int    |     回复的评论 ID     |        |
 | `createTime` | timestamp |       评论时间        |        |
-|   `ucText`   |   text    |       评论正文        |        |
+|   `cText`    |   text    |       评论正文        |        |
 |   `isDel`    |  tinyint  |      是否已删除       |   0    |
 
-> artworkID 列说明：1 为视频，2 为专栏，3 为动态
->
 > isDel 列说明：0 为未删除，1 为已删除
->
-> > 使用一个评论表去统一存储三个表
-> >
-> > (视频表，专栏表，动态表)中的
-> >
-> > <u>不同数据类型和数据精度的 ID</u>
-> >
-> > 在此之前需要通过 Type 列的值判断评论或点赞的作品对应的表
+
+### 视频评论关系表
+
+| 列名 | 数据类型  |  说明   |
+| :--: | :-------: | :-----: |
+| bvID | int（10） | 视频 ID |
+| cID  |    int    | 评论 ID |
+
+### 动态评论关系表
+
+| 列名 | 数据类型  |  说明   |
+| :--: | :-------: | :-----: |
+| bvID | int（10） | 动态 ID |
+| cID  |    int    | 评论 ID |
 
 ### 用户评论数据表
 
-|     列名      | 数据类型 |   说明   | 默认值 |
-| :-----------: | :------: | :------: | :----: |
-|    `ucID`     |   int    | 评论 ID  |        |
-|  `ucLikeNum`  |  bigint  | 点赞数量 |   0    |
-| `ucunLikeNum` |  bigint  | 点踩数量 |   0    |
+|     列名     | 数据类型 |   说明   | 默认值 |
+| :----------: | :------: | :------: | :----: |
+|    `cID`     |   int    | 评论 ID  |        |
+|  `cLikeNum`  |  bigint  | 点赞数量 |   0    |
+| `cunLikeNum` |  bigint  | 点踩数量 |   0    |
 
 ### 用户评论点赞表
 
 |     列名     | 数据类型  |      说明       |       默认值        |
 | :----------: | :-------: | :-------------: | :-----------------: |
-|    `ucID`    |    int    | 被点赞的评论 ID |                     |
+|    `cID`     |    int    | 被点赞的评论 ID |                     |
 |    `uID`     |  int(9)   |  点赞的用户 ID  |                     |
 |   `status`   |  int(1)   |    点赞状态     |          0          |
 | `createTime` | timestamp |    点赞时间     | CURRENT_TIMESTAMP() |
@@ -306,10 +297,7 @@
 |  `receiver`  | varchar(16) |     留言接收者      |                     |
 | `updateTime` |  timestamp  |    发送信息时间     | CURRENT_TIMESTAMP() |
 |  `content`   |    text     |      留言内容       |                     |
-|    `type`    |   tinyint   |      留言类型       |                     |
 
-> type 列说明：1 为普通消息、2 为系统消息
->
 > 另见：消息表的数据库模型
 >
 > https://www.oschina.net/question/12_70252?sort=default&p=1
@@ -326,3 +314,11 @@
 |   `desc`    | varchar(200) |       收藏夹描述        |        |
 
 > isSecret 列说明: 私密为 1，公开为 0
+
+### 用户收藏夹表
+
+|    列名     | 数据类型 |       说明        | 默认值 |
+| :---------: | :------: | :---------------: | :----: |
+| `favListID` |   int    | 被点赞的收藏夹 ID |        |
+|    `uID`    |  int(9)  | 给予点赞的用户 ID |        |
+|  `status`   | tinyint  |     点赞状态      |   0    |
