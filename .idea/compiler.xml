@@ -13,7 +13,7 @@
     <bytecodeTargetLevel>
       <module name="Bili_API" target="1.8" />
       <module name="client_demo" target="1.8" />
-      <module name="gateway" target="8" />
+      <module name="gateway" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

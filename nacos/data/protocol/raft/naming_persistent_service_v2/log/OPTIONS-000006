@@ -57,7 +57,7 @@
   manifest_preallocation_size=4194304
   write_thread_slow_yield_usec=3
   db_log_dir=
-  wal_dir=E\:\\Bili_API\\nacos\\data\\protocol\\raft\\naming_persistent_service_v2\\log
+  wal_dir=G\:\\nacos\\data\\protocol\\raft\\naming_persistent_service_v2\\log
   max_subcompactions=1
   WAL_size_limit_MB=0
   max_total_wal_size=0
