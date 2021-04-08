@@ -1,0 +1,278 @@
+2021-04-04 08:27:09,172 INFO [AUTO-DELETE-IP] service: Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=5}, ip: {"ip":"192.168.101.6","port":8081,"healthy":false,"cluster":"DEFAULT","extendDatum":{"preserved.register.source":"SPRING_CLOUD","customInstanceId":"192.168.101.6#8081#DEFAULT#DEFAULT_GROUP@@client-demo-service"},"lastHeartBeatTime":1617495994713,"metadataId":"192.168.101.6:8081:DEFAULT"}
+
+2021-04-04 08:27:09,173 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=5}, 192.168.101.6:8081#true
+
+2021-04-04 08:27:10,940 INFO Client connection 192.168.101.6:8081#true disconnect, remove instances and subscribers
+
+2021-04-04 08:28:15,035 WARN namespace : public, [DEFAULT_GROUP@@client-demo-service] services are automatically cleaned
+
+2021-04-04 08:50:40,352 INFO Client connection 192.168.101.6:8081#true connect
+
+2021-04-04 08:50:40,352 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=0}, 192.168.101.6:8081#true
+
+2021-04-04 08:52:20,494 INFO [AUTO-DELETE-IP] service: Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=1}, ip: {"ip":"192.168.101.6","port":8081,"healthy":false,"cluster":"DEFAULT","extendDatum":{"preserved.register.source":"SPRING_CLOUD","customInstanceId":"192.168.101.6#8081#DEFAULT#DEFAULT_GROUP@@client-demo-service"},"lastHeartBeatTime":1617497510475,"metadataId":"192.168.101.6:8081:DEFAULT"}
+
+2021-04-04 08:52:20,494 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=1}, 192.168.101.6:8081#true
+
+2021-04-04 08:52:23,426 INFO Client connection 192.168.101.6:8081#true disconnect, remove instances and subscribers
+
+2021-04-04 08:52:31,837 INFO Client connection 192.168.101.6:8081#true connect
+
+2021-04-04 08:52:31,837 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=2}, 192.168.101.6:8081#true
+
+2021-04-04 08:54:09,943 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=3}, 192.168.101.6:8081#true
+
+2021-04-04 08:54:10,147 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=4}, 192.168.101.6:8081#true
+
+2021-04-04 08:54:43,630 INFO Client connection 192.168.101.6:8081#true disconnect, remove instances and subscribers
+
+2021-04-04 08:54:48,594 INFO Client connection 192.168.101.6:8081#true connect
+
+2021-04-04 08:54:48,595 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=5}, 192.168.101.6:8081#true
+
+2021-04-04 09:25:51,602 INFO [AUTO-DELETE-IP] service: Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=6}, ip: {"ip":"192.168.101.6","port":8081,"healthy":false,"cluster":"DEFAULT","extendDatum":{"preserved.register.source":"SPRING_CLOUD","customInstanceId":"192.168.101.6#8081#DEFAULT#DEFAULT_GROUP@@client-demo-service"},"lastHeartBeatTime":1617499517167,"metadataId":"192.168.101.6:8081:DEFAULT"}
+
+2021-04-04 09:25:51,602 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=6}, 192.168.101.6:8081#true
+
+2021-04-04 09:25:56,605 INFO Client connection 192.168.101.6:8081#true disconnect, remove instances and subscribers
+
+2021-04-04 09:27:15,442 WARN namespace : public, [DEFAULT_GROUP@@client-demo-service] services are automatically cleaned
+
+2021-04-04 10:03:27,603 INFO Client connection 192.168.101.6:8081#true connect
+
+2021-04-04 10:03:27,604 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=0}, 192.168.101.6:8081#true
+
+2021-04-04 10:03:27,797 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=1}, 192.168.101.6:8081#true
+
+2021-04-04 10:04:00,302 INFO Client connection 192.168.101.6:8081#true disconnect, remove instances and subscribers
+
+2021-04-04 10:05:15,767 WARN namespace : public, [DEFAULT_GROUP@@client-demo-service] services are automatically cleaned
+
+2021-04-04 10:06:15,904 INFO Client connection 192.168.101.6:8081#true connect
+
+2021-04-04 10:06:15,904 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=0}, 192.168.101.6:8081#true
+
+2021-04-04 10:06:50,934 INFO [AUTO-DELETE-IP] service: Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=1}, ip: {"ip":"192.168.101.6","port":8081,"healthy":false,"cluster":"DEFAULT","extendDatum":{"preserved.register.source":"SPRING_CLOUD","customInstanceId":"192.168.101.6#8081#DEFAULT#DEFAULT_GROUP@@client-demo-service"},"lastHeartBeatTime":1617501980910,"metadataId":"192.168.101.6:8081:DEFAULT"}
+
+2021-04-04 10:06:50,934 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=1}, 192.168.101.6:8081#true
+
+2021-04-04 10:06:55,561 INFO Client connection 192.168.101.6:8081#true disconnect, remove instances and subscribers
+
+2021-04-04 10:08:15,797 WARN namespace : public, [DEFAULT_GROUP@@client-demo-service] services are automatically cleaned
+
+2021-04-04 10:09:20,677 INFO Client connection 192.168.101.6:8081#true connect
+
+2021-04-04 10:09:20,677 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=0}, 192.168.101.6:8081#true
+
+2021-04-04 10:09:50,715 INFO [AUTO-DELETE-IP] service: Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=1}, ip: {"ip":"192.168.101.6","port":8081,"healthy":false,"cluster":"DEFAULT","extendDatum":{"preserved.register.source":"SPRING_CLOUD","customInstanceId":"192.168.101.6#8081#DEFAULT#DEFAULT_GROUP@@client-demo-service"},"lastHeartBeatTime":1617502160677,"metadataId":"192.168.101.6:8081:DEFAULT"}
+
+2021-04-04 10:09:50,715 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=1}, 192.168.101.6:8081#true
+
+2021-04-04 10:09:50,841 INFO Client connection 192.168.101.6:8081#true disconnect, remove instances and subscribers
+
+2021-04-04 10:11:15,814 WARN namespace : public, [DEFAULT_GROUP@@client-demo-service] services are automatically cleaned
+
+2021-04-04 10:33:48,645 INFO Client connection 192.168.101.6:8081#true connect
+
+2021-04-04 10:33:48,646 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=0}, 192.168.101.6:8081#true
+
+2021-04-04 10:54:14,736 INFO Client connection 192.168.101.6:8082#true connect
+
+2021-04-04 10:54:14,736 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo2-service', ephemeral=true, revision=0}, 192.168.101.6:8082#true
+
+2021-04-04 10:54:25,491 INFO Client connection 192.168.101.6:63354#true connect
+
+2021-04-04 10:55:02,661 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo2-service', ephemeral=true, revision=1}, 192.168.101.6:8082#true
+
+2021-04-04 10:55:03,170 INFO Client connection 192.168.101.6:54690#true connect
+
+2021-04-04 10:55:20,268 INFO Client connection 192.168.101.6:63354#true disconnect, remove instances and subscribers
+
+2021-04-04 10:57:27,338 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=1}, 192.168.101.6:8081#true
+
+2021-04-04 10:57:45,527 INFO Client connection 192.168.101.6:54690#true disconnect, remove instances and subscribers
+
+2021-04-04 10:57:50,063 INFO [AUTO-DELETE-IP] service: Service{namespace='public', group='DEFAULT_GROUP', name='client-demo2-service', ephemeral=true, revision=2}, ip: {"ip":"192.168.101.6","port":8082,"healthy":false,"cluster":"DEFAULT","extendDatum":{"preserved.register.source":"SPRING_CLOUD","customInstanceId":"192.168.101.6#8082#DEFAULT#DEFAULT_GROUP@@client-demo2-service"},"lastHeartBeatTime":1617505037892,"metadataId":"192.168.101.6:8082:DEFAULT"}
+
+2021-04-04 10:57:50,063 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo2-service', ephemeral=true, revision=2}, 192.168.101.6:8082#true
+
+2021-04-04 10:57:50,535 INFO Client connection 192.168.101.6:8082#true disconnect, remove instances and subscribers
+
+2021-04-04 10:59:16,209 WARN namespace : public, [DEFAULT_GROUP@@client-demo2-service] services are automatically cleaned
+
+2021-04-04 11:01:33,458 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=2}, 192.168.101.6:8081#true
+
+2021-04-04 11:03:12,719 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=3}, 192.168.101.6:8081#true
+
+2021-04-04 11:36:33,717 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=4}, 192.168.101.6:8081#true
+
+2021-04-04 11:36:33,921 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=5}, 192.168.101.6:8081#true
+
+2021-04-04 11:37:04,432 INFO Client connection 192.168.101.6:8081#true disconnect, remove instances and subscribers
+
+2021-04-04 11:37:17,779 INFO Client connection 192.168.101.6:8081#true connect
+
+2021-04-04 11:37:17,779 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=6}, 192.168.101.6:8081#true
+
+2021-04-04 12:08:20,883 INFO [AUTO-DELETE-IP] service: Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=7}, ip: {"ip":"192.168.101.6","port":8081,"healthy":false,"cluster":"DEFAULT","extendDatum":{"preserved.register.source":"SPRING_CLOUD","customInstanceId":"192.168.101.6#8081#DEFAULT#DEFAULT_GROUP@@client-demo-service"},"lastHeartBeatTime":1617509266249,"metadataId":"192.168.101.6:8081:DEFAULT"}
+
+2021-04-04 12:08:20,883 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=7}, 192.168.101.6:8081#true
+
+2021-04-04 12:08:22,500 INFO Client connection 192.168.101.6:8081#true disconnect, remove instances and subscribers
+
+2021-04-04 12:10:16,793 WARN namespace : public, [DEFAULT_GROUP@@client-demo-service] services are automatically cleaned
+
+2021-04-04 12:33:06,364 INFO Client connection 192.168.101.6:8081#true connect
+
+2021-04-04 12:33:06,365 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=0}, 192.168.101.6:8081#true
+
+2021-04-04 12:50:05,264 INFO Client connection 192.168.101.6:8000#true connect
+
+2021-04-04 12:50:05,264 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='gateway-service', ephemeral=true, revision=0}, 192.168.101.6:8000#true
+
+2021-04-04 12:51:22,659 INFO Client connection 192.168.101.6:53638#true connect
+
+2021-04-04 12:53:47,133 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='gateway-service', ephemeral=true, revision=1}, 192.168.101.6:8000#true
+
+2021-04-04 12:54:06,875 INFO Client connection 192.168.101.6:53638#true disconnect, remove instances and subscribers
+
+2021-04-04 12:54:08,842 INFO Client connection 192.168.101.6:62139#true connect
+
+2021-04-04 12:55:31,127 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='gateway-service', ephemeral=true, revision=2}, 192.168.101.6:8000#true
+
+2021-04-04 12:55:52,034 INFO Client connection 192.168.101.6:62139#true disconnect, remove instances and subscribers
+
+2021-04-04 12:55:56,756 INFO Client connection 192.168.101.6:65030#true connect
+
+2021-04-04 12:58:17,050 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='gateway-service', ephemeral=true, revision=3}, 192.168.101.6:8000#true
+
+2021-04-04 12:58:22,773 INFO Client connection 192.168.101.6:52671#true connect
+
+2021-04-04 12:58:42,286 INFO Client connection 192.168.101.6:65030#true disconnect, remove instances and subscribers
+
+2021-04-04 13:00:07,468 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='gateway-service', ephemeral=true, revision=4}, 192.168.101.6:8000#true
+
+2021-04-04 13:00:27,435 INFO Client connection 192.168.101.6:57426#true connect
+
+2021-04-04 13:00:27,477 INFO Client connection 192.168.101.6:52671#true disconnect, remove instances and subscribers
+
+2021-04-04 13:03:01,046 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='gateway-service', ephemeral=true, revision=5}, 192.168.101.6:8000#true
+
+2021-04-04 13:03:22,817 INFO Client connection 192.168.101.6:57426#true disconnect, remove instances and subscribers
+
+2021-04-04 13:04:07,501 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='gateway-service', ephemeral=true, revision=6}, 192.168.101.6:8000#true
+
+2021-04-04 13:04:13,660 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='gateway-service', ephemeral=true, revision=7}, 192.168.101.6:8000#true
+
+2021-04-04 13:04:51,563 INFO [AUTO-DELETE-IP] service: Service{namespace='public', group='DEFAULT_GROUP', name='gateway-service', ephemeral=true, revision=8}, ip: {"ip":"192.168.101.6","port":8000,"healthy":false,"cluster":"DEFAULT","extendDatum":{"preserved.register.source":"SPRING_CLOUD","customInstanceId":"192.168.101.6#8000#DEFAULT#DEFAULT_GROUP@@gateway-service"},"lastHeartBeatTime":1617512658665,"metadataId":"192.168.101.6:8000:DEFAULT"}
+
+2021-04-04 13:04:51,563 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='gateway-service', ephemeral=true, revision=8}, 192.168.101.6:8000#true
+
+2021-04-04 13:04:52,971 INFO Client connection 192.168.101.6:8000#true disconnect, remove instances and subscribers
+
+2021-04-04 13:06:17,225 WARN namespace : public, [DEFAULT_GROUP@@gateway-service] services are automatically cleaned
+
+2021-04-04 13:35:27,918 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=1}, 192.168.101.6:8081#true
+
+2021-04-04 13:36:19,102 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=2}, 192.168.101.6:8081#true
+
+2021-04-04 13:37:12,510 INFO [AUTO-DELETE-IP] service: Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=3}, ip: {"ip":"192.168.101.6","port":8081,"healthy":false,"cluster":"DEFAULT","extendDatum":{"preserved.register.source":"SPRING_CLOUD","customInstanceId":"192.168.101.6#8081#DEFAULT#DEFAULT_GROUP@@client-demo-service"},"lastHeartBeatTime":1617514599120,"metadataId":"192.168.101.6:8081:DEFAULT"}
+
+2021-04-04 13:37:12,510 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=3}, 192.168.101.6:8081#true
+
+2021-04-04 13:37:15,844 INFO Client connection 192.168.101.6:8081#true disconnect, remove instances and subscribers
+
+2021-04-04 13:38:00,983 INFO Client connection 192.168.101.6:8081#true connect
+
+2021-04-04 13:38:00,983 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=4}, 192.168.101.6:8081#true
+
+2021-04-04 13:40:06,198 INFO [AUTO-DELETE-IP] service: Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=5}, ip: {"ip":"192.168.101.6","port":8081,"healthy":false,"cluster":"DEFAULT","extendDatum":{"preserved.register.source":"SPRING_CLOUD","customInstanceId":"192.168.101.6#8081#DEFAULT#DEFAULT_GROUP@@client-demo-service"},"lastHeartBeatTime":1617514776087,"metadataId":"192.168.101.6:8081:DEFAULT"}
+
+2021-04-04 13:40:06,198 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=5}, 192.168.101.6:8081#true
+
+2021-04-04 13:40:07,035 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=6}, 192.168.101.6:8081#true
+
+2021-04-04 13:43:14,795 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=7}, 192.168.101.6:8081#true
+
+2021-04-04 13:44:55,616 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='client-demo-service', ephemeral=true, revision=8}, 192.168.101.6:8081#true
+
+2021-04-04 13:52:42,274 INFO Client connection 192.168.101.6:8000#true connect
+
+2021-04-04 13:52:42,274 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='gateway-service', ephemeral=true, revision=0}, 192.168.101.6:8000#true
+
+2021-04-04 13:52:46,590 INFO Client connection 192.168.101.6:58668#true connect
+
+2021-04-04 13:53:25,334 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='gateway-service', ephemeral=true, revision=1}, 192.168.101.6:8000#true
+
+2021-04-04 13:53:52,424 INFO Client connection 192.168.101.6:58668#true disconnect, remove instances and subscribers
+
+2021-04-04 13:55:24,074 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='gateway-service', ephemeral=true, revision=2}, 192.168.101.6:8000#true
+
+2021-04-04 13:55:43,860 INFO Client connection 192.168.101.6:65111#true connect
+
+2021-04-04 13:56:56,155 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='gateway-service', ephemeral=true, revision=3}, 192.168.101.6:8000#true
+
+2021-04-04 13:57:05,898 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='gateway-service', ephemeral=true, revision=4}, 192.168.101.6:8000#true
+
+2021-04-04 13:57:08,046 INFO Client connection 192.168.101.6:65433#true connect
+
+2021-04-04 13:57:17,759 INFO Client connection 192.168.101.6:65111#true disconnect, remove instances and subscribers
+
+2021-04-04 13:57:42,740 INFO [AUTO-DELETE-IP] service: Service{namespace='public', group='DEFAULT_GROUP', name='gateway-service', ephemeral=true, revision=5}, ip: {"ip":"192.168.101.6","port":8000,"healthy":false,"cluster":"DEFAULT","extendDatum":{"preserved.register.source":"SPRING_CLOUD","customInstanceId":"192.168.101.6#8000#DEFAULT#DEFAULT_GROUP@@gateway-service"},"lastHeartBeatTime":1617515830903,"metadataId":"192.168.101.6:8000:DEFAULT"}
+
+2021-04-04 13:57:42,740 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='gateway-service', ephemeral=true, revision=5}, 192.168.101.6:8000#true
+
+2021-04-04 13:57:42,802 INFO Client connection 192.168.101.6:8000#true disconnect, remove instances and subscribers
+
+2021-04-04 13:57:42,802 INFO Client connection 192.168.101.6:65433#true disconnect, remove instances and subscribers
+
+2021-04-04 13:58:56,428 INFO Client connection 192.168.101.6:8000#true connect
+
+2021-04-04 13:58:56,429 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='gateway-service', ephemeral=true, revision=6}, 192.168.101.6:8000#true
+
+2021-04-04 13:58:56,761 INFO Client connection 192.168.101.6:54883#true connect
+
+2021-04-04 14:02:38,551 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='gateway-service', ephemeral=true, revision=7}, 192.168.101.6:8000#true
+
+2021-04-04 14:02:50,899 INFO Client connection 192.168.101.6:58944#true connect
+
+2021-04-04 14:02:58,303 INFO Client connection 192.168.101.6:54883#true disconnect, remove instances and subscribers
+
+2021-04-04 14:03:40,079 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='gateway-service', ephemeral=true, revision=8}, 192.168.101.6:8000#true
+
+2021-04-04 14:03:43,591 INFO Client connection 192.168.101.6:64225#true connect
+
+2021-04-04 14:04:03,439 INFO Client connection 192.168.101.6:58944#true disconnect, remove instances and subscribers
+
+2021-04-04 14:04:26,973 INFO [AUTO-DELETE-IP] service: Service{namespace='public', group='DEFAULT_GROUP', name='gateway-service', ephemeral=true, revision=9}, ip: {"ip":"192.168.101.6","port":8000,"healthy":false,"cluster":"DEFAULT","extendDatum":{"preserved.register.source":"SPRING_CLOUD","customInstanceId":"192.168.101.6#8000#DEFAULT#DEFAULT_GROUP@@gateway-service"},"lastHeartBeatTime":1617516235100,"metadataId":"192.168.101.6:8000:DEFAULT"}
+
+2021-04-04 14:04:26,973 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='gateway-service', ephemeral=true, revision=9}, 192.168.101.6:8000#true
+
+2021-04-04 14:04:28,477 INFO Client connection 192.168.101.6:8000#true disconnect, remove instances and subscribers
+
+2021-04-04 14:04:28,477 INFO Client connection 192.168.101.6:64225#true disconnect, remove instances and subscribers
+
+2021-04-04 14:06:17,704 WARN namespace : public, [DEFAULT_GROUP@@gateway-service] services are automatically cleaned
+
+2021-04-04 14:22:44,634 INFO Client connection 192.168.101.6:8000#true connect
+
+2021-04-04 14:22:44,634 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='gateway-service', ephemeral=true, revision=0}, 192.168.101.6:8000#true
+
+2021-04-04 14:22:47,590 INFO Client connection 192.168.101.6:49714#true connect
+
+2021-04-04 14:23:41,501 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='gateway-service', ephemeral=true, revision=1}, 192.168.101.6:8000#true
+
+2021-04-04 14:23:44,884 INFO Client connection 192.168.101.6:65039#true connect
+
+2021-04-04 14:24:00,377 INFO Client connection 192.168.101.6:49714#true disconnect, remove instances and subscribers
+
+2021-04-04 14:24:29,762 INFO [AUTO-DELETE-IP] service: Service{namespace='public', group='DEFAULT_GROUP', name='gateway-service', ephemeral=true, revision=2}, ip: {"ip":"192.168.101.6","port":8000,"healthy":false,"cluster":"DEFAULT","extendDatum":{"preserved.register.source":"SPRING_CLOUD","customInstanceId":"192.168.101.6#8000#DEFAULT#DEFAULT_GROUP@@gateway-service"},"lastHeartBeatTime":1617517436511,"metadataId":"192.168.101.6:8000:DEFAULT"}
+
+2021-04-04 14:24:29,762 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='gateway-service', ephemeral=true, revision=2}, 192.168.101.6:8000#true
+
+2021-04-04 14:24:30,414 INFO Client connection 192.168.101.6:8000#true disconnect, remove instances and subscribers
+
+2021-04-04 14:24:30,414 INFO Client connection 192.168.101.6:65039#true disconnect, remove instances and subscribers
+
+2021-04-04 14:26:17,875 WARN namespace : public, [DEFAULT_GROUP@@gateway-service] services are automatically cleaned
+
