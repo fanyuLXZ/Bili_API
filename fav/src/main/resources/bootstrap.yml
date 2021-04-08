@@ -1,0 +1,23 @@
+server:
+  port: 8076
+spring:
+  application:
+    #应用名
+    name: fav-service
+  cloud:
+    nacos:
+      #注册服务地址
+      discovery:
+        server-addr: localhost:8848
+      #配置服务地址
+      config:
+        server-addr: localhost:8848
+        file-extension: yaml
+        extension-configs[0]:
+          data-id: sentinel-config.yaml
+
+
+
+#mybatis:
+#  mapperLocations: classpath:mapper/*.xml
+#  type-aliases-package: com.atguigu.spingcloud.entities    # 所有Entity别名类所在包
