@@ -13,3 +13,9 @@ spring:
       config:
         server-addr: localhost:8848
         file-extension: yaml
+        extension-configs[0]:
+          data-id: sentinel-config.yaml
+          refresh: true
+        extension-configs[1]:
+          data-id: datasource-config.yaml
+          refresh: true

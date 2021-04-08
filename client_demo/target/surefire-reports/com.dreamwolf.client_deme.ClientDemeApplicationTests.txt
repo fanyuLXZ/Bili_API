@@ -1,9 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.dreamwolf.client_deme.ClientDemeApplicationTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 3.588 s <<< FAILURE! - in com.dreamwolf.client_deme.ClientDemeApplicationTests
-contextLoads  Time elapsed: 0.002 s  <<< ERROR!
-java.lang.IllegalStateException: Failed to load ApplicationContext
-Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'scopedTarget.clientDemoApplication': Injection of autowired dependencies failed; nested exception is java.lang.IllegalArgumentException: Could not resolve placeholder 'config' in value "${config}"
-Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'config' in value "${config}"
-

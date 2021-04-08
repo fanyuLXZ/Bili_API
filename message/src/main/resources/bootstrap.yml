@@ -1,5 +1,5 @@
 server:
-  port: 8086
+  port: 8085
 spring:
   #数据库配置
   datasource:
@@ -21,6 +21,10 @@ spring:
         file-extension: yaml
         extension-configs[0]:
           data-id: sentinel-config.yaml
+          refresh: true
+        extension-configs[1]:
+          data-id: datasource-config.yaml
+          refresh: true
   #配置日志
 mybatis-plus:
   configuration:

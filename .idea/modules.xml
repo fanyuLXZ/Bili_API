@@ -3,8 +3,14 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Bili_API.iml" filepath="$PROJECT_DIR$/Bili_API.iml" />
-      <module fileurl="file://$PROJECT_DIR$/client_demo/client_demo.iml" filepath="$PROJECT_DIR$/client_demo/client_demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dynamic/dynamic.iml" filepath="$PROJECT_DIR$/dynamic/dynamic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fav/fav.iml" filepath="$PROJECT_DIR$/fav/fav.iml" />
       <module fileurl="file://$PROJECT_DIR$/gateway/gateway.iml" filepath="$PROJECT_DIR$/gateway/gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/member/member.iml" filepath="$PROJECT_DIR$/member/member.iml" />
+      <module fileurl="file://$PROJECT_DIR$/message/message.iml" filepath="$PROJECT_DIR$/message/message.iml" />
+      <module fileurl="file://$PROJECT_DIR$/video/video.iml" filepath="$PROJECT_DIR$/video/video.iml" />
+      <module fileurl="file://$PROJECT_DIR$/watch_history/watch_history.iml" filepath="$PROJECT_DIR$/watch_history/watch_history.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zoning/zoning.iml" filepath="$PROJECT_DIR$/zoning/zoning.iml" />
     </modules>
   </component>
 </project>
