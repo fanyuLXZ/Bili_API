@@ -1,6 +1,27 @@
 server:
   port: 8085
 spring:
+  #数据库配置
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/BiliBili_db?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    driver-class-name: com.mysql.jdbc.Driver
+    tomcat:
+      initial-size: 10 #初始化连接数
+      max-active: 100 #连接池处于活动状态的数据库连接的最大数目，0表示不限制,表示最大并发
+      max-idle: 50
+      #连接池处于空闲状态的数据库连接的最小数目，低于此数值将会创建所欠缺的连接，设0无限制
+      min-idle: 45  #连接池处于空闲状态的数据库连接的最小数目，低于此数值将会创建所欠缺的连接，设0无限制
+      max-wait: 100 #连接池中连接用完时，新的请求的等待时间（即等待别的连接空闲），超时返回异常，毫秒
+      remove-abandoned: true  #是否清除已经超过 removeAbandonedTimeout 设置的无效连接，自动回收超时连接
+      remove-abandoned-timeout: 180 #以秒表示清除无效连接的时限，自我中断时间，单位秒
+      test-while-idle: true #指定连接进入空闲状态时是否经过空闲对象驱逐进程的校验，如果校验未通过，则该连接被连接池断掉值为true,则validationQuery参数必须为一个非空字串
+      time-between-eviction-runs-millis: 60000  #以毫秒表示空闲对象驱逐进程由休眠状态进入运行状态的数值，值为非正整时表示不运行任何空闲对象驱逐进程运行判断连接超时任务的时间间隔
+      test-on-borrow: false #指定连接被调用时是否经过校验，如果校验未通过，则该连接被连接池断掉，并由连接池尝试调用另一个连接值为true,则validationQuery参数必须为一个非空字串
+      test-on-return: false #指定连接返回到池中是时是否经过校验值为true,则validationQuery参数必须为一个非空字串
+      validation-query: select 1  #在连接返回给调用者前用于校验连接是否有效的SQL语句，如果指定了SQL语句，则必须为一个SELECT语句，且至少有一行结果
+      num-tests-per-eviction-run: 100 #连接池检查每个空闲对象驱逐进程的对象数量
   application:
     #应用名
     name: video-service
@@ -15,3 +36,9 @@ spring:
         file-extension: yaml
         extension-configs[0]:
           data-id: sentinel-config.yaml
+
+
+  #配置日志
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
