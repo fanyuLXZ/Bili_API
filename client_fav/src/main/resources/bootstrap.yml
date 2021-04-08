@@ -15,3 +15,9 @@ spring:
         file-extension: yaml
         extension-configs[0]:
           data-id: sentinel-config.yaml
+
+
+
+#mybatis:
+#  mapperLocations: classpath:mapper/*.xml
+#  type-aliases-package: com.atguigu.spingcloud.entities    # 所有Entity别名类所在包
