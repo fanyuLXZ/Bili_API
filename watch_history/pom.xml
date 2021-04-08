@@ -9,10 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>client_watch_history</artifactId>
+    <artifactId>watch_history</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>client_watch_history</name>
+    <name>watch_history</name>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>1.8</java.version>
