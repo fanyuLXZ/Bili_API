@@ -1,0 +1,27 @@
+server:
+  port: 8086
+spring:
+  #数据库配置
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/BiliBili_db?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    driver-class-name: com.mysql.jdbc.Driver
+  application:
+    #应用名
+    name: message-service
+  cloud:
+    nacos:
+      #注册服务地址
+      discovery:
+        server-addr: localhost:8848
+      #配置服务地址
+      config:
+        server-addr: localhost:8848
+        file-extension: yaml
+        extension-configs[0]:
+          data-id: sentinel-config.yaml
+  #配置日志
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
