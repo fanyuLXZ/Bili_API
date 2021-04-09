@@ -5,18 +5,17 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.3</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>2.4.2</version>
     </parent>
     <modules>
         <module>gateway</module>
         <module>member</module>
         <module>dynamic</module>
-        <module>fav</module>
         <module>message</module>
         <module>video</module>
-        <module>watch_history</module>
         <module>zoning</module>
+        <module>watch-history</module>
+        <module>fav</module>
     </modules>
     <groupId>com.dream-wolf</groupId>
     <artifactId>Bili_API</artifactId>
@@ -39,7 +38,7 @@
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>2.2.1.RELEASE</version>
+                <version>2020.0.RC1</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

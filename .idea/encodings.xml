@@ -3,13 +3,11 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/dynamic/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/fav/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/fav/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/member/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/message/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/video/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/watch_history/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/watch_history/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/watch-history/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/zoning/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/zoning/src/main/resources" charset="UTF-8" />
   </component>

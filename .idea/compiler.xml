@@ -8,9 +8,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="zoning" />
+        <module name="watch-history" />
         <module name="member" />
-        <module name="watch_history" />
         <module name="dynamic" />
+        <module name="fav" />
         <module name="video" />
         <module name="message" />
         <module name="gateway" />
@@ -25,6 +26,7 @@
       <module name="member" target="1.8" />
       <module name="message" target="1.8" />
       <module name="video" target="1.8" />
+      <module name="watch-history" target="1.8" />
       <module name="watch_history" target="1.8" />
       <module name="zoning" target="1.8" />
     </bytecodeTargetLevel>
@@ -33,10 +35,12 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="client_demo" options="-parameters" />
       <module name="dynamic" options="-parameters" />
+      <module name="fav" options="-parameters" />
       <module name="gateway" options="-parameters" />
       <module name="member" options="-parameters" />
       <module name="message" options="-parameters" />
       <module name="video" options="-parameters" />
+      <module name="watch-history" options="-parameters" />
       <module name="watch_history" options="-parameters" />
       <module name="zoning" options="-parameters" />
     </option>

@@ -1,6 +1,0 @@
-2021-04-06 09:53:33,916 INFO [dump-all-ok] client-demo-service.yaml+DEFAULT_GROUP, 1617357823464, length=9, md5=a5bcfdc9447bbda8a26ee3f39fd87ee3
-
-2021-04-06 09:53:33,917 INFO [dump-all-ok] sentinel-config.yaml+DEFAULT_GROUP, 1617496759549, length=105, md5=bc35d7a32b2cfe5a81ce0276c513cc39
-
-2021-04-06 09:53:33,918 INFO [dump-all-ok] gateway-service.yaml+DEFAULT_GROUP, 1617516217295, length=199, md5=28efd085a13567f25b5cae2f887ad4b8
-
