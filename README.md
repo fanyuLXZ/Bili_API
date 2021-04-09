@@ -20,8 +20,8 @@
 * ### 用户消息模块 Message
   
 * ### 用户模块 Member
-  1. 路径：/info  
-     返回值：
+   1. /info  
+      返回值：
       * isLogin 是否登陆
       * email_verified 邮箱是否验证
       * mobile_verified 手机是否验证
@@ -55,10 +55,21 @@
       * wallet 钱包对象
         mid uid
         bcoin_balance b币余额
+   3. /
 * ### 动态模块 Dynamic
-
+   1./entrance
+      返回值：  
+      * entrance
 * ### 分区模块 Zoning
 
 * ### 视频观看记录模块 Watch-History
 
 * ### 收藏模块 Favorite
+
+
+* ### 前端接口 web-interface
+   1. /nav/stat
+      返回值：
+      * following 关注数
+      * follower 粉丝数
+      * dynamic_count 动态数
