@@ -7,5 +7,8 @@ package com.dreamwolf.watchhistory.service.impl;
 // */
 //用户观看历史表
 
-public class VideoHistoryServiceImpl {
+import com.dreamwolf.watchhistory.service.VideoHistoryService;
+
+public class VideoHistoryServiceImpl implements VideoHistoryService {
+
 }
