@@ -37,7 +37,7 @@
             - current_exp 当前经验值 int
             - next_exp 下等级需要的经验值 int
         * vip 大会员对象 object
-            - type 会员类型 int 1大会员 0小会员
+            - type 会员类型 int 1大会员 0小会员(4月1愚人节那天为小会员)
             - status 是否是会员 int 1是 0否
             - due_date 会员有效时间 date
             - label string 固定返回"{"path": "", "text": "大会员", "label_theme": "vip", "text_color": "#FFFFFF", "bg_style":
