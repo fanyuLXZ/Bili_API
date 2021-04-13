@@ -6,6 +6,8 @@ import com.dreamwolf.member.business.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 /**
  * <p>
  * 用户信息表 服务实现类
@@ -16,5 +18,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
+    @Resource
+    UserMapper userMapper;
 
+    @Override
+    public User select(String userName) {
+        return userMapper.select(userName);
+    }
 }
