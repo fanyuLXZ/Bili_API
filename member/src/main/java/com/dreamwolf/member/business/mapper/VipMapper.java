@@ -3,6 +3,7 @@ package com.dreamwolf.member.business.mapper;
 import com.dreamwolf.member.business.entity.Vip;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -14,5 +15,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface VipMapper extends BaseMapper<Vip> {
-
+    public Vip vipselect(@Param("uID")int uID);
 }

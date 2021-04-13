@@ -1,14 +1,12 @@
 server:
-  port: 8086
+  port: 8083
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  type-aliases-package: com.dreamwolf.member.business.entity
 #spring
 spring:
   application:
     name: member-service
-  datasource:
-    url: jdbc:mysql://localhost:3306/bilibili_db?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true
-    driver-class-name: com.mysql.jdbc.Driver  #com.mysql.jdbc.Driver
-    username: root
-    password: root
   cloud:
     nacos:
       #注册服务地址
