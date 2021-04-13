@@ -78,6 +78,13 @@
             - hide_mail 隐藏过的邮箱 如："155****@qq.com"
             - bind_tel 是否绑定手机号
             - bind_mail 是否绑定邮箱
+    6. 查找账号对应的账号 /user/verify (非公开接口)
+        参数：   
+        * username 账号(手机号和邮箱) string
+        * password 密码(md5加密) string
+        返回值：   
+        * succeed 是否成功 boolean
+        * uid uid int
 * ### 动态模块 Dynamic
     1. 动态的最新信息 /entrance  
        参考链接：https://api.bilibili.com/x/web-interface/dynamic/entrance?video_offset=0&article_offset=0&alltype_offset=0   
