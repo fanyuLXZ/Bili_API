@@ -280,7 +280,7 @@
 | :----------------: | :-------: | :----------------------: | :-----------------: |
 |       `uID`        |  int(9)   |         用户 ID          |                     |
 |       `bvID`       |  int(10)  |         视频 ID          |                     |
-|    `CloseTime`     | timestamp |       关闭媒体时间       | CURRENT_TIMESTAMP() |
+|    `CloseTime`     | timestamp |       关闭视频时间       | CURRENT_TIMESTAMP() |
 | `TimelinePosition` |   time    | 视频关闭时，时间线的位置 |                     |
 
 ### 用户消息表

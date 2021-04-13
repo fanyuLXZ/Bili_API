@@ -10,4 +10,7 @@ public class FavApplication {
     public static void main(String[] args) {
         SpringApplication.run(FavApplication.class, args);
     }
+
+
+
 }
