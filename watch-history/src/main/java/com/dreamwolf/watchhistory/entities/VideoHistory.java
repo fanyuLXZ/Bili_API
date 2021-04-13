@@ -9,7 +9,7 @@ import java.util.Date;
 // */
 //用户观看历史表
 
-public class VideoHistoryEntities {
+public class VideoHistory {
     private int uID;//用户ID
     private int bvID;//视频ID
     private Date CloseTime;//关闭媒体时间
