@@ -68,7 +68,7 @@ public class User implements Serializable {
     private String boundQQ;
 
     @TableField("headImgPath")
-    private String headImgPath;
+    private String headImgPath;  //头像图片路径
 
 
 }
