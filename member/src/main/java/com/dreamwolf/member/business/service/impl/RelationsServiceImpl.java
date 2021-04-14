@@ -2,7 +2,7 @@ package com.dreamwolf.member.business.service.impl;
 
 import com.dreamwolf.member.business.entity.Relations;
 import com.dreamwolf.member.business.mapper.RelationsMapper;
-import com.dreamwolf.member.business.service.IRelationsService;
+import com.dreamwolf.member.business.service.RelationsService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2021-04-12
  */
 @Service
-public class RelationsServiceImpl extends ServiceImpl<RelationsMapper, Relations> implements IRelationsService {
+public class RelationsServiceImpl extends ServiceImpl<RelationsMapper, Relations> implements RelationsService {
 
 }

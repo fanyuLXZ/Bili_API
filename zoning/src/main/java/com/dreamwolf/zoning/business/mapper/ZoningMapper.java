@@ -3,6 +3,9 @@ package com.dreamwolf.zoning.business.mapper;
 import com.dreamwolf.zoning.business.entity.Zoning;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -14,5 +17,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface ZoningMapper extends BaseMapper<Zoning> {
-
+    public Map<String,Object> mapsele(@Param("data")String date, @Param("id")Integer id);
 }

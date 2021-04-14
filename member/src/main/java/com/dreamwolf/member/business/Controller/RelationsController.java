@@ -1,12 +1,11 @@
 package com.dreamwolf.member.business.Controller;
 
 
-import com.dreamwolf.member.business.service.IRelationsService;
-import com.dreamwolf.member.business.service.IUserService;
-import com.dreamwolf.member.business.service.IUserdataService;
-import com.dreamwolf.member.business.service.IVipService;
+import com.dreamwolf.member.business.service.RelationsService;
+import com.dreamwolf.member.business.service.UserService;
+import com.dreamwolf.member.business.service.UserdataService;
+import com.dreamwolf.member.business.service.VipService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,12 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class RelationsController {
     @Autowired
-    IUserService iUserService;
+    UserService userService;
     @Autowired
-    IUserdataService iUserdataService;
+    UserdataService userdataService;
     @Autowired
-    IVipService iVipService;
+    VipService vipService;
     @Autowired
-    IRelationsService iRelationsService;
+    RelationsService relationsService;
 }
 

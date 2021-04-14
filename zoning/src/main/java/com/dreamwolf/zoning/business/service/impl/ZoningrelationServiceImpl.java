@@ -2,7 +2,7 @@ package com.dreamwolf.zoning.business.service.impl;
 
 import com.dreamwolf.zoning.business.entity.Zoningrelation;
 import com.dreamwolf.zoning.business.mapper.ZoningrelationMapper;
-import com.dreamwolf.zoning.business.service.IZoningrelationService;
+import com.dreamwolf.zoning.business.service.ZoningrelationService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2021-04-12
  */
 @Service
-public class ZoningrelationServiceImpl extends ServiceImpl<ZoningrelationMapper, Zoningrelation> implements IZoningrelationService {
+public class ZoningrelationServiceImpl extends ServiceImpl<ZoningrelationMapper, Zoningrelation> implements ZoningrelationService {
 
 }

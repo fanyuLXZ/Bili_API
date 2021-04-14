@@ -4,11 +4,6 @@ server:
 spring:
   application:
     name: dynamic-service
-  datasource:
-    url: jdbc:mysql://localhost:3306/bilibili_db?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true
-    driver-class-name: com.mysql.jdbc.Driver  #com.mysql.jdbc.Driver
-    username: root
-    password: root
   cloud:
     nacos:
       #注册服务地址

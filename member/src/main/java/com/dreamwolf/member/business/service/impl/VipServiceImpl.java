@@ -2,7 +2,7 @@ package com.dreamwolf.member.business.service.impl;
 
 import com.dreamwolf.member.business.entity.Vip;
 import com.dreamwolf.member.business.mapper.VipMapper;
-import com.dreamwolf.member.business.service.IVipService;
+import com.dreamwolf.member.business.service.VipService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  * @since 2021-04-12
  */
 @Service
-public class VipServiceImpl extends ServiceImpl<VipMapper, Vip> implements IVipService {
+public class VipServiceImpl extends ServiceImpl<VipMapper, Vip> implements VipService {
     @Resource
     VipMapper vipMapper;
 

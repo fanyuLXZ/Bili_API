@@ -12,6 +12,6 @@ import org.apache.ibatis.annotations.Param;
  * @author zhaolin
  * @since 2021-04-12
  */
-public interface IUserService extends IService<User> {
+public interface UserService extends IService<User> {
     public User select(String userName);
 }
