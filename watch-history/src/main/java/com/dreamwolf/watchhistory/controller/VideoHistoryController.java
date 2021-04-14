@@ -37,10 +37,15 @@ public class VideoHistoryController {
         List<Map<String,Object>> list = new ArrayList<>();
         Map<String,Object> listmap=new HashMap();
         listmap.put("title",videoService.getVideobvID(id).getBvTitle());
-//        listmap.put("long_title",);//分p标题
-//        listmap.put("cover",);//封面图片路径
+        listmap.put("long_title","");//分p标题
+        listmap.put("cover",videoService.getVideobvID(id).getBvCoverImgPath());//封面图片路径
 //        listmap.put("author_name",);//作者名称
-//        listmap.put("uri",);//视频链接
+        listmap.put("uri",videoService.getVideobvID(id).getBvVideoPath());//视频链接
+        Map<String,Object> history=new HashMap();
+        history.put("oid","hid");
+        history.put("business","archive");
+        history.put("page",1);
+        listmap.put("history",history);
 //        listmap.put("history",);//历史对象
 //                - oid hid
 //                - business 类型 string 暂时"archive"
