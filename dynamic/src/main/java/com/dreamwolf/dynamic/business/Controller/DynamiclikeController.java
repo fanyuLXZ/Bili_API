@@ -17,7 +17,6 @@ import java.util.Map;
  * @since 2021-04-12
  */
 @RestController
-@RequestMapping("/business/dynamiclike")
 public class DynamiclikeController {
 
     @RequestMapping("/info")

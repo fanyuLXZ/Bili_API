@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-04-12
  */
 @RestController
-@RequestMapping("/business/userdynamic")
 public class UserdynamicController {
 
 }

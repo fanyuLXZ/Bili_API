@@ -2,7 +2,7 @@ package com.dreamwolf.dynamic.business.service.impl;
 
 import com.dreamwolf.dynamic.business.entity.Dynamiccomment;
 import com.dreamwolf.dynamic.business.mapper.DynamiccommentMapper;
-import com.dreamwolf.dynamic.business.service.IDynamiccommentService;
+import com.dreamwolf.dynamic.business.service.DynamiccommentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2021-04-12
  */
 @Service
-public class DynamiccommentServiceImpl extends ServiceImpl<DynamiccommentMapper, Dynamiccomment> implements IDynamiccommentService {
+public class DynamiccommentServiceImpl extends ServiceImpl<DynamiccommentMapper, Dynamiccomment> implements DynamiccommentService {
 
 }

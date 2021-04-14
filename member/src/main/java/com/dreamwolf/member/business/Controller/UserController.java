@@ -1,6 +1,7 @@
 package com.dreamwolf.member.business.Controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dreamwolf.member.business.entity.User;
 import com.dreamwolf.member.business.service.IRelationsService;
 import com.dreamwolf.member.business.service.IUserService;
@@ -40,9 +41,9 @@ public class UserController {
     @RequestMapping("/user/verify")
     public Map verify(@RequestParam("username")String username, @RequestParam("password")String password) throws Exception {
         //mybatis-plus条件查询 技术有限 没用出来
-        /*QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq("userName",username).eq("password",password);*/
-        User user=iUserService.select(username);//查找对应用户名和密码的对象
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("userName",username).or().eq("boundEmail",username);
+        User user=iUserService.getOne(wrapper);//查找对应用户名和密码的对象
         md5 md=new md5();//加密
         Map<String, Object> map=new HashMap<String, Object>();
         if (md.message(user.getPassword()).equals(md.message(password))){//查看密码是否正确
