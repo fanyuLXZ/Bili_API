@@ -96,7 +96,7 @@ class FavApplicationTests {
 
         //4. 策略配置
         StrategyConfig sgc = new StrategyConfig();
-        sgc.setInclude(new String[] { "userfavoritelist","favoritelike","user" });
+        sgc.setInclude(new String[] { "userfavoritelist","favoritelike","user","video" });
         // 设置要映射的表名，可以放多个表名，根据这个名 字，自动生成对应表的模块结构
         // 下划线转驼峰命名
         sgc.setNaming(NamingStrategy.underline_to_camel);// 包的命名规则
