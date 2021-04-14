@@ -9,14 +9,38 @@ import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.po.TableFill;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.dreamwolf.member.business.util.md5;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 //代码自动生成器
 @SpringBootTest
 public class Automatically {
+    @Test
+    public void md5() throws Exception {
+        md5 MD5=new md5();
+        MD5.message("222222");
+    }
+    /*@Test
+    public void mmmm() throws Exception {
+        String sss="123456";
+        MessageDigest m=MessageDigest.getInstance("SHA-1");
+        m.update(sss.getBytes());
+        byte s[]=m.digest();
+        System.out.print(s[1]+"+"+s[2]+"+"+s[3]+"+"+s[4]+"+"+s[5]);
+        System.out.println(m.getProvider().getInfo());
+        String result="";
+
+        for (int i=0; i>s.length;i++){
+            System.out.print("????????????????????"+s[i]);
+            result+=Integer.toHexString((0x000000ff & s[i]) | 0xffffff00).substring(6);
+        }
+        System.out.print("KKKKKKKKK"+result);
+    }*/
 
     @Test
     public void Automatice(){

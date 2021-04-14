@@ -6,14 +6,14 @@
 
 * 徐文建：
     - 收藏模块 userFavoriteList
-    - 用户消息模块 Message
+    - 视频模块 Video
 * 赵霖：
     - 用户模块 Member
     - 动态模块 Dynamic
     - 分区模块 Zoning
 * 王子轩：
     - 视频观看记录模块 watch-history
-    - 视频模块 Video
+    - 用户消息模块 Message
 
 ---
 
@@ -78,7 +78,7 @@
             - hide_mail 隐藏过的邮箱 如："155****@qq.com"
             - bind_tel 是否绑定手机号
             - bind_mail 是否绑定邮箱
-    6. 查找账号对应的账号 /user/verify (非公开接口)
+    6. 查找账号对应的账号 /user/verify 
         参数：   
         * username 账号(手机号和邮箱) string
         * password 密码(md5加密) string
@@ -221,12 +221,10 @@
                 - view 播放量 int
 * ### 安全模块 safety
     1. 手机号登陆 /login   
-       参数：
+        参数：  
         * tel 手机号
         * code 验证码
-        * go_url 跳转的页面
     2. 账号密码登陆 /login   
-       参数：
+        参数：  
         * username 用户名
         * password 密码
-        * go_url 跳转的页面

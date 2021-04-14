@@ -1,12 +1,9 @@
 server:
-  port: 8083
-mybatis-plus:
-  mapper-locations: classpath:/mapper/*Mapper.xml
-  type-aliases-package: com.dreamwolf.member.business.entity
-#spring
+  port: 8088
 spring:
   application:
-    name: member-service
+    #应用名
+    name: safety-service
   cloud:
     nacos:
       #注册服务地址
@@ -21,4 +18,7 @@ spring:
           refresh: true
         extension-configs[1]:
           data-id: datasource-config.yaml
+          refresh: true
+        extension-configs[2]:
+          data-id: redis-data-config
           refresh: true
