@@ -79,6 +79,7 @@ public class User implements Serializable {
     @TableField("headImgPath")
     private String headImgPath;
 
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }

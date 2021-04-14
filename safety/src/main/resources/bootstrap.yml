@@ -1,9 +1,9 @@
 server:
-  port: 8082
-#spring
+  port: 8088
 spring:
   application:
-    name: member-service
+    #应用名
+    name: safety-service
   cloud:
     nacos:
       #注册服务地址
@@ -19,8 +19,6 @@ spring:
         extension-configs[1]:
           data-id: datasource-config.yaml
           refresh: true
-
-  #配置日志
-mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+        extension-configs[2]:
+          data-id: redis-data-config
+          refresh: true
