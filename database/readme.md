@@ -89,6 +89,7 @@
 |      `uID`       |    int(9)    |  视频作者 ID  |                     |
 | `bvCoverImgPath` | varchar(255) |  视频封面图   |                     |
 |  `bvVideoPath`   | varchar(255) | 视频文件路径  |                     |
+|  `bvVideoTime`   |     time     |  视频总时长   |                     |
 |    `bvTitle`     | varchar(40)  |   视频标题    |                     |
 |     `bvDesc`     |     text     |   视频简介    |                     |
 |   `bvPostTime`   |  timestamp   | 视频上传日期  | CURRENT_TIMESTAMP() |
@@ -182,11 +183,11 @@
 
 ### 分区关系表
 
-|  列名  | 数据类型 |     说明     |
-| :----: | :------: | :----------: |
-| `trID` |   int    | 主键，无意义 |
-| `bvID` | int(10)  |   视频 id    |
-| `zID`  |   int    |   分区 id    |
+|    列名     | 数据类型 |     说明     |
+| :---------: | :------: | :----------: |
+|   `trID`    |   int    | 主键，无意义 |
+| `zIDFather` |   int    |  父分区 id   |
+| `zIDChild`  |   int    |  子分区 id   |
 
 ---
 
