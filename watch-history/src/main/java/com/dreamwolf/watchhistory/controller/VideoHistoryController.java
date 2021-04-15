@@ -1,8 +1,10 @@
 package com.dreamwolf.watchhistory.controller;
 
+import com.dreamwolf.watchhistory.entities.User;
 import com.dreamwolf.watchhistory.entities.Video;
 import com.dreamwolf.watchhistory.entities.VideoHistory;
 import com.dreamwolf.watchhistory.entities.Videocomment;
+import com.dreamwolf.watchhistory.service.UserService;
 import com.dreamwolf.watchhistory.service.VideoHistoryService;
 import com.dreamwolf.watchhistory.service.VideoService;
 import com.dreamwolf.watchhistory.service.VideocommentService;
@@ -25,10 +27,12 @@ public class VideoHistoryController {
     public VideoHistory videoHistory;
     public Video video;
     public Videocomment videocomment;
+    public User user;
     @Resource
     VideoHistoryService videoHistoryService;
     VideocommentService videocommentService;
     VideoService videoService;
+    UserService userService;
     @GetMapping("/list")
     public Map videoHistorylist(){
         Integer id=1;
@@ -39,7 +43,7 @@ public class VideoHistoryController {
         listmap.put("title",videoService.getVideobvID(id).getBvTitle());
         listmap.put("long_title","");//分p标题
         listmap.put("cover",videoService.getVideobvID(id).getBvCoverImgPath());//封面图片路径
-//        listmap.put("author_name",);//作者名称
+        listmap.put("author_name",userService.getUseruID(id).getUserName());//作者名称
         listmap.put("uri",videoService.getVideobvID(id).getBvVideoPath());//视频链接
         Map<String,Object> history=new HashMap();
         history.put("oid","hid");
@@ -50,9 +54,10 @@ public class VideoHistoryController {
 //                - oid hid
 //                - business 类型 string 暂时"archive"
 //                - page p数 int 暂时1
+
 //        listmap.put("duration",);//总时长
-//        listmap.put("progress",);//观看时长
-//        listmap.put("show_title",);//pgc卡用
+        listmap.put("progress",-1);//观看时长
+        listmap.put("show_title","");//pgc卡用
         listmap.put("view_at",videoHistoryService.getCxqb(id).getTimelinePosition());
         list.add(listmap);
         map.put("list",list);
