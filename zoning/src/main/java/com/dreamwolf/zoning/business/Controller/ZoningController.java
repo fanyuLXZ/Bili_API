@@ -3,7 +3,6 @@ package com.dreamwolf.zoning.business.Controller;
 
 import com.dreamwolf.zoning.business.service.ZoningService;
 import com.dreamwolf.zoning.business.service.ZoningrelationService;
-import org.apache.velocity.runtime.directive.contrib.For;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -18,9 +17,10 @@ import java.util.Map;
  * </p>
  *
  * @author zhaolin
- * @since 2021-04-12
+ * @since 2021-04-16
  */
 @RestController
+@RequestMapping("/business/zoning")
 public class ZoningController {
     @Autowired
     ZoningService zoningService;
@@ -35,11 +35,10 @@ public class ZoningController {
         map.put("message",0);
         map.put("ttl",1);
         Map<String, Object> data=new HashMap<String, Object>();
-        Map<String, Object> region_count=zoningService.mapsele("2021-01-14",1);
+        /*Map<String, Object> region_count=zoningService.mapsele("2021-01-14",1);
         data.put("region_count",region_count);
-        map.put("data",data);
+        map.put("data",data);*/
         return map;
     }
-
 }
 

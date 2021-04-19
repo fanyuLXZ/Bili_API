@@ -1,6 +1,7 @@
 package com.dreamwolf.member.business.Controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dreamwolf.member.business.entity.Vip;
 import com.dreamwolf.member.business.service.RelationsService;
 import com.dreamwolf.member.business.service.UserService;
@@ -52,6 +53,22 @@ public class VipController {
         data.put("vip_type",month+"/"+day_of_month=="4/1"?0:1);//会员类型
         data.put("due_date",vip.getExpirationTime());//会员有效时间
         map.put("data",data);
+        return map;
+    }
+
+
+    //通过用户id 查询对应大会员信息
+    @RequestMapping("/Vip")
+    public Map vip(){
+        Integer id=1;
+        QueryWrapper<Vip> wrapper = new QueryWrapper<>();
+        wrapper.eq("uID",id);
+        Vip vip=vipService.getOne(wrapper);
+        Map<String, Object> map=new HashMap<String, Object>();
+        map.put("vID",vip.getvID());
+        map.put("uID",vip.getuID());
+        map.put("ExpirationTime",vip.getExpirationTime());
+        map.put("vPoint",vip.getvPoint());
         return map;
     }
 }

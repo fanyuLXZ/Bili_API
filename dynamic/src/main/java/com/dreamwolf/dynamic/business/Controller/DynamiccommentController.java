@@ -1,16 +1,17 @@
 package com.dreamwolf.dynamic.business.Controller;
 
 
-import com.dreamwolf.dynamic.business.entity.Dynamiclike;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.dreamwolf.dynamic.business.entity.Dynamiccomment;
 import com.dreamwolf.dynamic.business.service.*;
-import com.dreamwolf.member.business.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,32 +24,33 @@ import java.util.Map;
  */
 @RestController
 public class DynamiccommentController {
-    @Autowired
+    @Resource
     DynamiccommentService dynamiccommentService;
-    @Autowired
+    @Resource
     DynamicdataService dynamicdataService;
-    @Autowired
+    @Resource
     DynamiclikeService dynamiclikeService;
-    @Autowired
+    @Resource
     UserdynamicService userdynamicService;
-    /*@Resource
-    UserService userService;*/
+    @Resource
+    MemberService memberService;
 
+    //动态的最新信息
     @RequestMapping("/entrance")
-    public Map entrance() {
+    public Map entrance(@RequestParam("id")Integer id) {
+        Map map= memberService.verify(1);
+        return map;
+    }
+
+    //dynamicComment表所有信息
+    @RequestMapping("/dynamicComment")
+    public Map dynamicComment(){
         Integer id=1;
+        QueryWrapper<Dynamiccomment> wrapper = new QueryWrapper<>();
+        wrapper.eq("udID","1");
+        List<Dynamiccomment> relations=dynamiccommentService.list(wrapper);
         Map<String, Object> map=new HashMap<String, Object>();
-        map.put("code",0);//"code":0,"message":"0","ttl":1,
-        map.put("message",0);
-        map.put("ttl",1);
-        Map<String, Object> data=new HashMap<String, Object>();
-        Map<String, Object> entrance=new HashMap<String, Object>();
-        //User user=userService.ById(id);
-        /*entrance.put("icon",user.getHeadImgPath());
-        entrance.put("mid",user.getuID());//id*/
-        entrance.put("type","up");
-        data.put("entrance",entrance);
-        map.put("data",data);
+        map.put("dynamicComment",relations);
         return map;
     }
 }
