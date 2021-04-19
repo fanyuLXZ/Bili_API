@@ -2,7 +2,7 @@ package com.dreamwolf.member.business.service.impl;
 
 import com.dreamwolf.member.business.entity.User;
 import com.dreamwolf.member.business.mapper.UserMapper;
-import com.dreamwolf.member.business.service.IUserService;
+import com.dreamwolf.member.business.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  * @since 2021-04-12
  */
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Resource
     UserMapper userMapper;
 

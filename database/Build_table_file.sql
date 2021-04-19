@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `BiliBili_db`.`User` (
   `boundQQ` VARCHAR(15) NULL COMMENT '被绑定qq',
   `headImgPath` VARCHAR(255) NULL,
   PRIMARY KEY (`uID`),
-  UNIQUE INDEX `BoundPhone_UNIQUE` (`boundPhone` ASC) VISIBLE)
+  UNIQUE INDEX `BoundPhone_UNIQUE` (`boundPhone` ASC) )
 ENGINE = InnoDB
 COMMENT = '用户信息表';
 
@@ -85,9 +85,9 @@ IF NOT EXISTS `BiliBili_db`.`Relations`
   `followUID` INT
 (9) NOT NULL COMMENT '粉丝ID\n',
   INDEX `fk_Friendship_User1_idx`
-(`uID` ASC) VISIBLE,
+(`uID` ASC) ,
   INDEX `fk_Friendship_User2_idx`
-(`followUID` ASC) VISIBLE,
+(`followUID` ASC) ,
   PRIMARY KEY
 (`uID`, `followUID`),
   CONSTRAINT `fk_Friendship_User1`
@@ -128,9 +128,9 @@ IF NOT EXISTS `BiliBili_db`.`VIP`
   PRIMARY KEY
 (`vID`),
   INDEX `fk_BigMember_User1_idx`
-(`uID` ASC) VISIBLE,
+(`uID` ASC) ,
   UNIQUE INDEX `uID_UNIQUE`
-(`uID` ASC) VISIBLE,
+(`uID` ASC) ,
   CONSTRAINT `fk_BigMember_User1`
     FOREIGN KEY
 (`uID`)
@@ -210,9 +210,9 @@ IF NOT EXISTS `BiliBili_db`.`userMsgs`
   PRIMARY KEY
 (`umID`),
   INDEX `fk_userMsgs_User2_idx`
-(`friendID` ASC) VISIBLE,
+(`friendID` ASC) ,
   INDEX `fk_userMsgs_User1_idx`
-(`userID` ASC) VISIBLE,
+(`userID` ASC) ,
   CONSTRAINT `fk_userMsgs_User1`
     FOREIGN KEY
 (`userID`)
@@ -275,7 +275,7 @@ IF NOT EXISTS `BiliBili_db`.`favoriteLike`
   PRIMARY KEY
 (`favListID`, `uID`),
   INDEX `fk_FavoriteLike_User1_idx`
-(`uID` ASC) VISIBLE,
+(`uID` ASC) ,
   CONSTRAINT `fk_FavoriteLike_userFavoriteList1`
     FOREIGN KEY
 (`favListID`)
@@ -303,55 +303,16 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `BiliBili_db`.`Zoning` ;
 
-CREATE TABLE IF NOT EXISTS `BiliBili_db`.`Zoning` (
-  `zID` INT NOT NULL AUTO_INCREMENT COMMENT '分区ID',
-  `zName` VARCHAR(50) NOT NULL COMMENT '分区名称',
-  PRIMARY KEY (`zID`))
+CREATE TABLE
+IF NOT EXISTS `BiliBili_db`.`Zoning`
+(`zID` INT NOT NULL AUTO_INCREMENT COMMENT '分区ID',
+  `zFatherID` INT NULL COMMENT '父分区id，为空表示根分区',
+  `zName` VARCHAR
+(50) NOT NULL COMMENT '分区名称',
+  PRIMARY KEY
+(`zID`))
 ENGINE = InnoDB
 COMMENT = '分区表';
-
-
--- -----------------------------------------------------
--- Table `BiliBili_db`.`zoningRelation`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `BiliBili_db`.`zoningRelation` ;
-
-CREATE TABLE
-IF NOT EXISTS `BiliBili_db`.`zoningRelation`
-(
-  `zrID` INT NOT NULL AUTO_INCREMENT COMMENT '主键，无意义',
-  `bvID` INT
-(10) ZEROFILL NOT NULL COMMENT '视频id',
-  `zID` INT NOT NULL COMMENT '分区id',
-  PRIMARY KEY
-(`zrID`, `zID`),
-  INDEX `fk_TreePaths_Tag1_idx`
-(`zID` ASC) VISIBLE,
-  INDEX `fk_TagRelation_Video1_idx`
-(`bvID` ASC) VISIBLE,
-  UNIQUE INDEX `bvID_UNIQUE`
-(`bvID` ASC) VISIBLE,
-  CONSTRAINT `fk_TreePaths_Tag1`
-    FOREIGN KEY
-(`zID`)
-    REFERENCES `BiliBili_db`.`Zoning`
-(`zID`)
-    ON
-DELETE NO ACTION
-    ON
-UPDATE NO ACTION,
-  CONSTRAINT `fk_TagRelation_Video1`
-    FOREIGN KEY
-(`bvID`)
-    REFERENCES `BiliBili_db`.`Video`
-(`bvID`)
-    ON
-DELETE NO ACTION
-    ON
-UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = '分区关系表';
-
 
 
 -- -----------------------------------------------------
@@ -372,8 +333,8 @@ CREATE TABLE IF NOT EXISTS `BiliBili_db`.`Video` (
   `bvChildZoning` INT NOT NULL DEFAULT 0 COMMENT '视频子分区ID',
   `bvIsDel` TINYINT NOT NULL DEFAULT 0 COMMENT '是否已删除，0为未删除，1为已删除',
   PRIMARY KEY (`bvID`),
-  INDEX `fk_VideoInfo_User1_idx` (`uID` ASC) VISIBLE,
-  INDEX `fk_Video_Tag1_idx` (`bvChildZoning` ASC) VISIBLE,
+  INDEX `fk_VideoInfo_User1_idx` (`uID` ASC) ,
+  INDEX `fk_Video_Tag1_idx` (`bvChildZoning` ASC) ,
   CONSTRAINT `fk_VideoInfo_User1`
     FOREIGN KEY (`uID`)
     REFERENCES `BiliBili_db`.`User` (`uID`)
@@ -402,7 +363,7 @@ CREATE TABLE IF NOT EXISTS `BiliBili_db`.`videoData` (
   `bvFavoriteNum` BIGINT NOT NULL DEFAULT 0 COMMENT '视频收藏数',
   `bvRetweetNum` BIGINT NOT NULL DEFAULT 0 COMMENT '视频转发数',
   `bvCommentNum` BIGINT NOT NULL DEFAULT 0 COMMENT '视频评论数',
-  INDEX `fk_VideoData_VideoInfo1_idx` (`bvID` ASC) VISIBLE,
+  INDEX `fk_VideoData_VideoInfo1_idx` (`bvID` ASC) ,
   CONSTRAINT `fk_VideoData_VideoInfo1`
     FOREIGN KEY (`bvID`)
     REFERENCES `BiliBili_db`.`Video` (`bvID`)
@@ -439,8 +400,8 @@ CREATE TABLE IF NOT EXISTS `BiliBili_db`.`videoLike` (
   `uID` INT(9) NOT NULL COMMENT '点赞的用户ID',
   `status` TINYINT NOT NULL DEFAULT 0 COMMENT '点赞状态，0为未作任何操作，1为点赞\n默认为0',
   `createTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() COMMENT '点赞时间',
-  INDEX `fk_videoLike_Video1_idx` (`bvID` ASC) VISIBLE,
-  INDEX `fk_videoLike_User1_idx` (`uID` ASC) VISIBLE,
+  INDEX `fk_videoLike_Video1_idx` (`bvID` ASC) ,
+  INDEX `fk_videoLike_User1_idx` (`uID` ASC) ,
   PRIMARY KEY (`bvID`, `uID`),
   CONSTRAINT `fk_videoLike_Video1`
     FOREIGN KEY (`bvID`)
@@ -470,9 +431,9 @@ IF NOT EXISTS `BiliBili_db`.`videoFavorite`
   `favTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 () COMMENT '收藏时间，默认为当前时间，不支持设置系统时间',
   INDEX `fk_videoFavorite_Video1_idx`
-(`bvID` ASC) VISIBLE,
+(`bvID` ASC) ,
   INDEX `fk_videoFavorite_userFavoriteList1_idx`
-(`favListID` ASC) VISIBLE,
+(`favListID` ASC) ,
   PRIMARY KEY
 (`bvID`, `favListID`),
   CONSTRAINT `fk_videoFavorite_Video1`
@@ -512,7 +473,7 @@ IF NOT EXISTS `BiliBili_db`.`videoComment`
   PRIMARY KEY
 (`bvID`, `cID`),
   INDEX `fk_videoComment_Comment1_idx`
-(`cID` ASC) VISIBLE,
+(`cID` ASC) ,
   CONSTRAINT `fk_videoComment_Comment1`
     FOREIGN KEY
 (`cID`)
@@ -531,7 +492,7 @@ UPDATE NO ACTION,
 DELETE NO ACTION
     ON
 UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
 COMMENT = '视频评论关系表';
 
 
@@ -550,7 +511,7 @@ CREATE TABLE IF NOT EXISTS `BiliBili_db`.`Comment` (
   `cText` TEXT NOT NULL COMMENT '评论正文',
   `isDel` TINYINT NOT NULL DEFAULT 0 COMMENT '是否已删除，0为未删除，1为已删除',
   PRIMARY KEY (`cID`),
-  INDEX `fk_userComment_User1_idx` (`uID` ASC) VISIBLE,
+  INDEX `fk_userComment_User1_idx` (`uID` ASC) ,
   CONSTRAINT `fk_userComment_User1`
     FOREIGN KEY (`uID`)
     REFERENCES `BiliBili_db`.`User` (`uID`)
@@ -572,7 +533,7 @@ IF NOT EXISTS `BiliBili_db`.`commentData`
   `cLikeNum` BIGINT NOT NULL DEFAULT 0 COMMENT '点赞数量',
   `cUnLikeNum` BIGINT NOT NULL DEFAULT 0 COMMENT '点踩数量',
   INDEX `fk_commentData_userComment1_idx`
-(`cID` ASC) VISIBLE,
+(`cID` ASC) ,
   CONSTRAINT `fk_commentData_userComment1`
     FOREIGN KEY
 (`cID`)
@@ -602,9 +563,9 @@ IF NOT EXISTS `BiliBili_db`.`commentLike`
   `createTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 () COMMENT '点赞时间，默认为当前时间',
   INDEX `fk_commentLike_userComment1_idx`
-(`cID` ASC) VISIBLE,
+(`cID` ASC) ,
   INDEX `fk_commentLike_User1_idx`
-(`uID` ASC) VISIBLE,
+(`uID` ASC) ,
   PRIMARY KEY
 (`cID`, `uID`),
   CONSTRAINT `fk_commentLike_userComment1`
@@ -643,7 +604,7 @@ CREATE TABLE IF NOT EXISTS `BiliBili_db`.`userDynamic` (
   `updateTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() COMMENT '发表动态的时间',
   `isDel` TINYINT NOT NULL DEFAULT 0 COMMENT '动态是否已经删除',
   PRIMARY KEY (`udID`),
-  INDEX `fk_userDynamic_User1_idx` (`uID` ASC) VISIBLE,
+  INDEX `fk_userDynamic_User1_idx` (`uID` ASC) ,
   CONSTRAINT `fk_userDynamic_User1`
     FOREIGN KEY (`uID`)
     REFERENCES `BiliBili_db`.`User` (`uID`)
@@ -663,7 +624,7 @@ CREATE TABLE IF NOT EXISTS `BiliBili_db`.`dynamicData` (
   `udLikeNum` BIGINT NOT NULL DEFAULT 0 COMMENT '动态点赞总数',
   `udRetweetNum` BIGINT NOT NULL DEFAULT 0 COMMENT '动态转发数',
   `udCommentNum` BIGINT NOT NULL DEFAULT 0 COMMENT '动态评论数',
-  INDEX `fk_DynamicData_userDynamic1_idx` (`udID` ASC) VISIBLE,
+  INDEX `fk_DynamicData_userDynamic1_idx` (`udID` ASC) ,
   CONSTRAINT `fk_DynamicData_userDynamic1`
     FOREIGN KEY (`udID`)
     REFERENCES `BiliBili_db`.`userDynamic` (`udID`)
@@ -688,9 +649,9 @@ IF NOT EXISTS `BiliBili_db`.`dynamicLike`
   `createTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 () COMMENT '点赞时间，默认为当前时间',
   INDEX `fk_dynamicLike_userDynamic1_idx`
-(`udID` ASC) VISIBLE,
+(`udID` ASC) ,
   INDEX `fk_dynamicLike_User1_idx`
-(`uID` ASC) VISIBLE,
+(`uID` ASC) ,
   PRIMARY KEY
 (`udID`, `uID`),
   CONSTRAINT `fk_dynamicLike_userDynamic1`
@@ -729,7 +690,7 @@ IF NOT EXISTS `BiliBili_db`.`dynamicComment`
   PRIMARY KEY
 (`udID`, `cID`),
   INDEX `fk_dynamicComment_Comment1_idx`
-(`cID` ASC) VISIBLE,
+(`cID` ASC) ,
   CONSTRAINT `fk_dynamicComment_userDynamic1`
     FOREIGN KEY
 (`udID`)
@@ -748,7 +709,7 @@ UPDATE NO ACTION,
 DELETE NO ACTION
     ON
 UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
 COMMENT = '动态评论关系表';
 
 

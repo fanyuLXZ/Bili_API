@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dreamwolf.zoning.business.mapper.ZoningMapper">
-
+    <select id="mapsele" resultType="map">
+        SELECT COUNT(bvChildZoning),bvChildZoning FROM `video`
+        WHERE `bvPostTime` LIKE concat('%',#{data},'%') AND `uID`=${id}
+        GROUP BY `bvChildZoning`
+    </select>
 </mapper>

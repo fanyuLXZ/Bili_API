@@ -1,13 +1,11 @@
 server:
   port: 8087
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  type-aliases-package: com.dreamwolf.member.business.entity
 spring:
   application:
     name: zoning-service
-  datasource:
-    url: jdbc:mysql://localhost:3306/bilibili_db?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true
-    driver-class-name: com.mysql.jdbc.Driver  #com.mysql.jdbc.Driver
-    username: root
-    password: root
   cloud:
     nacos:
       #注册服务地址

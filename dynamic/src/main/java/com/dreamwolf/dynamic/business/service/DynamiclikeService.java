@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author zhaolin
  * @since 2021-04-12
  */
-public interface IDynamiclikeService extends IService<Dynamiclike> {
+public interface DynamiclikeService extends IService<Dynamiclike> {
 
 }

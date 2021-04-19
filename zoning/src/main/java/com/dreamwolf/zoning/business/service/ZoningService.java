@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author zhaolin
- * @since 2021-04-12
+ * @since 2021-04-16
  */
-public interface IZoningService extends IService<Zoning> {
+public interface ZoningService extends IService<Zoning> {
 
 }

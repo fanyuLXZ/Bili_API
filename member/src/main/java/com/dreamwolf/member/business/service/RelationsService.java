@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author zhaolin
  * @since 2021-04-12
  */
-public interface IRelationsService extends IService<Relations> {
+public interface RelationsService extends IService<Relations> {
 
 }

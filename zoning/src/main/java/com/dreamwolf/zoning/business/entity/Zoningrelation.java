@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author zhaolin
- * @since 2021-04-12
+ * @since 2021-04-16
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -31,42 +31,16 @@ public class Zoningrelation implements Serializable {
     private Integer zrID;
 
     /**
-     * 视频id
+     * 父分区id
      */
-    @TableField("bvID")
-    private Integer bvID;
+    @TableField("zIDFather")
+    private Integer zIDFather;
 
     /**
-     * 分区id
+     * 子分区id
      */
-    @TableField("zID")
-    private Integer zID;
+    @TableField("zIDChild")
+    private Integer zIDChild;
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
 
-    public Integer getZrID() {
-        return zrID;
-    }
-
-    public void setZrID(Integer zrID) {
-        this.zrID = zrID;
-    }
-
-    public Integer getBvID() {
-        return bvID;
-    }
-
-    public void setBvID(Integer bvID) {
-        this.bvID = bvID;
-    }
-
-    public Integer getzID() {
-        return zID;
-    }
-
-    public void setzID(Integer zID) {
-        this.zID = zID;
-    }
 }

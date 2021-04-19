@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author zhaolin
- * @since 2021-04-12
+ * @since 2021-04-16
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -36,23 +36,5 @@ public class Zoning implements Serializable {
     @TableField("zName")
     private String zName;
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
 
-    public Integer getzID() {
-        return zID;
-    }
-
-    public void setzID(Integer zID) {
-        this.zID = zID;
-    }
-
-    public String getzName() {
-        return zName;
-    }
-
-    public void setzName(String zName) {
-        this.zName = zName;
-    }
 }
