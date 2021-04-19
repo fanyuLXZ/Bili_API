@@ -21,7 +21,7 @@ import org.springframework.stereotype.Controller;
  * </p>
  *
  * @author 老徐
- * @since 2021-04-12
+ * @since 2021-04-14
  */
 @Controller
 @Data
@@ -67,8 +67,9 @@ public class User implements Serializable {
     @TableField("boundQQ")
     private String boundQQ;
 
+    @ApiModelProperty(value = "用户头像路径")
     @TableField("headImgPath")
-    private String headImgPath;  //头像图片路径
+    private String headImgPath;
 
 
 }

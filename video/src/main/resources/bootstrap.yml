@@ -20,8 +20,13 @@ spring:
           data-id: datasource-config.yaml
           refresh: true
 
+#mybatis:
+#  mapper-locations: classpath:mapper/video/*.xml
+#  type-aliases-package: com.dreamwolf.video.pojo
 
   #配置日志
 mybatis-plus:
+  mapper-locations: classpath:mapper/video/*.xml
+  type-aliases-package: com.dreamwolf.video.pojo
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

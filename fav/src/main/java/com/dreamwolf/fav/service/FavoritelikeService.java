@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author 老徐
- * @since 2021-04-12
+ * @since 2021-04-14
  */
-public interface FavoritelikeService extends IService<Favoritelike> {
+public interface FavoritelikeService{
 
 }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author 老徐
- * @since 2021-04-12
+ * @since 2021-04-14
  */
 @RestController
 @RequestMapping("/fav/favoritelike")

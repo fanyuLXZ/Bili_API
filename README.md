@@ -21,6 +21,136 @@
 
 * ### 视频模块 Video
 
+Video对象 视频基础信息表
+	1./aaa
+		返回值：根据子分区id查询视频，返回list
+		*data: list集合
+		 	-bvID： bv号
+		 	-uID： 视频作者ID
+		 	-bvCoverImgPath： 视频封面图
+		 	-bvVideoPath： 视频文件路径
+		 	-bvTitle： 视频标题
+		 	-bvDesc： 视频简介
+		 	-bvPostTime： 创建时间
+		 	-bvChildZoning： 视频子分区ID
+		 	-bvIsDel： 是否已删除，0为未删除，1为已删除
+	1./bbb
+		返回值：根据视频id(bvID)查询视频信息，返回对象
+		*data: video对象
+		 	-bvID： bv号
+		 	-uID： 视频作者ID
+		 	-bvCoverImgPath： 视频封面图
+		 	-bvVideoPath： 视频文件路径
+		 	-bvTitle： 视频标题
+		 	-bvDesc： 视频简介
+		 	-bvPostTime： 创建时间
+		 	-bvChildZoning： 视频子分区ID
+		 	-bvIsDel： 是否已删除，0为未删除，1为已删除
+	1./ccc
+		返回值：根据作者id(uID)查询作者下面视频，返回list
+		*data: list集合
+		 	-bvID： bv号
+		 	-uID： 视频作者ID
+		 	-bvCoverImgPath： 视频封面图
+		 	-bvVideoPath： 视频文件路径
+		 	-bvTitle： 视频标题
+		 	-bvDesc： 视频简介
+		 	-bvPostTime： 创建时间
+		 	-bvChildZoning： 视频子分区ID
+		 	-bvIsDel： 是否已删除，0为未删除，1为已删除
+	1./ddd
+		返回值：查询视频基础信息表所有数据，返回list
+		*data: list集合
+		 	-bvID： bv号
+		 	-uID： 视频作者ID
+		 	-bvCoverImgPath： 视频封面图
+		 	-bvVideoPath： 视频文件路径
+		 	-bvTitle： 视频标题
+		 	-bvDesc： 视频简介
+		 	-bvPostTime： 创建时间
+		 	-bvChildZoning： 视频子分区ID
+		 	-bvIsDel： 是否已删除，0为未删除，1为已删除
+
+
+Videocomment对象 视频评论表
+	1./aaa
+		返回值：根据视频id(bvID)查找所属视频的评论id(cID) 返回lsit
+		*data : list集合
+		 	-cID：评论集合
+		 		-bvID：视频id
+		 		-ID: 评论id
+	2./bbb
+		返回值： 返回lsit 查询所有数据
+		* data : list集合
+			-bvID：视频ID
+		 	-cID：评论ID
+
+Videodata对象 视频数据
+	1./aaa
+		返回值：根据视频id(bvID)查询该视频的基本数据 返回对象
+		*data: 对象
+			-bvID :	视频对应BV号
+			-bvPlayNum : 视频播放数
+			-bvPopupsNum : 视频弹幕数
+			-bvLikeNum : 视频顶数
+			-bvCoinNum : 视频硬币数
+			-bvFavoriteNum : 视频收藏数
+			-bvRetweetNum : 视频转发数
+			-bvCommentNum : 视频评论数
+	2./bbb
+		返回值：查询视频数据表所有信息 返回list
+		*data: list集合
+			-bvID :	视频对应BV号
+			-bvPlayNum : 视频播放数
+			-bvPopupsNum : 视频弹幕数
+			-bvLikeNum : 视频顶数
+			-bvCoinNum : 视频硬币数
+			-bvFavoriteNum : 视频收藏数
+			-bvRetweetNum : 视频转发数
+			-bvCommentNum : 视频评论数
+
+Videofavorite对象 视频收藏表
+	1./aaa
+		返回值：根据被收藏的视频id(bvID)查询该视频被收藏在那个收藏夹下(favListID) 返回对象
+		*data: 对象
+		 -bvID： 被收藏的视频ID
+		 -favListID： 视频收藏夹ID
+		 -favTime： 收藏时间，默认为当前时间，不支持设置系统时间
+	2./bbb
+		返回值：查询视频收藏表所有数据 返回list
+		*data: list集合
+		 -bvID： 被收藏的视频ID
+		 -favListID： 视频收藏夹ID
+		 -favTime： 收藏时间，默认为当前时间，不支持设置系统时间
+
+Videorating对象 视频评分表
+	1./aaa
+		返回值：根据视频id(bvID)查询视频评分 返回对象
+		*data: 对象
+		 -bvID： 视频ID
+		 -OverallRating： 视频综合评分，评分规则详见数据库说明书。
+	1./bbb
+		返回值：查询视频评分表所有数据 返回lsit
+		*data: list集合对象
+		 -bvID： 视频ID
+		 -OverallRating： 视频综合评分，评分规则详见数据库说明书。
+
+Videolike对象 视频点赞表
+	1./aaa
+		返回值：根据视频id(bvID)查询视频下面的点赞用户id
+		*data: list集合
+		 -bvID： 视频ID
+		 -uID： 点赞的用户ID
+		 -status： 点赞状态，0为未作任何操作，1为点赞，默认为0
+		 -createTime： 点赞时间
+	1./bbb
+		返回值：查询视频点赞表所有数据
+		*data: list集合
+		 -bvID： 视频ID
+		 -uID： 点赞的用户ID
+		 -status： 点赞状态，0为未作任何操作，1为点赞，默认为0
+		 -createTime： 点赞时间
+
 * ### 用户消息模块 Message
 
 * ### 用户模块 Member
@@ -180,7 +310,7 @@
                 - media_count 收藏夹内视频(媒体)数 int
     2. /resource 参考链接：https://api.bilibili.com/x/v3/fav/resource/list4navigate?platform=web   
        参数：
-        * media_id 收藏夹id
+            * media_id 收藏夹id
 
        返回值：
         * id 收藏夹id int

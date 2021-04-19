@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author 老徐
- * @since 2021-04-12
+ * @since 2021-04-14
  */
 @Service
-public class FavoritelikeServiceImpl extends ServiceImpl<FavoritelikeMapper, Favoritelike> implements FavoritelikeService {
+public class FavoritelikeServiceImpl implements FavoritelikeService {
 
 }
