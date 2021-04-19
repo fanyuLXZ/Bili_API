@@ -303,52 +303,16 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `BiliBili_db`.`Zoning` ;
 
-CREATE TABLE IF NOT EXISTS `BiliBili_db`.`Zoning` (
-  `zID` INT NOT NULL AUTO_INCREMENT COMMENT '分区ID',
-  `zName` VARCHAR(50) NOT NULL COMMENT '分区名称',
-  PRIMARY KEY (`zID`))
+CREATE TABLE
+IF NOT EXISTS `BiliBili_db`.`Zoning`
+(`zID` INT NOT NULL AUTO_INCREMENT COMMENT '分区ID',
+  `zFatherID` INT NULL COMMENT '父分区id，为空表示根分区',
+  `zName` VARCHAR
+(50) NOT NULL COMMENT '分区名称',
+  PRIMARY KEY
+(`zID`))
 ENGINE = InnoDB
 COMMENT = '分区表';
-
-
--- -----------------------------------------------------
--- Table `BiliBili_db`.`zoningRelation`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `BiliBili_db`.`zoningRelation` ;
-
-CREATE TABLE
-IF NOT EXISTS `BiliBili_db`.`zoningRelation`
-(
-  `zrID` INT NOT NULL AUTO_INCREMENT COMMENT '主键，无意义',
-  `zIDFather` INT NOT NULL COMMENT '父分区id',
-  `zIDChild` INT NOT NULL COMMENT '子分区id',
-  PRIMARY KEY
-(`zrID`, `zIDChild`, `zIDFather`),
-  INDEX `fk_Zoning_1`
-(`zIDChild` ASC) ,
-  INDEX
-(`zIDFather` ASC) ,
-  CONSTRAINT `fk_Zoning_1`
-    FOREIGN KEY
-(`zIDChild`)
-    REFERENCES `BiliBili_db`.`Zoning`
-(`zID`)
-    ON
-DELETE NO ACTION
-    ON
-UPDATE NO ACTION,
-  CONSTRAINT `fk_Zoning_2`
-    FOREIGN KEY
-(`zIDFather`)
-    REFERENCES `BiliBili_db`.`Zoning`
-(`zID`)
-    ON
-DELETE NO ACTION
-    ON
-UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = '分区关系表';
-
 
 
 -- -----------------------------------------------------
@@ -528,7 +492,7 @@ UPDATE NO ACTION,
 DELETE NO ACTION
     ON
 UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
 COMMENT = '视频评论关系表';
 
 
@@ -745,7 +709,7 @@ UPDATE NO ACTION,
 DELETE NO ACTION
     ON
 UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
 COMMENT = '动态评论关系表';
 
 

@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 //代码自动生成器
@@ -20,6 +21,7 @@ public class Automatically {
 
     @Test
     public void Automatice(){
+
 //        //构建一个 代码自动生成器对象
 //        AutoGenerator mpg = new AutoGenerator();
 //

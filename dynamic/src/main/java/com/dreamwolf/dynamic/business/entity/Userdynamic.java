@@ -1,6 +1,5 @@
 package com.dreamwolf.dynamic.business.entity;
 
-import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
