@@ -3,12 +3,12 @@ server:
 #spring
 spring:
   application:
-    name: member-service
+    name: fav-service
   cloud:
     nacos:
       #注册服务地址
       discovery:
-        server-addr: localhost:8848
+        server-addr : localhost:8848
       #配置服务地址
       config:
         server-addr: localhost:8848

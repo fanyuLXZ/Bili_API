@@ -3,6 +3,7 @@ package com.dreamwolf.video.mapper;
 import com.dreamwolf.video.pojo.Videofavorite;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -14,5 +15,12 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface VideofavoriteMapper extends BaseMapper<Videofavorite> {
+
+    /**
+     * 根据视频收藏夹id查询收藏夹下的视频数量
+     * @param favListID
+     * @return
+     */
+    public int selectfavListID(@Param("favListID") Integer favListID);
 
 }

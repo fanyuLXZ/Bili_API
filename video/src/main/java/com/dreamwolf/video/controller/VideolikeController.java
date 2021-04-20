@@ -21,28 +21,43 @@ import java.util.Map;
  * @since 2021-04-14
  */
 @RestController
-@RequestMapping("/video/videolike")
 public class VideolikeController {
 
     @Resource
     private VideolikeService videolikeService;
 
-    @RequestMapping(value = "/aaa")
+    @RequestMapping(value = "/videolikebvid")
     public Map selectbvid(Integer bvid){
         Map map = new HashMap();
-        //根据视频id查询视频下的点赞用户id
-        List<Videolike> listmap = videolikeService.selectbvid(bvid);
-        map.put("data",listmap);
+        if(bvid !=null) {
+            map.put("code", 0);
+            map.put("message", "0");
+            //根据视频id查询视频下的点赞用户id
+            List<Videolike> listmap = videolikeService.selectbvid(bvid);
+            map.put("data", listmap);
+        }else{
+            map.put("code",400);
+            map.put("message","传入的参数(bvid)不能为空");
+            map.put("data",null);
+        }
 
         return map;
     }
 
-    @RequestMapping(value = "/bbb")
+    @RequestMapping(value = "/videolikelist")
     public Map selectlistt(){
         Map map = new HashMap();
-        //查询视频点赞表的所有数据
-        List<Videolike> listmap = videolikeService.selectlist();
-        map.put("data",listmap);
+        if(map !=null) {
+            map.put("code", 0);
+            map.put("message", "0");
+            //查询视频点赞表的所有数据
+            List<Videolike> listmap = videolikeService.selectlist();
+            map.put("data",listmap);
+        }else{
+            map.put("code",400);
+            map.put("message","数据为空");
+            map.put("data",null);
+        }
 
         return map;
     }

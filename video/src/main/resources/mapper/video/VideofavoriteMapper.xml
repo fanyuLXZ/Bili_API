@@ -2,4 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dreamwolf.video.mapper.VideofavoriteMapper">
 
+
+    <select id="selectfavListID" resultType="int">
+        SELECT COUNT(*) FROM `videofavorite`
+        <where>
+            <if test="favListID!=null">
+                favListID=#{favListID}
+            </if>
+        </where>
+    </select>
 </mapper>

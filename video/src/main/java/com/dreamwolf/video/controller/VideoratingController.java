@@ -21,28 +21,43 @@ import java.util.Map;
  * @since 2021-04-14
  */
 @RestController
-@RequestMapping("/video/videorating")
 public class VideoratingController {
 
     @Resource
     private VideoratingService videoratingService;
 
-    @RequestMapping(value = "/aaa")
+    @RequestMapping(value = "/videoratbvID")
     public Map selectbvidl(Integer bvID){
         Map map = new HashMap();
-        //根据视频id查询视频评分
-        Videorating videorating = videoratingService.selectbvid(bvID);
-        map.put("data",videorating);
+        if(bvID !=null) {
+            map.put("code", 0);
+            map.put("message", "0");
+            //根据视频id查询视频评分
+            Videorating videorating = videoratingService.selectbvid(bvID);
+            map.put("data",videorating);
+        }else{
+            map.put("code",400);
+            map.put("message","传入的参数(bvID)不能为空");
+            map.put("data",null);
+        }
 
         return map;
     }
 
-    @RequestMapping(value = "/bbb")
+    @RequestMapping(value = "/videoratlist")
     public Map selectlists(){
         Map map = new HashMap();
-        //查询视频评分表所有数据
-        List<Videorating> videoratings = videoratingService.selectlist();
-        map.put("data",videoratings);
+        if(map !=null) {
+            map.put("code", 0);
+            map.put("message", "0");
+            //查询视频评分表所有数据
+            List<Videorating> videoratings = videoratingService.selectlist();
+            map.put("data",videoratings);
+        }else{
+            map.put("code",400);
+            map.put("message","数据为空");
+            map.put("data",null);
+        }
         return map;
     }
 

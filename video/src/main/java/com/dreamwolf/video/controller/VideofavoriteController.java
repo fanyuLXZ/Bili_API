@@ -3,6 +3,7 @@ package com.dreamwolf.video.controller;
 
 import com.dreamwolf.video.pojo.Videofavorite;
 import com.dreamwolf.video.service.VideofavoriteService;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -21,29 +22,52 @@ import java.util.Map;
  * @since 2021-04-14
  */
 @RestController
-@RequestMapping("/video/videofavorite")
 public class VideofavoriteController {
 
     @Resource
     private VideofavoriteService videofavoriteService;
 
+    @PostMapping("/videocount")
+    public int selectint(Integer favListID){
+        Integer count = videofavoriteService.selectfavListID(favListID);
 
-    @RequestMapping(value = "/aaa")
+        return count;
+    }
+
+
+    @RequestMapping(value = "/videofavbvID")
     public Map selectbvid(Integer bvID){
         Map map = new HashMap();
+        if(bvID !=null) {
+            map.put("code",0);
+            map.put("message","0");
         //根据被收藏的视频id查询收藏的视频收藏夹id
-        Videofavorite videofavorite = videofavoriteService.selectbvID(bvID);
-        map.put("data",videofavorite);
+            Videofavorite videofavorite = videofavoriteService.selectbvID(bvID);
+            map.put("data",videofavorite);
+        }else{
+            map.put("code",400);
+            map.put("message","传入的参数(bvID)不能为空");
+            map.put("data",null);
+        }
+
 
         return map;
     }
 
-    @RequestMapping(value = "/bbb")
+    @RequestMapping(value = "/videofavlist")
     public Map selectlistt(){
         Map map = new HashMap();
+        if(map !=null) {
+            map.put("code",0);
+            map.put("message","0");
         //查询视频收藏表所有数据
-        List<Videofavorite> videofavoriteList = videofavoriteService.selectlist();
-        map.put("data",videofavoriteList);
+            List<Videofavorite> videofavoriteList = videofavoriteService.selectlist();
+            map.put("data",videofavoriteList);
+        }else{
+            map.put("code",400);
+            map.put("message","数据为空");
+            map.put("data",null);
+        }
 
         return map;
     }

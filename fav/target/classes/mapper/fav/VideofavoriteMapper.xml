@@ -1,0 +1,32 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dreamwolf.fav.mapper.VideofavoriteMapper">
+
+    <resultMap id="listmap" type="Videofavorite">
+        <id column="bvID" property="bvID"/>
+        <result column="favListID" property="favListID" />
+        <result column="favTime" property="favTime" />
+        <association property="video" javaType="com.dreamwolf.fav.pojo.Video">
+            <id column="bvID" property="bvID"/>
+            <result column="uID" property="uID"/>
+            <result column="bvCoverImgPath" property="bvCoverImgPath"/>
+            <result column="bvVideoPath" property="bvVideoPath"/>
+            <result column="bvTitle" property="bvTitle"/>
+            <result column="bvDesc" property="bvDesc"/>
+            <result column="bvPostTime" property="bvPostTime"/>
+            <result column="bvChildZoning" property="bvChildZoning"/>
+            <result column="bvIsDel" property="bvIsDel"/>
+        </association>
+    </resultMap>
+
+    <select id="selectlist" resultMap="listmap">
+        SELECT * FROM `videofavorite` t1 LEFT JOIN `video` t2 ON t1.bvID=t2.bvID
+        <where>
+            <if test="favListID!=null">
+                favListID=#{favListID}
+            </if>
+        </where>
+    </select>
+
+</mapper>

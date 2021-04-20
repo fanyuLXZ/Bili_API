@@ -21,29 +21,43 @@ import java.util.Map;
  * @since 2021-04-14
  */
 @RestController
-@RequestMapping("/video/videocomment")
 public class VideocommentController {
 
     @Resource
     private VideocommentService videocommentService;
 
-    @RequestMapping(value = "/aaa")
-    public Map selectbvid(Integer bvid){
+    @RequestMapping(value = "/videocommbvid")
+    public Map selectbvids(Integer bvid){
         Map map = new HashMap();
-        Map listmap = new HashMap();
-        List<Videocomment> videocommentList = videocommentService.selectbvID(bvid);//根据视频id查询评论id
-        listmap.put("cID", videocommentList);   //评论ID
-        map.put("data",listmap);
+        if(bvid !=null) {
+            map.put("code",0);
+            map.put("message","0");
+            Map listmap = new HashMap();
+            List<Videocomment> videocommentList = videocommentService.selectbvID(bvid);//根据视频id查询评论id
+            listmap.put("cID", videocommentList);   //评论ID
+            map.put("data",listmap);
+        }else{
+            map.put("code",400);
+            map.put("message","传入的参数(bvid)不能为空");
+            map.put("data",null);
+        }
 
         return map;
     }
 
-    @RequestMapping(value = "/bbb")
+    @RequestMapping(value = "/videocommlist")
     public Map selectlist(){
         Map map = new HashMap();
-        List<Videocomment> videocommentList = videocommentService.selectlist();//查询视频评论表所有数据
-        map.put("data",videocommentList);
-
+        if(map !=null) {
+            map.put("code",0);
+            map.put("message","0");
+            List<Videocomment> videocommentList = videocommentService.selectlist();//查询视频评论表所有数据
+            map.put("data",videocommentList);
+        }else{
+            map.put("code",400);
+            map.put("message","数据为空");
+            map.put("data",null);
+        }
         return map;
     }
 

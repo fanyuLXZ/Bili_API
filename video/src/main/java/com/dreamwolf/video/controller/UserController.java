@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-04-14
  */
 @RestController
-@RequestMapping("/video/user")
 public class UserController {
 
 }

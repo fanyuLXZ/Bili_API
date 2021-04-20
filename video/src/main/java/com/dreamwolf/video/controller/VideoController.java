@@ -22,45 +22,77 @@ import java.util.Map;
  * @since 2021-04-14
  */
 @RestController
-@RequestMapping("/video/video")
 public class VideoController {
 
     @Resource
     private VideoService videoService;
 
     //通过子分区id查视频,返回list
-    @GetMapping("/aaa")
+    @GetMapping("/videobvldZoning")
     public Map videobvChildZoning(Integer bvChildZoning){
         Map map = new HashMap();
-        List<Video> list = videoService.videoZoningIdlist(bvChildZoning);
-        map.put("data",list);
+        if(bvChildZoning !=null) {
+            map.put("code",0);
+            map.put("message","0");
+            List<Video> list = videoService.videoZoningIdlist(bvChildZoning);
+            map.put("data",list);
+        }else{
+            map.put("code",400);
+            map.put("message","传入的参数(bvChildZoning)不能为空");
+            map.put("data",null);
+        }
         return map;
     }
 
     //通过bv号(视频id)查视频，返回对象
-    @GetMapping("/bbb")
+    @GetMapping("/videobvID")
     public Map videobvID(Integer bvID){
         Map map = new HashMap();
-        Video video = videoService.videobvIDlist(bvID);
-        map.put("data",video);
+        if(bvID !=null) {
+            map.put("code",0);
+            map.put("message","0");
+            Video video = videoService.videobvIDlist(bvID);
+            map.put("data",video);
+        }else{
+            map.put("code",400);
+            map.put("message","传入的参数(bvID)不能为空");
+            map.put("data",null);
+        }
         return map;
     }
 
     //通过作者id查视频，返回list
-    @GetMapping("/ccc")
+    @GetMapping("/videouID")
     public Map videouID(Integer uID){
         Map map = new HashMap();
-        List<Video> list = videoService.videouIDlist(uID);
-        map.put("data",list);
+        if(uID !=null) {
+            map.put("code",0);
+            map.put("message","0");
+            List<Video> list = videoService.videouIDlist(uID);
+            map.put("data",list);
+        }else{
+            map.put("code",400);
+            map.put("message","传入的参数(uID)不能为空");
+            map.put("data",null);
+        }
+
         return map;
     }
 
     //查video的所有数据
-    @GetMapping("/ddd")
+    @GetMapping("/videolist")
     public Map videoselectlist(){
         Map map = new HashMap();
-        List<Video> list = videoService.selectlist();
-        map.put("data", list);
+        if(map !=null) {
+            map.put("code",0);
+            map.put("message","0");
+            List<Video> list = videoService.selectlist();
+            map.put("data", list);
+        }else{
+            map.put("code",400);
+            map.put("message","数据为空");
+            map.put("data",null);
+        }
 
         return map;
     }

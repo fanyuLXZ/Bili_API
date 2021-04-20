@@ -33,4 +33,9 @@ public class VideofavoriteServiceImpl extends ServiceImpl<VideofavoriteMapper, V
     public List<Videofavorite> selectlist() {
         return videofavoriteMapper.selectList(null);
     }
+
+    @Override
+    public int selectfavListID(Integer favListID) {
+        return videofavoriteMapper.selectfavListID(favListID);
+    }
 }

@@ -2,6 +2,7 @@ package com.dreamwolf.video.service;
 
 import com.dreamwolf.video.pojo.Videofavorite;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -27,6 +28,14 @@ public interface VideofavoriteService extends IService<Videofavorite> {
      * @return
      */
     public List<Videofavorite> selectlist();
+
+
+    /**
+     * 根据视频收藏夹id查询收藏夹下的视频数量
+     * @param favListID
+     * @return
+     */
+    public int selectfavListID(Integer favListID);
 
 
 }
