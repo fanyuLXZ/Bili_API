@@ -8,6 +8,7 @@ import com.dreamwolf.watchhistory.service.UserService;
 import com.dreamwolf.watchhistory.service.VideoHistoryService;
 import com.dreamwolf.watchhistory.service.VideoService;
 import com.dreamwolf.watchhistory.service.VideocommentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -20,22 +21,21 @@ import java.util.*;
 // */
 //用户观看历史表
 
-
+@ResponseBody
 @RestController
 @RequestMapping("/watch-history/videoHistoryController")
 public class VideoHistoryController {
-    public VideoHistory videoHistory;
-    public Video video;
-    public Videocomment videocomment;
-    public User user;
-    @Resource
+    @Autowired
     VideoHistoryService videoHistoryService;
+    @Autowired
     VideocommentService videocommentService;
+    @Autowired
     VideoService videoService;
+    @Autowired
     UserService userService;
     @GetMapping("/list")
     public Map videoHistorylist(){
-        Integer id=1;
+        Integer id=5;
 //        videoHistoryService.getCxqb(id).getBvID();
         Map<String,Object> map=new HashMap();
         List<Map<String,Object>> list = new ArrayList<>();
@@ -46,16 +46,16 @@ public class VideoHistoryController {
         listmap.put("author_name",userService.getUseruID(id).getUserName());//作者名称
         listmap.put("uri",videoService.getVideobvID(id).getBvVideoPath());//视频链接
         Map<String,Object> history=new HashMap();
-        history.put("oid","hid");
-        history.put("business","archive");
-        history.put("page",1);
-        listmap.put("history",history);
+            history.put("oid","hid");
+            history.put("business","archive");
+            history.put("page",1);
+            listmap.put("history",history);
 //        listmap.put("history",);//历史对象
 //                - oid hid
 //                - business 类型 string 暂时"archive"
 //                - page p数 int 暂时1
 
-//        listmap.put("duration",);//总时长
+        listmap.put("duration","duration");//总时长
         listmap.put("progress",-1);//观看时长
         listmap.put("show_title","");//pgc卡用
         listmap.put("view_at",videoHistoryService.getCxqb(id).getTimelinePosition());
