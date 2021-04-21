@@ -268,6 +268,11 @@
         返回值：   
         * succeed 是否成功 boolean
         * uid uid int
+    7. 大会员积分 /vip/point   
+        参考链接：https://big.bilibili.com/web/point?jsonp=jsonp   
+        返回值：
+        * mid uid int
+        * pointBalance 积分余额 int 
 * ### 动态模块 Dynamic
     1. 动态的最新信息 /entrance  
        参考链接：https://api.bilibili.com/x/web-interface/dynamic/entrance?video_offset=0&article_offset=0&alltype_offset=0   
