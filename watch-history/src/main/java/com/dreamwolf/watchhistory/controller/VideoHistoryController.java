@@ -63,16 +63,8 @@ public class VideoHistoryController {
         map.put("list",list);
         return map;
     }
-//    @RequestMapping("/info")
-//    public Map info(){
-//        Integer id=1;
-//        Map<String, Object> map=new HashMap<String, Object>();
-//        map.put("uname",iUserService.getById(id).getuID());
-//        map.put("face",iUserService.getById(id).getHeadImgPath());
-//        map.put("email_verified",iUserService.getById(id).getBoundEmail()!=null);
-//        map.put("mobile_verified",iUserService.getById(id).getBoundPhone()!=null);
-//
-//        return map;
-//    }
+    //返回表数据
+    
+
 
 }
