@@ -20,7 +20,7 @@ import org.springframework.stereotype.Controller;
  * </p>
  *
  * @author 老徐
- * @since 2021-04-12
+ * @since 2021-04-14
  */
 @Controller
 @Data
@@ -53,6 +53,7 @@ public class Userfavoritelist implements Serializable {
     private Integer tLikeNum;
 
     @ApiModelProperty(value = "收藏夹描述")
+    @TableField("desc")
     private String desc;
 
 

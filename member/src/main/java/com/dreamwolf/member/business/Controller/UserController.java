@@ -112,11 +112,41 @@ public class UserController {
         return map;
     }
 
-    //帮助
+    //接口调接口
     @RequestMapping("/bang")
-    public User bang(@RequestParam("id")Integer id){
-        User user= userService.getById(id);
-        return user;
+    public Map bang(@RequestParam("id")Integer id){
+        Map<String, Object> map=new HashMap<String, Object>();
+        map.put("code",0);//"code":0,"message":"0","ttl":1,
+        map.put("message",0);
+        map.put("ttl",1);
+        Map<String, Object> data=new HashMap<String, Object>();
+        Map<String, Object> entrance=new HashMap<String, Object>();
+        User user=userService.getById(id);
+        entrance.put("icon",user.getHeadImgPath());
+        entrance.put("mid",user.getuID());//id
+        entrance.put("type","up");
+        data.put("entrance",entrance);
+        map.put("data",data);
+        return map;
+    }
+
+    //通过id返回User表所有对应id信息
+    @RequestMapping("/User")
+    public Map user(){
+        Integer id=1;
+        User user=userService.getById(1);
+        Map<String, Object> map=new HashMap<String, Object>();
+        map.put("uID",user.getuID());
+        map.put("userName",user.getUserName());
+        map.put("password",user.getPassword());
+        map.put("nickName",user.getNickName());
+        map.put("sex",user.getSex());
+        map.put("birthday",user.getBirthday());
+        map.put("boundEmail",user.getBoundEmail());
+        map.put("boundPhone",user.getBoundEmail());
+        map.put("boundQQ",user.getBoundQQ());
+        map.put("headImgPath",user.getHeadImgPath());
+        return map;
     }
 }
 

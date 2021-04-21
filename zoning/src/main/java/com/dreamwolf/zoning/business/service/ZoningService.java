@@ -2,9 +2,6 @@ package com.dreamwolf.zoning.business.service;
 
 import com.dreamwolf.zoning.business.entity.Zoning;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.apache.ibatis.annotations.Param;
-
-import java.util.Map;
 
 /**
  * <p>
@@ -12,8 +9,8 @@ import java.util.Map;
  * </p>
  *
  * @author zhaolin
- * @since 2021-04-12
+ * @since 2021-04-16
  */
 public interface ZoningService extends IService<Zoning> {
-    public Map<String,Object> mapsele(String date,Integer id);
+
 }

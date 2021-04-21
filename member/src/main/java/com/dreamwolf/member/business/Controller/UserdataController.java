@@ -1,6 +1,7 @@
 package com.dreamwolf.member.business.Controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dreamwolf.member.business.entity.User;
 import com.dreamwolf.member.business.entity.Userdata;
 import com.dreamwolf.member.business.entity.Vip;
@@ -37,6 +38,7 @@ public class UserdataController {
     @Autowired
     RelationsService relationsService;
 
+    //用户信息
     @RequestMapping("/all-info")
     public Map info(){
         Jisuan jisuan=new Jisuan();
@@ -89,7 +91,27 @@ public class UserdataController {
         return map;
     }
 
-
+    //通过用户id 返回Userdata表所有信息 用户等级经验等.
+    @RequestMapping("/Userdata")
+    public Map userdata(){
+        Integer id=1;
+        QueryWrapper<Userdata> wrapper = new QueryWrapper<>();
+        wrapper.eq("uID",id);
+        Userdata userdata=userdataService.getOne(wrapper);
+        Map<String, Object> map=new HashMap<String, Object>();
+        map.put("uID",userdata.getuID());
+        map.put("Level",userdata.getLevel());
+        map.put("Exp",userdata.getExp());
+        map.put("CoinsNum",userdata.getCoinsNum());
+        map.put("BCoinsNum",userdata.getBCoinsNum());
+        map.put("tFollowNum",userdata.gettFollowNum());
+        map.put("tFansNum",userdata.gettFansNum());
+        map.put("tLikeNum",userdata.gettLikeNum());
+        map.put("tPlaysNum",userdata.gettPlaysNum());
+        map.put("tReadNum",userdata.gettReadNum());
+        map.put("uDescription",userdata.getuDescription());
+        return map;
+    }
 
 
 

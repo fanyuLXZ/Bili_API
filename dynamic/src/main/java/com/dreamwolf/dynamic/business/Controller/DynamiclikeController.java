@@ -1,11 +1,18 @@
 package com.dreamwolf.dynamic.business.Controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.dreamwolf.dynamic.business.entity.Dynamiccomment;
+import com.dreamwolf.dynamic.business.entity.Dynamicdata;
+import com.dreamwolf.dynamic.business.entity.Dynamiclike;
+import com.dreamwolf.dynamic.business.service.DynamiclikeService;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,12 +25,17 @@ import java.util.Map;
  */
 @RestController
 public class DynamiclikeController {
+    @Resource
+    DynamiclikeService dynamiclikeService;
 
-    @RequestMapping("/info")
+    //通过动态id 查看谁点赞和点赞时间
+    @RequestMapping("/dynamiclike")
     public Map info(){
-        Integer id=1;
+        QueryWrapper<Dynamiclike> wrapper = new QueryWrapper<>();
+        wrapper.eq("udID","2");
         Map<String, Object> map=new HashMap<String, Object>();
-
+        List<Dynamiclike> dynamiclike=dynamiclikeService.list(wrapper);
+        map.put("dynamiclike",dynamiclike);
         return map;
     }
 }

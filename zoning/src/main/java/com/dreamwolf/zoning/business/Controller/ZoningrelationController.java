@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author zhaolin
- * @since 2021-04-12
+ * @since 2021-04-16
  */
 @RestController
+@RequestMapping("/business/zoningrelation")
 public class ZoningrelationController {
 
 }

@@ -20,6 +20,11 @@ import java.util.List;
 @SpringBootTest
 class FavApplicationTests {
 
+    @Test
+    void show(){
+        System.out.println("111");
+    }
+
     //代码生成器
     @Test
     void contextLoads() {

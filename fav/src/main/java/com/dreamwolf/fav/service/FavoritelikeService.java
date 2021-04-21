@@ -1,10 +1,16 @@
 package com.dreamwolf.fav.service;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import com.dreamwolf.fav.pojo.Favoritelike;
+import com.baomidou.mybatisplus.extension.service.IService;
 
-//收藏夹状态表
-public interface FavoriteLikeService {
+/**
+ * <p>
+ *  服务类
+ * </p>
+ *
+ * @author 老徐
+ * @since 2021-04-14
+ */
+public interface FavoritelikeService{
 
 }
