@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,10 +43,12 @@ public class RelationsController {
     @RequestMapping("/relations")
     public Map relations(){
         Integer id=1;
-        Relations relations=relationsService.getById(1);
+        QueryWrapper<Relations> wrapper=new QueryWrapper();
+        wrapper.eq("uID",id);
+        List<Relations> relations=relationsService.list(wrapper);
         Map<String, Object> map=new HashMap<String, Object>();
-        map.put("uID",relations.getuID());
-        map.put("followUID",relations.getFollowUID());
+        //map.put("uID",map.);
+        //map.put("followUID",relations.getFollowUID());
         return map;
     }
 

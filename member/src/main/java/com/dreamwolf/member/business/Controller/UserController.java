@@ -8,6 +8,7 @@ import com.dreamwolf.member.business.service.UserService;
 import com.dreamwolf.member.business.service.UserdataService;
 import com.dreamwolf.member.business.service.VipService;
 import com.dreamwolf.member.business.util.Hide;
+import com.dreamwolf.member.business.util.Maps;
 import com.dreamwolf.member.business.util.md5;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,18 +40,28 @@ public class UserController {
 
     //登录
     @RequestMapping("/user/verify")
-    public Map verify(@RequestParam("username")String username, @RequestParam("password")String password) throws Exception {
-        //mybatis-plus条件查询 技术有限 没用出来
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq("userName",username).or().eq("boundEmail",username);
-        User user= userService.getOne(wrapper);//查找对应用户名和密码的对象
-        md5 md=new md5();//加密
+    public Map verify(String username,String password) throws Exception {
         Map<String, Object> map=new HashMap<String, Object>();
-        if (md.message(user.getPassword()).equals(md.message(password))){//查看密码是否正确
-            map.put("succeed",true);//是否登录成功
-            map.put("uid",user.getuID());//对应用户id
+        if(username!=null && !username.equals("") && password!=null && !password.equals("") ){
+            QueryWrapper<User> wrapper = new QueryWrapper<>();
+            wrapper.eq("boundPhone",username).or().eq("boundEmail",username);
+            User user=userService.getOne(wrapper);//查找对应用户名和密码的对象
+            if(user!=null){
+                md5 md=new md5();//加密
+                if(md.message(user.getPassword()).toUpperCase().equals(password.toUpperCase()) && user.getPassword()!=null && !user.getPassword().equals("")){//查看密码是否正确
+                    map.put("succeed",true);//是否登录成功
+                    map.put("uid",user.getuID());//对应用户id
+                }else{
+                    map.put("succeed",false);//是否登录成功
+                    map.put("message","密码不正确");
+                }
+            }else{
+                map.put("succeed",false);//是否登录成功
+                map.put("message","密码账号不正确");
+            }
         }else{
-            map.put("succeed",false);//是否登录成功
+            map.put("succeed",false);
+            map.put("message","账号或密码为空");
         }
         return map;
     }
@@ -132,9 +143,8 @@ public class UserController {
 
     //通过id返回User表所有对应id信息
     @RequestMapping("/User")
-    public Map user(){
-        Integer id=1;
-        User user=userService.getById(1);
+    public Map user(Integer uid){
+        User user=userService.getById(uid);
         Map<String, Object> map=new HashMap<String, Object>();
         map.put("uID",user.getuID());
         map.put("userName",user.getUserName());
@@ -147,6 +157,13 @@ public class UserController {
         map.put("boundQQ",user.getBoundQQ());
         map.put("headImgPath",user.getHeadImgPath());
         return map;
+    }
+
+    //通过id返回User表所有对应id信息
+    @RequestMapping("/User/id")
+    public User userid(Integer id){
+        User user=userService.getById(id);
+        return user;
     }
 }
 

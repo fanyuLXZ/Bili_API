@@ -5,8 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dreamwolf.dynamic.business.entity.Dynamiccomment;
 import com.dreamwolf.dynamic.business.service.*;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -27,25 +25,19 @@ public class DynamiccommentController {
     @Resource
     DynamiccommentService dynamiccommentService;
     @Resource
-    DynamicdataService dynamicdataService;
-    @Resource
-    DynamiclikeService dynamiclikeService;
-    @Resource
-    UserdynamicService userdynamicService;
-    @Resource
     MemberService memberService;
 
     //动态的最新信息
     @RequestMapping("/entrance")
-    public Map entrance(@RequestParam("id")Integer id) {
-        Map map= memberService.verify(1);
+    public Map entrance() {
+        Integer id=1;
+        Map map= memberService.verify(id);
         return map;
     }
 
     //dynamicComment表所有信息
     @RequestMapping("/dynamicComment")
     public Map dynamicComment(){
-        Integer id=1;
         QueryWrapper<Dynamiccomment> wrapper = new QueryWrapper<>();
         wrapper.eq("udID","1");
         List<Dynamiccomment> relations=dynamiccommentService.list(wrapper);
