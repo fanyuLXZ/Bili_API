@@ -19,6 +19,6 @@ spring:
         extension-configs[1]:
           data-id: datasource-config.yaml
           refresh: true
-mybatis:
-  mapperLocations: classpath:mapper/*.xml
-  type-aliases-package: com.dreamwolf.watchhistory.entities    # 所有实体类的别名
+#mybatis:
+#  mapperLocations: classpath:/*.xml
+#  type-aliases-package: com.dreamwolf.watchhistory.entities    # 所有实体类的别名
