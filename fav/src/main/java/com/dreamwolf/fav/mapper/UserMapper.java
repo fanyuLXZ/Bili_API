@@ -21,6 +21,6 @@ public interface UserMapper extends BaseMapper<User> {
      * @param uID
      * @return
      */
-    public User selectuser(@Param("uID") Integer uID);
+//    public User selectuser(@Param("uID") Integer uID);
 
 }

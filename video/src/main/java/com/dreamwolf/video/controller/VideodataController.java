@@ -3,6 +3,7 @@ package com.dreamwolf.video.controller;
 
 import com.dreamwolf.video.pojo.Videodata;
 import com.dreamwolf.video.service.VideodataService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +27,7 @@ public class VideodataController {
     @Resource
     private VideodataService videodataService;
 
-    @RequestMapping(value = "/videodatabvID")
+    @GetMapping(value = "/videodatabvID")
     public Map selectdvid(Integer bvID){
         Map map = new HashMap();
         if(bvID !=null) {
@@ -43,7 +44,7 @@ public class VideodataController {
         return map;
     }
 
-    @RequestMapping(value = "/videodatalist")
+    @GetMapping(value = "/videodatalist")
     public Map selectlistt(){
         Map map = new HashMap();
         if(map !=null) {

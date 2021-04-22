@@ -70,5 +70,15 @@ public class Video implements Serializable {
     @TableField("bvIsDel")
     private Integer bvIsDel;
 
+    @ApiModelProperty(value = "时长")
+    @TableField("duration")
+    private Integer duration;
+
+    //视频评分
+    private Videorating videorating;
+
+    private String date;
+    private String datetime;
+
 
 }

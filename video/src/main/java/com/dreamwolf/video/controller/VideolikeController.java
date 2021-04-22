@@ -3,6 +3,7 @@ package com.dreamwolf.video.controller;
 
 import com.dreamwolf.video.pojo.Videolike;
 import com.dreamwolf.video.service.VideolikeService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +27,7 @@ public class VideolikeController {
     @Resource
     private VideolikeService videolikeService;
 
-    @RequestMapping(value = "/videolikebvid")
+    @GetMapping(value = "/videolikebvid")
     public Map selectbvid(Integer bvid){
         Map map = new HashMap();
         if(bvid !=null) {
@@ -44,7 +45,7 @@ public class VideolikeController {
         return map;
     }
 
-    @RequestMapping(value = "/videolikelist")
+    @GetMapping(value = "/videolikelist")
     public Map selectlistt(){
         Map map = new HashMap();
         if(map !=null) {

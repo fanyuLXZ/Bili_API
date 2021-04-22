@@ -3,6 +3,7 @@ package com.dreamwolf.video.controller;
 
 import com.dreamwolf.video.pojo.Videocomment;
 import com.dreamwolf.video.service.VideocommentService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +27,7 @@ public class VideocommentController {
     @Resource
     private VideocommentService videocommentService;
 
-    @RequestMapping(value = "/videocommbvid")
+    @GetMapping(value = "/videocommbvid")
     public Map selectbvids(Integer bvid){
         Map map = new HashMap();
         if(bvid !=null) {
@@ -45,7 +46,7 @@ public class VideocommentController {
         return map;
     }
 
-    @RequestMapping(value = "/videocommlist")
+    @GetMapping(value = "/videocommlist")
     public Map selectlist(){
         Map map = new HashMap();
         if(map !=null) {
