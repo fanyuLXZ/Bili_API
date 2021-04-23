@@ -205,40 +205,42 @@
 
 
 * ### 用户消息模块 Message
-    1. 收到的点赞
+    1. 收到的点赞 /like   
     参考链接：https://api.bilibili.com/x/msgfeed/like?csrf=4c7784a8355557a9595ccefc268e2f28&platform=web&build=0&mobi_app=web   
     返回值:
     * total 点赞集合 &lt;object&gt;
-    - items 点赞数组   list&lt;object&gt;
-        -  个人id   &lt;int
-        - users 用户信息对象数组  &gt;list &gt;object
-            - mid 点赞对象的id     &gt;int
-            - nickname 点赞对象的名字 &gt; String
-            - avatar  对象头像img   &gt; String
-            - follow   是否关注  &gt; boolean
-            - native_uri 个人中心的地址 string
-        - item 被点赞的对象  &gt; object
-            - item_id 被点赞的对象id &gt; int
-            - type  video代表视频，dynamic代表动态 reply代表文字 &gt; String
-            - title 视频标题,如果传text时，这里可传文字  &gt; String
-            - desc 视频描述   &gt; String
-            - image 视频封面图 &gt; String
-            - uri   视频链接   &gt; String
-            - ctime 点赞时间   &gt; String
-              -counts 此评论的总人数 &gt; int
-              -like_time 最新点赞的时间 Date
-              参考链接：https://api.bilibili.com/x/msgfeed/like?csrf=ed03730a1cd49540995b9fa002c1cf1e&platform=web&build=0&mobi_app=web
-
-    2. 回复我的
+        - items 点赞数组 list&lt;object&gt;
+            - id 个人id int
+            - users 用户信息对象数组 list&lt;object&gt;  
+              用户信息对象：
+                - mid 点赞对象的id int
+                - nickname 点赞对象的名字 String
+                - avatar  对象头像img String
+                - follow   是否关注 boolean
+                - native_uri 个人中心的地址 string
+            - item 被点赞的对象 object
+                - item_id 被点赞的对象id int
+                - type  video代表视频，dynamic代表动态 reply代表文字 String
+                - title 视频标题,如果传text时，这里可传文字 String
+                - desc 视频描述 String
+                - image 视频封面图 String
+                - uri   视频链接 String
+                - ctime 点赞时间 String
+                  -counts 此评论的总人数 int
+                  -like_time 最新点赞的时间 Date
+             
+    2. 回复我的 /reply   
+       参考链接：https://api.bilibili.com/x/msgfeed/reply?csrf=ed03730a1cd49540995b9fa002c1cf1e&build=0&mobi_app=web       
        返回值:
-        - Reply回复集合数组 object
-            - user 用户集合
-                - mid 评论对象的id     &gt;int
-                - nickname 评论对象的名字 &gt; String
-                - avatar  对象头像img   &gt; String
-                - follow   是否关注  &gt; boolean
-            - item 评论集合
-                - source_content 被回复的评论内容  &gt;  String
+        - reply 回复集合数组 object
+            - user 回复我的用户对象 object
+                用户对象
+                - mid 评论对象的id int
+                - nickname 评论对象的名字 String
+                - avatar  对象头像img String
+                - follow   是否关注 boolean
+            - item 回复我的评论对象 object  
+                - source_content 被回复的评论内容 String
                 - type ideo代表视频，dynamic代表动态 reply代表文字 String,
                 - business  视频，动态，文字三个参数 string
                 - title 被回复的评论或视频 string,
@@ -247,28 +249,24 @@
                 - image 当前 视频，动态的封面 string
                 - native_uri 个人中心的地址 string
 
-    3. 我的消息
+    3. 我的消息 /get_sessions
        参考链接：https://api.vc.bilibili.com/session_svr/v1/session_svr/get_sessions?csrf=ed03730a1cd49540995b9fa002c1cf1e&session_type=1&group_fold=1&unfollow_fold=0&sort_rule=2&build=0&mobi_app=web
-        1.
-        - session_list 对话集合数组
-            - talker_id  对话id int,
-            - ack_seqno 此对话id的长度 int &lt; 可用可不用,
-            - last_msg 最后评论集合
-                - sender_uid   最后一条数据的发送者,类似出轨的狼的id int
-                - receiver_id  最后一条数据的接受这者  int
-                - content   传最后一条数据的  String
-                  参考链接：https://api.vc.bilibili.com/account/v1/user/infos?csrf=ed03730a1cd49540995b9fa002c1cf1e&uids=402923390,77023684,37090048,37090048,412135935,412135935,32708657,32708657,412466388,412466388,268990278,268990278,429301126,429301126,256246039,256246039,361471422,361471422,14328316,14328316,235555226,235555226,233121654,233121654,144900177,144900177,260556632,260556632,37390043,77023684,6139562,77023684,66025025,66025025268990278&build=0&mobi_app=web
-        2. data对象集合数组
-            - mid: 与对话id一致时才会查到数据 int
-            - uname 网名 String,
-            - face 头像id String
-
-    参考链接：  https://api.vc.bilibili.com/svr_sync/v1/svr_sync/fetch_session_msgs?csrf=ed03730a1cd49540995b9fa002c1cf1e&sender_device_id=1&talker_id=402923390&session_type=1&size=20&build=0&mobi_app=web
-    3. 对话框 messages 对象数组
-    - sender_uid   最后一条数据的发送者,类似出轨的狼的id int
-    - receiver_id  最后一条数据的接受这者  int
-    - content   传一条数据的  String
-    - timestamp   发送这一条数据的时间 Date,
+        * session_list 会话集合数组 list&lt;object&gt;
+            - talker_id 对话id int
+            - ack_seqno 此对话id的长度 int
+            - last_msg 最新聊天对象 object
+              聊天对象:
+                - sender_uid 最新聊天数据的发送者,类似出轨的狼的id int
+                - receiver_id 最新聊天数据的接收这者 int
+                - content 最新聊天的内容 String
+    
+    4. 聊天记录 /fetch_session_msgs   
+       参考链接：https://api.vc.bilibili.com/svr_sync/v1/svr_sync/fetch_session_msgs?csrf=ed03730a1cd49540995b9fa002c1cf1e&sender_device_id=1&talker_id=402923390&session_type=1&size=20&build=0&mobi_app=web   
+       * messages 对象数组   
+        - sender_uid 最后一条数据的发送者,类似出轨的狼的id int
+        - receiver_id 最后一条数据的接受这者  int
+        - content 传一条数据的  String
+        - timestamp 发送这一条数据的时间 Date
 * ### 用户模块 Member
     1. 用户信息 /all-info  
        参考链接：https://api.bilibili.com/x/web-interface/nav  
@@ -361,6 +359,16 @@
         * face 头像 string
         * fans 粉丝数 int
         * friend 关注数 int
+    
+    4.查询指定uid的基本信息   
+    参考链接：https://api.vc.bilibili.com/account/v1/user/infos?csrf=ed03730a1cd49540995b9fa002c1cf1e&uids=402923390,77023684,37090048,37090048,412135935,412135935,32708657,32708657,412466388,412466388,268990278,268990278,429301126,429301126,256246039,256246039,361471422,361471422,14328316,14328316,235555226,235555226,233121654,233121654,144900177,144900177,260556632,260556632,37390043,77023684,6139562,77023684,66025025,66025025268990278&build=0&mobi_app=web
+    参数：
+        * uids uid集合 list&lt;int&gt;
+    返回值：用户对象集合list&lt;object&gt;   
+        用户对象：
+        * mid uid int
+        * uname 昵称 String
+        * face 头像id String
 * ### 动态模块 Dynamic
     1. 动态的最新信息 /entrance  
        参考链接：https://api.bilibili.com/x/web-interface/dynamic/entrance?video_offset=0&article_offset=0&alltype_offset=0   
