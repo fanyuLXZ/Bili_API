@@ -15,6 +15,26 @@
         <result column="duration" property="duration" />
     </resultMap>
 
+
+    <select id="selectlistBvid" resultMap="videomap">
+        SELECT * FROM `video`
+        <where>
+            <if test="bvidlist!=null and bvidlist.length>0">
+                bvID IN
+                <foreach collection="bvidlist" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectcoutbvid" resultMap="videomap">
+        SELECT COUNT(`bvChildZoning`) AS countbv,`bvChildZoning` AS bvChild
+        FROM `video`
+        WHERE `bvPostTime` LIKE CONCAT(#{bvPostTime},'%')
+        GROUP BY `bvChildZoning`
+    </select>
+
     <select id="videoZoningIdlist" resultMap="videomap">
         SELECT * FROM `video`
         <where>

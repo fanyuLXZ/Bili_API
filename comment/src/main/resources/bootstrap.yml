@@ -8,10 +8,10 @@ spring:
     nacos:
       #注册服务地址
       discovery:
-        server-addr: localhost:8848
-      #配置服务地
+        server-addr: 192.168.43.58:8848
+      #配置服务地址
       config:
-        server-addr: localhost:8848
+        server-addr: 192.168.43.58:8848
         file-extension: yaml
         extension-configs[0]:
           data-id: sentinel-config.yaml

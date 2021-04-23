@@ -1,4 +1,4 @@
-package com.dreamwolf.video.service;
+package com.dreamwolf.comment.service;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,9 +9,8 @@ import java.util.Map;
 @FeignClient(name = "member-service")
 public interface UsermapService {
 
-    @GetMapping("/User")
-    public Map user(@RequestParam Integer uid);
-
+    @GetMapping("/membe")
+    public Map membe(@RequestParam Integer uID);
 
 
 }

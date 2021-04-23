@@ -20,6 +20,21 @@ import java.util.List;
 @Mapper
 public interface VideoMapper extends BaseMapper<Video> {
 
+    /**
+     * 根据bvid数组查询对象 返回集合
+     * @param bvidlist bvid数组
+     * @return
+     */
+    public List<Video> selectlistBvid(Integer[] bvidlist);
+
+
+    /**
+     * 根据日期查询并返回子分区和子分区id的数量
+     * @param bvPostTime
+     * @return
+     */
+    public List<Video> selectcoutbvid(@Param("bvPostTime") String bvPostTime);
+
 
     /**
      * 根据子分区id查找视频并分页处理

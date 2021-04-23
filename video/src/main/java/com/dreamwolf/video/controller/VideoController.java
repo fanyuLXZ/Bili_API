@@ -219,7 +219,7 @@ public class VideoController {
                     }
                     Videorating videorating = videoratingService.selectbvid(video.getBvID());
                     if(videorating!=null){
-                    mapdata.put("pts",videorating.getOverallRating());
+                        mapdata.put("pts",videorating.getOverallRating());
                     }else{
                         mapdata.put("pts",0);
                     }
@@ -235,6 +235,44 @@ public class VideoController {
             map.put("data",null);
         }
         return map;
+    }
+
+    /**
+     * 根据时间查找子分区id和子分区id的总数
+     * @param str
+     * @return
+     */
+    @GetMapping("/videoseldate")
+    public Map selmap(String str){
+        List listmap = new ArrayList();
+//        String str="2021-04-21";
+        List<Video> list = videoService.selectcoutbvid(str);
+        Map<String, Object> kele=new HashMap<String, Object>();
+        for (Video st : list) {
+            kele.put(st.getBvChild().toString(),st.getCountbv());
+        }
+        return kele;
+    }
+
+
+    @GetMapping("/videoBvidlist")
+    public List<Map<String,Object>> selectbbid(Integer[] bvidlist){
+        List listmap = new ArrayList();
+        List<Video> list = videoService.selectlistBvid(bvidlist);
+
+            for(Video video : list){
+                Map videomap = new HashMap();
+                videomap.put("title",video.getBvTitle());   //标题
+                videomap.put("long_title","");
+                videomap.put("cover",video.getBvCoverImgPath());  //封面
+                videomap.put("uid",video.getUID());   //作者id
+                videomap.put("uri",video.getBvVideoPath()); //路径
+                videomap.put("duration",video.getDuration());  //总时长
+                listmap.add(videomap);
+            }
+
+        return listmap;
+
     }
 
 

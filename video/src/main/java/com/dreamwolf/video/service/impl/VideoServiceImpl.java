@@ -28,6 +28,16 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
 
 
     @Override
+    public List<Video> selectlistBvid(Integer[] bvidlist) {
+        return videoMapper.selectlistBvid(bvidlist);
+    }
+
+    @Override
+    public List<Video> selectcoutbvid(String bvPostTime) {
+        return videoMapper.selectcoutbvid(bvPostTime);
+    }
+
+    @Override
     public List<Video> videoPagebvzoing(Integer[] bvChildZoninglist, Integer pageSize, Integer pagecount) {
         return videoMapper.videoPagebvzoing(bvChildZoninglist,pageSize,pagecount);
     }

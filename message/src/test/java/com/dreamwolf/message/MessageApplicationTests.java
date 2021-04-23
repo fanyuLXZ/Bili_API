@@ -11,36 +11,22 @@ import com.baomidou.mybatisplus.generator.config.po.TableFill;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import com.dreamwolf.message.mapper.UsermsgsMapper;
-import com.dreamwolf.message.pojo.Usermsgs;
 import org.junit.jupiter.api.Test;
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
-@MapperScan("com.dreamwolf.message.*")
 class MessageApplicationTests {
 
-    @Autowired
-    private UsermsgsMapper userMapper;
-
-    @Test
-    void show(){
-
-    }
 
     @Test
     void contextLoads() {
-        System.out.println("1111111111");
-        List<Usermsgs> usermsgsList = userMapper.selectList(null);
-        usermsgsList.forEach(System.out::println);
 
     }
 
+    //代码生成器
     @Test
     void contextLoads2() {
         //需要构建一个代码自动生成器
@@ -116,7 +102,7 @@ class MessageApplicationTests {
 
         //4. 策略配置
         StrategyConfig sgc = new StrategyConfig();
-        sgc.setInclude("usermsgs");
+        sgc.setInclude(new String[] { "usermsgs","user"});
         // 设置要映射的表名，可以放多个表名，根据这个名 字，自动生成对应表的模块结构
         // 下划线转驼峰命名
         sgc.setNaming(NamingStrategy.underline_to_camel);// 包的命名规则

@@ -44,8 +44,8 @@ public class Comment implements Serializable {
     private Integer uID;
 
     @ApiModelProperty(value = "回复的评论ID")
-    @TableField("cID_reply")
-    private Integer cidReply;
+    @TableField("cIDreply")
+    private Integer cIDreply;
 
     @ApiModelProperty(value = "评论时间 ")
     @TableField("createTime")
@@ -58,6 +58,8 @@ public class Comment implements Serializable {
     @ApiModelProperty(value = "是否已删除，0为未删除，1为已删除")
     @TableField("isDel")
     private Integer isDel;
+
+    private Commentdata commentdata;
 
 
 }

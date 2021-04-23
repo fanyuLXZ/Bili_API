@@ -2,7 +2,7 @@ package com.dreamwolf.message.mapper;
 
 import com.dreamwolf.message.pojo.Usermsgs;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Repository;
  * </p>
  *
  * @author 老徐
- * @since 2021-04-07
+ * @since 2021-04-23
  */
-@Repository
+@Mapper
 public interface UsermsgsMapper extends BaseMapper<Usermsgs> {
 
 }
