@@ -3,6 +3,7 @@ package com.dreamwolf.video.controller;
 
 import com.dreamwolf.video.pojo.Videofavorite;
 import com.dreamwolf.video.service.VideofavoriteService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -35,7 +36,7 @@ public class VideofavoriteController {
     }
 
 
-    @RequestMapping(value = "/videofavbvID")
+    @GetMapping(value = "/videofavbvID")
     public Map selectbvid(Integer bvID){
         Map map = new HashMap();
         if(bvID !=null) {
@@ -54,7 +55,7 @@ public class VideofavoriteController {
         return map;
     }
 
-    @RequestMapping(value = "/videofavlist")
+    @GetMapping(value = "/videofavlist")
     public Map selectlistt(){
         Map map = new HashMap();
         if(map !=null) {

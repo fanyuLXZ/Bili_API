@@ -8,6 +8,7 @@
             <if test="bvID != null">
                 bvID = #{bvID}
             </if>
+            ORDER BY OverallRating DESC
         </where>
     </select>
 

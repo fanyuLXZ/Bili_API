@@ -7,6 +7,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,13 +28,23 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
 
 
     @Override
+    public List<Video> videoPagebvzoing(Integer[] bvChildZoninglist, Integer pageSize, Integer pagecount) {
+        return videoMapper.videoPagebvzoing(bvChildZoninglist,pageSize,pagecount);
+    }
+
+    @Override
+    public Integer videocount(Integer[] bvChildZoninglist) {
+        return videoMapper.videocount(bvChildZoninglist);
+    }
+
+    @Override
     public List<Video> selectlist() {
         return videoMapper.selectList(null);
     }
 
     @Override
-    public List<Video> videoZoningIdlist(Integer bvChildZoning) {
-        return videoMapper.videoZoningIdlist(bvChildZoning);
+    public List<Video> videoZoningIdlist(Integer[] bvChildZoning, String date, String datetime) {
+        return videoMapper.videoZoningIdlist(bvChildZoning,date,datetime);
     }
 
     @Override

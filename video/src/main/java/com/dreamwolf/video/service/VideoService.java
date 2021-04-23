@@ -4,6 +4,8 @@ import com.dreamwolf.video.pojo.Video;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,6 +19,23 @@ import java.util.List;
 public interface VideoService extends IService<Video> {
 
     /**
+     * 根据子分区id查找视频并分页处理
+     * @param bvChildZoninglist 子分区集合
+     * @param pageSize 从第几页开始
+     * @param pagecount 一页显示多少条
+     * @return
+     */
+    public List<Video> videoPagebvzoing(Integer[] bvChildZoninglist,Integer pageSize,Integer pagecount);
+
+
+    /**
+     * 根据子分区id查找视频返回视频总数
+     * @param bvChildZoninglist 子分区集合
+     * @return
+     */
+    public Integer videocount(Integer[] bvChildZoninglist);
+
+    /**
      * 查video的所有数据
      * @return
      */
@@ -27,7 +46,7 @@ public interface VideoService extends IService<Video> {
      * @param bvChildZoning
      * @return
      */
-    public List<Video> videoZoningIdlist(Integer bvChildZoning);
+    public List<Video> videoZoningIdlist(Integer[] bvChildZoning,String date, String datetime);
 
     /**
      * 通过bv号查视频，返回List

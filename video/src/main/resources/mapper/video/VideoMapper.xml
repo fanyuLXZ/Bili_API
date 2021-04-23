@@ -12,14 +12,19 @@
         <result column="bvPostTime" property="bvPostTime" />
         <result column="bvChildZoning" property="bvChildZoning" />
         <result column="bvIsDel" property="bvIsDel" />
+        <result column="duration" property="duration" />
     </resultMap>
 
     <select id="videoZoningIdlist" resultMap="videomap">
         SELECT * FROM `video`
         <where>
-            <if test="bvChildZoning != null">
-                bvChildZoning=#{bvChildZoning}
+            <if test="bvChildZoning !=null and bvChildZoning.length>0">
+                bvChildZoning IN
+                <foreach collection="bvChildZoning" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
             </if>
+            AND bvPostTime BETWEEN #{date} AND #{datetime} LIMIT 0,12
         </where>
     </select>
 
@@ -39,6 +44,34 @@
                 uID=#{uID}
             </if>
         </where>
+    </select>
+
+    <select id="videocount" resultType="int">
+        SELECT COUNT(*) FROM `video`
+        <where>
+            <if test="bvChildZoninglist !=null and bvChildZoninglist.length>0">
+                bvChildZoning IN
+                <foreach collection="bvChildZoninglist" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+
+    <select id="videoPagebvzoing" resultMap="videomap">
+        SELECT * FROM `video`
+        <where>
+            <if test="bvChildZoninglist !=null and bvChildZoninglist.length>0">
+                bvChildZoning IN
+                <foreach collection="bvChildZoninglist" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        <if test="pageSize!=null and pagecount!=null">
+            LIMIT #{pageSize},#{pagecount}
+        </if>
     </select>
 
 </mapper>

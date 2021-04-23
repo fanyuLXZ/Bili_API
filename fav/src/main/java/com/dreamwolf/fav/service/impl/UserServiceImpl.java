@@ -19,11 +19,11 @@ import javax.annotation.Resource;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Resource
-    private UserMapper userMapper;
-
-    @Override
-    public User selectuser(Integer uID) {
-        return userMapper.selectuser(uID);
-    }
+//    @Resource
+//    private UserMapper userMapper;
+//
+//    @Override
+//    public User selectuser(Integer uID) {
+//        return userMapper.selectuser(uID);
+//    }
 }

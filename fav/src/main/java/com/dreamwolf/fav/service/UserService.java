@@ -19,6 +19,6 @@ public interface UserService{
      * @param uID
      * @return
      */
-    public User selectuser(Integer uID);
+//    public User selectuser(Integer uID);
 
 }

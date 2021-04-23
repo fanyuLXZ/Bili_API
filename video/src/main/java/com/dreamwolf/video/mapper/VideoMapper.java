@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,12 +20,31 @@ import java.util.List;
 @Mapper
 public interface VideoMapper extends BaseMapper<Video> {
 
+
+    /**
+     * 根据子分区id查找视频并分页处理
+     * @param bvChildZoninglist 子分区集合
+     * @param pageSize 从第几页开始
+     * @param pagecount 一页显示多少条
+     * @return
+     */
+    public List<Video> videoPagebvzoing(Integer[] bvChildZoninglist,Integer pageSize,Integer pagecount);
+
+    /**
+     * 根据子分区id查找视频返回视频总数
+     * @param bvChildZoninglist 子分区集合
+     * @return
+     */
+    public Integer videocount(Integer[] bvChildZoninglist);
+
     /**
      * 通过子分区id查视频,返回list
      * @param bvChildZoning
      * @return
      */
-    public List<Video> videoZoningIdlist(@Param("bvChildZoning") Integer bvChildZoning);
+    public List<Video> videoZoningIdlist(@Param("bvChildZoning") Integer[] bvChildZoning,@Param("date") String date,@Param("datetime") String datetime);
+
+
 
     /**
      * 通过bv号查视频，返回对象

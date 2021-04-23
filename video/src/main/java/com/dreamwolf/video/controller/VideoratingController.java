@@ -3,6 +3,7 @@ package com.dreamwolf.video.controller;
 
 import com.dreamwolf.video.pojo.Videorating;
 import com.dreamwolf.video.service.VideoratingService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +27,7 @@ public class VideoratingController {
     @Resource
     private VideoratingService videoratingService;
 
-    @RequestMapping(value = "/videoratbvID")
+    @GetMapping(value = "/videoratbvID")
     public Map selectbvidl(Integer bvID){
         Map map = new HashMap();
         if(bvID !=null) {
@@ -44,7 +45,7 @@ public class VideoratingController {
         return map;
     }
 
-    @RequestMapping(value = "/videoratlist")
+    @GetMapping(value = "/videoratlist")
     public Map selectlists(){
         Map map = new HashMap();
         if(map !=null) {

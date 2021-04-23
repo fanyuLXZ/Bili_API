@@ -5,10 +5,7 @@ import com.dreamwolf.fav.pojo.User;
 import com.dreamwolf.fav.pojo.Userfavoritelist;
 import com.dreamwolf.fav.pojo.Video;
 import com.dreamwolf.fav.pojo.Videofavorite;
-import com.dreamwolf.fav.service.UserService;
-import com.dreamwolf.fav.service.UserfavoritelistService;
-import com.dreamwolf.fav.service.Videofav;
-import com.dreamwolf.fav.service.VideofavoriteService;
+import com.dreamwolf.fav.service.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -41,8 +38,11 @@ public class UserfavoritelistController {
     @Resource
     private VideofavoriteService videofavoriteService;
 
-//    @Resource
-//    private Videofav videofav;
+    @Resource
+    private Videofav videofav;
+
+    @Resource
+    private UserlistService selectuser;
 
     @GetMapping("/folder")
     public Map userfavlist(){
@@ -63,11 +63,11 @@ public class UserfavoritelistController {
             List<Map> new_userfavoritelists = new ArrayList<>();
             for (Userfavoritelist userfavorite : userfavoritelists) {
                 Map mapmap = new HashMap();
-//                Integer videocount = videofav.selectfavListID(userfavorite.getFavListID());
+                Integer videocount = videofav.selectfavListID(userfavorite.getFavListID());
                 mapmap.put("id", userfavorite.getFavListID());
                 mapmap.put("mid", userfavorite.getUID());
                 mapmap.put("title", userfavorite.getName());
-                mapmap.put("media_count", 0);
+                mapmap.put("media_count", videocount);
                 new_userfavoritelists.add(mapmap);
             }
             mapobject.put("list", new_userfavoritelists);         //收藏夹对象集合
@@ -111,9 +111,13 @@ public class UserfavoritelistController {
                 data.put("page", 1);      //p数 暂时为1
                 data.put("type", 2);      //类型 暂时为2   2: 'archive', 12: 'audio', 21: 'ugcSeason'4
                 Integer uid = userfavoritelistService.selectfavListID(media_id);//返回用户id
-                User user = userService.selectuser(uid);//根据用户id查询的用户对象
-                data.put("upper", user);     //up主 object
-                data.put("bvid", videofavorite.getVideo().getBvID());    //bv号
+                User user = selectuser.selectuid(uid);//根据用户id查询的用户对象
+                Map usermap = new HashMap();
+                usermap.put("mid",user.getuID());
+                usermap.put("name",user.getUserName());
+                usermap.put("face",user.getHeadImgPath());
+                data.put("upper", usermap);     //up主 object
+                data.put("bvid", "bv"+videofavorite.getVideo().getBvID());    //bv号
                 listmap.add(data);
             }
             map.put("data",listmap);
@@ -124,9 +128,10 @@ public class UserfavoritelistController {
             map.put("data",null);
         }
 
-
         return map;
     }
+
+
 
 
 

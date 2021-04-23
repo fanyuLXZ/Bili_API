@@ -42,6 +42,14 @@ public class User implements Serializable {
     @TableField("userName")
     private String userName;
 
+    public Integer getuID() {
+        return uID;
+    }
+
+    public void setuID(Integer uID) {
+        this.uID = uID;
+    }
+
     @ApiModelProperty(value = "用户密码")
     private String password;
 
