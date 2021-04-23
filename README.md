@@ -312,28 +312,7 @@
                 * up-up主维度的更新提醒 展示 头像+红点;
                 * dyn-动态维度的图标提醒 展示 头像+红点;
                 * dot-动态维度的红点提醒 展示 红点
-    2. 动态的前20个信息 /dynamic_new   
-        参考链接：https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?csrf=4c7784a8355557a9595ccefc268e2f28&uid=26119890&type_list=268435455&from=weball&platform=web   
-        返回值：
-        * cards 动态信息对象集合 list&lt;object&gt;   
-          动态信息对象：
-            - user_profile 用户对象 object
-                - info 信息对象 object
-                    - uid 用户id int
-                    - uname 发表动态人 string
-                    - face 发表人头像 string
-            - vip vip对象 object
-                - status 是否是会员 boolean
-                - type 会员类型 int
-                - due_date 会员有效时间 date
-            - content 内容对象 object
-                - info 信息对象 
-                    - dynamic_id 动态id int
-                    - date 发表时间 date 
-                    - text 发表内容 string
-                    - like 点赞数 int
-                    - comment 评论数 int
-    3. 查询指定多个uid的动态数 /dynamic_num
+    2. 查询指定多个uid的动态数 /dynamic_num
         参考链接：https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_num_ex?csrf=7f16078c913c8540075a3d85b52b36e0&uids=433899970   
         参数：
         * uids uid集合
@@ -343,28 +322,32 @@
         动态数对象：
             - uid uid int
             - num 动态数 int
-    4. 最新的20条动态信息 /dynamic_new 
+    3. 最新的20条动态信息 /dynamic_new 
         参考链接：https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?csrf=4c7784a8355557a9595ccefc268e2f28&uid=26119890&type_list=268435455&from=weball&platform=web   
         返回值：
         * cards 动态信息对象集合 list&lt;object&gt;   
         动态信息对象：
-            - user_profile 用户对象 &lt;object&gt;
-                - info 信息对象 object
-                    - uid 用户id int
-                    - uname 发表动态人 string
-                    - face 发表人头像 string
-            - vip vip对象 object
-                - status 是否是会员 string
-                - type 会员类型 int
-                - due_date 会员有效时间 date
-            - content 内容对象 object
-                - info 信息对象 object
-                    - dynamic_id 动态id int
-                    - date 发表时间 date
-                    - text 发表内容 text
-                    - like 点赞数 int
-                    - comment 评论数 int
-    5. 根据偏移动态id获取后面20条动态信息 /dynamic_history
+            - desc 基础信息对象 object
+                - uid 发布人uid int 
+                - type 动态类型 int 1为直播 2为文本 3为番剧 暂时返回2
+                - comment 评论数量 int
+                - like 点赞数量 int
+                - is_liked 是否点赞 int 0否 1是
+                - timestamp 发表事件
+                - dynamic_id 动态id int
+                - user_profile 用户信息 object
+                    - info 用户基本信息 object
+                        - uid 用户id int
+                        - uname 用户姓名 string
+                        - face 用户头像 string
+                    - vip 用户会员 object
+                        - status 是否是会员 Boolean
+                        - type 会员类型 int
+                        - due_date 会员有效时间 date
+                    - level_info 等级对象 object
+                        - current_level 当前等级 int
+            - card 内容 string
+    4. 根据偏移动态id获取后面20条动态信息 /dynamic_history
         参考链接：https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_history?csrf=4c7784a8355557a9595ccefc268e2f28&uid=26119890&offset_dynamic_id=516351783052848953&type=268435455&from=weball&platform=web
         参数：
         * offset_dynamic_id 偏移动态id
@@ -372,80 +355,91 @@
         返回值：
         * cards 动态卡片对象集合 list&lt;object&gt;   
           动态信息对象：
-            - user_profile 用户对象 &lt;object&gt;
-                - info 信息对象 object
-                    - uid 用户id int
-                    - uname 发表动态人 string
-                    - face 发表人头像 string
-            - vip vip对象 object
-                - status 是否是会员 string
-                - type 会员类型 int
-                - due_date 会员有效时间 date
-            - content 内容对象 object
-                - info 信息对象 object
-                    - dynamic_id 动态id int
-                    - date 发表时间 date
-                    - text 发表内容 text
-                    - like 点赞数 int
-                    - comment 评论数 int
-    6. 动态详细信息 /dynamic_detail
+            - desc 基础信息对象 object
+                - uid 发布人uid int
+                - type 动态类型 int 1为直播 2为文本 3为番剧 暂时返回2
+                - comment 评论数量 int
+                - like 点赞数量 int
+                - is_liked 是否点赞 int 0否 1是
+                - timestamp 发表事件
+                - dynamic_id 动态id int
+                - user_profile 用户信息 object
+                    - info 用户基本信息 object
+                        - uid 用户id int
+                        - uname 用户姓名 string
+                        - face 用户头像 string
+                    - vip 用户会员 object
+                        - status 是否是会员 Boolean
+                        - type 会员类型 int
+                        - due_date 会员有效时间 date
+                    - level_info 等级对象 object
+                        - current_level 当前等级 int
+            - card 内容 string
+    5. 动态详细信息 /dynamic_detail
         参数：  
         * dynamic_id 动态id
         返回：
-        * card 动态卡片对象 object
-            - user_profile 用户对象 &lt;object&gt;
-                - info 信息对象 object
-                    - uid 用户id int
-                    - uname 发表动态人 string
-                    - face 发表人头像 string
-            - vip vip对象 object
-                - status 是否是会员 string
-                - type 会员类型 int
-                - due_date 会员有效时间 date
-            - content 内容对象 object
-                - info 信息对象 object
-                    - dynamic_id 动态id int
-                    - date 发表时间 date
-                    - text 发表内容 text
-                    - like 点赞数 int
-                    - comment 评论数 int
-    7. 动态评论信息
-        参数：
-        * dynamic_id 动态id 
-        返回值：
-        * replies 评论对象集合 &lt;object&gt;
-            - rpid 评论id int
-            - member 用户对象 object
-                - mid uid int
-                - uname 评论人姓名 string
-                - sex 性别 string
-                  - face 头像 string
-                  - level_info 等级对象 object
-                      - current_level 当前等级 int
-                - vip vip对象 object
-                  - status 是否是会员 boolean
-            - like 评论点赞数 int
-            - dislike 评论点踩数 int
-            - ctime 评论时间 date
-            - content 内容对象 object
-                - message 评论内容 int
-            - replies 评论对象集合 &lt;object&gt;（仅三条）
-                - rpid 评论id int
-                - mid uid int
-                - ctime date 评论时间
-                - like 评论点赞数
-                - dislike 评论点踩数
-                - member 用户对象 object
-                    - mid uid int
-                    - uname 姓名 string   
-                    - sex 性别 string
-                    - face 头像 string
+        * card 动态卡片对象集合 object
+            - desc 基础信息对象 object
+                - uid 发布人uid int
+                - type 动态类型 int 1为直播 2为文本 3为番剧 暂时返回2
+                - comment 评论数量 int
+                - like 点赞数量 int
+                - is_liked 是否点赞 int 0否 1是
+                - timestamp 发表事件
+                - dynamic_id 动态id int
+                - user_profile 用户信息 object
+                    - info 用户基本信息 object
+                        - uid 用户id int
+                        - uname 用户姓名 string
+                        - face 用户头像 string
+                    - vip 用户会员 object
+                        - status 是否是会员 Boolean
+                        - type 会员类型 int
+                        - due_date 会员有效时间 date
                     - level_info 等级对象 object
                         - current_level 当前等级 int
-                    - vip vip对象 object
-                        - status 是否是会员 boolean
-                - content 内容对象 object
-                    - message 评论内容 int
+            - card 内容 string
+    6. 动态评论信息   
+        参数：
+        * dynamic_id 动态id 
+        
+        返回值：  
+        - page 评论分页 object
+            - acount 总评论（父评论+子评论） int
+            - count 评论数 int 
+            - num 当前页码 int
+            - size 每页评论数 int
+        - replies 评论对象集合 object
+            - action 状态 0为无状态 2为踩了他
+            - content 评论内容对象 object
+                - message 评论内容
+            - count 子评论数量 int
+            - ctime 评论时间 date
+            - member 发表评论人对象 object
+                - mid 用户id int
+                - sex 性别 string
+                - uname 用户名称 string
+                - avatar 用户头像 string  
+                - level_info 用户等级对象 object
+                    - current_level 用户等级 int
+                - vip 会员对象 object
+                    - status 是否是会员 Boolean
+            - replies 子评论对象集合 object
+                - content 评论回复对象 object （仅三条）
+                    - content 评论回复内容对象 object
+                        - message 回复内容 string 
+                - ctime 回复评论时间 date
+                - like 点赞数量 int
+                - member 回复评论人对象 object
+                    - mid 用户id int 
+                    - sex 用户性别 string
+                    - uname 用户姓名 string 
+                    - avatar 用户头像 string 
+                    - level_info 回复评论人等级对象 object
+                        - current_level 用户等级 int
+                    - vip 回复评论人会员对象 object
+                        - status 是否是会员 Boolean
     
 * ### 分区模块 Zoning
     1. 全部分区当日新投稿数量 /online/all   
