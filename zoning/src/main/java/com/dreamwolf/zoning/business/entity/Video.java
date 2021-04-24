@@ -19,9 +19,8 @@ import lombok.experimental.Accessors;
 public class Video implements Serializable {
 
 
-    private Integer countbv;
-
-    private Integer bvChild;
+    private Integer countbv; // 数量
+    private Integer bvChild; //子分区id
 
 
     public Integer getCountbv() {

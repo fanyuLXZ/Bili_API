@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +46,24 @@ public class UserdynamicController {
         Map<String, Object> map=new HashMap<String, Object>();
         List<Userdynamic> userdynamics=userdynamicService.list(wrapper);
         map.put("userdynamics",userdynamics);
+        return map;
+    }
+
+    @RequestMapping("/dynamic_new")
+    public Map dynamic_new(){
+        Map<String, Object> map=new HashMap<String, Object>();
+        map.put("code",0);
+        map.put("message","");
+        map.put("ttl",1);
+        Map<String, Object> data=new HashMap<String, Object>();
+        List cards=new ArrayList();
+        Map <String, Object> desc=new HashMap<String, Object>();
+        //查询内容对象
+        Map <String,Object> user_profile=new HashMap<String, Object>();
+        Map <String,Object> info=new HashMap<String, Object>();
+        cards.add(desc);
+        data.put("cards",cards);
+        map.put("data",data);
         return map;
     }
 }

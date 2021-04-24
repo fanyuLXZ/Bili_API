@@ -18,4 +18,9 @@ public interface VideoCount {
     @GetMapping("/videopage")
     public Map<String, Object> videopage(@RequestParam Integer[] list,@RequestParam Integer count,@RequestParam Integer ps);
 
+    @GetMapping("/videodeorating")
+    public Map<String, Object> selectdeorating(@RequestParam Integer[] bvChildZoning,@RequestParam Integer datetime);
+
+    @GetMapping("/videoseldate")
+    public Map<String, Object> selmap(@RequestParam String str);
 }

@@ -71,8 +71,8 @@ public class UserdataController {
         Map<String, Object> vip=new HashMap<String, Object>();
         //判断会员类型 4.1号为小会员
         Calendar cal = Calendar.getInstance();
-        int month = (cal.get(Calendar.MONTH)) + 1;
-        int day_of_month = cal.get(Calendar.DAY_OF_MONTH);
+        int month = (cal.get(Calendar.MONTH)) + 1;//月
+        int day_of_month = cal.get(Calendar.DAY_OF_MONTH);//日
         vip.put("vip_type",month+"/"+day_of_month=="4/1"?0:1);//会员类型
         vip.put("vip_status",ivip.getuID()==null?0:1);//是否是会员
         vip.put("due_date",ivip.getExpirationTime());//会员有效时间

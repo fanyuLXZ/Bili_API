@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,11 +40,12 @@ public class ZoningController {
         map.put("message","");
         map.put("ttl",1);
         Map<String, Object> data=new HashMap<String, Object>();
-        List<Video> list=iZoningService.listInt("2021-04-20");
-        Map<String, Object> kele=new HashMap<String, Object>();
+        Map<String, Object> kele=videoCount.selmap("2021-04-21");
+        /*Map<String, Object> kele=new HashMap<String, Object>();
+        data.put("list",list);
         for (Video str : list) {
             kele.put(str.getBvChild().toString(),str.getCountbv());
-        }
+        }*/
         data.put("region_count",kele);
         map.put("data",data);
         return map;
@@ -53,9 +53,9 @@ public class ZoningController {
 
     //分区楼层视频卡片数据
     @GetMapping("/region/dynamic")
-    public Map dynamic(Integer ps,Integer id){//
+    public Map dynamic(Integer ps,Integer rid){
         Map<String, Object> map=new HashMap<String, Object>();
-        if(ps!=null && !ps.equals("") && id!=null) {
+        if(ps!=null && !ps.equals("") && rid!=null) {
             map.put("code", 0);
             map.put("message", "");
             map.put("ttl", 1);
@@ -64,7 +64,7 @@ public class ZoningController {
             page.put("num", 1);
             page.put("size", ps);//分页大小
             QueryWrapper<Zoning> wrapper = new QueryWrapper<>();
-            wrapper.eq("zFatherID", id); //查找
+            wrapper.eq("zFatherID", rid); //查找
             List<Zoning> zoning = iZoningService.list(wrapper);//子分区
             if (zoning!=null){
                 Integer[] list = new Integer[zoning.size()];
@@ -122,5 +122,45 @@ public class ZoningController {
         return zoning;
     }
 
+    @GetMapping("/region/ranking")
+    public Map region(Integer rid,Integer day){
+        Map<String, Object> map = new HashMap<String, Object>();
+        if(rid!=null && !rid.equals("")){
+            QueryWrapper<Zoning> wrapper = new QueryWrapper<>();
+            wrapper.eq("zFatherID", rid); //查找条件
+            List<Zoning> zoning = iZoningService.list(wrapper);//获取对应父分区的子分区
+            if (zoning!=null){
+                Integer[] list = new Integer[zoning.size()];
+                for (int i=0;i<zoning.size();i++) {
+                    list[i]=zoning.get(i).getzID();
+                }
+                Map maplist=videoCount.selectdeorating(list,day);
+                if(maplist!=null){
+                    map.put("code", 0);
+                    map.put("message", "");
+                    map.put("ttl", 1);
+                    map.put("data",maplist.get("data"));
+                }else{
+                    map.put("code",400);
+                    map.put("message","返回的集合为空");
+                }
+            }
+        }else{
+            map.put("code",400);
+            map.put("message","rid不能为空");
+        }
+        return map;
+    }
+
+    //Zong 通过组件id返回组件名称
+    @GetMapping("elementby")
+    public String elementby(Integer zID){
+        String zName=null;
+        if (zID!=null && !zID.equals("")){
+            Zoning zoning=iZoningService.getById(zID);
+            zName=zoning.getzName();
+        }
+        return zName;
+    }
 }
 
