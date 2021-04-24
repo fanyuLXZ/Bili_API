@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dreamwolf.comment.mapper.CommentMapper">
+
+    <resultMap id="comremap" type="Comment">
+        <id column="cID" property="cID" />
+        <result column="uID" property="uID" />
+        <result column="cIDreply" property="cIDreply" />
+        <result column="createTime" property="createTime" />
+        <result column="cText" property="cText" />
+        <result column="isDel" property="isDel" />
+        <association property="commentdata" javaType="com.dreamwolf.comment.pojo.Commentdata">
+            <id column="cID" property="cID"/>
+            <result column="cLikeNum" property="cLikeNum" />
+            <result column="cUnLikeNum" property="cUnLikeNum" />
+        </association>
+
+    </resultMap>
+
+    <select id="selectrpid" resultMap="comremap">
+        SELECT * FROM `comment` t1 LEFT JOIN `commentdata` t2 ON t1.`cID`=t2.cID
+        <where>
+            <if test="cIDreply !=null">
+                cIDreply =#{cIDreply}
+            </if>
+        </where>
+    </select>
+
+</mapper>

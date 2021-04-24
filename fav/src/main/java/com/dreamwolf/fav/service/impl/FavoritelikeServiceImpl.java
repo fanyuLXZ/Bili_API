@@ -1,11 +1,20 @@
 package com.dreamwolf.fav.service.impl;
 
-///**
-// * @author: wzx
-// * @data: 2021/4/7 9:42
-// * @version: 1.0
-// */
-//收藏夹状态表
-public class FavoriteLikeServiceImpl {
+import com.dreamwolf.fav.pojo.Favoritelike;
+import com.dreamwolf.fav.mapper.FavoritelikeMapper;
+import com.dreamwolf.fav.service.FavoritelikeService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.stereotype.Service;
+
+/**
+ * <p>
+ *  服务实现类
+ * </p>
+ *
+ * @author 老徐
+ * @since 2021-04-14
+ */
+@Service
+public class FavoritelikeServiceImpl implements FavoritelikeService {
 
 }
