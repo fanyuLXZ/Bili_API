@@ -1,0 +1,26 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dreamwolf.comment.mapper.CommentlikeMapper">
+
+    <resultMap id="likemap" type="Commentlike">
+        <id column="cID" property="cID" />
+        <result column="uID" property="uID" />
+        <result column="status" property="status" />
+        <result column="createTime" property="createTime" />
+    </resultMap>
+
+    <select id="selectlikelsit" resultMap="likemap">
+        SELECT * FROM `commentlike`
+        <where>
+            <if test="array !=null and array.length>0">
+                cID IN
+                <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

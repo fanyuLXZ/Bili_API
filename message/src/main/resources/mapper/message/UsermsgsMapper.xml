@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dreamwolf.message.mapper.UsermsgsMapper">
+    
+    <resultMap id="usermsgsmap" type="Usermsgs">
+        <id column="umID" property="umID" />
+        <result column="userID" property="userID" />
+        <result column="friendID" property="friendID" />
+        <result column="sender" property="sender" />
+        <result column="receiver" property="receiver" />
+        <result column="updateTime" property="updateTime" />
+        <result column="content" property="content" />
+    </resultMap>
+
+
+    <select id="selectusermsgs" resultMap="usermsgsmap">
+        SELECT `talker_id`,MAX(`updateTime`),`userID`,`friendID`,`content` FROM
+        (SELECT `friendID` AS talker_id,usermsgs.* FROM `usermsgs`
+        WHERE `userID`=#{uid}
+        UNION (
+        SELECT `userID` AS talker_id,usermsgs.* FROM `usermsgs`
+        WHERE `friendID`=#{uid}
+        ))AS talker_table
+        GROUP BY `talker_id`
+    </select>
 
 </mapper>

@@ -26,4 +26,62 @@
         </where>
     </select>
 
+    <select id="selectbvidint" resultType="int">
+        SELECT COUNT(cID) FROM `comment`
+        <where>
+            `cID` IN
+            <foreach collection="cid" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
+    </select>
+
+    <select id="selectuidlist" resultType="int">
+        SELECT cID FROM `comment`
+        <where>
+            <if test="uID!=null">
+                `uID`=#{uID}
+            </if>
+        </where>
+    </select>
+
+    <select id="commentuidlist" resultMap="comremap">
+        SELECT * FROM `comment`
+        <where>
+            <if test="array!=null and array.length>0">
+                cID IN
+                <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+                AND `cIDreply`=0
+            </if>
+        </where>
+    </select>
+
+    <select id="commcidlist" resultMap="comremap">
+        SELECT * FROM `comment`
+        <where>
+            `cID`=#{cID}
+        </where>
+    </select>
+
+    <select id="commselectlistuid" resultMap="comremap">
+        SELECT * FROM `comment`
+        <where>
+            <if test="uID!=null">
+                uID=#{uID} AND `cIDreply` !=0
+            </if>
+        </where>
+    </select>
+
+    <select id="commselectlistcid" resultMap="comremap">
+        SELECT * FROM `comment`
+        <where>
+            <if test="cid!=null">
+                cID=#{cid}
+            </if>
+        </where>
+    </select>
+
+
 </mapper>

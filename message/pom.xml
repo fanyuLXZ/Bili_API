@@ -71,7 +71,16 @@
             <artifactId>swagger-annotations</artifactId>
             <version>1.5.20</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.dreamwolf</groupId>
+            <artifactId>video</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dreamwolf</groupId>
+            <artifactId>comment</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 </project>

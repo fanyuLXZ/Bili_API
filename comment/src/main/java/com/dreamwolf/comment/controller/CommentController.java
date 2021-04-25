@@ -67,7 +67,65 @@ public class CommentController {
         }
 
         return map;
+    }
 
+    @GetMapping("/commcidcount")
+    public Integer selebvidint(Integer[] arr){
+//        Integer[] a = new Integer[]{1,2,3};
+        return commentService.selectbvidint(arr);
+    }
+
+    /**
+     * 根据当前用户id查询用户下的评论
+     * @param uid
+     * @return
+     */
+    @GetMapping("/commuidlist")
+    public List<Integer> selectuidlisst(Integer uid){
+        return commentService.selectuidlist(uid);
+    }
+
+    /**
+     * 跟你点赞评论id数组查询评论id数据
+     * @param array
+     * @return
+     */
+    @GetMapping("/commcidarray")
+    public List<Comment> commentsarrlist(Integer[] array){
+        return commentService.commentuidlist(array);
+    }
+
+
+    /**
+     * 根据评论id查询评论数据
+     * @param cid
+     * @return
+     */
+    @GetMapping("/commcidlistmap")
+    public Map<String,Comment> commcidlist(Integer cid){
+        Map map = new HashMap();
+        Comment comment = commentService.commcidlist(cid);
+        map.put("data",comment);
+        return map;
+    }
+
+    /**
+     * 根据uid用户查询评论表发布的评论数据
+     * @return
+     */
+    @GetMapping("/selecomuid")
+    public List<Comment> selecomuid(Integer uid){
+        return commentService.commselectlistuid(uid);
+    }
+
+    /**
+     * 根据评论主键cid查询数据
+     * @param cid
+     * @return
+     */
+    @GetMapping("/selecomcid")
+    public List<Comment> selecomcid(Integer cid){
+        return commentService.commselectlistcid(cid);
     }
 
 }
