@@ -3,13 +3,17 @@ package com.dreamwolf.member.business.Controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dreamwolf.member.business.entity.User;
+import com.dreamwolf.member.business.entity.Userdata;
+import com.dreamwolf.member.business.entity.Vip;
 import com.dreamwolf.member.business.service.RelationsService;
 import com.dreamwolf.member.business.service.UserService;
 import com.dreamwolf.member.business.service.UserdataService;
 import com.dreamwolf.member.business.service.VipService;
 import com.dreamwolf.member.business.util.Hide;
+import com.dreamwolf.member.business.util.Maps;
 import com.dreamwolf.member.business.util.md5;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,18 +43,28 @@ public class UserController {
 
     //登录
     @RequestMapping("/user/verify")
-    public Map verify(@RequestParam("username")String username, @RequestParam("password")String password) throws Exception {
-        //mybatis-plus条件查询 技术有限 没用出来
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq("userName",username).or().eq("boundEmail",username);
-        User user= userService.getOne(wrapper);//查找对应用户名和密码的对象
-        md5 md=new md5();//加密
+    public Map verify(String username,String password) throws Exception {
         Map<String, Object> map=new HashMap<String, Object>();
-        if (md.message(user.getPassword()).equals(md.message(password))){//查看密码是否正确
-            map.put("succeed",true);//是否登录成功
-            map.put("uid",user.getuID());//对应用户id
+        if(username!=null && !username.equals("") && password!=null && !password.equals("") ){
+            QueryWrapper<User> wrapper = new QueryWrapper<>();
+            wrapper.eq("boundPhone",username).or().eq("boundEmail",username);
+            User user=userService.getOne(wrapper);//查找对应用户名和密码的对象
+            if(user!=null){
+                md5 md=new md5();//加密
+                if(md.message(user.getPassword()).toUpperCase().equals(password.toUpperCase()) && user.getPassword()!=null && !user.getPassword().equals("")){//查看密码是否正确
+                    map.put("succeed",true);//是否登录成功
+                    map.put("uid",user.getuID());//对应用户id
+                }else{
+                    map.put("succeed",false);//是否登录成功
+                    map.put("message","密码不正确");
+                }
+            }else{
+                map.put("succeed",false);//是否登录成功
+                map.put("message","密码账号不正确");
+            }
         }else{
-            map.put("succeed",false);//是否登录成功
+            map.put("succeed",false);
+            map.put("message","账号或密码为空");
         }
         return map;
     }
@@ -114,38 +128,76 @@ public class UserController {
 
     //接口调接口
     @RequestMapping("/bang")
-    public Map bang(@RequestParam("id")Integer id){
+    public Map bang(Integer id){
         Map<String, Object> map=new HashMap<String, Object>();
-        map.put("code",0);//"code":0,"message":"0","ttl":1,
-        map.put("message",0);
-        map.put("ttl",1);
-        Map<String, Object> data=new HashMap<String, Object>();
-        Map<String, Object> entrance=new HashMap<String, Object>();
-        User user=userService.getById(id);
-        entrance.put("icon",user.getHeadImgPath());
-        entrance.put("mid",user.getuID());//id
-        entrance.put("type","up");
-        data.put("entrance",entrance);
-        map.put("data",data);
+        if(id!=null){
+            map.put("code",0);//"code":0,"message":"0","ttl":1,
+            map.put("message",0);
+            map.put("ttl",1);
+            Map<String, Object> data=new HashMap<String, Object>();
+            Map<String, Object> entrance=new HashMap<String, Object>();
+            User user=userService.getById(id);
+            entrance.put("icon",user.getHeadImgPath());
+            entrance.put("mid",user.getuID());//id
+            entrance.put("type","up");
+            data.put("entrance",entrance);
+            map.put("data",data);
+        }else{
+            map.put("code",400);
+            map.put("message","id不能为空");
+        }
         return map;
     }
 
     //通过id返回User表所有对应id信息
     @RequestMapping("/User")
-    public Map user(){
-        Integer id=1;
-        User user=userService.getById(1);
+    public Map user(Integer uid){
+        User user=userService.getById(uid);
         Map<String, Object> map=new HashMap<String, Object>();
-        map.put("uID",user.getuID());
-        map.put("userName",user.getUserName());
-        map.put("password",user.getPassword());
-        map.put("nickName",user.getNickName());
-        map.put("sex",user.getSex());
-        map.put("birthday",user.getBirthday());
-        map.put("boundEmail",user.getBoundEmail());
-        map.put("boundPhone",user.getBoundEmail());
-        map.put("boundQQ",user.getBoundQQ());
-        map.put("headImgPath",user.getHeadImgPath());
+        if(uid !=null && !uid.equals("")){
+            map.put("uID",user.getuID());
+            map.put("userName",user.getUserName());
+            map.put("password",user.getPassword());
+            map.put("nickName",user.getNickName());
+            map.put("sex",user.getSex());
+            map.put("birthday",user.getBirthday());
+            map.put("boundEmail",user.getBoundEmail());
+            map.put("boundPhone",user.getBoundEmail());
+            map.put("boundQQ",user.getBoundQQ());
+            map.put("headImgPath",user.getHeadImgPath());
+        }else{
+            map.put("code",400);
+            map.put("message","值不能为空");
+        }
+        return map;
+    }
+
+    //通过id返回User表所有对应id信息
+    @RequestMapping("/User/id")
+    public User userid(Integer id){
+        User user=userService.getById(id);
+        return user;
+    }
+
+    //评论回复用户对象 接口调接口
+    @GetMapping("/membe")
+    public Map membe(Integer uID){
+        Map<String, Object> map=new HashMap<String, Object>();
+        User user=userService.getById(uID);
+        map.put("mid",user.getuID());
+        map.put("uname",user.getNickName());
+        map.put("sex",user.getSex()==1?"男":"女");
+        map.put("face",user.getHeadImgPath());
+        Map<String, Object> level_info=new HashMap<String, Object>();
+        QueryWrapper<Userdata> wrapper = new QueryWrapper<>();
+        wrapper.eq("uID",uID);
+        level_info.put("current_level",userdataService.getOne(wrapper).getLevel());
+        map.put("level_info",level_info);
+        Map<String, Object> vip=new HashMap<String, Object>();
+        QueryWrapper<Vip> vipQueryWrapper = new QueryWrapper<>();
+        wrapper.eq("uID",uID);
+        vip.put("status",vipService.getOne(vipQueryWrapper)!=null);
+        map.put("vip",vip);
         return map;
     }
 }

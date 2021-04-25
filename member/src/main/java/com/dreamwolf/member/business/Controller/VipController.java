@@ -66,9 +66,9 @@ public class VipController {
         Vip vip=vipService.getOne(wrapper);
         Map<String, Object> map=new HashMap<String, Object>();
         map.put("vID",vip.getvID());
-        map.put("uID",vip.getuID());
-        map.put("ExpirationTime",vip.getExpirationTime());
-        map.put("vPoint",vip.getvPoint());
+        map.put("uID",vip.getuID());//用户id
+        map.put("ExpirationTime",vip.getExpirationTime());//大会员过期时间
+        map.put("vPoint",vip.getvPoint());//会员积分
         return map;
     }
 }

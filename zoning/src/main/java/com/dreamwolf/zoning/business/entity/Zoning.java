@@ -8,6 +8,7 @@ import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.stereotype.Controller;
 
 /**
  * <p>
@@ -15,7 +16,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author zhaolin
- * @since 2021-04-16
+ * @since 2021-04-20
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -31,10 +32,42 @@ public class Zoning implements Serializable {
     private Integer zID;
 
     /**
+     * 父分区id，为空表示根分区
+     */
+    @TableField("zFatherID")
+    private Integer zFatherID;
+
+    /**
      * 分区名称
      */
     @TableField("zName")
     private String zName;
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 
+    public Integer getzID() {
+        return zID;
+    }
+
+    public void setzID(Integer zID) {
+        this.zID = zID;
+    }
+
+    public Integer getzFatherID() {
+        return zFatherID;
+    }
+
+    public void setzFatherID(Integer zFatherID) {
+        this.zFatherID = zFatherID;
+    }
+
+    public String getzName() {
+        return zName;
+    }
+
+    public void setzName(String zName) {
+        this.zName = zName;
+    }
 }

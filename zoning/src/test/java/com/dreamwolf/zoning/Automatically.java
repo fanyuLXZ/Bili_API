@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.po.TableFill;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.dreamwolf.zoning.business.util.Count;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -17,6 +18,12 @@ import java.util.ArrayList;
 //代码自动生成器
 @SpringBootTest
 public class Automatically {
+    @Test
+    public void count(){
+        Count count=new Count();
+        Integer i=count.count(10,3);
+        System.out.print(i);
+    }
 
     @Test
     public void Automatice(){
@@ -25,7 +32,7 @@ public class Automatically {
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
-        strategy.setInclude("zoning","zoningrelation");// Zoning   zoningRelation
+        strategy.setInclude("video");// Zoning   zoningRelation
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true);

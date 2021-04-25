@@ -272,6 +272,7 @@
 |        列名        | 数据类型  |           说明           |       默认值        |
 | :----------------: | :-------: | :----------------------: | :-----------------: |
 |       `uID`        |  int(9)   |         用户 ID          |                     |
+|       `oid`        |  int(4)   |         历史记录id          |                     |
 |       `bvID`       |  int(10)  |         视频 ID          |                     |
 |    `CloseTime`     | timestamp |       关闭视频时间       | CURRENT_TIMESTAMP() |
 | `TimelinePosition` |   time    | 视频关闭时，时间线的位置 |                     |
