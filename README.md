@@ -472,7 +472,7 @@
                     - level_info 等级对象 object
                         - current_level 当前等级 int
             - card 内容 string
-    6. 动态评论简略信息 /reply   
+    6. 动态简略评论信息 /reply   
         参数：
         * dynamic_id 动态id 
         
@@ -512,10 +512,11 @@
                         - current_level 用户等级 int
                     - vip 回复评论人会员对象 object
                         - status 是否是会员 Boolean
-    7. 动态评论详细信息 /reply/main
+    7. 动态详细评论信息 /reply/main
         参数：
         * dynamic_id 动态id
         * next 页码 int
+        * mode 查询模式 1为热度 2为时间
     
         返回值：
         - replies 评论对象集合 object
