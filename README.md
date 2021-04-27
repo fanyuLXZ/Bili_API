@@ -360,15 +360,15 @@
         * fans 粉丝数 int
         * friend 关注数 int
     
-    10.查询指定uid的基本信息   /user/infos
-    参考链接：https://api.vc.bilibili.com/account/v1/user/infos?csrf=ed03730a1cd49540995b9fa002c1cf1e&uids=402923390,77023684,37090048,37090048,412135935,412135935,32708657,32708657,412466388,412466388,268990278,268990278,429301126,429301126,256246039,256246039,361471422,361471422,14328316,14328316,235555226,235555226,233121654,233121654,144900177,144900177,260556632,260556632,37390043,77023684,6139562,77023684,66025025,66025025268990278&build=0&mobi_app=web
+    10.查询指定uid的基本信息   /user/infos   
+    参考链接：https://api.vc.bilibili.com/account/v1/user/infos?csrf=ed03730a1cd49540995b9fa002c1cf1e&uids=402923390,77023684,37090048,37090048,412135935,412135935,32708657,32708657,412466388,412466388,268990278,268990278,429301126,429301126,256246039,256246039,361471422,361471422,14328316,14328316,235555226,235555226,233121654,233121654,144900177,144900177,260556632,260556632,37390043,77023684,6139562,77023684,66025025,66025025268990278&build=0&mobi_app=web   
     参数：
-        * uids uid集合 list&lt;int&gt;
+    * uids uid集合 list&lt;int&gt;
     返回值：用户对象集合list&lt;object&gt;   
-        用户对象：
-        * mid uid int
-        * uname 昵称 String
-        * face 头像id String
+    用户对象：
+    * mid uid int
+    * uname 昵称 String
+    * face 头像id String
 * ### 动态模块 Dynamic
     1. 动态的最新信息 /entrance  
        参考链接：https://api.bilibili.com/x/web-interface/dynamic/entrance?video_offset=0&article_offset=0&alltype_offset=0   
@@ -404,7 +404,7 @@
                 - comment 评论数量 int
                 - like 点赞数量 int
                 - is_liked 是否点赞 int 0否 1是
-                - timestamp 发表事件
+                - timestamp 发表时间
                 - dynamic_id 动态id int
                 - user_profile 用户信息 object
                     - info 用户基本信息 object
@@ -432,7 +432,7 @@
                 - comment 评论数量 int
                 - like 点赞数量 int
                 - is_liked 是否点赞 int 0否 1是
-                - timestamp 发表事件
+                - timestamp 发表时间
                 - dynamic_id 动态id int
                 - user_profile 用户信息 object
                     - info 用户基本信息 object
@@ -458,7 +458,7 @@
                 - comment 评论数量 int
                 - like 点赞数量 int
                 - is_liked 是否点赞 int 0否 1是
-                - timestamp 发表事件
+                - timestamp 发表时间
                 - dynamic_id 动态id int
                 - user_profile 用户信息 object
                     - info 用户基本信息 object
