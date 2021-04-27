@@ -19,6 +19,21 @@ import java.util.List;
 public interface VideoService extends IService<Video> {
 
     /**
+     * 根据bvid数组查询对象 返回集合
+     * @param bvidlist bvid数组
+     * @return
+     */
+    public List<Video> selectlistBvid(Integer[] bvidlist);
+
+
+    /**
+     * 根据日期查询并返回子分区和子分区id的数量
+     * @param bvPostTime
+     * @return
+     */
+    public List<Video> selectcoutbvid(String bvPostTime);
+
+    /**
      * 根据子分区id查找视频并分页处理
      * @param bvChildZoninglist 子分区集合
      * @param pageSize 从第几页开始
@@ -60,6 +75,8 @@ public interface VideoService extends IService<Video> {
      * @param uID
      * @return
      */
-    public List<Video> videouIDlist(Integer uID);
+    public List<Integer> videouIDlist(Integer uID);
+
+
 
 }

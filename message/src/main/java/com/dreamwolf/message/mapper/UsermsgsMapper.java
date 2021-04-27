@@ -2,7 +2,9 @@ package com.dreamwolf.message.mapper;
 
 import com.dreamwolf.message.pojo.Usermsgs;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -10,9 +12,16 @@ import org.springframework.stereotype.Repository;
  * </p>
  *
  * @author 老徐
- * @since 2021-04-07
+ * @since 2021-04-23
  */
-@Repository
+@Mapper
 public interface UsermsgsMapper extends BaseMapper<Usermsgs> {
+
+    /**
+     * 根据当前用户id查询消息表数据 按最新时间排序
+     * @param uid
+     * @return
+     */
+    public List<Usermsgs> selectusermsgs(Integer uid);
 
 }

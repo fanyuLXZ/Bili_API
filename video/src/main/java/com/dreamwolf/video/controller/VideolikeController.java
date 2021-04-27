@@ -1,7 +1,9 @@
 package com.dreamwolf.video.controller;
 
 
+import com.dreamwolf.video.pojo.Video;
 import com.dreamwolf.video.pojo.Videolike;
+import com.dreamwolf.video.service.VideoService;
 import com.dreamwolf.video.service.VideolikeService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +28,9 @@ public class VideolikeController {
 
     @Resource
     private VideolikeService videolikeService;
+
+    @Resource
+    private VideoService videoService;
 
     @GetMapping(value = "/videolikebvid")
     public Map selectbvid(Integer bvid){
@@ -61,6 +66,17 @@ public class VideolikeController {
         }
 
         return map;
+    }
+
+
+    /**
+     * 根据用户下面的视频拿到用户下所有的点赞了的视频
+     * @param array
+     * @return
+     */
+    @GetMapping("/videolikeuid")
+    public List<Videolike> sellist(Integer[] array){
+        return videolikeService.selectbvidlist(array);
     }
 
 

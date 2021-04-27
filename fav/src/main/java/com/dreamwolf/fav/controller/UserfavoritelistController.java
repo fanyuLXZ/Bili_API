@@ -33,9 +33,6 @@ public class UserfavoritelistController {
     private UserfavoritelistService userfavoritelistService; //收藏夹
 
     @Resource
-    private UserService userService;
-
-    @Resource
     private VideofavoriteService videofavoriteService;
 
     @Resource

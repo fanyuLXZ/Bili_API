@@ -3,6 +3,7 @@ package com.dreamwolf.comment.mapper;
 import com.dreamwolf.comment.pojo.Commentdata;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -14,5 +15,12 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface CommentdataMapper extends BaseMapper<Commentdata> {
+
+    /**
+     * 根据评论id查询点赞数和点踩数
+     * @param cID
+     * @return
+     */
+    public Commentdata selectcID(@Param("cID") Integer cID);
 
 }

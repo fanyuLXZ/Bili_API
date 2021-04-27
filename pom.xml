@@ -17,6 +17,7 @@
         <module>watch-history</module>
         <module>fav</module>
         <module>safety</module>
+        <module>comment</module>
     </modules>
     <groupId>com.dream-wolf</groupId>
     <artifactId>Bili_API</artifactId>

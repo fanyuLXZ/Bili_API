@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-04-22
  */
 @RestController
-@RequestMapping("/comment/videocomment")
 public class VideocommentController {
 
 }

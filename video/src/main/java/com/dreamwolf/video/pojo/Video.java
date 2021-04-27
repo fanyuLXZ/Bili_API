@@ -79,6 +79,9 @@ public class Video implements Serializable {
 
     private String date;
     private String datetime;
+    
+    private Integer countbv; // 数量
+    private Integer bvChild; //子分区id
 
 
 }

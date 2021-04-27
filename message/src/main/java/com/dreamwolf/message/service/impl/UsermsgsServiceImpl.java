@@ -1,10 +1,14 @@
 package com.dreamwolf.message.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dreamwolf.message.pojo.Usermsgs;
 import com.dreamwolf.message.mapper.UsermsgsMapper;
 import com.dreamwolf.message.service.UsermsgsService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * <p>
@@ -12,9 +16,30 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author 老徐
- * @since 2021-04-07
+ * @since 2021-04-23
  */
 @Service
-public class UsermsgsServiceImpl implements UsermsgsService {
+public class UsermsgsServiceImpl extends ServiceImpl<UsermsgsMapper, Usermsgs> implements UsermsgsService {
 
+    @Resource
+    private UsermsgsMapper usermsgsMapper;
+
+    @Override
+    public List<Usermsgs> selectusermsgs(Integer uid) {
+        return usermsgsMapper.selectusermsgs(uid);
+    }
+
+    @Override
+    public List<Usermsgs> selectusmsgsfid(Integer friendID) {
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("friendID",friendID);
+        return usermsgsMapper.selectList(wrapper);
+    }
+
+    @Override
+    public List<Usermsgs> selectusmsgsuid(Integer userID) {
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("userID",userID);
+        return usermsgsMapper.selectList(wrapper);
+    }
 }

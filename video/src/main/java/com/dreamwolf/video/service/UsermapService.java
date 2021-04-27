@@ -12,4 +12,6 @@ public interface UsermapService {
     @GetMapping("/User")
     public Map user(@RequestParam Integer uid);
 
+
+
 }

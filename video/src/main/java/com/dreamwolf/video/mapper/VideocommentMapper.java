@@ -20,5 +20,19 @@ public interface VideocommentMapper extends BaseMapper<Videocomment> {
 
     public List<Videocomment> selectbvid(@Param("bvID") Integer bvID);
 
+    /**
+     * 根据视频id数组查询视频评论id 返回cidlist
+     * @param array
+     * @return
+     */
+    public List<Integer> selectbvidarray(Integer[] array);
+
+    /**
+     *  根据视频id数组查询视频评论表数据
+     * @param array
+     * @return
+     */
+    public List<Videocomment> selectvidercomlist(Integer[] array);
+
 
 }
