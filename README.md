@@ -352,15 +352,15 @@
             - type 会员类型 1大会员  0小会员
             - status 是否是会员
         * following 当前登陆人是否关注查询的用户 boolean
-    9. 当前登陆的用户基本信息  
+    9. 当前登陆的用户基本信息 /card/info  
+       参考链接：https://api.bilibili.com/x/web-interface/card?csrf=7f16078c913c8540075a3d85b52b36e0&mid=433899970&photo=true   
        返回值：
         * mid uid int
         * name 用户姓名 string
         * face 头像 string
         * fans 粉丝数 int
         * friend 关注数 int
-    
-    10.查询指定uid的基本信息   /user/infos   
+    10. 查询指定uid的基本信息   /user/infos   
     参考链接：https://api.vc.bilibili.com/account/v1/user/infos?csrf=ed03730a1cd49540995b9fa002c1cf1e&uids=402923390,77023684,37090048,37090048,412135935,412135935,32708657,32708657,412466388,412466388,268990278,268990278,429301126,429301126,256246039,256246039,361471422,361471422,14328316,14328316,235555226,235555226,233121654,233121654,144900177,144900177,260556632,260556632,37390043,77023684,6139562,77023684,66025025,66025025268990278&build=0&mobi_app=web   
     参数：
     * uids uid集合 list&lt;int&gt;
