@@ -69,11 +69,15 @@ public interface VideoMapper extends BaseMapper<Video> {
     public Video videobvIDlist(@Param("bvID") Integer bvID);
 
     /**
-     * 通过作者id查视频，返回list
+     * 通过作者id查视频，返回list bvid
      * @param uID
      * @return
      */
-    public List<Video> videouIDlist(@Param("uID") Integer uID);
+    public List<Integer> videouIDlist(@Param("uID") Integer uID);
+
+
+
+
 
 
 

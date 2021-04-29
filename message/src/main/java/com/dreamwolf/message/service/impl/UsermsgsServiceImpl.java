@@ -25,6 +25,11 @@ public class UsermsgsServiceImpl extends ServiceImpl<UsermsgsMapper, Usermsgs> i
     private UsermsgsMapper usermsgsMapper;
 
     @Override
+    public List<Usermsgs> selectusermsgs(Integer uid) {
+        return usermsgsMapper.selectusermsgs(uid);
+    }
+
+    @Override
     public List<Usermsgs> selectusmsgsfid(Integer friendID) {
         QueryWrapper wrapper = new QueryWrapper();
         wrapper.eq("friendID",friendID);
@@ -36,5 +41,10 @@ public class UsermsgsServiceImpl extends ServiceImpl<UsermsgsMapper, Usermsgs> i
         QueryWrapper wrapper = new QueryWrapper();
         wrapper.eq("userID",userID);
         return usermsgsMapper.selectList(wrapper);
+    }
+
+    @Override
+    public List<Usermsgs> usermsgslistuidfid(Integer userID, Integer friendID) {
+        return usermsgsMapper.usermsgslistuidfid(userID,friendID);
     }
 }

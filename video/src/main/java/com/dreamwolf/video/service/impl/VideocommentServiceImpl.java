@@ -26,6 +26,16 @@ public class VideocommentServiceImpl extends ServiceImpl<VideocommentMapper, Vid
     private VideocommentMapper videocommentMapper;
 
     @Override
+    public List<Videocomment> selectvidercomlist(Integer[] array) {
+        return videocommentMapper.selectvidercomlist(array);
+    }
+
+    @Override
+    public List<Integer> selectbvidarray(Integer[] array) {
+        return videocommentMapper.selectbvidarray(array);
+    }
+
+    @Override
     public List<Videocomment> selectbvID(Integer bvID) {
         return videocommentMapper.selectbvid(bvID);
     }

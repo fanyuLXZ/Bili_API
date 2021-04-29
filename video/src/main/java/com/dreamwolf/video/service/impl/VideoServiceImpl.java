@@ -63,7 +63,9 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
     }
 
     @Override
-    public List<Video> videouIDlist(Integer uID) {
+    public List<Integer> videouIDlist(Integer uID) {
         return videoMapper.videouIDlist(uID);
     }
+
+
 }

@@ -352,23 +352,23 @@
             - type 会员类型 1大会员  0小会员
             - status 是否是会员
         * following 当前登陆人是否关注查询的用户 boolean
-    9. 当前登陆的用户基本信息  
+    9. 当前登陆的用户基本信息 /card/info  
+       参考链接：https://api.bilibili.com/x/web-interface/card?csrf=7f16078c913c8540075a3d85b52b36e0&mid=433899970&photo=true   
        返回值：
         * mid uid int
         * name 用户姓名 string
         * face 头像 string
         * fans 粉丝数 int
         * friend 关注数 int
-    
-    4.查询指定uid的基本信息   
-    参考链接：https://api.vc.bilibili.com/account/v1/user/infos?csrf=ed03730a1cd49540995b9fa002c1cf1e&uids=402923390,77023684,37090048,37090048,412135935,412135935,32708657,32708657,412466388,412466388,268990278,268990278,429301126,429301126,256246039,256246039,361471422,361471422,14328316,14328316,235555226,235555226,233121654,233121654,144900177,144900177,260556632,260556632,37390043,77023684,6139562,77023684,66025025,66025025268990278&build=0&mobi_app=web
+    10. 查询指定uid的基本信息   /user/infos   
+    参考链接：https://api.vc.bilibili.com/account/v1/user/infos?csrf=ed03730a1cd49540995b9fa002c1cf1e&uids=402923390,77023684,37090048,37090048,412135935,412135935,32708657,32708657,412466388,412466388,268990278,268990278,429301126,429301126,256246039,256246039,361471422,361471422,14328316,14328316,235555226,235555226,233121654,233121654,144900177,144900177,260556632,260556632,37390043,77023684,6139562,77023684,66025025,66025025268990278&build=0&mobi_app=web   
     参数：
-        * uids uid集合 list&lt;int&gt;
+    * uids uid集合 list&lt;int&gt;
     返回值：用户对象集合list&lt;object&gt;   
-        用户对象：
-        * mid uid int
-        * uname 昵称 String
-        * face 头像id String
+    用户对象：
+    * mid uid int
+    * uname 昵称 String
+    * face 头像id String
 * ### 动态模块 Dynamic
     1. 动态的最新信息 /entrance  
        参考链接：https://api.bilibili.com/x/web-interface/dynamic/entrance?video_offset=0&article_offset=0&alltype_offset=0   
@@ -404,7 +404,7 @@
                 - comment 评论数量 int
                 - like 点赞数量 int
                 - is_liked 是否点赞 int 0否 1是
-                - timestamp 发表事件
+                - timestamp 发表时间
                 - dynamic_id 动态id int
                 - user_profile 用户信息 object
                     - info 用户基本信息 object
@@ -432,7 +432,7 @@
                 - comment 评论数量 int
                 - like 点赞数量 int
                 - is_liked 是否点赞 int 0否 1是
-                - timestamp 发表事件
+                - timestamp 发表时间
                 - dynamic_id 动态id int
                 - user_profile 用户信息 object
                     - info 用户基本信息 object
@@ -446,7 +446,8 @@
                     - level_info 等级对象 object
                         - current_level 当前等级 int
             - card 内容 string
-    5. 动态详细信息 /dynamic_detail
+    5. 动态详细信息 /dynamic_detail  
+       https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/get_dynamic_detail?csrf=4c7784a8355557a9595ccefc268e2f28&dynamic_id=517512923173368485   
         参数：  
         * dynamic_id 动态id
         返回：
@@ -457,7 +458,7 @@
                 - comment 评论数量 int
                 - like 点赞数量 int
                 - is_liked 是否点赞 int 0否 1是
-                - timestamp 发表事件
+                - timestamp 发表时间
                 - dynamic_id 动态id int
                 - user_profile 用户信息 object
                     - info 用户基本信息 object
@@ -471,7 +472,7 @@
                     - level_info 等级对象 object
                         - current_level 当前等级 int
             - card 内容 string
-    6. 动态评论简略信息 /reply   
+    6. 动态简略评论信息 /reply   
         参数：
         * dynamic_id 动态id 
         
@@ -511,10 +512,11 @@
                         - current_level 用户等级 int
                     - vip 回复评论人会员对象 object
                         - status 是否是会员 Boolean
-    7. 动态评论详细信息 /reply/main
+    7. 动态详细评论信息 /reply/main
         参数：
         * dynamic_id 动态id
         * next 页码 int
+        * mode 查询模式 1为热度 2为时间
     
         返回值：
         - replies 评论对象集合 object

@@ -8,10 +8,35 @@
     </resultMap>
 
     <select id="selectbvid" resultMap="commmap">
-        SELECT * FROM `videocomment`
+        SELECT cID FROM `videocomment`
         <where>
             <if test="bvID!=null">
                 bvID=#{bvID}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="selectbvidarray" resultType="int">
+        SELECT cID FROM `videocomment`
+        <where>
+            <if test="array!=null and array.length>0">
+                `bvID` IN
+                <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectvidercomlist" resultMap="commmap">
+        SELECT * FROM `videocomment`
+        <where>
+            <if test="array!=null and array.length>0">
+                `bvID` IN
+                <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
             </if>
         </where>
     </select>
