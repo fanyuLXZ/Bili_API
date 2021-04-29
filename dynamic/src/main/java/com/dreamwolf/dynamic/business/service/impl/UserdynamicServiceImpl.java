@@ -6,6 +6,10 @@ import com.dreamwolf.dynamic.business.service.UserdynamicService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  * 用户动态表 服务实现类
@@ -16,5 +20,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserdynamicServiceImpl extends ServiceImpl<UserdynamicMapper, Userdynamic> implements UserdynamicService {
+    @Resource
+    UserdynamicMapper userdynamicMapper;
 
+    @Override
+    public List<Map<String, Object>> listmap(Integer udID,Integer[] shuzu) {
+        return userdynamicMapper.listmap(udID,shuzu);
+    }
 }

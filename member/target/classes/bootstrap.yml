@@ -1,14 +1,12 @@
 server:
-  port: 8081
+  port: 8083
 mybatis-plus:
   mapper-locations: classpath:/mapper/*Mapper.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
+  type-aliases-package: com.dreamwolf.member.business.entity
 #spring
 spring:
   application:
-    name: dynamic-service
+    name: member-service
   cloud:
     nacos:
       #注册服务地址

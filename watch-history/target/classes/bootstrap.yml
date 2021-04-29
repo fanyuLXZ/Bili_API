@@ -1,14 +1,9 @@
 server:
-  port: 8081
-mybatis-plus:
-  mapper-locations: classpath:/mapper/*Mapper.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
+  port: 8086
 #spring
 spring:
   application:
-    name: dynamic-service
+    name: watch-service
   cloud:
     nacos:
       #注册服务地址
@@ -24,3 +19,6 @@ spring:
         extension-configs[1]:
           data-id: datasource-config.yaml
           refresh: true
+mybatis:
+  mapperLocations: classpath:/mapper/*.xml
+  type-aliases-package: com.dreamwolf.watchhistory.entities    # 所有实体类的别名
