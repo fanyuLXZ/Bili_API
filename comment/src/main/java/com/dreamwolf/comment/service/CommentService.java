@@ -18,6 +18,50 @@ import java.util.List;
 public interface CommentService extends IService<Comment> {
 
     /**
+     * 根据评论id数组去查询数据 并且按照最新时间排序 并分页处理
+     * @param array
+     * next 页码
+     * @return
+     */
+    public List<Comment> comdatalisttimepage(Integer[] array,Integer next);
+
+
+    /**
+     * 根据cid数组查询并且cIDreply=0的则是动态或者视频
+     * @param array
+     * @return
+     */
+    public  List<Comment> commselectarrcidlist(Integer[] array);
+
+    /**
+     * 根据评论id数组去查询数据 并且按照最新时间排序
+     * @param array
+     * @return
+     */
+    public List<Comment> comdatalisttime(Integer[] array);
+
+    /**
+     * 根据评论id数组去查询数据
+     * @param array
+     * @return
+     */
+    public List<Comment> comarrlist(Integer[] array);
+
+    /**
+     * 根据评论cid去查询下面的子评论对象集合
+     * @param cIDreply
+     * @return
+     */
+    public List<Comment> selelistcIDreply(Integer cIDreply);
+
+    /**
+     * 根据回复的id查询子评论数量
+     * @param cIDreply
+     * @return
+     */
+    public Integer commcountcIDreply(Integer cIDreply);
+
+    /**
      * 通过cid评论主键查询数据
      * @param cid
      * @return
@@ -44,7 +88,7 @@ public interface CommentService extends IService<Comment> {
      * @param cIDreply
      * @return
      */
-    public List<Comment> selectrpid(Integer cIDreply);
+    public List<Comment> selectrpid(Integer cIDreply,Integer pn,Integer ps);
 
     /**
      * 根据评论id返回评论总数

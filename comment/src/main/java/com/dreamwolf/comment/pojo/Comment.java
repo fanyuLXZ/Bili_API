@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -13,6 +15,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -24,7 +27,6 @@ import org.springframework.stereotype.Controller;
  * @author 老徐
  * @since 2021-04-22
  */
-@Controller
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -49,6 +51,8 @@ public class Comment implements Serializable {
 
     @ApiModelProperty(value = "评论时间 ")
     @TableField("createTime")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     @ApiModelProperty(value = "评论正文")

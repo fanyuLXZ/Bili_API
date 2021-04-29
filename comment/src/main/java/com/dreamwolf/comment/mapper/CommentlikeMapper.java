@@ -16,5 +16,13 @@ public interface CommentlikeMapper extends BaseMapper<Commentlike> {
      */
     public List<Commentlike> selectlikelsit(Integer[] array);
 
+    /***
+     * 根据评论id和用户id查询被点赞的评论数据（）
+     * @param cid
+     * @param uid
+     * @return
+     */
+    public Commentlike commlikecidlist(Integer cid,Integer uid);
+
 
 }

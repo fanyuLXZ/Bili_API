@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * <p>
  * 评论数据表 Mapper 接口
@@ -22,5 +24,28 @@ public interface CommentdataMapper extends BaseMapper<Commentdata> {
      * @return
      */
     public Commentdata selectcID(@Param("cID") Integer cID);
+
+    /**
+     * 通过子评论集合去查询子评论里面热度最高的数据取前三条
+     * @param array  热度等于 点赞数减去点踩数
+     * @return
+     */
+    public List<Commentdata> commdatalist(Integer[] array);
+
+    /**
+     * 根据评论id集合查询热度最高的前10条
+     * @param array 热度等于 点赞数减去点踩数
+     * @return
+     */
+    public List<Commentdata> commdatalistarr(Integer[] array);
+
+
+    /**
+     * 根据评论id集合查询热度最高的前10条
+     * @param array 热度等于 点赞数减去点踩数
+     *    next 页码
+     * @return
+     */
+    public List<Commentdata> commdatalistpage(Integer[] array,Integer next);
 
 }

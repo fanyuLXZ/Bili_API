@@ -22,7 +22,8 @@ public class CommentlikeController {
      * @return
      */
     @GetMapping("/selectlikearr")
-    public List<Commentlike> selectarrlist(Integer[] arr){
+    public List<Commentlike> selectarrlist(Integer[] arr)
+    {
         return commentlikeService.selectlikelsit(arr);
     }
 

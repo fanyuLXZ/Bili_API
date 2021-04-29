@@ -24,4 +24,14 @@
         GROUP BY `talker_id`
     </select>
 
+
+    <select id="usermsgslistuidfid" resultMap="usermsgsmap">
+        SELECT * FROM `usermsgs`
+        <where>
+            <if test="userID!=null and friendID!=null ">
+                (`userID`=#{userID} OR `friendID` =#{userID}) AND (`userID` =#{friendID} OR `friendID`=#{friendID})
+            </if>
+        </where>
+    </select>
+
 </mapper>

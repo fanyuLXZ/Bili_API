@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 
 import java.util.Date;
 
-@Controller
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
