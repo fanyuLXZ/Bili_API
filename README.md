@@ -4,6 +4,7 @@
 
 ## 项目人员分配
 
+### [需要跳转的目录] {#1}
 * 徐文建：
     - 收藏模块 userFavoriteList
     - 视频模块 Video
@@ -144,7 +145,6 @@
 	9. 查询被收藏的视频在那个收藏夹下  /videofavbvID   
 	    参数:   
         * bvID 被收藏的视频id Integer   
-                 ### [需要跳转的目录] {#1}
 		返回值：根据被收藏的视频id(bvID)查询该视频被收藏在那个收藏夹下(favListID) 返回对象   
 		* code：0
 		* message：0
