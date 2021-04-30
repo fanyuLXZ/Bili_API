@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>dynamic</artifactId>
+    <artifactId>zoning</artifactId>
 
     <dependencies>
         <dependency>
@@ -59,18 +59,5 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-loadbalancer</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.dream-wolf</groupId>
-            <artifactId>member</artifactId>
-            <version>1.0</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis-typehandlers-jsr310</artifactId>
-            <version>1.0.2</version>
-        </dependency>
-
     </dependencies>
 </project>
