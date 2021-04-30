@@ -122,6 +122,7 @@ public class ZoningController {
         return zoning;
     }
 
+    //指定分区排行榜 前十二个
     @GetMapping("/region/ranking")
     public Map region(Integer rid,Integer day){
         Map<String, Object> map = new HashMap<String, Object>();
