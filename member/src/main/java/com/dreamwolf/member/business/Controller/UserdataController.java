@@ -100,17 +100,17 @@ public class UserdataController {
         Userdata userdata=userdataService.getOne(wrapper);
         Map<String, Object> map=new HashMap<String, Object>();
         if(id!=null && !id.equals("")){
-            map.put("uID",userdata.getuID());
-            map.put("Level",userdata.getLevel());
-            map.put("Exp",userdata.getExp());
-            map.put("CoinsNum",userdata.getCoinsNum());
-            map.put("BCoinsNum",userdata.getBCoinsNum());
-            map.put("tFollowNum",userdata.gettFollowNum());
-            map.put("tFansNum",userdata.gettFansNum());
-            map.put("tLikeNum",userdata.gettLikeNum());
-            map.put("tPlaysNum",userdata.gettPlaysNum());
-            map.put("tReadNum",userdata.gettReadNum());
-            map.put("uDescription",userdata.getuDescription());
+            map.put("uID",userdata.getuID());//ID
+            map.put("Level",userdata.getLevel());//等级
+            map.put("Exp",userdata.getExp());//现有经验
+            map.put("CoinsNum",userdata.getCoinsNum());//现有硬币数量
+            map.put("BCoinsNum",userdata.getBCoinsNum());//B币数量
+            map.put("tFollowNum",userdata.gettFollowNum());//关注数量
+            map.put("tFansNum",userdata.gettFansNum());//粉丝量
+            map.put("tLikeNum",userdata.gettLikeNum());//总赞数
+            map.put("tPlaysNum",userdata.gettPlaysNum());//视频播放量
+            map.put("tReadNum",userdata.gettReadNum());//阅读量
+            map.put("uDescription",userdata.getuDescription());//简介
         }else{
             map.put("code",400);
             map.put("message","id不能为空");

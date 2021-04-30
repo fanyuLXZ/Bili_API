@@ -137,8 +137,8 @@ public class UserController {
             Map<String, Object> data=new HashMap<String, Object>();
             Map<String, Object> entrance=new HashMap<String, Object>();
             User user=userService.getById(id);
-            entrance.put("icon",user.getHeadImgPath());
-            entrance.put("mid",user.getuID());//id
+            entrance.put("icon",user.getHeadImgPath());//头像
+            entrance.put("mid",user.getuID());//用户唯一id
             entrance.put("type","up");
             data.put("entrance",entrance);
             map.put("data",data);
@@ -153,6 +153,12 @@ public class UserController {
     @RequestMapping("/useruid")
     public User useruid(Integer uid){
         User user=userService.getById(uid);
+        return user;
+    }
+    //通过id返回User表所有对应id信息
+    @RequestMapping("/User/id")
+    public User userid(Integer id){
+        User user=userService.getById(id);
         return user;
     }
 
@@ -179,31 +185,26 @@ public class UserController {
         return map;
     }
 
-    //通过id返回User表所有对应id信息
-    @RequestMapping("/User/id")
-    public User userid(Integer id){
-        User user=userService.getById(id);
-        return user;
-    }
+
 
     //评论回复用户对象 接口调接口
     @GetMapping("/membe")
     public Map membe(Integer uID){
         Map<String, Object> map=new HashMap<String, Object>();
         User user=userService.getById(uID);
-        map.put("mid",user.getuID());
-        map.put("uname",user.getNickName());
-        map.put("sex",user.getSex()==1?"男":"女");
-        map.put("face",user.getHeadImgPath());
+        map.put("mid",user.getuID());//用户唯一id
+        map.put("uname",user.getNickName());//用户昵称
+        map.put("sex",user.getSex()==1?"男":"女");//性别
+        map.put("face",user.getHeadImgPath());//头像
         Map<String, Object> level_info=new HashMap<String, Object>();
         QueryWrapper<Userdata> wrapper = new QueryWrapper<>();
         wrapper.eq("uID",uID);
-        level_info.put("current_level",userdataService.getOne(wrapper).getLevel());
+        level_info.put("current_level",userdataService.getOne(wrapper).getLevel());//用户等级
         map.put("level_info",level_info);
         Map<String, Object> vip=new HashMap<String, Object>();
         QueryWrapper<Vip> vipQueryWrapper = new QueryWrapper<>();
         wrapper.eq("uID",uID);
-        vip.put("status",vipService.getOne(vipQueryWrapper)!=null);
+        vip.put("status",vipService.getOne(vipQueryWrapper)!=null);//是否有vip
         map.put("vip",vip);
         return map;
     }
@@ -284,21 +285,22 @@ public class UserController {
         Integer id=1;
         User user=userService.getById(id);
         Map<String,Object> data=new HashMap<>();
-        data.put("mid",user.getuID());
-        data.put("name",user.getNickName());
-        data.put("face",user.getHeadImgPath());
+        data.put("mid",user.getuID());//用户id
+        data.put("name",user.getNickName());//用户昵称
+        data.put("face",user.getHeadImgPath());//用户头像
         QueryWrapper<Relations> integerQueryWrapper=new QueryWrapper<>();
-        integerQueryWrapper.eq("uID",id);
+        integerQueryWrapper.eq("uID",id);//查找uID为id的 关注up的
         List<Relations> shu=relationsService.list(integerQueryWrapper);
         QueryWrapper<Relations> integerWrapper=new QueryWrapper<>();
-        integerWrapper.eq("followUID",id);
+        integerWrapper.eq("followUID",id);//查找followUID为id的 up关注的
         List<Relations> shu2=relationsService.list(integerWrapper);
-        data.put("fans",shu.size());
-        data.put("friend",shu2.size());
+        data.put("fans",shu.size());//粉丝数
+        data.put("friend",shu2.size());//关注数
         map.put("data",data);
         return  map;
     }
 
+    //用户对象数组
     @GetMapping("/users")
     public List<Map<String,Object>> users(Integer[] list,Integer uid){//评论着用户id数组  发布动态用户id
         List<Map<String,Object>> listmap=new ArrayList<>();
@@ -307,13 +309,13 @@ public class UserController {
         List<User> dzuser=userService.list(userQueryWrapper);
         for(int i=0;i<list.length;i++){
             Map<String,Object> usermap=new HashMap<>();
-            usermap.put("mid",dzuser.get(i).getuID());
-            usermap.put("nickname",dzuser.get(i).getNickName());
-            usermap.put("avatar",dzuser.get(i).getHeadImgPath());
+            usermap.put("mid",dzuser.get(i).getuID());//点赞对象的id
+            usermap.put("nickname",dzuser.get(i).getNickName());//~昵称
+            usermap.put("avatar",dzuser.get(i).getHeadImgPath());//~头像
             QueryWrapper<Relations> relationsWrapper=new QueryWrapper<>();//判断评论用户是否关注了
             relationsWrapper.eq("followUID",dzuser.get(i).getuID()).eq("uID",uid);
             Relations relations=relationsService.getOne(relationsWrapper);
-            usermap.put("follow",relations!=null?true:false);
+            usermap.put("follow",relations!=null?true:false);//是否关注
             usermap.put("native_uri","个人中心地址");
             listmap.add(usermap);
         }
@@ -368,6 +370,7 @@ public class UserController {
         }
         return map;
     }
+    //接口调接口
     @GetMapping("/data")
     public List<Map<String,Object>> list(Integer id){
         List<Map<String,Object>> listmap=new ArrayList<>();

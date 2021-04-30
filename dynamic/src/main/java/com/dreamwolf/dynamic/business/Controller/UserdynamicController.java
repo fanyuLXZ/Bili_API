@@ -327,7 +327,7 @@ public class UserdynamicController {
         return map;
     }
 
-
+    //接口调接口
     @GetMapping("/replyitem")
     public List<Map<String,Object>> replyitem(Integer userdy){
         List<Map<String,Object>> list=new ArrayList<>();
