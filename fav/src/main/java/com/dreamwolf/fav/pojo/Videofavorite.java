@@ -16,7 +16,6 @@ import java.util.Date;
 /**
  *视频收藏表
  */
-@Controller
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

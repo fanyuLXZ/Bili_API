@@ -11,6 +11,7 @@ import com.dreamwolf.member.business.service.UserdataService;
 import com.dreamwolf.member.business.service.VipService;
 import com.dreamwolf.member.business.util.Jisuan;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -93,29 +94,38 @@ public class UserdataController {
 
     //通过用户id 返回Userdata表所有信息 用户等级经验等.
     @RequestMapping("/Userdata")
-    public Map userdata(){
-        Integer id=1;
+    public Map userdata(Integer id){
         QueryWrapper<Userdata> wrapper = new QueryWrapper<>();
         wrapper.eq("uID",id);
         Userdata userdata=userdataService.getOne(wrapper);
         Map<String, Object> map=new HashMap<String, Object>();
-        map.put("uID",userdata.getuID());
-        map.put("Level",userdata.getLevel());
-        map.put("Exp",userdata.getExp());
-        map.put("CoinsNum",userdata.getCoinsNum());
-        map.put("BCoinsNum",userdata.getBCoinsNum());
-        map.put("tFollowNum",userdata.gettFollowNum());
-        map.put("tFansNum",userdata.gettFansNum());
-        map.put("tLikeNum",userdata.gettLikeNum());
-        map.put("tPlaysNum",userdata.gettPlaysNum());
-        map.put("tReadNum",userdata.gettReadNum());
-        map.put("uDescription",userdata.getuDescription());
+        if(id!=null && !id.equals("")){
+            map.put("uID",userdata.getuID());//ID
+            map.put("Level",userdata.getLevel());//等级
+            map.put("Exp",userdata.getExp());//现有经验
+            map.put("CoinsNum",userdata.getCoinsNum());//现有硬币数量
+            map.put("BCoinsNum",userdata.getBCoinsNum());//B币数量
+            map.put("tFollowNum",userdata.gettFollowNum());//关注数量
+            map.put("tFansNum",userdata.gettFansNum());//粉丝量
+            map.put("tLikeNum",userdata.gettLikeNum());//总赞数
+            map.put("tPlaysNum",userdata.gettPlaysNum());//视频播放量
+            map.put("tReadNum",userdata.gettReadNum());//阅读量
+            map.put("uDescription",userdata.getuDescription());//简介
+        }else{
+            map.put("code",400);
+            map.put("message","id不能为空");
+        }
         return map;
     }
 
-
-
-
+    //通过id返回Userdata表所有对应id信息
+    @RequestMapping("/Userdataid")
+    public Userdata Userdataid(Integer uid){
+        QueryWrapper<Userdata> userdataQueryWrapper=new QueryWrapper<>();
+        userdataQueryWrapper.eq("uID",uid);
+        Userdata userdata=userdataService.getOne(userdataQueryWrapper);
+        return userdata;
+    }
 
 }
 

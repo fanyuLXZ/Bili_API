@@ -2,6 +2,7 @@ package com.dreamwolf.member.business.Controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.dreamwolf.member.business.entity.Userdata;
 import com.dreamwolf.member.business.entity.Vip;
 import com.dreamwolf.member.business.service.RelationsService;
 import com.dreamwolf.member.business.service.UserService;
@@ -41,7 +42,7 @@ public class VipController {
         Integer id=1;//默认id
         Map<String, Object> map=new HashMap<String, Object>();
         map.put("code",0);
-        map.put("message",0);
+        map.put("message","");
         map.put("ttl",1);
         Map<String, Object> data=new HashMap<String, Object>();
         Vip vip= vipService.vipselect(id);
@@ -59,17 +60,53 @@ public class VipController {
 
     //通过用户id 查询对应大会员信息
     @RequestMapping("/Vip")
-    public Map vip(){
-        Integer id=1;
+    public Map vip(Integer uID){
         QueryWrapper<Vip> wrapper = new QueryWrapper<>();
-        wrapper.eq("uID",id);
-        Vip vip=vipService.getOne(wrapper);
         Map<String, Object> map=new HashMap<String, Object>();
-        map.put("vID",vip.getvID());
-        map.put("uID",vip.getuID());//用户id
-        map.put("ExpirationTime",vip.getExpirationTime());//大会员过期时间
-        map.put("vPoint",vip.getvPoint());//会员积分
+        if(uID!=null && !uID.equals("")){
+            wrapper.eq("uID",uID);
+            Vip vip=vipService.getOne(wrapper);
+            if(vip!=null){
+                map.put("vID",vip.getvID());
+                map.put("uID",vip.getuID());//用户id
+                map.put("ExpirationTime",vip.getExpirationTime());//大会员过期时间
+                map.put("vPoint",vip.getvPoint());//会员积分
+            }else{
+                map=null;
+            }
+        }else{
+            map.put("code",400);
+            map.put("message","id不能为空");
+        }
         return map;
+    }
+
+    //大会员积分
+    @RequestMapping("/vip/point")
+    public Map vippoint(){
+        Integer id=1;
+        Map<String,Object>  map=new HashMap<>();
+        QueryWrapper queryWrapper=new QueryWrapper();
+        map.put("code",0);
+        map.put("message","");
+        map.put("ttl",1);
+        queryWrapper.eq("uID",id);
+        Vip vip=vipService.getOne(queryWrapper);
+        if(vip!=null){
+            map.put("mid",vip.getuID());
+            map.put("pointBalance",vip.getvPoint());
+        }else{
+            map.put("mid",id);
+            map.put("pointBalance",vip.getvPoint());
+        }
+        return map;
+    }
+
+    //通过id返回Userdata表所有对应id信息
+    @RequestMapping("/vipid")
+    public Vip vipid(Integer uid){
+        Vip vips=vipService.getById(uid);
+        return vips;
     }
 }
 

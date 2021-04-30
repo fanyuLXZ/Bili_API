@@ -3,6 +3,11 @@ package com.dreamwolf.dynamic.business.mapper;
 import com.dreamwolf.dynamic.business.entity.Userdynamic;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -15,4 +20,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserdynamicMapper extends BaseMapper<Userdynamic> {
 
+    List<Map<String,Object>> listmap(@Param("udID")Integer udID,Integer[] shuzu);
 }

@@ -75,6 +75,8 @@ public interface VideoService extends IService<Video> {
      * @param uID
      * @return
      */
-    public List<Video> videouIDlist(Integer uID);
+    public List<Integer> videouIDlist(Integer uID);
+
+
 
 }

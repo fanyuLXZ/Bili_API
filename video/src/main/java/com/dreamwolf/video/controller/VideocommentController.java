@@ -27,23 +27,39 @@ public class VideocommentController {
     @Resource
     private VideocommentService videocommentService;
 
-    @GetMapping(value = "/videocommbvid")
-    public Map selectbvids(Integer bvid){
-        Map map = new HashMap();
-        if(bvid !=null) {
-            map.put("code",0);
-            map.put("message","0");
-            Map listmap = new HashMap();
-            List<Videocomment> videocommentList = videocommentService.selectbvID(bvid);//根据视频id查询评论id
-            listmap.put("cID", videocommentList);   //评论ID
-            map.put("data",listmap);
-        }else{
-            map.put("code",400);
-            map.put("message","传入的参数(bvid)不能为空");
-            map.put("data",null);
-        }
+    //根据视频id数组查询视频评论表数据
+    @GetMapping("/viderbvidcommlist")
+    public List<Videocomment> videocombvidlist(Integer[] array){
+        return videocommentService.selectvidercomlist(array);
+    }
 
-        return map;
+    //根据视频id数组查询视频评论id 返回list
+    @GetMapping("/videocommmarr")
+    public List<Integer> selectarr(Integer[] arr){
+        return videocommentService.selectbvidarray(arr);
+    }
+
+    /**
+     * 根据bvid视频id去查找评论id
+     * @param bvid
+     * @return
+     */
+    @GetMapping(value = "/videocommbvid")
+    public List<Videocomment> selectbvids(Integer bvid){
+//        Map map = new HashMap();
+//        if(bvid !=null) {
+//            map.put("code",0);
+//            map.put("message","0");
+//            Map listmap = new HashMap();
+            List<Videocomment> videocommentList = videocommentService.selectbvID(bvid);//根据视频id查询评论id
+//            map.put("data",videocommentList);
+//        }else{
+//            map.put("code",400);
+//            map.put("message","传入的参数(bvid)不能为空");
+//            map.put("data",null);
+//        }
+
+        return videocommentList;
     }
 
     @GetMapping(value = "/videocommlist")

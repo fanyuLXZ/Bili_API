@@ -25,4 +25,11 @@ public interface VideolikeMapper extends BaseMapper<Videolike> {
      */
     public List<Videolike> selectbvid(@Param("bvID") Integer bvID);
 
+    /**
+     * 根据bvid数组查询所有的视频id的点赞表数据
+     * @param bvidlist
+     * @return
+     */
+    public List<Videolike> selectbvidlist(Integer[] bvidlist);
+
 }

@@ -15,6 +15,21 @@ import java.util.List;
  */
 public interface VideocommentService extends IService<Videocomment> {
 
+
+    /**
+     *  根据视频id数组查询视频评论表数据
+     * @param array
+     * @return
+     */
+    public List<Videocomment> selectvidercomlist(Integer[] array);
+
+    /**
+     * 根据视频id数组查询视频评论 返回list
+     * @param array
+     * @return
+     */
+    public List<Integer> selectbvidarray(Integer[] array);
+
     /**
      * 根据bvID 视频id查询视频下面的评论id
      * @param bvID

@@ -22,7 +22,6 @@ import org.springframework.stereotype.Controller;
  * @author 老徐
  * @since 2021-04-14
  */
-@Controller
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,18 +40,28 @@ public class RelationsController {
     @Autowired
     RelationsService relationsService;
 
-    //通过用户id 查看对应id的粉丝数
+    //通过用户id 查看对应id的粉丝id
     @RequestMapping("/relations")
-    public Map relations(){
-        Integer id=1;
+    public List<Map<String, Object>> relations(Integer uid){
         QueryWrapper<Relations> wrapper=new QueryWrapper();
-        wrapper.eq("uID",id);
-        List<Relations> relations=relationsService.list(wrapper);
-        Map<String, Object> map=new HashMap<String, Object>();
-        //map.put("uID",map.);
-        //map.put("followUID",relations.getFollowUID());
-        return map;
+        wrapper.eq("uID",uid);
+        List<Map<String, Object>> relations=relationsService.listMaps(wrapper);
+        return relations;
     }
+
+    //通过粉丝id查看对应关注的up主id
+    @RequestMapping("/intuid")
+    public List<Map<String, Object>> intuid(Integer followUID){
+        List<Map<String,Object>> udId=new ArrayList<>();
+        if (followUID!=null && !followUID.equals("")){
+            QueryWrapper<Relations> relationsQueryWrapper=new QueryWrapper<>();
+            relationsQueryWrapper.eq("followUID",followUID);
+            udId=relationsService.listMaps(relationsQueryWrapper);
+        }
+        return udId;
+    }
+
+
 
 }
 

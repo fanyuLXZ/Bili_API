@@ -33,4 +33,9 @@ public class VideolikeServiceImpl extends ServiceImpl<VideolikeMapper, Videolike
     public List<Videolike> selectlist() {
         return videolikeMapper.selectList(null);
     }
+
+    @Override
+    public List<Videolike> selectbvidlist(Integer[] bvidlist) {
+        return videolikeMapper.selectbvidlist(bvidlist);
+    }
 }
