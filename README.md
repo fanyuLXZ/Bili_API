@@ -23,7 +23,7 @@
 * ### 视频模块 Vide 
 	1. 查看子分区下视频  /videobvldZoning  
 	    参数：
-	    [公式标题锚点](#1)
+	    [公式标题锚点](#用户消息模块-message)
 	    * bvChildZoning 子分区id Integer   
 	    
 		返回值：根据子分区id(bvChildZoning)查询视频，返回list   
