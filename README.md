@@ -363,7 +363,7 @@
     10. 查询指定uid的基本信息   /user/infos   
     参考链接：https://api.vc.bilibili.com/account/v1/user/infos?csrf=ed03730a1cd49540995b9fa002c1cf1e&uids=402923390,77023684,37090048,37090048,412135935,412135935,32708657,32708657,412466388,412466388,268990278,268990278,429301126,429301126,256246039,256246039,361471422,361471422,14328316,14328316,235555226,235555226,233121654,233121654,144900177,144900177,260556632,260556632,37390043,77023684,6139562,77023684,66025025,66025025268990278&build=0&mobi_app=web   
     参数：
-    * uids uid集合 list&lt;int&gt;
+    * uids uid集合 list&lt;int&gt;   
     返回值：用户对象集合list&lt;object&gt;   
     用户对象：
     * mid uid int
@@ -417,7 +417,7 @@
                         - due_date 会员有效时间 date
                     - level_info 等级对象 object
                         - current_level 当前等级 int
-            - card 内容 string
+                - card 内容 string
     4. 根据偏移动态id获取后面20条动态信息 /dynamic_history
         参考链接：https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_history?csrf=4c7784a8355557a9595ccefc268e2f28&uid=26119890&offset_dynamic_id=516351783052848953&type=268435455&from=weball&platform=web
         参数：
@@ -451,7 +451,7 @@
         参数：  
         * dynamic_id 动态id
         返回：
-        * card 动态卡片对象集合 object
+        * card 动态卡片对象 object
             - desc 基础信息对象 object
                 - uid 发布人uid int
                 - type 动态类型 int 1为直播 2为文本 3为番剧 暂时返回2
@@ -474,7 +474,8 @@
             - card 内容 string
     6. 动态简略评论信息 /reply   
         参数：
-        * dynamic_id 动态id 
+        * dynamic_id 动态id
+        * sort 排序方法 0为热度 1为时间
         
         返回值：  
         - page 评论分页 object
@@ -483,6 +484,7 @@
             - num 当前页码 int
             - size 每页评论数 int
         - replies 评论对象集合 object
+            - rpid 评论id int
             - action 状态 0为无状态 2为踩了他
             - content 评论内容对象 object
                 - message 评论内容
@@ -517,7 +519,7 @@
         * dynamic_id 动态id
         * next 页码 int
         * mode 查询模式 1为热度 2为时间
-    
+        
         返回值：
         - replies 评论对象集合 object
             - action 状态 0为无状态 2为踩了他
@@ -582,9 +584,9 @@
     3. 指定分区排行榜（前12个）/region/ranking   
        参考链接：   
        https://api.bilibili.com/x/web-interface/ranking/region?rid=1&day=3&original=0   
-       参数：   
-       rid 分区id   
-       day 几天之内的排行 (只需要返回此参数为3的)   
+       参数： 
+        * rid 分区id   
+        * day 几天之内的排行 (只需要返回此参数为3的)   
        返回值(视频信息对象集合list&lt;object&gt;)：  
        视频信息对象：
         * aid bvid
@@ -593,6 +595,129 @@
         * title 标题 string
         * typename 子分区名 string
         * pts 评分 int
+    4. 子分区最新动态（四个） dynamic/region
+        参考链接：
+       https://api.bilibili.com/x/web-interface/dynamic/region?jsonp=jsonp&pn=1&ps=5&rid=24&callback=jsonCallback_bili_5019176969914881  
+       参数：  
+        * rid 子分区id int  
+        * pn 页码 int  
+        * ps 每页数据 int
+        
+           返回值：  
+        * page
+            - count 总数 int
+            - num 页码 int
+            - size 每页条数  
+        * archives 对象集合 object
+            - aid 视频id int
+            - bvid 视频id string
+            - ctime 发表时间 string
+            - desc 视频文章 string
+            - duration 视频时长 int  
+            - owner 作者信息 object
+                - mid 作者id int
+                - name 姓名 string
+                - face 头像 string 
+            - pic 预览图 string
+            - title 视频标题 string
+            - tname 视频分区 string
+            - stat 视频数据 object 
+                - aid 视频id int
+                - coin 投币数 int
+                - favorite 收藏数 int
+                - like 点赞数 int
+                - dislike 点踩数 int
+                - reply 评论数 int
+                - share 转发数 int
+                - view 观看数 int
+                - his_rank 排名 int
+      
+    5. 子分区视频按投稿时间排序（二十个） /cate/search
+       参考链接：  
+       https://s.search.bilibili.com/cate/search?main_ver=v3&search_type=video&view_type=hot_rank&order=click&copy_right=-1&cate_id=24&page=2&pagesize=20&jsonp=jsonp&time_from=20210422&time_to=20210429&callback=jsonCallback_bili_38590292299397416     
+       参数：
+        * rid 子分区id int
+        * pn 页码数 int
+        * ps 每页数据 int
+
+       返回值： 对象集合 list&lt;object&gt;
+        * page 分页对象
+            - count 总条数 int
+            - num 页码数 int
+            - size 每页数据 int
+        * archives 视频对象集合 object
+            - aid 视频id int
+            - bvid 视频id string 
+            - ctime 发布时间 string
+            - desc 视频文章 string
+            - duration 视频时长 int  
+            - owner 作者信息 object
+                - face 头像 string
+                - mid 作者id int
+                - name 作者名称 string
+            - pic 视频预览图 string
+            - stat 数据 object
+                - aid 视频id int
+                - coin 投币数 int
+                - favorite 收藏数 int
+                - like 点赞数 int
+                - dislike 点踩数 int
+                - reply 评论数 int
+                - share 转发数 int
+                - view 观看数 int
+                - his_rank 排名 int
+            - title 视频标题 string 
+            - tname 视频分区 string
+    6. 子分区视频按视频热度排序（二十个） /newlist  
+        参考链接：  
+        https://api.bilibili.com/x/web-interface/newlist?rid=24&type=0&pn=1&ps=20&jsonp=jsonp&callback=jsonCallback_bili_480916365086748953   
+        参数：
+        * rid 子分区id int
+        * pn 页码数 int  
+        * ps 每页数据 int  
+        返回值  对象集合 list&lt;object&gt;
+        - numPages 总页数 int
+        - numResults 总条数 int
+        - page 页码 int
+        - pagesize 每页数据 int
+            - result 对象集合object
+            - author 作者 strirng
+            - bvid 视频id int
+            - description 视频文章 string
+            - duration 视频时长 int
+            - favorites 收藏数 int
+            - mid 作者id int
+            - pic 预览图 string
+            - play 观看数 int
+            - pubdate 视频发表时间 string
+            - review 评论数 int
+            - title 视频标题 string
+            - type 视频类型 string 
+    
+    7. 排行榜（十个） /ranking/region  
+       参考链接：
+       https://api.bilibili.com/x/web-interface/ranking/region?jsonp=jsonp&rid=210&day=7&original=0&callback=jsonCallback_bili_0849387551523184111  
+       参数： 
+        * rid 子分区id int
+        
+        返回值 对象集合 object  
+        - aid 视频id int  
+        - author 作者名称 string  
+        - bvid 视频id string  
+        - coins 投币数 int  
+        - create 发布时间 string  
+        - description 视频文章 string  
+        - duration 视频时长 string  
+        - favorites 收藏数 int  
+        - mid 作者id int  
+        - pic 预览图 string  
+        - play 播放数 int  
+        - pts 综合评分 int  
+        - review 评论数 int  
+        - title 视频标题 string  
+        - typename 视频分区 string  
+        
+            
 * ### 视频观看记录模块 Watch-History
     1. /list   
        参考链接：https://api.bilibili.com/x/web-interface/history/cursor   
@@ -600,7 +725,8 @@
         * ps 数量
 
        返回值：
-        * list 视频对象列表 list&lt;object&gt; 视频对象：
+        * list 视频对象列表 list&lt;object&gt;   
+          视频对象：
             - title 视频标题 string
             - long_title 分p标题 string 暂且固定返回""
             - cover 封面图片路径 string
@@ -681,12 +807,18 @@
         * password 密码
 
 * ### 评论模块 comment
-    1. 评论回复信息
-       参数：
+    1. 评论回复信息 /reply
+        参数：  
         * rpid 评论id int
-          返回值：
+        * pn 页码 int
+        * ps 每页总条数 int
+        返回值：  
         * replies 评论对象集合 &lt;object&gt;
             - rpid 评论id int
+            - page 分页对象 object
+              - count 总数 int
+              - num 页码 int
+              - size 每页总条数 int
             - member 用户对象 object
                 - mid uid int
                 - uname 姓名 string
@@ -701,3 +833,41 @@
             - ctime 评论时间 date
             - content 内容对象 object
                 - message 评论内容 int
+
+* ### 视频模块 comment
+    1. 视频信息
+        * videoData 视频显示对象集合 &lt;object&gt;
+            - aid 视频id int
+            - video 视频对象 object
+                - id 视频id int
+                - title 标题 string
+                - desc 副标题 string
+                - ctime 发布时间 Date
+                - rank 排名 int
+            - owner up主对象 object
+                - mid up主id int
+                - upname up主名字 String
+                - fans 关注数 int
+                - attention 是否关注 boolean
+                - sign 个人简历 String
+                - face 头像图片  String
+            - stat 数据对象 object
+                - view 播放量 int
+                - favorite 收藏数 int
+                - coin 投币数 int
+                - like 点赞数 int
+            - related 视频推荐对象数组 &lt;object&gt;
+                - aid 视频id int
+                - pic 图片 String
+                - title 标题 String
+                - owner up对象 object
+                    - name up名字 String
+                    - mid  upid int
+                - stat 播放量对象 object
+                    - view 播放量 in
+            - mainpartition 父分区 object
+                - id 分区id int
+                - name 分区名 string
+            - deputydivision 子分区 object
+                - id 分区id int
+                - name 分区名 string
