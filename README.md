@@ -76,7 +76,7 @@
 		 	- bvChildZoning： 视频子分区ID
 		 	- bvIsDel： 是否已删除，0为未删除，1为已删除
 		 	
-	4. 查询所有视频的基础信息  /videolist   
+	4. ###### 查询所有视频的基础信息  /videolist   
 		返回值：查询视频基础信息表所有数据，返回list   
 		* code：0
 		* message：0
