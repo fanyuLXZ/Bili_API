@@ -22,6 +22,7 @@
 * ### 视频模块 Vide 
 	1. 查看子分区下视频  /videobvldZoning  
 	    参数：
+	    [公式标题锚点](#1)
 	    * bvChildZoning 子分区id Integer   
 	    
 		返回值：根据子分区id(bvChildZoning)查询视频，返回list   
@@ -58,7 +59,7 @@
 		 	
 	3. 查看作者下面发布的视频  /videouID  
 	    参数:  
-        * uID 作者id Integer   
+        * uID 作者id Integer   ### [需要跳转的目录] {#1}
         	 
 		返回值：根据作者id(uID)查询作者下面视频，返回list   
 		* code：0
