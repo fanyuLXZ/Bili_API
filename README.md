@@ -59,7 +59,7 @@
 		 	
 	3. 查看作者下面发布的视频  /videouID  
 	    参数:  
-        * uID 作者id Integer   ### [需要跳转的目录] {#1}
+        * uID 作者id Integer   
         	 
 		返回值：根据作者id(uID)查询作者下面视频，返回list   
 		* code：0
@@ -144,7 +144,7 @@
 	9. 查询被收藏的视频在那个收藏夹下  /videofavbvID   
 	    参数:   
         * bvID 被收藏的视频id Integer   
-                 
+                 ### [需要跳转的目录] {#1}
 		返回值：根据被收藏的视频id(bvID)查询该视频被收藏在那个收藏夹下(favListID) 返回对象   
 		* code：0
 		* message：0
