@@ -4,6 +4,7 @@
 
 ## 项目人员分配
 
+### [需要跳转的目录] {#1}
 * 徐文建：
     - 收藏模块 userFavoriteList
     - 视频模块 Video
@@ -22,6 +23,7 @@
 * ### 视频模块 Vide 
 	1. 查看子分区下视频  /videobvldZoning  
 	    参数：
+	    [公式标题锚点](#用户消息模块-message)
 	    * bvChildZoning 子分区id Integer   
 	    
 		返回值：根据子分区id(bvChildZoning)查询视频，返回list   
@@ -74,7 +76,7 @@
 		 	- bvChildZoning： 视频子分区ID
 		 	- bvIsDel： 是否已删除，0为未删除，1为已删除
 		 	
-	4. 查询所有视频的基础信息  /videolist   
+	4. ###### 查询所有视频的基础信息  /videolist   
 		返回值：查询视频基础信息表所有数据，返回list   
 		* code：0
 		* message：0
@@ -143,7 +145,6 @@
 	9. 查询被收藏的视频在那个收藏夹下  /videofavbvID   
 	    参数:   
         * bvID 被收藏的视频id Integer   
-                 
 		返回值：根据被收藏的视频id(bvID)查询该视频被收藏在那个收藏夹下(favListID) 返回对象   
 		* code：0
 		* message：0
