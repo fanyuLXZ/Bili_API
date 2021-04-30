@@ -42,4 +42,9 @@ public class UsermsgsServiceImpl extends ServiceImpl<UsermsgsMapper, Usermsgs> i
         wrapper.eq("userID",userID);
         return usermsgsMapper.selectList(wrapper);
     }
+
+    @Override
+    public List<Usermsgs> usermsgslistuidfid(Integer userID, Integer friendID) {
+        return usermsgsMapper.usermsgslistuidfid(userID,friendID);
+    }
 }

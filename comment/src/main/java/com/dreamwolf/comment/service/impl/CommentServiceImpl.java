@@ -25,6 +25,36 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     private CommentMapper commentMapper;
 
     @Override
+    public List<Comment> comdatalisttimepage(Integer[] array, Integer next) {
+        return commentMapper.comdatalisttimepage(array,next);
+    }
+
+    @Override
+    public List<Comment> commselectarrcidlist(Integer[] array) {
+        return commentMapper.commselectarrcidlist(array);
+    }
+
+    @Override
+    public List<Comment> comdatalisttime(Integer[] array) {
+        return commentMapper.comdatalisttime(array);
+    }
+
+    @Override
+    public List<Comment> comarrlist(Integer[] array) {
+        return commentMapper.comarrlist(array);
+    }
+
+    @Override
+    public List<Comment> selelistcIDreply(Integer cIDreply) {
+        return commentMapper.selelistcIDreply(cIDreply);
+    }
+
+    @Override
+    public Integer commcountcIDreply(Integer cIDreply) {
+        return commentMapper.commcountcIDreply(cIDreply);
+    }
+
+    @Override
     public List<Comment> commselectlistcid(Integer cid) {
         return commentMapper.commselectlistcid(cid);
     }
@@ -40,8 +70,8 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     }
 
     @Override
-    public List<Comment> selectrpid(Integer cIDreply) {
-        return commentMapper.selectrpid(cIDreply);
+    public List<Comment> selectrpid(Integer cIDreply,Integer pn,Integer ps) {
+        return commentMapper.selectrpid(cIDreply,pn,ps);
     }
 
     @Override
@@ -58,4 +88,6 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     public List<Comment> commentuidlist(Integer[] array) {
         return commentMapper.commentuidlist(array);
     }
+
+
 }

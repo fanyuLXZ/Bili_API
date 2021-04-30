@@ -13,4 +13,6 @@ public interface UsermapService {
     public Map membe(@RequestParam Integer uID);
 
 
+
+
 }

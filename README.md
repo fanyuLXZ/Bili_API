@@ -363,7 +363,7 @@
     10. 查询指定uid的基本信息   /user/infos   
     参考链接：https://api.vc.bilibili.com/account/v1/user/infos?csrf=ed03730a1cd49540995b9fa002c1cf1e&uids=402923390,77023684,37090048,37090048,412135935,412135935,32708657,32708657,412466388,412466388,268990278,268990278,429301126,429301126,256246039,256246039,361471422,361471422,14328316,14328316,235555226,235555226,233121654,233121654,144900177,144900177,260556632,260556632,37390043,77023684,6139562,77023684,66025025,66025025268990278&build=0&mobi_app=web   
     参数：
-    * uids uid集合 list&lt;int&gt;   
+    * uids uid集合 list&lt;int&gt;
     返回值：用户对象集合list&lt;object&gt;   
     用户对象：
     * mid uid int
@@ -417,7 +417,7 @@
                         - due_date 会员有效时间 date
                     - level_info 等级对象 object
                         - current_level 当前等级 int
-                - card 内容 string
+            - card 内容 string
     4. 根据偏移动态id获取后面20条动态信息 /dynamic_history
         参考链接：https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_history?csrf=4c7784a8355557a9595ccefc268e2f28&uid=26119890&offset_dynamic_id=516351783052848953&type=268435455&from=weball&platform=web
         参数：
@@ -451,7 +451,7 @@
         参数：  
         * dynamic_id 动态id
         返回：
-        * card 动态卡片对象 object
+        * card 动态卡片对象集合 object
             - desc 基础信息对象 object
                 - uid 发布人uid int
                 - type 动态类型 int 1为直播 2为文本 3为番剧 暂时返回2

@@ -18,7 +18,15 @@
                 <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
                     #{item}
                 </foreach>
+                AND STATUS=1
             </if>
+        </where>
+    </select>
+
+    <select id="commlikecidlist" resultMap="likemap">
+        SELECT * FROM `commentlike`
+        <where>
+            `cID`=#{cid} AND uID=#{uid}
         </where>
     </select>
 

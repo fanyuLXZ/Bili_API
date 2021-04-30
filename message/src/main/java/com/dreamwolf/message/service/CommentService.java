@@ -14,6 +14,15 @@ import java.util.Map;
 public interface CommentService {
 
     /**
+     * 根据cid数组查询并且cIDreply=0的则是动态或者视频
+     * @param array
+     * @return
+     */
+    @GetMapping("/comseletcilll")
+    public List<Comment> commcidlists(@RequestParam Integer[] array);
+
+
+    /**
      * 根据uid用户查询评论表发布的评论数据
      * @return
      */
@@ -34,7 +43,7 @@ public interface CommentService {
      * @return
      */
     @GetMapping("/commcidlistmap")
-    public Map<String,Comment> commcidlist(@RequestParam Integer cid);
+    public Map<String,Map<String,Object>> commcidlist(@RequestParam Integer cid);
 
     /**
      * 根据评论id查询评论总数
@@ -53,7 +62,7 @@ public interface CommentService {
     public List<Integer> selectuidlist(@RequestParam Integer uid);
 
     /**
-     * 根据被点赞评论id查询评论点赞表的数据
+     * 根据评论id查询评论点赞表的数据
      * @param arr
      * @return
      */

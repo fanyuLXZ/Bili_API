@@ -5,6 +5,7 @@ import com.dreamwolf.comment.pojo.Comment;
 import com.dreamwolf.comment.pojo.Commentdata;
 import com.dreamwolf.comment.service.CommentService;
 import com.dreamwolf.comment.service.CommentdataService;
+import com.dreamwolf.gateway.entity.ResponseData;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -30,17 +31,17 @@ public class CommentdataController {
     private CommentdataService commentdataService;
 
     @GetMapping("/commdatacid")
-    public Map selectucid(Integer cID){
-        Map map = new HashMap();
+    public ResponseData<Commentdata> selectucid(Integer cID){
+        ResponseData<Commentdata> responseData = new ResponseData<>();
         Commentdata commentdate = commentdataService.selectcID(cID);
-        if(map!=null && commentdate !=null && cID!=null){
-            map.put("data",commentdate);
+        if(commentdate !=null && cID!=null){
+            responseData.setData(commentdate);
         }else {
-            map.put("code",400);
-            map.put("message","commentdate对象为空或参数cid异常");
-            map.put("data",null);
+            responseData.setCode(400);
+            responseData.setMessage("commentdate对象为空或参数cid异常");
+            responseData.setData(null);
         }
-        return map;
+        return responseData;
     }
 
 }

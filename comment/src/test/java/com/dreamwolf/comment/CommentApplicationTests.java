@@ -22,7 +22,12 @@ class CommentApplicationTests {
 
     @Test
     void contextLoads() {
+        Integer[] array = new Integer[]{1,5,9,4,6,3,2};
+
+
     }
+
+
 
 
     //代码生成器

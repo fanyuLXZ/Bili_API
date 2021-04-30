@@ -75,7 +75,8 @@ public class VideolikeController {
      * @return
      */
     @GetMapping("/videolikeuid")
-    public List<Videolike> sellist(Integer[] array){
+    public List<Videolike> sellist(Integer[] array)
+    {
         return videolikeService.selectbvidlist(array);
     }
 

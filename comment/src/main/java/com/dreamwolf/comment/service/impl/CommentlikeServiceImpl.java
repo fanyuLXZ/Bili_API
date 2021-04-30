@@ -20,6 +20,10 @@ public class CommentlikeServiceImpl extends ServiceImpl<CommentlikeMapper, Comme
         return commentlikeMapper.selectlikelsit(array);
     }
 
+    @Override
+    public Commentlike commlikecidlist(Integer cid, Integer uid) {
+        return commentlikeMapper.commlikecidlist(cid,uid);
+    }
 
 
 }

@@ -1,6 +1,6 @@
-package com.dreamwolf.comment.service;
+package com.dreamwolf.fav.service;
 
-import com.dreamwolf.comment.pojo.Video;
+import com.dreamwolf.fav.pojo.Video;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author 老徐
- * @since 2021-04-22
+ * @since 2021-04-27
  */
 public interface VideoService extends IService<Video> {
 

@@ -24,4 +24,13 @@ public interface UsermsgsMapper extends BaseMapper<Usermsgs> {
      */
     public List<Usermsgs> selectusermsgs(Integer uid);
 
+
+    /**
+     * 查询聊天记录 根据传过来的当前用户id和对话人的id查询两个人的聊天记录
+     * @param userID
+     * @param friendID
+     * @return
+     */
+    public List<Usermsgs> usermsgslistuidfid(Integer userID,Integer friendID);
+
 }

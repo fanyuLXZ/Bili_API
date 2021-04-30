@@ -17,4 +17,47 @@
         </where>
     </select>
 
+    <select id="commdatalist" resultMap="comdatemap">
+        SELECT cID,(`cLikeNum`-`cUnLikeNum`) AS aaa  FROM `commentdata`
+        <where>
+            <if test="array!=null and array.length>0">
+                `cID`IN
+                <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+                ORDER BY aaa DESC LIMIT 0,3
+            </if>
+        </where>
+    </select>
+
+
+    <select id="commdatalistarr" resultMap="comdatemap">
+        SELECT cID,(`cLikeNum`-`cUnLikeNum`) AS aaa  FROM `commentdata`
+        <where>
+            <if test="array!=null and array.length>0">
+                `cID`IN
+                <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+                ORDER BY aaa DESC LIMIT 0,10
+            </if>
+        </where>
+    </select>
+
+
+    <select id="commdatalistpage" resultMap="comdatemap">
+        SELECT cID,(`cLikeNum`-`cUnLikeNum`) AS aaa  FROM `commentdata`
+        <where>
+            <if test="array!=null and array.length>0">
+                `cID`IN
+                <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+                ORDER BY aaa DESC LIMIT #{next},10
+            </if>
+        </where>
+    </select>
+
+
+
 </mapper>

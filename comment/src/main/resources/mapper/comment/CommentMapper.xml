@@ -23,6 +23,7 @@
             <if test="cIDreply !=null">
                 cIDreply =#{cIDreply}
             </if>
+            LIMIT #{pn},#{ps}
         </where>
     </select>
 
@@ -58,7 +59,7 @@
         </where>
     </select>
 
-    <select id="commcidlist" resultMap="comremap">
+    <select id="selectarrlist" resultMap="comremap">
         SELECT * FROM `comment`
         <where>
             `cID`=#{cID}
@@ -82,6 +83,90 @@
             </if>
         </where>
     </select>
+
+    <select id="commcountcIDreply" resultType="int">
+         SELECT COUNT(`cIDreply`) FROM `comment`
+         <where>
+             <if test="cIDreply!=null">
+                 `cIDreply`=#{cIDreply}
+             </if>
+         </where>
+    </select>
+
+    <select id="selelistcIDreply" resultMap="comremap">
+        SELECT * FROM `comment`
+        <where>
+            <if test="cIDreply!=null">
+                `cIDreply`=#{cIDreply}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="comarrlist" resultMap="comremap">
+        SELECT * FROM `comment`
+        <where>
+            <if test="array!=null and array.length>0">
+                `cID` IN
+                <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+                <foreach collection="array" item="id" open=" ORDER BY FIELD(cID," close=")" separator=",">
+                    ${id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+
+    <select id="comdatalisttime" resultMap="comremap">
+        SELECT * FROM `comment`
+        <where>
+            <if test="array!=null and array.length>0">
+                `cID` IN
+                <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+                AND `cIDreply` =0 ORDER BY `createTime` DESC LIMIT 0,10
+            </if>
+        </where>
+    </select>
+
+    <select id="comdatalisttimepage" resultMap="comremap">
+        SELECT * FROM `comment`
+        <where>
+            <if test="array!=null and array.length>0">
+                `cID` IN
+                <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+                AND `cIDreply` =0 ORDER BY `createTime` DESC LIMIT #{next},10
+            </if>
+        </where>
+    </select>
+
+
+
+    <select id="commcidlist" resultMap="comremap">
+        SELECT * FROM `comment`
+        <where>
+                `cID`=#{cID} AND `cIDreply`=0
+        </where>
+    </select>
+
+    <select id="commselectarrcidlist" resultMap="comremap">
+        SELECT * FROM `comment`
+        <where>
+            <if test="array!=null and array.length>0">
+                `cID` IN
+                <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+                AND `cIDreply`=0
+            </if>
+        </where>
+    </select>
+
 
 
 </mapper>

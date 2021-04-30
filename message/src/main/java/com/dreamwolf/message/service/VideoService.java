@@ -1,5 +1,6 @@
 package com.dreamwolf.message.service;
 
+import com.dreamwolf.comment.pojo.Comment;
 import com.dreamwolf.video.pojo.Video;
 import com.dreamwolf.video.pojo.Videocomment;
 import com.dreamwolf.video.pojo.Videolike;
@@ -12,6 +13,7 @@ import java.util.Map;
 
 @FeignClient(name = "video-service")
 public interface VideoService {
+
 
     /**
      * 通过bvid查询对象

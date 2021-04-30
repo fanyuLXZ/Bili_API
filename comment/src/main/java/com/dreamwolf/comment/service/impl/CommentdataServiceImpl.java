@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * <p>
@@ -26,8 +27,23 @@ public class CommentdataServiceImpl extends ServiceImpl<CommentdataMapper, Comme
     private CommentdataMapper commentdataMapper;
 
     @Override
+    public List<Commentdata> commdatalistpage(Integer[] array, Integer next) {
+        return commentdataMapper.commdatalistpage(array,next);
+    }
+
+    @Override
+    public List<Commentdata> commdatalistarr(Integer[] array) {
+        return commentdataMapper.commdatalistarr(array);
+    }
+
+    @Override
     public Commentdata selectcID(Integer cID) {
         return commentdataMapper.selectcID(cID);
+    }
+
+    @Override
+    public List<Commentdata> commdatalist(Integer[] array) {
+        return commentdataMapper.commdatalist(array);
     }
 
 
