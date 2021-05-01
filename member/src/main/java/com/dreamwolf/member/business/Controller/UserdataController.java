@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dreamwolf.member.business.entity.User;
 import com.dreamwolf.member.business.entity.Userdata;
 import com.dreamwolf.member.business.entity.Vip;
+import com.dreamwolf.member.business.entity.web_interface.LevelInfo;
 import com.dreamwolf.member.business.service.RelationsService;
 import com.dreamwolf.member.business.service.UserService;
 import com.dreamwolf.member.business.service.UserdataService;
@@ -59,13 +60,9 @@ public class UserdataController {
         data.put("face",user.getHeadImgPath());//头像
         data.put("email_verified",user.getBoundEmail()!=null);//邮箱
         data.put("mobile_verified",user.getBoundPhone()!=null);//电话好吗
-        //等级信息相关
-        Map<String, Object> level_info=new HashMap<String, Object>();
-        level_info.put("current_level",userdata.getLevel());//当前等级
-        level_info.put("current_min",jisuan.residue(userdata.getLevel()));//最小经验
-        level_info.put("current_exp",userdata.getExp());//当前经验值
-        level_info.put("next_exp",jisuan.mincurrent(userdata.getLevel(),userdata.getExp().intValue()));//需要的经验值
-        data.put("level_info",level_info);
+        data.put("level_info",new LevelInfo(userdata.getLevel(),
+                        jisuan.residue(userdata.getLevel()),userdata.getExp(),
+                jisuan.mincurrent(userdata.getLevel(),userdata.getExp().intValue()));
         data.put("money",userdata.getCoinsNum());//硬币数
         data.put("bcoin_balance",userdata.getBCoinsNum());//b币数
         //会员相关

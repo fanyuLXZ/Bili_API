@@ -279,6 +279,7 @@ public class UserController {
         return  listMap;
     }
 
+    //当前登陆的用户基本信息
     @GetMapping("card/info")
     public Map<String,Object> cardinfos(){
         Map<String,Object> map=new HashMap<>();

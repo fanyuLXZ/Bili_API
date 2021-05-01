@@ -7,8 +7,6 @@ import com.dreamwolf.dynamic.business.service.DynamicdataService;
 import com.dreamwolf.dynamic.business.service.DynamiclikeService;
 import com.dreamwolf.dynamic.business.service.MemberService;
 import com.dreamwolf.dynamic.business.service.UserdynamicService;
-import org.omg.CORBA.INTERNAL;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -56,7 +54,7 @@ public class DynamiclikeController {
         Map<String, Object> map=new HashMap<String, Object>();
         map.put("code",0);
         map.put("message","");
-        map.put("ttl",1);
+        map.put("ttl",1);user/info
         Map<String, Object> data=new HashMap<String, Object>();
         Map<String, Object> total=new HashMap<String, Object>();*/
         List<Map<String,Object>> items=new ArrayList<>();//点赞数组
