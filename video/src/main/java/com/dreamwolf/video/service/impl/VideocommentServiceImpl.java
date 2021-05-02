@@ -1,14 +1,12 @@
 package com.dreamwolf.video.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.dreamwolf.video.pojo.Videocomment;
-import com.dreamwolf.video.mapper.VideocommentMapper;
-import com.dreamwolf.video.service.VideocommentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.dreamwolf.video.mapper.VideocommentMapper;
+import com.dreamwolf.video.pojo.Videocomment;
+import com.dreamwolf.video.service.VideocommentService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.io.Serializable;
 import java.util.List;
 
 /**

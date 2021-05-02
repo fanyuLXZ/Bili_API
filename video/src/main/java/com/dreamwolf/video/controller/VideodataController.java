@@ -12,8 +12,6 @@ import com.dreamwolf.video.service.VideoService;
 import com.dreamwolf.video.service.VideodataService;
 import com.dreamwolf.video.service.VideoratingService;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;

@@ -6,6 +6,8 @@ import com.dreamwolf.member.business.entity.Relations;
 import com.dreamwolf.member.business.entity.User;
 import com.dreamwolf.member.business.entity.Userdata;
 import com.dreamwolf.member.business.entity.Vip;
+import com.dreamwolf.member.business.entity.web_interface.OwnerInfo;
+import com.dreamwolf.member.business.entity.web_interface.VideoinfoOwnerInfo;
 import com.dreamwolf.member.business.service.*;
 import com.dreamwolf.member.business.util.Hide;
 import com.dreamwolf.member.business.util.Maps;
@@ -396,6 +398,25 @@ public class UserController {
             listmap.add(map);
         }
         return listmap;
+    }
+
+    //根据用户id查询对象 /video/info
+    @GetMapping("/video/info")
+    public VideoinfoOwnerInfo video_info(Integer uid,Integer mid){//当前用户id  用户id
+        User user=userService.getById(mid);
+        QueryWrapper<Userdata> userdataQueryWrapper=new QueryWrapper<>();
+        userdataQueryWrapper.eq("uID",mid);
+        Userdata userdata=userdataService.getOne(userdataQueryWrapper);
+        QueryWrapper<Relations> relationsQueryWrapper=new QueryWrapper<>();
+        relationsQueryWrapper.eq("followUID",uid).eq("uID",mid);
+        Relations relations=relationsService.getOne(relationsQueryWrapper);
+        return new VideoinfoOwnerInfo(user,userdata,relations!=null);
+    }
+
+    @GetMapping("/ownerinfo")
+    public OwnerInfo OwnerInfo(Integer uID){
+        User user=userService.getById(uID);
+        return new OwnerInfo(user);
     }
 }
 
