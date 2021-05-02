@@ -19,6 +19,30 @@ import java.util.List;
 public interface VideoService extends IService<Video> {
 
     /**
+     * 根据子分区id查询最新的视频数据集合
+     * @param rid
+     * @param pn
+     * @param ps
+     * @return
+     */
+    public List<Video> videolistselectpage(Integer rid,Integer pn,Integer ps);
+
+    /**
+     * 根据子分区id查询最新的4条数据
+     * @param rid
+     * @return
+     */
+    public List<Video> videoliselectridlist(Integer rid);
+
+    /**
+     * 查询不等于当前视频id的随机20条数据
+     * @param bvid
+     * @param pagesum
+     * @return
+     */
+    public List<Video> selecvideolistpa(Integer bvid,int pagesum);
+
+    /**
      * 根据bvid数组查询对象 返回集合
      * @param bvidlist bvid数组
      * @return

@@ -25,6 +25,11 @@ public class VideoratingServiceImpl extends ServiceImpl<VideoratingMapper, Video
     private VideoratingMapper videoratingMapper;
 
     @Override
+    public List<Videorating> selectvideolist() {
+        return videoratingMapper.selectvideolist();
+    }
+
+    @Override
     public Videorating selectbvid(Integer bvID) {
         return videoratingMapper.selectbvid(bvID);
     }

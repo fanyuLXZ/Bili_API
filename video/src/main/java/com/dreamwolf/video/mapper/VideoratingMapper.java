@@ -25,6 +25,12 @@ public interface VideoratingMapper extends BaseMapper<Videorating> {
      */
     public Videorating selectbvid(@Param("bvID") Integer bvID);
 
+    /**
+     * 查询所有视频评分根据视频评分排序
+     * @return
+     */
+    public List<Videorating> selectvideolist();
+
 
 
 }

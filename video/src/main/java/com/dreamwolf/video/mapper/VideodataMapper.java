@@ -16,6 +16,11 @@ import org.apache.ibatis.annotations.Mapper;
 public interface VideodataMapper extends BaseMapper<Videodata> {
 
 
+    /**
+     * 根据视频id查询视频数据
+     * @param bvID 视频id
+     * @return
+     */
     public Videodata selectbvid(Integer bvID);
 
 }

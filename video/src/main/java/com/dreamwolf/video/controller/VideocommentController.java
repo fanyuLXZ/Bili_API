@@ -46,18 +46,7 @@ public class VideocommentController {
      */
     @GetMapping(value = "/videocommbvid")
     public List<Videocomment> selectbvids(Integer bvid){
-//        Map map = new HashMap();
-//        if(bvid !=null) {
-//            map.put("code",0);
-//            map.put("message","0");
-//            Map listmap = new HashMap();
             List<Videocomment> videocommentList = videocommentService.selectbvID(bvid);//根据视频id查询评论id
-//            map.put("data",videocommentList);
-//        }else{
-//            map.put("code",400);
-//            map.put("message","传入的参数(bvid)不能为空");
-//            map.put("data",null);
-//        }
 
         return videocommentList;
     }

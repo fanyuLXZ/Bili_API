@@ -12,4 +12,8 @@
         </where>
     </select>
 
+    <select id="selectvideolist" resultType="Videorating">
+        SELECT * FROM `videorating` ORDER BY `OverallRating` DESC
+    </select>
+
 </mapper>

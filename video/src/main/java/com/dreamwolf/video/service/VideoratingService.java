@@ -17,6 +17,12 @@ import java.util.List;
 public interface VideoratingService extends IService<Videorating> {
 
     /**
+     * 查询所有视频评分根据视频评分排序
+     * @return
+     */
+    public List<Videorating> selectvideolist();
+
+    /**
      * 根据视频id(bvID)查询视频评分
      * @param bvID
      * @return

@@ -1,11 +1,12 @@
 package com.dreamwolf.video.controller;
 
 
+import com.dreamwolf.video.entity.web_interface.ArchivesInfo;
+import com.dreamwolf.video.entity.web_interface.Statinfo;
 import com.dreamwolf.video.pojo.Video;
 import com.dreamwolf.video.pojo.Videodata;
 import com.dreamwolf.video.pojo.Videorating;
 import com.dreamwolf.video.service.*;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -293,6 +294,113 @@ public class VideoController {
         Video video = videoService.videobvIDlist(bvid);
         map.put("data",video);
         return map;
+    }
+
+    /**
+     * 根据子分区id查询最新的4条数据
+     * @return
+     */
+    @GetMapping("/videoridlists")
+    public List<ArchivesInfo> selectvideorid(Integer rid){
+//        Integer rid = 310;
+        List list = new ArrayList();
+        List<Video> videoList = videoService.videoliselectridlist(rid); //查询最新的4条记录
+        for(Video video : videoList){
+            ArchivesInfo archivesInfo = new ArchivesInfo();
+            archivesInfo.setAid(video.getBvID());   //视频id
+            archivesInfo.setBvid("bv"+video.getBvID()); //bv号
+            archivesInfo.setCtime(video.getBvPostTime());   //发表时间
+            archivesInfo.setDesc(video.getBvDesc());    //视频文章
+            archivesInfo.setDuration(video.getDuration());  //时长
+            archivesInfo.setPic(video.getBvCoverImgPath()); //图片
+            archivesInfo.setTitle(video.getBvTitle());  //标题
+            archivesInfo.setTname(null);    //分区名
+                Statinfo statinfo = new Statinfo();
+                Videodata videodata = videodataService.selectbvID(video.getBvID()); //根据视频id查询数据
+            if(videodata!=null){
+                statinfo.setAid(videodata.getBvID());   //视频id
+                statinfo.setCoin(videodata.getBvCoinNum());
+                statinfo.setFavorite(videodata.getBvFavoriteNum());
+                statinfo.setLike(videodata.getBvLikeNum()); //点赞数
+                statinfo.setDislike(null);  //点踩
+                statinfo.setReply(videodata.getBvCommentNum());
+                statinfo.setShare(videodata.getBvRetweetNum());
+                statinfo.setView(videodata.getBvPlayNum());
+                List<Videorating> videoratings = videoratingService.selectvideolist();  //查询所有视频评分数据按评分排序
+                int a=0;
+                int i=0;
+                for(Videorating  videorating : videoratings){
+                    a+=1;
+                    if(videorating.getBvID()==video.getBvID()){
+                        i=a;
+                        break;
+                    }
+                }
+                statinfo.setHis_rank(i);    //排名
+                archivesInfo.setStatinfo(statinfo);
+            }else{
+                archivesInfo.setStatinfo(null);
+            }
+            list.add(archivesInfo);
+
+        }
+
+        return list;
+    }
+
+
+    /**
+     * 根据子分区id查询最新的数据并分页处理
+     * @return
+     */
+    @GetMapping("/selectlistvieopage")
+    public List<ArchivesInfo> selectlistvieopage(Integer rid,Integer pn,Integer ps){
+//        Integer rid = 310;
+//        Integer pn=0;
+//        Integer ps=20;
+        List list = new ArrayList();
+        List<Video> videoList = videoService.videolistselectpage(rid,pn,ps); //查询最新的4条记录
+        for(Video video : videoList){
+            ArchivesInfo archivesInfo = new ArchivesInfo();
+            archivesInfo.setAid(video.getBvID());   //视频id
+            archivesInfo.setBvid("bv"+video.getBvID()); //bv号
+            archivesInfo.setCtime(video.getBvPostTime());   //发表时间
+            archivesInfo.setDesc(video.getBvDesc());    //视频文章
+            archivesInfo.setDuration(video.getDuration());  //时长
+            archivesInfo.setPic(video.getBvCoverImgPath()); //图片
+            archivesInfo.setTitle(video.getBvTitle());  //标题
+            archivesInfo.setTname(null);    //分区名
+            Statinfo statinfo = new Statinfo();
+            Videodata videodata = videodataService.selectbvID(video.getBvID()); //根据视频id查询数据
+            if(videodata!=null){
+                statinfo.setAid(videodata.getBvID());   //视频id
+                statinfo.setCoin(videodata.getBvCoinNum());
+                statinfo.setFavorite(videodata.getBvFavoriteNum());
+                statinfo.setLike(videodata.getBvLikeNum()); //点赞数
+                statinfo.setDislike(null);  //点踩
+                statinfo.setReply(videodata.getBvCommentNum());
+                statinfo.setShare(videodata.getBvRetweetNum());
+                statinfo.setView(videodata.getBvPlayNum());
+                List<Videorating> videoratings = videoratingService.selectvideolist();  //查询所有视频评分数据按评分排序
+                int a=0;
+                int i=0;
+                for(Videorating  videorating : videoratings){
+                    a+=1;
+                    if(videorating.getBvID()==video.getBvID()){
+                        i=a;
+                        break;
+                    }
+                }
+                statinfo.setHis_rank(i);    //排名
+                archivesInfo.setStatinfo(statinfo);
+            }else{
+                archivesInfo.setStatinfo(null);
+            }
+            list.add(archivesInfo);
+
+        }
+
+        return list;
     }
 
 

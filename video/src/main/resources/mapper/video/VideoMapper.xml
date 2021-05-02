@@ -15,6 +15,25 @@
         <result column="duration" property="duration" />
     </resultMap>
 
+    <select id="videolistselectpage" resultMap="videomap">
+        SELECT * FROM `video`
+        <where>
+            `bvChildZoning`=#{rid} ORDER BY `bvPostTime` DESC LIMIT #{pn},#{ps}
+        </where>
+    </select>
+
+
+    <select id="videoliselectridlist" resultMap="videomap">
+        SELECT * FROM video WHERE `bvChildZoning`=#{rid} ORDER BY `bvPostTime` DESC LIMIT 0,4
+    </select>
+
+    <select id="selecvideolistpa" resultMap="videomap">
+        SELECT * FROM video
+        <where>
+            `bvID` !=#{bvid} LIMIT #{pagesum},20
+        </where>
+    </select>
+
 
     <select id="selectlistBvid" resultMap="videomap">
         SELECT * FROM `video`
