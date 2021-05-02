@@ -5,14 +5,10 @@ import com.dreamwolf.video.pojo.Video;
 import com.dreamwolf.video.pojo.Videodata;
 import com.dreamwolf.video.pojo.Videorating;
 import com.dreamwolf.video.service.*;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**

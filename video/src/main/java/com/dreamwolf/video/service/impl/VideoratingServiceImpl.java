@@ -1,10 +1,9 @@
 package com.dreamwolf.video.service.impl;
 
-import com.dreamwolf.video.pojo.Videorating;
-import com.dreamwolf.video.mapper.VideoratingMapper;
-import com.dreamwolf.video.service.VideoratingService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.apache.ibatis.annotations.Param;
+import com.dreamwolf.video.mapper.VideoratingMapper;
+import com.dreamwolf.video.pojo.Videorating;
+import com.dreamwolf.video.service.VideoratingService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

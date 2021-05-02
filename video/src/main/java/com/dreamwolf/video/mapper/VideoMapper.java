@@ -1,12 +1,10 @@
 package com.dreamwolf.video.mapper;
 
-import com.dreamwolf.video.pojo.Video;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.dreamwolf.video.pojo.Video;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**

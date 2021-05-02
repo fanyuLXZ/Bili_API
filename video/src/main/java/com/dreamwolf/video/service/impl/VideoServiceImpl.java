@@ -1,15 +1,12 @@
 package com.dreamwolf.video.service.impl;
 
-import com.dreamwolf.video.pojo.Video;
-import com.dreamwolf.video.mapper.VideoMapper;
-import com.dreamwolf.video.service.VideoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.dreamwolf.video.mapper.VideoMapper;
+import com.dreamwolf.video.pojo.Video;
+import com.dreamwolf.video.service.VideoService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**

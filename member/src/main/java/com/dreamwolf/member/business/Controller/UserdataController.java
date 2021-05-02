@@ -62,7 +62,7 @@ public class UserdataController {
         data.put("mobile_verified",user.getBoundPhone()!=null);//电话好吗
         data.put("level_info",new LevelInfo(userdata.getLevel(),
                         jisuan.residue(userdata.getLevel()),userdata.getExp(),
-                jisuan.mincurrent(userdata.getLevel(),userdata.getExp().intValue()));
+                jisuan.mincurrent(userdata.getLevel(),userdata.getExp().intValue())));
         data.put("money",userdata.getCoinsNum());//硬币数
         data.put("bcoin_balance",userdata.getBCoinsNum());//b币数
         //会员相关

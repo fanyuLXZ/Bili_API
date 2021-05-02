@@ -23,4 +23,9 @@ public interface VideoCount {
 
     @GetMapping("/videoseldate")
     public Map<String, Object> selmap(@RequestParam String str);
+
+    //提前写好
+    @GetMapping("/videomap")
+    public List<Map<String,Object>> videolistmap(@RequestParam Integer rid);
+
 }

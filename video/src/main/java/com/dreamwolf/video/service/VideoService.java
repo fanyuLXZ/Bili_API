@@ -1,11 +1,8 @@
 package com.dreamwolf.video.service;
 
-import com.dreamwolf.video.pojo.Video;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.apache.ibatis.annotations.Param;
+import com.dreamwolf.video.pojo.Video;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**

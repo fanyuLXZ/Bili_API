@@ -1,9 +1,9 @@
 package com.dreamwolf.video.service.impl;
 
-import com.dreamwolf.video.pojo.Videofavorite;
-import com.dreamwolf.video.mapper.VideofavoriteMapper;
-import com.dreamwolf.video.service.VideofavoriteService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.dreamwolf.video.mapper.VideofavoriteMapper;
+import com.dreamwolf.video.pojo.Videofavorite;
+import com.dreamwolf.video.service.VideofavoriteService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

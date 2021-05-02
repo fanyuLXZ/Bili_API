@@ -1,7 +1,7 @@
 package com.dreamwolf.video.service;
 
-import com.dreamwolf.video.pojo.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.dreamwolf.video.pojo.User;
 
 /**
  * <p>

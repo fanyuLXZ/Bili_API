@@ -1,13 +1,10 @@
 package com.dreamwolf.video.controller;
 
 
-import com.dreamwolf.video.pojo.Video;
 import com.dreamwolf.video.pojo.Videolike;
 import com.dreamwolf.video.service.VideoService;
 import com.dreamwolf.video.service.VideolikeService;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;

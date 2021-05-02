@@ -1,8 +1,7 @@
 package com.dreamwolf.video.service;
 
-import com.dreamwolf.video.pojo.Videorating;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.apache.ibatis.annotations.Param;
+import com.dreamwolf.video.pojo.Videorating;
 
 import java.util.List;
 
