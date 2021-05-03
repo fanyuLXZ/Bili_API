@@ -1,7 +1,7 @@
 package com.dreamwolf.comment.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.dreamwolf.comment.pojo.Commentlike;
+import com.dreamwolf.entity.comment.Commentlike;
 
 import java.util.List;
 

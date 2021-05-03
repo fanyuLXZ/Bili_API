@@ -1,7 +1,7 @@
 package com.dreamwolf.video.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.dreamwolf.video.pojo.Videofavorite;
+import com.dreamwolf.entity.video.Videofavorite;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.dreamwolf.fav.service.impl;
 
-import com.dreamwolf.fav.pojo.Userfavoritelist;
+import com.dreamwolf.entity.fav.Userfavoritelist;
 import com.dreamwolf.fav.mapper.UserfavoritelistMapper;
 import com.dreamwolf.fav.service.UserfavoritelistService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

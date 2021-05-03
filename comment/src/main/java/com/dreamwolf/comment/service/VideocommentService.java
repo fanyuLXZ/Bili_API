@@ -1,7 +1,7 @@
 package com.dreamwolf.comment.service;
 
-import com.dreamwolf.comment.pojo.Videocomment;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.dreamwolf.entity.video.Videocomment;
 
 /**
  * <p>

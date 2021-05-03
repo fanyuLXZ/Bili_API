@@ -1,7 +1,5 @@
 package com.dreamwolf.fav.service;
 
-import com.dreamwolf.fav.pojo.Favoritelike;
-import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>

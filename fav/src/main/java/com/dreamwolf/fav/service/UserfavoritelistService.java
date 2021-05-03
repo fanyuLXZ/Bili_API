@@ -1,6 +1,6 @@
 package com.dreamwolf.fav.service;
 
-import com.dreamwolf.fav.pojo.Userfavoritelist;
+import com.dreamwolf.entity.fav.Userfavoritelist;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.apache.ibatis.annotations.Param;
 

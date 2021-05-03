@@ -1,8 +1,7 @@
 package com.dreamwolf.comment.service;
 
-import com.dreamwolf.comment.pojo.Comment;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.apache.ibatis.annotations.Param;
+import com.dreamwolf.entity.comment.Comment;
 
 import java.util.List;
 

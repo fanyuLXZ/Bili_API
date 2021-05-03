@@ -1,8 +1,8 @@
 package com.dreamwolf.fav.service.impl;
 
-import com.dreamwolf.fav.pojo.Video;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.dreamwolf.entity.video.Video;
 import com.dreamwolf.fav.mapper.VideoMapper;
-import com.dreamwolf.fav.service.VideoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2021-04-27
  */
 @Service
-public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements VideoService {
+public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements IService<Video> {
 
 }

@@ -1,9 +1,8 @@
 package com.dreamwolf.message.service;
 
-import com.dreamwolf.comment.pojo.Comment;
-import com.dreamwolf.video.pojo.Video;
-import com.dreamwolf.video.pojo.Videocomment;
-import com.dreamwolf.video.pojo.Videolike;
+import com.dreamwolf.entity.video.Video;
+import com.dreamwolf.entity.video.Videocomment;
+import com.dreamwolf.entity.video.Videolike;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +19,7 @@ public interface VideoService {
      * @return
      */
     @GetMapping("/videobvidlists")
-    public Map<String,Video> videobvidlists(@RequestParam Integer bvid);
+    public Map<String, Video> videobvidlists(@RequestParam Integer bvid);
 
     //根据视频id数组查询视频评论id 返回list
     @GetMapping("/videocommmarr")

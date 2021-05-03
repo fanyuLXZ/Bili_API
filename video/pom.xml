@@ -73,13 +73,7 @@
         </dependency>
         <dependency>
             <groupId>com.dream-wolf</groupId>
-            <artifactId>member</artifactId>
-            <version>1.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.dream-wolf</groupId>
-            <artifactId>zoning</artifactId>
+            <artifactId>entity</artifactId>
             <version>1.0</version>
         </dependency>
 

@@ -1,13 +1,12 @@
 package com.dreamwolf.message.controller;
 
-
-import com.dreamwolf.comment.pojo.Comment;
-import com.dreamwolf.comment.pojo.Commentlike;
-import com.dreamwolf.message.pojo.Usermsgs;
+import com.dreamwolf.entity.comment.Comment;
+import com.dreamwolf.entity.comment.Commentlike;
+import com.dreamwolf.entity.message.Usermsgs;
+import com.dreamwolf.entity.video.Video;
+import com.dreamwolf.entity.video.Videocomment;
+import com.dreamwolf.entity.video.Videolike;
 import com.dreamwolf.message.service.*;
-import com.dreamwolf.video.pojo.Video;
-import com.dreamwolf.video.pojo.Videocomment;
-import com.dreamwolf.video.pojo.Videolike;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.RestController;

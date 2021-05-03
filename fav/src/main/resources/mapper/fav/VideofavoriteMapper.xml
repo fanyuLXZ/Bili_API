@@ -7,7 +7,7 @@
         <id column="bvID" property="bvID"/>
         <result column="favListID" property="favListID" />
         <result column="favTime" property="favTime" />
-        <association property="video" javaType="com.dreamwolf.fav.pojo.Video">
+        <association property="video" javaType="com.dreamwolf.entity.video.Video">
             <id column="bvID" property="bvID"/>
             <result column="uID" property="uID"/>
             <result column="bvCoverImgPath" property="bvCoverImgPath"/>

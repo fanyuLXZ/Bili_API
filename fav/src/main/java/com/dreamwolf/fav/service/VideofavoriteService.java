@@ -1,6 +1,6 @@
 package com.dreamwolf.fav.service;
 
-import com.dreamwolf.fav.pojo.Videofavorite;
+import com.dreamwolf.entity.fav.Videofavorite;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

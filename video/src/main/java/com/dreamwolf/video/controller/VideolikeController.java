@@ -1,7 +1,7 @@
 package com.dreamwolf.video.controller;
 
 
-import com.dreamwolf.video.pojo.Videolike;
+import com.dreamwolf.entity.video.Videolike;
 import com.dreamwolf.video.service.VideoService;
 import com.dreamwolf.video.service.VideolikeService;
 import org.springframework.web.bind.annotation.GetMapping;

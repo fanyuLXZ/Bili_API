@@ -1,8 +1,8 @@
 package com.dreamwolf.video.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.dreamwolf.entity.video.Videorating;
 import com.dreamwolf.video.mapper.VideoratingMapper;
-import com.dreamwolf.video.pojo.Videorating;
 import com.dreamwolf.video.service.VideoratingService;
 import org.springframework.stereotype.Service;
 

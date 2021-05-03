@@ -1,7 +1,7 @@
 package com.dreamwolf.fav.service.impl;
 
+import com.dreamwolf.entity.fav.Videofavorite;
 import com.dreamwolf.fav.mapper.VideofavoriteMapper;
-import com.dreamwolf.fav.pojo.Videofavorite;
 import com.dreamwolf.fav.service.VideofavoriteService;
 import org.springframework.stereotype.Service;
 

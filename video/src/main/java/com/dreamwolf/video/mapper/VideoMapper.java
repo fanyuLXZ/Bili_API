@@ -1,7 +1,7 @@
 package com.dreamwolf.video.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.dreamwolf.video.pojo.Video;
+import com.dreamwolf.entity.video.Video;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -60,7 +60,7 @@ public interface VideoMapper extends BaseMapper<Video> {
      * @param rid
      * @return
      */
-    public List<Video> videoliselectridlist(Integer rid,Integer pn,Integer ps);
+    public List<Video> videoliselectridlist(Integer rid, Integer pn, Integer ps);
 
     /**
      * 查询不等于当前视频id的随机20条数据

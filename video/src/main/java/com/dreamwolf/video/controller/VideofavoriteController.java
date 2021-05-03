@@ -1,7 +1,7 @@
 package com.dreamwolf.video.controller;
 
 
-import com.dreamwolf.video.pojo.Videofavorite;
+import com.dreamwolf.entity.video.Videofavorite;
 import com.dreamwolf.video.service.VideofavoriteService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
