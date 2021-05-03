@@ -1,12 +1,11 @@
 server:
-  port: 8083
+  port: 8087
 mybatis-plus:
   mapper-locations: classpath:/mapper/*Mapper.xml
-  type-aliases-package: com.dreamwolf.member.business.entity
-#spring
+  type-aliases-package: com.dreamwolf.zoning.business.entity
 spring:
   application:
-    name: member-service
+    name: zoning-service
   cloud:
     nacos:
       #注册服务地址

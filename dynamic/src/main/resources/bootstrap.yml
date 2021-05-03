@@ -13,10 +13,10 @@ spring:
     nacos:
       #注册服务地址
       discovery:
-        server-addr: xwjlxzzl.cn.utools.club:80
+        server-addr: xwjlxzzl.cn1.utools.club:80
       #配置服务地址
       config:
-        server-addr: xwjlxzzl.cn.utools.club:80
+        server-addr: xwjlxzzl.cn1.utools.club:80
         file-extension: yaml
         extension-configs[0]:
           data-id: sentinel-config.yaml
