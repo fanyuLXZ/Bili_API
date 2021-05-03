@@ -1,6 +1,6 @@
 package com.dreamwolf.member.business.service;
 
-import com.dreamwolf.member.business.entity.Relations;
+import com.dreamwolf.entity.member.Relations;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

@@ -2,10 +2,7 @@ package com.dreamwolf.member.business.Controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.dreamwolf.member.business.entity.Relations;
-import com.dreamwolf.member.business.entity.User;
-import com.dreamwolf.member.business.entity.Userdata;
-import com.dreamwolf.member.business.entity.Vip;
+import com.dreamwolf.entity.member.Relations;
 import com.dreamwolf.member.business.service.RelationsService;
 import com.dreamwolf.member.business.service.UserService;
 import com.dreamwolf.member.business.service.UserdataService;

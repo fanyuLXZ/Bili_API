@@ -2,10 +2,10 @@ package com.dreamwolf.member.business.Controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.dreamwolf.member.business.entity.Relations;
-import com.dreamwolf.member.business.entity.User;
-import com.dreamwolf.member.business.entity.Userdata;
-import com.dreamwolf.member.business.entity.Vip;
+import com.dreamwolf.entity.member.Relations;
+import com.dreamwolf.entity.member.User;
+import com.dreamwolf.entity.member.Userdata;
+import com.dreamwolf.entity.member.Vip;
 import com.dreamwolf.entity.member.web_interface.OwnerInfo;
 import com.dreamwolf.entity.member.web_interface.VideoinfoOwnerInfo;
 import com.dreamwolf.member.business.service.*;

@@ -1,7 +1,7 @@
 package com.dreamwolf.member.business.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.dreamwolf.member.business.entity.Relations;
+import com.dreamwolf.entity.member.Relations;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
