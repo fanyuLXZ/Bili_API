@@ -1,4 +1,4 @@
-package com.dreamwolf.member.business.entity.web_interface;
+package com.dreamwolf.entity.member.web_interface;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

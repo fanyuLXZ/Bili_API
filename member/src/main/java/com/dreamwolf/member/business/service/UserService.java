@@ -2,7 +2,6 @@ package com.dreamwolf.member.business.service;
 
 import com.dreamwolf.member.business.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>

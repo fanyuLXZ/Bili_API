@@ -1,6 +1,6 @@
-package com.dreamwolf.member.business.entity.web_interface;
+package com.dreamwolf.entity.member.web_interface;
 
-import com.dreamwolf.member.business.entity.User;
+import com.dreamwolf.entity.member.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

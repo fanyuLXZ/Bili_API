@@ -5,14 +5,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dreamwolf.member.business.entity.User;
 import com.dreamwolf.member.business.entity.Userdata;
 import com.dreamwolf.member.business.entity.Vip;
-import com.dreamwolf.member.business.entity.web_interface.LevelInfo;
+import com.dreamwolf.entity.member.web_interface.LevelInfo;
 import com.dreamwolf.member.business.service.RelationsService;
 import com.dreamwolf.member.business.service.UserService;
 import com.dreamwolf.member.business.service.UserdataService;
 import com.dreamwolf.member.business.service.VipService;
 import com.dreamwolf.member.business.util.Jisuan;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
