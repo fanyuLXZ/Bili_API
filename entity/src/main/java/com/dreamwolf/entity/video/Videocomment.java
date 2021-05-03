@@ -1,4 +1,4 @@
-package com.dreamwolf.video.pojo;
+package com.dreamwolf.entity.video;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

@@ -497,8 +497,15 @@ public class VideoController {
         return list;
     }
 
-
-
+    /**
+     * 根据子分区id查询视频总数
+     * @param rid
+     * @return
+     */
+    @GetMapping("/selectidcoutn")
+    public Integer selectidcoutn(Integer rid){
+        return videoService.selectridcount(rid);
+    }
 
 
 

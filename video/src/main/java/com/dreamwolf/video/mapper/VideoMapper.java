@@ -19,6 +19,13 @@ import java.util.List;
 public interface VideoMapper extends BaseMapper<Video> {
 
     /**
+     * 根据子分区id查询视频总数
+     * @param rid
+     * @return
+     */
+    public Integer selectridcount(Integer rid);
+
+    /**
      * 按热度查询的id查询视频数据并显示前10条
      * @param array
      * @return
