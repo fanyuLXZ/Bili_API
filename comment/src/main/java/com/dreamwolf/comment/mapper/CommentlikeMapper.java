@@ -1,7 +1,7 @@
 package com.dreamwolf.comment.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.dreamwolf.comment.pojo.Commentlike;
+import com.dreamwolf.entity.comment.Commentlike;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

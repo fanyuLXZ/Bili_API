@@ -1,8 +1,8 @@
 package com.dreamwolf.fav.service.impl;
 
-import com.dreamwolf.fav.pojo.User;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.dreamwolf.entity.member.User;
 import com.dreamwolf.fav.mapper.UserMapper;
-import com.dreamwolf.fav.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2021-04-27
  */
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IService<User> {
 
 }

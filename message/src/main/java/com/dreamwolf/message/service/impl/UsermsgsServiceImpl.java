@@ -1,7 +1,7 @@
 package com.dreamwolf.message.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.dreamwolf.message.pojo.Usermsgs;
+import com.dreamwolf.entity.message.Usermsgs;
 import com.dreamwolf.message.mapper.UsermsgsMapper;
 import com.dreamwolf.message.service.UsermsgsService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

@@ -1,8 +1,8 @@
 package com.dreamwolf.comment.service;
 
-import com.dreamwolf.comment.pojo.Comment;
-import com.dreamwolf.comment.pojo.Commentdata;
+
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.dreamwolf.entity.comment.Commentdata;
 
 import java.util.List;
 

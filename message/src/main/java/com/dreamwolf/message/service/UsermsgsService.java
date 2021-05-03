@@ -1,6 +1,6 @@
 package com.dreamwolf.message.service;
 
-import com.dreamwolf.message.pojo.Usermsgs;
+import com.dreamwolf.entity.message.Usermsgs;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;

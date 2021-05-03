@@ -1,6 +1,6 @@
 package com.dreamwolf.message.mapper;
 
-import com.dreamwolf.message.pojo.Usermsgs;
+import com.dreamwolf.entity.message.Usermsgs;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

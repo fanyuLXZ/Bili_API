@@ -1,6 +1,6 @@
 package com.dreamwolf.fav.mapper;
 
-import com.dreamwolf.fav.pojo.User;
+import com.dreamwolf.entity.member.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

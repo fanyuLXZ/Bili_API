@@ -1,13 +1,11 @@
 package com.dreamwolf.fav.controller;
 
 
-import com.dreamwolf.fav.pojo.User;
-import com.dreamwolf.fav.pojo.Userfavoritelist;
-import com.dreamwolf.fav.pojo.Video;
-import com.dreamwolf.fav.pojo.Videofavorite;
+import com.dreamwolf.entity.fav.Userfavoritelist;
+import com.dreamwolf.entity.fav.Videofavorite;
+import com.dreamwolf.entity.member.User;
 import com.dreamwolf.fav.service.*;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 

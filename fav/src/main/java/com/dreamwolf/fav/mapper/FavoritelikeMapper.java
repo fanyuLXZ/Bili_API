@@ -1,6 +1,6 @@
 package com.dreamwolf.fav.mapper;
 
-import com.dreamwolf.fav.pojo.Favoritelike;
+import com.dreamwolf.entity.fav.Favoritelike;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

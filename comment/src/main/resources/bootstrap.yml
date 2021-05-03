@@ -27,6 +27,6 @@ spring:
   #配置日志
 mybatis-plus:
   mapper-locations: classpath:mapper/comment/*.xml
-  type-aliases-package: com.dreamwolf.comment.pojo
+  type-aliases-package: com.dreamwolf.entity.comment
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

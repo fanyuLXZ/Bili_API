@@ -1,5 +1,6 @@
 package com.dreamwolf.gateway.entity;
 
+
 import lombok.Data;
 
 @Data

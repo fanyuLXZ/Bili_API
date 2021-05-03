@@ -1,8 +1,7 @@
 package com.dreamwolf.message.service;
 
-
-import com.dreamwolf.comment.pojo.Comment;
-import com.dreamwolf.comment.pojo.Commentlike;
+import com.dreamwolf.entity.comment.Comment;
+import com.dreamwolf.entity.comment.Commentlike;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

@@ -1,7 +1,7 @@
 package com.dreamwolf.fav.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.dreamwolf.fav.pojo.Videofavorite;
+import com.dreamwolf.entity.fav.Videofavorite;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

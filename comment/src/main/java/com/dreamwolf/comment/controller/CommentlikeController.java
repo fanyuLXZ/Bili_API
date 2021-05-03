@@ -1,7 +1,7 @@
 package com.dreamwolf.comment.controller;
 
-import com.dreamwolf.comment.pojo.Commentlike;
 import com.dreamwolf.comment.service.CommentlikeService;
+import com.dreamwolf.entity.comment.Commentlike;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

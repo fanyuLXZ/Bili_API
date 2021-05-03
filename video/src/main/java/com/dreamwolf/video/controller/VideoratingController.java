@@ -1,7 +1,7 @@
 package com.dreamwolf.video.controller;
 
 
-import com.dreamwolf.video.pojo.Videorating;
+import com.dreamwolf.entity.video.Videorating;
 import com.dreamwolf.video.service.VideoratingService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

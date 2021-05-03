@@ -11,8 +11,8 @@ import com.baomidou.mybatisplus.generator.config.po.TableFill;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.dreamwolf.entity.video.Video;
 import com.dreamwolf.video.mapper.VideoMapper;
-import com.dreamwolf.video.pojo.Video;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,8 +33,20 @@ class VideoApplicationTests {
 
     @Test
     void show() {
-//        List<Video> list = videoMapper.selectList(null);
-//        list.forEach(System.out::println);
+        Integer[] arr = new Integer[]{1,9,8,7,2,6};
+        int temp=0;
+        for(int i=0;i<arr.length-1;i++){
+            for(int j=0;j<arr.length-1-i;j++){
+                if(arr[j]<arr[j+1]){
+                    temp=arr[j];
+                    arr[j]=arr[j+1];
+                    arr[j+1]=temp;
+                }
+            }
+        }
+        for (Integer a : arr){
+            System.out.println(a);
+        }
 
     }
 

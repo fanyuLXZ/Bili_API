@@ -1,14 +1,13 @@
 package com.dreamwolf.video.controller;
 
-
-import com.dreamwolf.member.business.entity.web_interface.OwnerInfo;
-import com.dreamwolf.video.entity.web_interface.ArchivesInfo;
-import com.dreamwolf.video.entity.web_interface.Region;
-import com.dreamwolf.video.entity.web_interface.Result;
-import com.dreamwolf.video.entity.web_interface.Statinfo;
-import com.dreamwolf.video.pojo.Video;
-import com.dreamwolf.video.pojo.Videodata;
-import com.dreamwolf.video.pojo.Videorating;
+import com.dreamwolf.entity.member.web_interface.OwnerInfo;
+import com.dreamwolf.entity.video.Video;
+import com.dreamwolf.entity.video.Videodata;
+import com.dreamwolf.entity.video.Videorating;
+import com.dreamwolf.entity.video.web_interface.ArchivesInfo;
+import com.dreamwolf.entity.video.web_interface.Region;
+import com.dreamwolf.entity.video.web_interface.Result;
+import com.dreamwolf.entity.video.web_interface.Statinfo;
 import com.dreamwolf.video.service.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -302,7 +301,7 @@ public class VideoController {
      * @return
      */
     @GetMapping("/videoridlists")
-    public List<ArchivesInfo> selectvideorid(Integer rid,Integer pn,Integer ps){
+    public List<ArchivesInfo> selectvideorid(Integer rid, Integer pn, Integer ps){
 //        Integer rid = 310;
         List list = new ArrayList();
         List<Video> videoList = videoService.videoliselectridlist(rid,pn,ps); //查询最新的4条记录
