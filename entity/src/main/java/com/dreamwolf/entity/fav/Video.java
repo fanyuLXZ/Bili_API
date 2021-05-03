@@ -1,16 +1,19 @@
-package com.dreamwolf.video.pojo;
+package com.dreamwolf.entity.fav;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
+import java.util.Date;
+import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableField;
+import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
-import java.util.Date;
+import lombok.experimental.Accessors;
+import org.springframework.stereotype.Controller;
 
 /**
  * <p>
@@ -65,19 +68,6 @@ public class Video implements Serializable {
     @ApiModelProperty(value = "是否已删除，0为未删除，1为已删除")
     @TableField("bvIsDel")
     private Integer bvIsDel;
-
-    @ApiModelProperty(value = "时长")
-    @TableField("duration")
-    private Integer duration;
-
-    //视频评分
-    private Videorating videorating;
-
-    private String date;
-    private String datetime;
-    
-    private Integer countbv; // 数量
-    private Integer bvChild; //子分区id
 
 
 }

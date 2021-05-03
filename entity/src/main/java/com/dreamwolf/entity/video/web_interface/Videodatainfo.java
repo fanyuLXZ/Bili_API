@@ -1,6 +1,8 @@
 package com.dreamwolf.entity.video.web_interface;
 
 import com.dreamwolf.entity.member.web_interface.VideoinfoOwnerInfo;
+import com.dreamwolf.entity.zoning.web_interface.Deputydivision;
+import com.dreamwolf.entity.zoning.web_interface.Mainpartition;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,8 +22,8 @@ public class Videodatainfo {
     private Videoinfo videoinfo;//视频对象
     private Statinfo statinfo;  //对象集合
     private List relatedinfo;//视频推荐数组
-//    private Mainpartition mainpartition;
-//    private Deputydivision deputydivision;
+    private Mainpartition mainpartition;
+    private Deputydivision deputydivision;
 
 
 }

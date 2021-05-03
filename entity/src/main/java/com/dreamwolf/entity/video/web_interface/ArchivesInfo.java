@@ -1,7 +1,7 @@
-package com.dreamwolf.video.entity.web_interface;
+package com.dreamwolf.entity.video.web_interface;
 
 
-import com.dreamwolf.member.business.entity.web_interface.OwnerInfo;
+import com.dreamwolf.entity.member.web_interface.OwnerInfo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;

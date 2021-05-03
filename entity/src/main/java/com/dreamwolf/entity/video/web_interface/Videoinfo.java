@@ -1,4 +1,4 @@
-package com.dreamwolf.video.entity.web_interface;
+package com.dreamwolf.entity.video.web_interface;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

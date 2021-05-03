@@ -1,7 +1,7 @@
 package com.dreamwolf.video.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.dreamwolf.video.pojo.Videodata;
+import com.dreamwolf.entity.video.Videodata;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

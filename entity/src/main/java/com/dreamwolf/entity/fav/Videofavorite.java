@@ -1,4 +1,4 @@
-package com.dreamwolf.fav.pojo;
+package com.dreamwolf.entity.fav;
 
 
 import com.baomidou.mybatisplus.annotation.IdType;

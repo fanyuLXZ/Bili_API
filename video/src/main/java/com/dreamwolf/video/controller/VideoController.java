@@ -473,7 +473,9 @@ public class VideoController {
         for(Video video : videoList){
             Videodata videodata = videodataService.selectbvID(video.getBvID()); //根据视频id查询视频数据
             Region result = new Region();
-            result.setAuthor(null); //作者名称
+            OwnerInfo ownerInfo = usermapService.OwnerInfo(video.getUID());
+            String uname = ownerInfo.getName();
+            result.setAuthor(uname); //作者名称
             result.setAid(video.getBvID());      //视频id
             result.setBvid("bv"+video.getBvID());   //bv号
             result.setCoins(videodata.getBvCoinNum());  //投币数
@@ -488,7 +490,8 @@ public class VideoController {
             result.setCreate(video.getBvPostTime());   //发表时间
             result.setReview(videodata.getBvCommentNum());  //评论数
             result.setTitle(video.getBvTitle());    //标题
-            result.setTypename(null);   //视频类型
+            String name= userpageService.elementby(video.getBvChildZoning());
+            result.setTypename(name);   //视频类型
             list.add(result);
         }
         return list;

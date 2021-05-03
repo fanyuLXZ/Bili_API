@@ -10,6 +10,8 @@ import com.dreamwolf.entity.video.web_interface.Relatedinfo;
 import com.dreamwolf.entity.video.web_interface.Statinfo;
 import com.dreamwolf.entity.video.web_interface.Videodatainfo;
 import com.dreamwolf.entity.video.web_interface.Videoinfo;
+import com.dreamwolf.entity.zoning.web_interface.Deputydivision;
+import com.dreamwolf.entity.zoning.web_interface.Mainpartition;
 import com.dreamwolf.video.service.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -156,10 +158,10 @@ public class VideodataController {
         videodatainfo.setVideoinfo(videoinfo);       //视频对象
         VideoinfoOwnerInfo videoinfoOwnerInfo= usermapService.video_info(uid,video.getUID());  //当前用户id,用户id
         videodatainfo.setVideoinfoOwnerInfo(videoinfoOwnerInfo);   //用户对象
-//        Mainpartition mainpartition =userpageService.mainpartition(video.getBvChildZoning());
-//        videodatainfo.setMainpartition(mainpartition);
-//        Deputydivision deputydivision =userpageService.deputydivision(video.getBvChildZoning());
-//        videodatainfo.setDeputydivision(deputydivision);
+        Mainpartition mainpartition =userpageService.mainpartition(video.getBvChildZoning());
+        videodatainfo.setMainpartition(mainpartition);
+        Deputydivision deputydivision =userpageService.deputydivision(video.getBvChildZoning());
+        videodatainfo.setDeputydivision(deputydivision);
         return videodatainfo;
     }
 
