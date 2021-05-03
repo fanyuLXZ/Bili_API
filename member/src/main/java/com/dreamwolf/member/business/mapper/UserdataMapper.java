@@ -1,7 +1,8 @@
 package com.dreamwolf.member.business.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.dreamwolf.member.business.entity.Userdata;
+import com.dreamwolf.entity.member.Userdata;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

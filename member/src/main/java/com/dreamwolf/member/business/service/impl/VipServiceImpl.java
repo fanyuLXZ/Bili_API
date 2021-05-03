@@ -1,7 +1,8 @@
 package com.dreamwolf.member.business.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dreamwolf.member.business.entity.Vip;
+import com.dreamwolf.entity.member.Vip;
+
 import com.dreamwolf.member.business.mapper.VipMapper;
 import com.dreamwolf.member.business.service.VipService;
 import org.springframework.stereotype.Service;

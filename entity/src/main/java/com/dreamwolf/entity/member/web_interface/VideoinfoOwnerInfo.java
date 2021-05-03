@@ -1,7 +1,7 @@
-package com.dreamwolf.member.business.entity.web_interface;
+package com.dreamwolf.entity.member.web_interface;
 
-import com.dreamwolf.member.business.entity.User;
-import com.dreamwolf.member.business.entity.Userdata;
+import com.dreamwolf.entity.member.User;
+import com.dreamwolf.entity.member.Userdata;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +25,7 @@ public class VideoinfoOwnerInfo {
         this.sign = sign;
         this.face = face;
     }
-    public VideoinfoOwnerInfo(User user, Userdata userdata,boolean relations) {
+    public VideoinfoOwnerInfo(User user, Userdata userdata, boolean relations) {
         this.mid=user.getuID();
         this.upname=user.getNickName();
         this.face=user.getHeadImgPath();

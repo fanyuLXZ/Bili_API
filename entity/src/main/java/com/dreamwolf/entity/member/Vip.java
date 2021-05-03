@@ -1,4 +1,4 @@
-package com.dreamwolf.member.business.entity;
+package com.dreamwolf.entity.member;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

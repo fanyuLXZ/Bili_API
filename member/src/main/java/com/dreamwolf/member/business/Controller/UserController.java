@@ -2,21 +2,19 @@ package com.dreamwolf.member.business.Controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.dreamwolf.member.business.entity.Relations;
-import com.dreamwolf.member.business.entity.User;
-import com.dreamwolf.member.business.entity.Userdata;
-import com.dreamwolf.member.business.entity.Vip;
-import com.dreamwolf.member.business.entity.web_interface.OwnerInfo;
-import com.dreamwolf.member.business.entity.web_interface.VideoinfoOwnerInfo;
+import com.dreamwolf.entity.member.Relations;
+import com.dreamwolf.entity.member.User;
+import com.dreamwolf.entity.member.Userdata;
+import com.dreamwolf.entity.member.Vip;
+import com.dreamwolf.entity.member.web_interface.OwnerInfo;
+import com.dreamwolf.entity.member.web_interface.VideoinfoOwnerInfo;
 import com.dreamwolf.member.business.service.*;
 import com.dreamwolf.member.business.util.Hide;
-import com.dreamwolf.member.business.util.Maps;
 import com.dreamwolf.member.business.util.md5;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;

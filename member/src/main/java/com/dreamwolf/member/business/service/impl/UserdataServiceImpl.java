@@ -1,6 +1,7 @@
 package com.dreamwolf.member.business.service.impl;
 
-import com.dreamwolf.member.business.entity.Userdata;
+import com.dreamwolf.entity.member.Userdata;
+
 import com.dreamwolf.member.business.mapper.UserdataMapper;
 import com.dreamwolf.member.business.service.UserdataService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
