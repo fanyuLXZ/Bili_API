@@ -1,4 +1,4 @@
-package com.dreamwolf.zoning.business.entity.web_interface;
+package com.dreamwolf.entity.zoning.web_interface;
 
 import lombok.Data;
 

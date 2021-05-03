@@ -1,6 +1,6 @@
 package com.dreamwolf.dynamic.business.service;
 
-import com.dreamwolf.dynamic.business.entity.Dynamiclike;
+import com.dreamwolf.entity.dynamic.Dynamiclike;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

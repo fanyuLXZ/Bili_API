@@ -1,4 +1,4 @@
-package com.dreamwolf.zoning.business.entity;
+package com.dreamwolf.entity.zoning.web_interface;
 
 import java.io.Serializable;
 import lombok.Data;

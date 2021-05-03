@@ -2,10 +2,9 @@ package com.dreamwolf.zoning.business.Controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.dreamwolf.video.entity.web_interface.ArchivesInfo;
-import com.dreamwolf.zoning.business.entity.Video;
-import com.dreamwolf.zoning.business.entity.Zoning;
-import com.dreamwolf.zoning.business.entity.web_interface.*;
+import com.dreamwolf.entity.zoning.web_interface.Deputydivision;
+import com.dreamwolf.entity.zoning.web_interface.Mainpartition;
+import com.dreamwolf.entity.zoning.Zoning;
 import com.dreamwolf.zoning.business.service.IZoningService;
 import com.dreamwolf.zoning.business.service.VideoCount;
 import com.dreamwolf.zoning.business.util.Count;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

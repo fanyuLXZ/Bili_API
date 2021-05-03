@@ -61,9 +61,8 @@
         </dependency>
         <dependency>
             <groupId>com.dream-wolf</groupId>
-            <artifactId>member</artifactId>
+            <artifactId>entity</artifactId>
             <version>1.0</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>

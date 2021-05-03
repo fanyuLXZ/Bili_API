@@ -1,6 +1,5 @@
-package com.dreamwolf.dynamic.business.entity;
+package com.dreamwolf.entity.dynamic;
 
-import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -14,7 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * <p>
- * 动态点赞表，用于区分用户点赞
+ * 用户动态表
  * </p>
  *
  * @author zhaolin
@@ -23,35 +22,40 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class Dynamiclike implements Serializable {
+public class Userdynamic implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 被点赞的动态ID
+     * 单条动态ID，主键自增
      */
     @TableId("udID")
     private Integer udID;
 
     /**
-     * 点赞用户ID
+     * 用户ID
      */
     @TableField("uID")
     private Integer uID;
 
     /**
-     * 点赞状态，点赞状态，未做任何操作为0，点赞为1
-默认为0
+     * 动态正文
      */
-    private Integer status;
+    private String content;
 
     /**
-     * 点赞时间，默认为当前时间
+     * 发表动态的时间
      */
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone ="GMT+8")
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    @TableField("createTime")
-    private LocalDateTime createTime;
+    @TableField("updateTime")
+    private LocalDateTime updateTime;
+
+    /**
+     * 动态是否已经删除
+     */
+    @TableField("isDel")
+    private Integer isDel;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -73,19 +77,27 @@ public class Dynamiclike implements Serializable {
         this.uID = uID;
     }
 
-    public Integer getStatus() {
-        return status;
+    public String getContent() {
+        return content;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public LocalDateTime getCreateTime() {
-        return createTime;
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Integer getIsDel() {
+        return isDel;
+    }
+
+    public void setIsDel(Integer isDel) {
+        this.isDel = isDel;
     }
 }

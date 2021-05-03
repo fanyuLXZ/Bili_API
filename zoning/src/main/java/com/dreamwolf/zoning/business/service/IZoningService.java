@@ -1,12 +1,10 @@
 package com.dreamwolf.zoning.business.service;
 
-import com.dreamwolf.zoning.business.entity.Video;
-import com.dreamwolf.zoning.business.entity.Zoning;
+import com.dreamwolf.entity.zoning.web_interface.Video;
+import com.dreamwolf.entity.zoning.Zoning;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>

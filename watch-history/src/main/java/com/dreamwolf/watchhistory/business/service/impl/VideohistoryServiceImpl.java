@@ -1,6 +1,6 @@
 package com.dreamwolf.watchhistory.business.service.impl;
 
-import com.dreamwolf.watchhistory.business.entity.Videohistory;
+import com.dreamwolf.entity.watchhistory.Videohistory;
 import com.dreamwolf.watchhistory.business.mapper.VideohistoryMapper;
 import com.dreamwolf.watchhistory.business.service.IVideohistoryService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

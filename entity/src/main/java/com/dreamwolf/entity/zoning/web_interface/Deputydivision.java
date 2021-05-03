@@ -1,20 +1,22 @@
-package com.dreamwolf.zoning.business.entity.web_interface;
+package com.dreamwolf.entity.zoning.web_interface;
 
-import com.dreamwolf.zoning.business.entity.Zoning;
+
+import com.dreamwolf.entity.zoning.Zoning;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-//主分区
+//子分区
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Mainpartition {
+public class Deputydivision {
     private Integer id;//主分区
     private String name;//子区名
 
-    public Mainpartition(Zoning zoning) {
+    public Deputydivision(Zoning zoning) {
         this.id = zoning.getzID();
         this.name = zoning.getzName();
     }
+
 }

@@ -63,5 +63,10 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-loadbalancer</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.dream-wolf</groupId>
+            <artifactId>entity</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 </project>

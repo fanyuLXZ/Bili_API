@@ -1,8 +1,8 @@
 package com.dreamwolf.dynamic.business.service;
 
-import com.dreamwolf.dynamic.business.entity.User;
-import com.dreamwolf.dynamic.business.entity.Userdata;
-import com.dreamwolf.dynamic.business.entity.Vip;
+import com.dreamwolf.entity.dynamic.User;
+import com.dreamwolf.entity.dynamic.Userdata;
+import com.dreamwolf.entity.dynamic.Vip;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

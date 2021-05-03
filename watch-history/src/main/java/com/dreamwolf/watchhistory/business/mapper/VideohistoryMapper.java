@@ -1,6 +1,6 @@
 package com.dreamwolf.watchhistory.business.mapper;
 
-import com.dreamwolf.watchhistory.business.entity.Videohistory;
+import com.dreamwolf.entity.watchhistory.Videohistory;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

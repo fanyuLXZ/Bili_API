@@ -2,19 +2,19 @@ package com.dreamwolf.dynamic.business.Controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.dreamwolf.dynamic.business.entity.*;
 import com.dreamwolf.dynamic.business.service.DynamicdataService;
 import com.dreamwolf.dynamic.business.service.DynamiclikeService;
 import com.dreamwolf.dynamic.business.service.MemberService;
 import com.dreamwolf.dynamic.business.service.UserdynamicService;
+import com.dreamwolf.entity.dynamic.Dynamicdata;
+import com.dreamwolf.entity.dynamic.Dynamiclike;
+import com.dreamwolf.entity.dynamic.Userdynamic;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**

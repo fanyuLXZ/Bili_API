@@ -1,8 +1,7 @@
 package com.dreamwolf.dynamic.business.Controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.dreamwolf.dynamic.business.entity.Dynamiccomment;
-import com.dreamwolf.dynamic.business.entity.Dynamicdata;
+import com.dreamwolf.entity.dynamic.Dynamicdata;
 import com.dreamwolf.dynamic.business.service.DynamicdataService;
 import org.springframework.web.bind.annotation.RequestMapping;
 

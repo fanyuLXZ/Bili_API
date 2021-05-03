@@ -1,4 +1,4 @@
-package com.dreamwolf.dynamic.business.entity;
+package com.dreamwolf.entity.dynamic;
 
 import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.annotation.TableId;

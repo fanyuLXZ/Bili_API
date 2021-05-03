@@ -1,4 +1,4 @@
-package com.dreamwolf.watchhistory.business.entity;
+package com.dreamwolf.entity.watchhistory;
 
 import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.annotation.TableId;

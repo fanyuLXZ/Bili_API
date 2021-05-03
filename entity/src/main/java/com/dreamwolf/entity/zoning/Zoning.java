@@ -1,4 +1,4 @@
-package com.dreamwolf.zoning.business.entity;
+package com.dreamwolf.entity.zoning;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.Version;

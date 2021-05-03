@@ -1,6 +1,6 @@
 package com.dreamwolf.dynamic.business.service.impl;
 
-import com.dreamwolf.dynamic.business.entity.Dynamiclike;
+import com.dreamwolf.entity.dynamic.Dynamiclike;
 import com.dreamwolf.dynamic.business.mapper.DynamiclikeMapper;
 import com.dreamwolf.dynamic.business.service.DynamiclikeService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

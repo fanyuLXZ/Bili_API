@@ -1,6 +1,6 @@
 package com.dreamwolf.dynamic.business.mapper;
 
-import com.dreamwolf.dynamic.business.entity.Dynamicdata;
+import com.dreamwolf.entity.dynamic.Dynamicdata;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

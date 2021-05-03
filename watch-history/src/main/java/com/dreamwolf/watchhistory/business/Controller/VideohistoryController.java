@@ -2,12 +2,11 @@ package com.dreamwolf.watchhistory.business.Controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.dreamwolf.watchhistory.business.entity.Videohistory;
+import com.dreamwolf.entity.watchhistory.Videohistory;
 import com.dreamwolf.watchhistory.business.service.IVideohistoryService;
 import com.dreamwolf.watchhistory.business.service.UserService;
 import com.dreamwolf.watchhistory.business.service.VideoList;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
