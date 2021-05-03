@@ -16,6 +16,13 @@ import java.util.List;
 public interface VideodataService extends IService<Videodata> {
 
     /**
+     * 根据视频id数组查询视频数据并按热度查询
+     * @param array
+     * @return
+     */
+    public List<Videodata> videodatabvid(Integer[] array);
+
+    /**
      * 根据视频id bvID 查询bvID视频的基本数据
      * @param bvID
      * @return

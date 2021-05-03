@@ -11,4 +11,15 @@
         </where>
     </select>
 
+    <select id="videodatabvid" resultType="Videodata">
+        SELECT bvID,(`bvLikeNum`-`bvDislike`) AS aaa FROM `videodata`
+         <where>
+             `bvID` IN
+             <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+                 #{item}
+             </foreach>
+             ORDER BY aaa DESC
+         </where>
+    </select>
+
 </mapper>

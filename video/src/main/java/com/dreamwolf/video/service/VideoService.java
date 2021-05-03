@@ -16,6 +16,30 @@ import java.util.List;
 public interface VideoService extends IService<Video> {
 
     /**
+     * 按热度查询的id查询视频数据并显示前10条
+     * @param array
+     * @return
+     */
+    public List<Video> selectlispagelsit(Integer[] array);
+
+
+    /**
+     * 按热度查询的id查询视频并分页
+     * @param array
+     * @param pn
+     * @param ps
+     * @return
+     */
+    public List<Video> selectvideovlidlsit(Integer[] array,int pn,int ps);
+
+    /**
+     * 根据子分区id查询所有视频id集合
+     * @param rid
+     * @return
+     */
+    public List<Integer> videoselezoingid(Integer rid);
+
+    /**
      * 根据子分区id查询最新的视频数据集合
      * @param rid
      * @param pn
@@ -29,7 +53,7 @@ public interface VideoService extends IService<Video> {
      * @param rid
      * @return
      */
-    public List<Video> videoliselectridlist(Integer rid);
+    public List<Video> videoliselectridlist(Integer rid,Integer pn,Integer ps);
 
     /**
      * 查询不等于当前视频id的随机20条数据

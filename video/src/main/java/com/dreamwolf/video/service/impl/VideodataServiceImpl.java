@@ -24,6 +24,11 @@ public class VideodataServiceImpl extends ServiceImpl<VideodataMapper, Videodata
     private VideodataMapper videodataMapper;
 
     @Override
+    public List<Videodata> videodatabvid(Integer[] array) {
+        return videodataMapper.videodatabvid(array);
+    }
+
+    @Override
     public Videodata selectbvID(Integer bvID) {
         return videodataMapper.selectbvid(bvID);
     }

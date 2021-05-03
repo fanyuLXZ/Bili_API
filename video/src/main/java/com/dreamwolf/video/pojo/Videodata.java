@@ -59,5 +59,8 @@ public class Videodata implements Serializable {
     @TableField("bvCommentNum")
     private Long bvCommentNum;
 
+    @TableField("bvDislike")
+    private Long bvDislike;
+
 
 }

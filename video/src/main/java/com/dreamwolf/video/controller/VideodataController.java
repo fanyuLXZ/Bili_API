@@ -1,6 +1,8 @@
 package com.dreamwolf.video.controller;
 
 
+import com.dreamwolf.member.business.entity.web_interface.OwnerInfo;
+import com.dreamwolf.member.business.entity.web_interface.VideoinfoOwnerInfo;
 import com.dreamwolf.video.entity.web_interface.Relatedinfo;
 import com.dreamwolf.video.entity.web_interface.Statinfo;
 import com.dreamwolf.video.entity.web_interface.Videodatainfo;
@@ -8,9 +10,10 @@ import com.dreamwolf.video.entity.web_interface.Videoinfo;
 import com.dreamwolf.video.pojo.Video;
 import com.dreamwolf.video.pojo.Videodata;
 import com.dreamwolf.video.pojo.Videorating;
-import com.dreamwolf.video.service.VideoService;
-import com.dreamwolf.video.service.VideodataService;
-import com.dreamwolf.video.service.VideoratingService;
+import com.dreamwolf.video.service.*;
+import com.dreamwolf.zoning.business.entity.web_interface.Deputydivision;
+import com.dreamwolf.zoning.business.entity.web_interface.MainpardeputyInfo;
+import com.dreamwolf.zoning.business.entity.web_interface.Mainpartition;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,6 +41,12 @@ public class VideodataController {
 
     @Resource
     private VideoService videoService;
+
+    @Resource
+    private UsermapService usermapService;
+
+    @Resource
+    private UserpageService userpageService;
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
@@ -111,6 +120,8 @@ public class VideodataController {
                     relatedinfo.setAid(vide.getBvID());   //视频id
                     relatedinfo.setPic(vide.getBvCoverImgPath());   //图片
                     relatedinfo.setTitle(vide.getBvTitle()); //标题
+                OwnerInfo ownerInfo = usermapService.OwnerInfo(vide.getUID());
+                    relatedinfo.setOwnerInfo(ownerInfo); //用户对象
                 if(videodata2!=null){
                     statinfo.setView(videodata2.getBvPlayNum());
                     relatedinfo.setStatinfo(statinfo);  //播放量
@@ -146,7 +157,12 @@ public class VideodataController {
             videoinfo.setCtime(video.getBvPostTime());     //发表时间
             videoinfo.setRank(i);       //排名
         videodatainfo.setVideoinfo(videoinfo);       //视频对象
-
+        VideoinfoOwnerInfo videoinfoOwnerInfo= usermapService.video_info(uid,video.getUID());  //当前用户id,用户id
+        videodatainfo.setVideoinfoOwnerInfo(videoinfoOwnerInfo);   //用户对象
+        Mainpartition mainpartition =userpageService.mainpartition(video.getBvChildZoning());
+        videodatainfo.setMainpartition(mainpartition);
+        Deputydivision deputydivision =userpageService.deputydivision(video.getBvChildZoning());
+        videodatainfo.setDeputydivision(deputydivision);
         return videodatainfo;
     }
 
