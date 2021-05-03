@@ -15,6 +15,39 @@
         <result column="duration" property="duration" />
     </resultMap>
 
+    <select id="selectlispagelsit" resultMap="videomap">
+        SELECT * FROM `video`
+        <where>
+            `bvID` IN
+            <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            <foreach collection="array" item="id" open=" ORDER BY FIELD(bvID," close=")" separator=",">
+                ${id}
+            </foreach>
+            LIMIT 0,10
+        </where>
+    </select>
+
+
+    <select id="selectvideovlidlsit" resultMap="videomap">
+        SELECT * FROM `video`
+        <where>
+            `bvID` IN
+            <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            <foreach collection="array" item="id" open=" ORDER BY FIELD(bvID," close=")" separator=",">
+                ${id}
+            </foreach>
+            LIMIT #{pn},#{ps}
+        </where>
+    </select>
+
+    <select id="videoselezoingid" resultType="Integer">
+        SELECT bvID FROM `video` WHERE `bvChildZoning` =#{rid}
+    </select>
+
     <select id="videolistselectpage" resultMap="videomap">
         SELECT * FROM `video`
         <where>
@@ -24,7 +57,7 @@
 
 
     <select id="videoliselectridlist" resultMap="videomap">
-        SELECT * FROM video WHERE `bvChildZoning`=#{rid} ORDER BY `bvPostTime` DESC LIMIT 0,4
+        SELECT * FROM video WHERE `bvChildZoning`=#{rid} ORDER BY `bvPostTime` DESC LIMIT #{pn},#{ps}
     </select>
 
     <select id="selecvideolistpa" resultMap="videomap">

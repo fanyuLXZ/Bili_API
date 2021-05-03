@@ -5,6 +5,8 @@ import com.dreamwolf.video.pojo.Videorating;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * <p>
  * 视频综合评分表，根据该表判断视频排名 Mapper 接口

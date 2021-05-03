@@ -25,6 +25,36 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
 
 
     @Override
+    public List<Video> selectlispagelsit(Integer[] array) {
+        return videoMapper.selectlispagelsit(array);
+    }
+
+    @Override
+    public List<Video> selectvideovlidlsit(Integer[] array, int pn, int ps) {
+        return videoMapper.selectvideovlidlsit(array,pn,ps);
+    }
+
+    @Override
+    public List<Integer> videoselezoingid(Integer rid) {
+        return videoMapper.videoselezoingid(rid);
+    }
+
+    @Override
+    public List<Video> videolistselectpage(Integer rid, Integer pn, Integer ps) {
+        return videoMapper.videolistselectpage(rid,pn,ps);
+    }
+
+    @Override
+    public List<Video> videoliselectridlist(Integer rid,Integer pn,Integer ps) {
+        return videoMapper.videoliselectridlist(rid,pn,ps);
+    }
+
+    @Override
+    public List<Video> selecvideolistpa(Integer bvid, int pagesum) {
+        return videoMapper.selecvideolistpa(bvid,pagesum);
+    }
+
+    @Override
     public List<Video> selectlistBvid(Integer[] bvidlist) {
         return videoMapper.selectlistBvid(bvidlist);
     }

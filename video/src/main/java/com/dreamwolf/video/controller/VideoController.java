@@ -1,7 +1,10 @@
 package com.dreamwolf.video.controller;
 
 
+import com.dreamwolf.member.business.entity.web_interface.OwnerInfo;
 import com.dreamwolf.video.entity.web_interface.ArchivesInfo;
+import com.dreamwolf.video.entity.web_interface.Region;
+import com.dreamwolf.video.entity.web_interface.Result;
 import com.dreamwolf.video.entity.web_interface.Statinfo;
 import com.dreamwolf.video.pojo.Video;
 import com.dreamwolf.video.pojo.Videodata;
@@ -38,6 +41,7 @@ public class VideoController {
 
     @Resource
     private VideoratingService videoratingService;
+
 
     //通过子分区id查视频,返回list
 //    @GetMapping("/videobvldZoning")
@@ -298,10 +302,10 @@ public class VideoController {
      * @return
      */
     @GetMapping("/videoridlists")
-    public List<ArchivesInfo> selectvideorid(Integer rid){
+    public List<ArchivesInfo> selectvideorid(Integer rid,Integer pn,Integer ps){
 //        Integer rid = 310;
         List list = new ArrayList();
-        List<Video> videoList = videoService.videoliselectridlist(rid); //查询最新的4条记录
+        List<Video> videoList = videoService.videoliselectridlist(rid,pn,ps); //查询最新的4条记录
         for(Video video : videoList){
             ArchivesInfo archivesInfo = new ArchivesInfo();
             archivesInfo.setAid(video.getBvID());   //视频id
@@ -311,7 +315,10 @@ public class VideoController {
             archivesInfo.setDuration(video.getDuration());  //时长
             archivesInfo.setPic(video.getBvCoverImgPath()); //图片
             archivesInfo.setTitle(video.getBvTitle());  //标题
-            archivesInfo.setTname(null);    //分区名
+            OwnerInfo ownerInfo = usermapService.OwnerInfo(video.getUID());
+            archivesInfo.setOwner(ownerInfo);   //用户信息
+            String name= userpageService.elementby(video.getBvChildZoning());
+            archivesInfo.setTname(name);    //分区名
                 Statinfo statinfo = new Statinfo();
                 Videodata videodata = videodataService.selectbvID(video.getBvID()); //根据视频id查询数据
             if(videodata!=null){
@@ -319,7 +326,7 @@ public class VideoController {
                 statinfo.setCoin(videodata.getBvCoinNum());
                 statinfo.setFavorite(videodata.getBvFavoriteNum());
                 statinfo.setLike(videodata.getBvLikeNum()); //点赞数
-                statinfo.setDislike(null);  //点踩
+                statinfo.setDislike(videodata.getBvDislike());  //点踩
                 statinfo.setReply(videodata.getBvCommentNum());
                 statinfo.setShare(videodata.getBvRetweetNum());
                 statinfo.setView(videodata.getBvPlayNum());
@@ -356,7 +363,7 @@ public class VideoController {
 //        Integer pn=0;
 //        Integer ps=20;
         List list = new ArrayList();
-        List<Video> videoList = videoService.videolistselectpage(rid,pn,ps); //查询最新的4条记录
+        List<Video> videoList = videoService.videolistselectpage(rid,pn,ps);
         for(Video video : videoList){
             ArchivesInfo archivesInfo = new ArchivesInfo();
             archivesInfo.setAid(video.getBvID());   //视频id
@@ -366,7 +373,10 @@ public class VideoController {
             archivesInfo.setDuration(video.getDuration());  //时长
             archivesInfo.setPic(video.getBvCoverImgPath()); //图片
             archivesInfo.setTitle(video.getBvTitle());  //标题
-            archivesInfo.setTname(null);    //分区名
+            OwnerInfo ownerInfo = usermapService.OwnerInfo(video.getUID());
+            archivesInfo.setOwner(ownerInfo);   //用户信息
+            String name= userpageService.elementby(video.getBvChildZoning());
+            archivesInfo.setTname(name);    //分区名
             Statinfo statinfo = new Statinfo();
             Videodata videodata = videodataService.selectbvID(video.getBvID()); //根据视频id查询数据
             if(videodata!=null){
@@ -374,7 +384,7 @@ public class VideoController {
                 statinfo.setCoin(videodata.getBvCoinNum());
                 statinfo.setFavorite(videodata.getBvFavoriteNum());
                 statinfo.setLike(videodata.getBvLikeNum()); //点赞数
-                statinfo.setDislike(null);  //点踩
+                statinfo.setDislike(videodata.getBvDislike());  //点踩
                 statinfo.setReply(videodata.getBvCommentNum());
                 statinfo.setShare(videodata.getBvRetweetNum());
                 statinfo.setView(videodata.getBvPlayNum());
@@ -397,6 +407,91 @@ public class VideoController {
 
         }
 
+        return list;
+    }
+
+
+
+    /**
+     * 视频对象集合按热度查询排序
+     * @param rid
+     * @return
+     */
+    @GetMapping("/selectbvidlistpage")
+    public List<Result> selectbvidlistpage(Integer rid){
+        Integer pn =0;
+        Integer ps= 20;
+        List<Integer> array = videoService.videoselezoingid(rid); //根据子分区查询视频id
+        List<Videodata> arraydata = videodataService.videodatabvid(array.toArray(new Integer[0]));//按热度查
+        List<Integer> arrayvideo = new ArrayList();  //按热度排序后的视频id
+        for(Videodata videodata : arraydata){
+            arrayvideo.add(videodata.getBvID());
+        }
+        List<Video> videoList = videoService.selectvideovlidlsit(arrayvideo.toArray(new Integer[0]),pn,ps);
+        List list = new ArrayList();
+        for(Video video : videoList){
+            Result result = new Result();
+            OwnerInfo ownerInfo = usermapService.OwnerInfo(video.getUID());
+            String uname = ownerInfo.getName();
+            result.setAuthor(uname); //作者名称
+            result.setBvid(video.getBvID());      //视频id
+            result.setDescription(video.getBvDesc());   //文章
+            result.setDuration(video.getDuration());    //时长
+            Videodata videodata = videodataService.selectbvID(video.getBvID()); //根据视频id查询视频数据
+            result.setFavorites(videodata.getBvFavoriteNum());  //收藏数
+            result.setMid(video.getUID());  //作者id
+            result.setPic(video.getBvCoverImgPath());   //预览图
+            result.setPlay(videodata.getBvPlayNum());   //观看数
+            result.setPubdate(video.getBvPostTime());   //发表时间
+            result.setReview(videodata.getBvCommentNum());  //评论数
+            result.setTitle(video.getBvTitle());    //标题
+            String name= userpageService.elementby(video.getBvChildZoning());
+            result.setType(name);   //视频类型
+            list.add(result);
+        }
+        return list;
+    }
+
+
+
+
+    /**
+     * 视频对象集合按热度查询排序查询前10条
+     * @param rid
+     * @return
+     */
+    @GetMapping("/selectbvidlistpagelist")
+    public List<Result> selectbvidlistpagelist(Integer rid){
+        List<Integer> array = videoService.videoselezoingid(rid); //根据子分区查询视频id
+        List<Videodata> arraydata = videodataService.videodatabvid(array.toArray(new Integer[0]));//按热度查
+        List<Integer> arrayvideo = new ArrayList();  //按热度排序后的视频id
+        for(Videodata videodata : arraydata){
+            arrayvideo.add(videodata.getBvID());
+        }
+        //查询前10条
+        List<Video> videoList = videoService.selectlispagelsit(arrayvideo.toArray(new Integer[0]));
+        List list = new ArrayList();
+        for(Video video : videoList){
+            Videodata videodata = videodataService.selectbvID(video.getBvID()); //根据视频id查询视频数据
+            Region result = new Region();
+            result.setAuthor(null); //作者名称
+            result.setAid(video.getBvID());      //视频id
+            result.setBvid("bv"+video.getBvID());   //bv号
+            result.setCoins(videodata.getBvCoinNum());  //投币数
+            result.setDescription(video.getBvDesc());   //文章
+            result.setDuration(video.getDuration());    //时长
+            result.setFavorites(videodata.getBvFavoriteNum());  //收藏数
+            result.setMid(video.getUID());  //作者id
+            result.setPic(video.getBvCoverImgPath());   //预览图
+            result.setPlay(videodata.getBvPlayNum());   //观看数
+            Videorating videorating = videoratingService.selectbvid(video.getBvID());
+            result.setPts(videorating.getOverallRating());
+            result.setCreate(video.getBvPostTime());   //发表时间
+            result.setReview(videodata.getBvCommentNum());  //评论数
+            result.setTitle(video.getBvTitle());    //标题
+            result.setTypename(null);   //视频类型
+            list.add(result);
+        }
         return list;
     }
 
