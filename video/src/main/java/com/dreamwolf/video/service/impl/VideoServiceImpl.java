@@ -25,6 +25,11 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
 
 
     @Override
+    public Integer selectridcount(Integer rid) {
+        return videoMapper.selectridcount(rid);
+    }
+
+    @Override
     public List<Video> selectlispagelsit(Integer[] array) {
         return videoMapper.selectlispagelsit(array);
     }

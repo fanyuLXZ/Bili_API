@@ -15,6 +15,10 @@
         <result column="duration" property="duration" />
     </resultMap>
 
+    <select id="selectridcount" resultType="int">
+        SELECT COUNT(*) FROM `video` WHERE `bvChildZoning` =#{rid}
+    </select>
+
     <select id="selectlispagelsit" resultMap="videomap">
         SELECT * FROM `video`
         <where>
