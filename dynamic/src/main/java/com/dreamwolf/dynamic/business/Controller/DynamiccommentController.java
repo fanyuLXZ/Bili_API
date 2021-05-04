@@ -1,6 +1,7 @@
 package com.dreamwolf.dynamic.business.Controller;
 
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dreamwolf.entity.dynamic.Dynamiccomment;
 import com.dreamwolf.entity.dynamic.User;
@@ -8,6 +9,7 @@ import com.dreamwolf.entity.dynamic.Userdata;
 import com.dreamwolf.entity.dynamic.Vip;
 import com.dreamwolf.dynamic.business.service.*;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,14 +33,21 @@ public class DynamiccommentController {
     @Resource
     CommentService commentService;
     //动态的最新信息
+    @SentinelResource(value = "entrance",fallback="handlerEntrance")
     @RequestMapping("/entrance")
     public Map entrance() {
         Integer id=1;
         Map map= memberService.verify(id);
         return map;
     }
+    public Map handlerEntrance(@PathVariable Integer id, Throwable e) {
+        Map map=new HashMap();
+        map.put(444,"[业务异常兜底降级方法],exception内容:"+e.getMessage());
+        return map;
+    }
 
     //dynamicComment表所有信息
+    @SentinelResource(value = "dynamicComment",fallback="handlerDynamicComment")
     @RequestMapping("/dynamicComment")
     public Map dynamicComment(){
         QueryWrapper<Dynamiccomment> wrapper = new QueryWrapper<>();
@@ -48,8 +57,14 @@ public class DynamiccommentController {
         map.put("dynamicComment",relations);
         return map;
     }
+    public Map handlerDynamicComment(@PathVariable Integer id, Throwable e) {
+        Map map=new HashMap();
+        map.put(444,"[业务异常兜底降级方法],exception内容:"+e.getMessage());
+        return map;
+    }
 
     //动态评论简略信息
+    @SentinelResource(value = "reply",fallback="handlerReply")
     @GetMapping("/reply")
     public Map reply(Integer dynamic_id,Integer sort){//dynamic_id 动态id sort 1按照热度 2按照时间排序
         Map<String,Object> map=new HashMap<>();
@@ -61,7 +76,6 @@ public class DynamiccommentController {
         QueryWrapper<Dynamiccomment> queryWrapper=new QueryWrapper();
         queryWrapper.eq("udID",dynamic_id);
         List<Map<String,Object>> dynamiccomment=dynamiccommentService.listMaps(queryWrapper);//返回对应动态id的父评论
-
         page.put("count",dynamiccomment.size());//父评论数
         page.put("num",1);
         page.put("size",10);
@@ -80,7 +94,13 @@ public class DynamiccommentController {
         map.put("data",data);
         return  map;
     }
+    public Map handlerReply(@PathVariable Integer id, Throwable e) {
+        Map map=new HashMap();
+        map.put(444,"[业务异常兜底降级方法],exception内容:"+e.getMessage());
+        return map;
+    }
 
+    @SentinelResource(value = "replymain",fallback="handlerReplymain")
     @GetMapping("/reply/main")
     public Map replymain(Integer sort,Integer dynamic_id,Integer next){//sort1按热度 2按时间 动态dynamic_id  next页码
         Map<String,Object> map=new HashMap<>();
@@ -105,8 +125,14 @@ public class DynamiccommentController {
         map.put("data",data);
         return  map;
     }
+    public Map handlerReplymain(@PathVariable Integer id, Throwable e) {
+        Map map=new HashMap();
+        map.put(444,"[业务异常兜底降级方法],exception内容:"+e.getMessage());
+        return map;
+    }
 
     //member发表评论人对象
+    @SentinelResource(value = "memberid",fallback="handlerMemberid")
     @GetMapping("/memberid")
     public Map memberid(Integer id){
         Map<String,Object> data=new HashMap<String, Object>();
@@ -129,6 +155,10 @@ public class DynamiccommentController {
         data.put("vip",vip);
         return data;
     }
-
+    public Map handlerMemberid(@PathVariable Integer id, Throwable e) {
+        Map map=new HashMap();
+        map.put(444,"[业务异常兜底降级方法],exception内容:"+e.getMessage());
+        return map;
+    }
 }
 
