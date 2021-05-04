@@ -7,6 +7,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="image-resource" />
+        <module name="zoning" />
         <module name="watch-history" />
         <module name="member" />
         <module name="fav" />
@@ -15,6 +17,7 @@
         <module name="video" />
         <module name="message" />
         <module name="gateway" />
+        <module name="entity" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -22,8 +25,10 @@
       <module name="client_demo" target="1.8" />
       <module name="comment" target="1.8" />
       <module name="dynamic" target="1.8" />
+      <module name="entity" target="1.8" />
       <module name="fav" target="1.8" />
       <module name="gateway" target="1.8" />
+      <module name="image-resource" target="1.8" />
       <module name="member" target="1.8" />
       <module name="message" target="1.8" />
       <module name="video" target="1.8" />
@@ -37,8 +42,10 @@
       <module name="client_demo" options="-parameters" />
       <module name="comment" options="-parameters" />
       <module name="dynamic" options="-parameters" />
+      <module name="entity" options="-parameters" />
       <module name="fav" options="-parameters" />
       <module name="gateway" options="-parameters" />
+      <module name="image-resource" options="-parameters" />
       <module name="member" options="-parameters" />
       <module name="message" options="-parameters" />
       <module name="video" options="-parameters" />

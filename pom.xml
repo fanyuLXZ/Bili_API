@@ -18,6 +18,8 @@
         <module>fav</module>
         <module>safety</module>
         <module>comment</module>
+        <module>image-resource</module>
+        <module>entity</module>
     </modules>
     <groupId>com.dream-wolf</groupId>
     <artifactId>Bili_API</artifactId>

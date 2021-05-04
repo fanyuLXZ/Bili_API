@@ -13,7 +13,6 @@
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/safety/pom.xml" />
-        <option value="$PROJECT_DIR$/watch_history/pom.xml" />
       </set>
     </option>
   </component>

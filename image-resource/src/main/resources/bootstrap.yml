@@ -1,9 +1,9 @@
 server:
-  port: 80
+  port: 8090
+#spring
 spring:
   application:
-    #应用名
-    name: gateway-service
+    name: image-resource-service
   cloud:
     nacos:
       #注册服务地址

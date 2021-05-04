@@ -203,7 +203,46 @@
 		 - status： 点赞状态，0为未作任何操作，1为点赞，默认为0
 		 - createTime： 点赞时间
 
-
+    15. 视频显示
+        参数：
+        bvid bvid int   
+        返回值：
+        * videoData 视频显示对象 object 
+            - aid 视频id int
+            - video 视频对象 object
+                - id 视频id int
+                - title 标题 string
+                - desc 副标题 string
+                - ctime 发布时间 Date
+                - rank 排名 int
+            - owner up主对象id
+                - mid up主id int
+                - upname up主名字 String
+                - fans 关注数 int
+                - attention 是否关注 boolean
+                - sign 个人简历 String
+                - face 头像图片  String
+                -
+            - stat 对象集合
+                - view 播放量 int
+                - favorite 收藏数 int
+                - coin 投币数 int
+                - like 点赞数 int
+            - related 视频推荐对象数组 &lt;object&gt;
+                - aid 视频id int
+                - pic 图片 String
+                - title 标题 String
+                - owner up对象 object
+                    - name up名字 String
+                    - mid  upid int
+                - stat 播放量对象 object
+                    - view 播放量 in
+            - mainpartition 主分区
+                - id 主分区 int
+                - name 分区名 string
+            - deputydivision 副分区
+                - id 主分区 int
+                - name 分区名 string
 * ### 用户消息模块 Message
     1. 收到的点赞 /like   
     参考链接：https://api.bilibili.com/x/msgfeed/like?csrf=4c7784a8355557a9595ccefc268e2f28&platform=web&build=0&mobi_app=web   
@@ -603,7 +642,7 @@
         * pn 页码 int  
         * ps 每页数据 int
         
-           返回值：  
+       返回值：  
         * page
             - count 总数 int
             - num 页码 int
@@ -834,40 +873,11 @@
             - content 内容对象 object
                 - message 评论内容 int
 
-* ### 视频模块 comment
-    1. 视频信息
-        * videoData 视频显示对象集合 &lt;object&gt;
-            - aid 视频id int
-            - video 视频对象 object
-                - id 视频id int
-                - title 标题 string
-                - desc 副标题 string
-                - ctime 发布时间 Date
-                - rank 排名 int
-            - owner up主对象 object
-                - mid up主id int
-                - upname up主名字 String
-                - fans 关注数 int
-                - attention 是否关注 boolean
-                - sign 个人简历 String
-                - face 头像图片  String
-            - stat 数据对象 object
-                - view 播放量 int
-                - favorite 收藏数 int
-                - coin 投币数 int
-                - like 点赞数 int
-            - related 视频推荐对象数组 &lt;object&gt;
-                - aid 视频id int
-                - pic 图片 String
-                - title 标题 String
-                - owner up对象 object
-                    - name up名字 String
-                    - mid  upid int
-                - stat 播放量对象 object
-                    - view 播放量 in
-            - mainpartition 父分区 object
-                - id 分区id int
-                - name 分区名 string
-            - deputydivision 子分区 object
-                - id 分区id int
-                - name 分区名 string
+* ### 图片资源模块 image-resource
+    1. 上传图片 /upload-file   
+    参数：
+    * image 二进制图片
+    * type 类型 如：头像 视频封面等 将作为图片保存的分组
+    返回值：
+    * filePath 文件路径(相对于资源服务器 没有使用绝对url的原因是不容易修改)
+    * fileName 文件名
