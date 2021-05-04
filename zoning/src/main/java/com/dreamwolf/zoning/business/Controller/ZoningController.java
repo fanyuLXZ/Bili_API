@@ -2,9 +2,12 @@ package com.dreamwolf.zoning.business.Controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.dreamwolf.entity.video.web_interface.ArchivesInfo;
 import com.dreamwolf.entity.zoning.web_interface.Deputydivision;
+import com.dreamwolf.entity.zoning.web_interface.DynamicRegion;
 import com.dreamwolf.entity.zoning.web_interface.Mainpartition;
 import com.dreamwolf.entity.zoning.Zoning;
+import com.dreamwolf.entity.zoning.web_interface.Page;
 import com.dreamwolf.zoning.business.service.IZoningService;
 import com.dreamwolf.zoning.business.service.VideoCount;
 import com.dreamwolf.zoning.business.util.Count;
@@ -190,11 +193,12 @@ public class ZoningController {
         return new Deputydivision(zoning);
     }
 
-    /*@GetMapping("/dynamic/region")
-    public DynamicRegion dynamicRegion(Integer rid,Integer pn,Integer ps){//子分区 页码 没页数
-        Page page=new Page(rid,pn,ps);
-        ArchivesInfo archivesInfo=
+    @GetMapping("/dynamic/region")
+    public DynamicRegion dynamicRegion(Integer rid, Integer pn, Integer ps){//子分区 页码 没页数
+        Integer count=videoCount.selectidcoutn(rid);
+        Page page=new Page(count,pn,ps);
+        List<ArchivesInfo> archivesInfo=videoCount.selectvideorid(rid,pn,ps);
         return new DynamicRegion(page,archivesInfo);
-    }*/
+    }
 }
 

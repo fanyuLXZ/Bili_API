@@ -2,12 +2,12 @@ package com.dreamwolf.member.business.Controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.dreamwolf.entity.ResponseData;
 import com.dreamwolf.entity.member.Relations;
 import com.dreamwolf.entity.member.User;
 import com.dreamwolf.entity.member.Userdata;
 import com.dreamwolf.entity.member.Vip;
-import com.dreamwolf.entity.member.web_interface.OwnerInfo;
-import com.dreamwolf.entity.member.web_interface.VideoinfoOwnerInfo;
+import com.dreamwolf.entity.member.web_interface.*;
 import com.dreamwolf.member.business.service.*;
 import com.dreamwolf.member.business.util.Hide;
 import com.dreamwolf.member.business.util.md5;
@@ -69,65 +69,38 @@ public class UserController {
         return map;
     }
 
+
     //账号基本信息
     @RequestMapping("/account/info")
-    public Map account(){
+    public ResponseData<AccountInfo> account(){
         Integer id=1;//默认id
-        Map<String, Object> map=new HashMap<String, Object>();
-        map.put("code",0);
-        map.put("message",0);
-        map.put("ttl",1);
-        Map<String, Object> data=new HashMap<String, Object>();
         User user= userService.getById(id);
-        data.put("uname",user.getNickName());//用户昵称
-        data.put("userid",user.getUserName());//用户名
-        data.put("birthday",user.getBirthday());//出生年月
-        data.put("sex",user.getSex()==1?"男":"女");//性别
-        map.put("data",data);
-        return map;
+        AccountInfo accountInfo = new AccountInfo(user.getNickName(),user.getUserName(),user.getBirthday(),user.getSex()==1?"男":"女");
+        return new ResponseData<AccountInfo>(0,"",1,accountInfo);
     }
 
-    //每日奖励
+    //账号基本信息
     @RequestMapping("/exp/reward")
-    public Map reward(){
-        Integer id=1;
-        Map<String, Object> map=new HashMap<String, Object>();
-        map.put("code",0);
-        map.put("message",0);
-        map.put("ttl",1);
-        Map<String, Object> data=new HashMap<String, Object>();
+    public ResponseData<ExpReward> reward(){
+        Integer id=1;//默认id
         User user= userService.getById(id);
-        data.put("login",true);//是否登录
-        data.put("watch",true);//是否观看视频
-        data.put("coins",5);//暂时返回5
-        data.put("share",true);//是否分享过视频
-        data.put("email_verified",user.getBoundEmail()!=null);//是否绑定了邮箱
-        data.put("mobile_verified",user.getBoundPhone()!=null);//是否绑定了手机号
-        map.put("data",data);
-        return map;
+        ExpReward expReward = new ExpReward(true,true,5,true,user.getBoundEmail()!=null,user.getBoundPhone()!=null);
+        return new ResponseData<ExpReward>(0,"",1,expReward);
     }
 
     //用户基本信息
     @RequestMapping("/user/info")
-    public Map userinfo(){
-        Integer id=1;
+    public ResponseData<UserInfo> userinfo(){
+        Integer id=1;//默认id
         User user= userService.getById(id);
         Hide hide=new Hide();//加密工具类
-        Map<String, Object> map=new HashMap<String, Object>();
-        map.put("code",0);
-        map.put("message",0);
-        map.put("ttl",1);
-        Map<String, Object> data=new HashMap<String, Object>();
-        data.put("hide_tel",hide.hidePhoneNum(user.getBoundPhone()));
-        data.put("hide_mail",hide.hidePhoneNum(user.getBoundEmail()));
-        data.put("bind_tel",user.getBoundPhone()!=null);//是否绑定了手机号
-        data.put("bind_mail",user.getBoundEmail()!=null);//是否绑定了邮箱
-        map.put("data",data);
-        return map;
+        UserInfo userInfo = new UserInfo(hide.hidePhoneNum(user.getBoundPhone())
+                ,hide.hidePhoneNum(user.getBoundEmail()),
+                user.getBoundPhone()!=null,user.getBoundEmail()!=null);
+        return new ResponseData<UserInfo>(0,"",1,userInfo);
     }
-
     //接口调接口
-    @RequestMapping("/bang")
+    /*@RequestMapping("/bang")
     public Map bang(Integer id){
         Map<String, Object> map=new HashMap<String, Object>();
         if(id!=null){
@@ -135,8 +108,7 @@ public class UserController {
             map.put("message",0);
             map.put("ttl",1);
             Map<String, Object> data=new HashMap<String, Object>();
-            Map<String, Object> entrance=new HashMap<String, Object>();
-            User user=userService.getById(id);
+
             entrance.put("icon",user.getHeadImgPath());//头像
             entrance.put("mid",user.getuID());//用户唯一id
             entrance.put("type","up");
@@ -147,7 +119,17 @@ public class UserController {
             map.put("message","id不能为空");
         }
         return map;
-    }
+    }*/
+    //接口调接口
+    /*@RequestMapping("/bang")
+    public ResponseData<Bang> bang(Integer id){
+        Map<String, Object> entrance=new HashMap<String, Object>();
+        User user=userService.getById(id);
+        Bang bang = new Bang(user.getHeadImgPath()
+                ,user.getuID()
+                ,"up");
+        return new ResponseData<Bang>(0,"",1,bang);
+    }*/
 
     //通过id返回User表所有对应id信息
     @RequestMapping("/useruid")

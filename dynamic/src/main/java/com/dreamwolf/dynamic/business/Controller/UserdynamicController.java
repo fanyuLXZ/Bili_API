@@ -1,6 +1,7 @@
 package com.dreamwolf.dynamic.business.Controller;
 
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dreamwolf.entity.dynamic.Dynamiccomment;
 import com.dreamwolf.entity.dynamic.Dynamicdata;
@@ -8,6 +9,7 @@ import com.dreamwolf.entity.dynamic.Dynamiclike;
 import com.dreamwolf.entity.dynamic.Userdynamic;
 import com.dreamwolf.dynamic.business.service.*;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -39,6 +41,7 @@ public class UserdynamicController {
     DynamiccommentService dynamiccommentService;
 
     //获取对应用户id的所有动态
+    @SentinelResource(value = "userdynamicList",fallback="handlerUserdynamicList")
     @RequestMapping("/userdynamicList")
     public Map userdynamicList(Integer uid){
         QueryWrapper<Userdynamic> wrapper = new QueryWrapper<>();
@@ -48,8 +51,14 @@ public class UserdynamicController {
         map.put("userdynamics",userdynamics);
         return map;
     }
+    public Map handlerUserdynamicList(@PathVariable Integer id, Throwable e) {
+        Map map=new HashMap();
+        map.put(444,"[业务异常兜底降级方法],exception内容:"+e.getMessage());
+        return map;
+    }
 
     //获取动态id的所有信息
+    @SentinelResource(value = "userdynamic",fallback="handlerUserdynamic")
     @RequestMapping("/userdynamic")
     public Map userdynamic(Integer udID){
         QueryWrapper<Userdynamic> wrapper = new QueryWrapper<>();
@@ -59,9 +68,15 @@ public class UserdynamicController {
         map.put("userdynamics",userdynamics);
         return map;
     }
+    public Map handlerUserdynamic(@PathVariable Integer id, Throwable e) {
+        Map map=new HashMap();
+        map.put(444,"[业务异常兜底降级方法],exception内容:"+e.getMessage());
+        return map;
+    }
 
     //最新的20条动态
     @RequestMapping("/dynamic_new")
+    @SentinelResource(value = "dynamic_new",fallback="handlerDynamic_new")
     public Map dynamic_new(){
         Integer id=1;
         List<Map<String,Object>> listMap=memberService.intuid(id);
@@ -146,8 +161,14 @@ public class UserdynamicController {
         map.put("data",data);
         return map;
     }
+    public Map handlerDynamic_new(@PathVariable Integer id, Throwable e) {
+        Map map=new HashMap();
+        map.put(444,"[业务异常兜底降级方法],exception内容:"+e.getMessage());
+        return map;
+    }
 
     //根据偏移动态id获取后面20条动态信息 /dynamic_history
+    @SentinelResource(value = "dynamic_history",fallback="handlerDynamic_history")
     @GetMapping("dynamic_history")
     public Map dynamic_history(Integer offset_dynamic_id){
         Integer id=1;
@@ -227,8 +248,14 @@ public class UserdynamicController {
         map.put("data",data);
         return map;
     }
+    public Map handlerDynamic_history(@PathVariable Integer id, Throwable e) {
+        Map map=new HashMap();
+        map.put(444,"[业务异常兜底降级方法],exception内容:"+e.getMessage());
+        return map;
+    }
 
     //查询指定多个uid的动态数
+    @SentinelResource(value = "dynamic_num",fallback="handlerDynamic_num")
     @GetMapping("/dynamic_num")
     public  Map dynamic_num(Integer [] uids){
         Map<String, Object> map=new HashMap<String, Object>();
@@ -250,8 +277,14 @@ public class UserdynamicController {
         }
         return map;
     }
+    public Map handlerDynamic_num(@PathVariable Integer id, Throwable e) {
+        Map map=new HashMap();
+        map.put(444,"[业务异常兜底降级方法],exception内容:"+e.getMessage());
+        return map;
+    }
 
     //动态详细信息
+    @SentinelResource(value = "dynamic_detail",fallback="handlerDynamic_detail")
     @GetMapping("/dynamic_detail")
     public Map dynamic_detail(Integer dynamic_id){
         Integer id=1;
@@ -324,8 +357,14 @@ public class UserdynamicController {
         map.put("data",data);
         return map;
     }
+    public Map handlerDynamic_detail(@PathVariable Integer id, Throwable e) {
+        Map map=new HashMap();
+        map.put(444,"[业务异常兜底降级方法],exception内容:"+e.getMessage());
+        return map;
+    }
 
     //接口调接口
+    @SentinelResource(value = "replyitem",fallback="handlerReplyitem")
     @GetMapping("/replyitem")
     public List<Map<String,Object>> replyitem(Integer userdy){
         List<Map<String,Object>> list=new ArrayList<>();
@@ -358,6 +397,11 @@ public class UserdynamicController {
             list.add(mapdynamic);
         }
         return list;
+    }
+    public Map handlerReplyitem(@PathVariable Integer id, Throwable e) {
+        Map map=new HashMap();
+        map.put(444,"[业务异常兜底降级方法],exception内容:"+e.getMessage());
+        return map;
     }
 }
 

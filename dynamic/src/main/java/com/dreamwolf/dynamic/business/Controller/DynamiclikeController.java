@@ -1,6 +1,7 @@
 package com.dreamwolf.dynamic.business.Controller;
 
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dreamwolf.dynamic.business.service.DynamicdataService;
 import com.dreamwolf.dynamic.business.service.DynamiclikeService;
@@ -9,6 +10,7 @@ import com.dreamwolf.dynamic.business.service.UserdynamicService;
 import com.dreamwolf.entity.dynamic.Dynamicdata;
 import com.dreamwolf.entity.dynamic.Dynamiclike;
 import com.dreamwolf.entity.dynamic.Userdynamic;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -37,6 +39,7 @@ public class DynamiclikeController {
     MemberService memberService;
 
     //通过动态id 查看谁点赞和点赞时间
+    @SentinelResource(value = "info",fallback="handlerInfo")
     @RequestMapping("/dynamiclike")
     public Map info(){
         QueryWrapper<Dynamiclike> wrapper = new QueryWrapper<>();
@@ -46,8 +49,14 @@ public class DynamiclikeController {
         map.put("dynamiclike",dynamiclike);
         return map;
     }
+    public Map handlerInfo(@PathVariable Integer id, Throwable e) {
+        Map map=new HashMap();
+        map.put(444,"[业务异常兜底降级方法],exception内容:"+e.getMessage());
+        return map;
+    }
 
     //收到的点赞
+    @SentinelResource(value = "likeitems",fallback="handlerLikeitems")
     @RequestMapping("/likesitems")
     public List<Map<String,Object>> likeitems(Integer id){
         /*Integer id=1;
@@ -104,6 +113,13 @@ public class DynamiclikeController {
         /*data.put("total",total);
         map.put("data",data);*/
         return items;
+    }
+    public List<Map<String,Object>> handlerLikeitems(@PathVariable Integer id, Throwable e) {
+        Map map=new HashMap();
+        List<Map<String,Object>> listmap=new ArrayList<>();
+        map.put(444,"[业务异常兜底降级方法],exception内容:"+e.getMessage());
+        listmap.add(map);
+        return listmap;
     }
     //收到的点赞
     /*@GetMapping("/like")

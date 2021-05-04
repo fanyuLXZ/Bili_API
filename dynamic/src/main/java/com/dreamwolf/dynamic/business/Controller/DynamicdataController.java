@@ -1,8 +1,10 @@
 package com.dreamwolf.dynamic.business.Controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dreamwolf.entity.dynamic.Dynamicdata;
 import com.dreamwolf.dynamic.business.service.DynamicdataService;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -25,15 +27,21 @@ public class DynamicdataController {
     DynamicdataService dynamicdataService;
 
     //通过动态idID dynamicdata表所有信息 点赞数 转发数 评论数
+    @SentinelResource(value = "dynamicdata",fallback="handlerDynamicdata")
     @RequestMapping("/dynamicdata")
-    public Map dynamicdata(){
+    public Map dynamicdata(Integer id){
         QueryWrapper<Dynamicdata> wrapper = new QueryWrapper<>();
-        wrapper.eq("udID","1");
+        wrapper.eq("udID",id);
         Map<String, Object> map=new HashMap<String, Object>();
         Dynamicdata dynamicdata=dynamicdataService.getOne(wrapper);
         map.put("udLikeNum",dynamicdata.getUdLikeNum());
         map.put("udRetweetNum",dynamicdata.getUdRetweetNum());
         map.put("udCommentNum",dynamicdata.getUdCommentNum());
+        return map;
+    }
+    public Map handlerDynamicdata(@PathVariable Integer id, Throwable e) {
+        Map map=new HashMap();
+        map.put(444,"[业务异常兜底降级方法],exception内容:"+e.getMessage());
         return map;
     }
 }
