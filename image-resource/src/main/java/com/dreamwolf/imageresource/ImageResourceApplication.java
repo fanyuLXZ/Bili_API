@@ -77,7 +77,7 @@ public class ImageResourceApplication {
                 }
             }
         }
-        return new ResponseData<>(code,message,uploadFileResult);
+        return new ResponseData<UploadFileResult>(code,message,1,uploadFileResult);
     }
     @GetMapping("a")
     public String a(){
