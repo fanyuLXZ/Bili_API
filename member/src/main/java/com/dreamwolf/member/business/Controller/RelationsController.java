@@ -2,6 +2,7 @@ package com.dreamwolf.member.business.Controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.dreamwolf.entity.ResponseData;
 import com.dreamwolf.entity.member.Relations;
 import com.dreamwolf.member.business.service.RelationsService;
 import com.dreamwolf.member.business.service.UserService;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -37,26 +37,23 @@ public class RelationsController {
 
     //通过用户id 查看对应id的粉丝id
     @RequestMapping("/relations")
-    public List<Map<String, Object>> relations(Integer uid){
+    public ResponseData<List<Relations>> relations(Integer uid){
         QueryWrapper<Relations> wrapper=new QueryWrapper();
         wrapper.eq("uID",uid);
-        List<Map<String, Object>> relations=relationsService.listMaps(wrapper);
-        return relations;
+        List<Relations> relations=relationsService.list(wrapper);
+        return new ResponseData<List<Relations>>(0,"",1,relations);
     }
 
     //通过粉丝id查看对应关注的up主id
     @RequestMapping("/intuid")
-    public List<Map<String, Object>> intuid(Integer followUID){
-        List<Map<String,Object>> udId=new ArrayList<>();
+    public ResponseData<List<Relations>> intuid(Integer followUID){
+        List<Relations> relations=new ArrayList<>();
         if (followUID!=null && !followUID.equals("")){
             QueryWrapper<Relations> relationsQueryWrapper=new QueryWrapper<>();
             relationsQueryWrapper.eq("followUID",followUID);
-            udId=relationsService.listMaps(relationsQueryWrapper);
+            relations=relationsService.list(relationsQueryWrapper);
         }
-        return udId;
+        return new ResponseData<List<Relations>>(0,"",1,relations);
     }
-
-
-
 }
 

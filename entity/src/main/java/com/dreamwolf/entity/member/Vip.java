@@ -24,9 +24,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 public class Vip implements Serializable {
-
     private static final long serialVersionUID = 1L;
-
     /**
      * 主键无意义
      */

@@ -3,11 +3,14 @@ package com.dreamwolf.dynamic.business.Controller;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.dreamwolf.dynamic.business.entity.Page;
+import com.dreamwolf.dynamic.business.entity.Reply;
+import com.dreamwolf.entity.ResponseData;
 import com.dreamwolf.entity.dynamic.Dynamiccomment;
-import com.dreamwolf.entity.dynamic.User;
 import com.dreamwolf.entity.dynamic.Userdata;
-import com.dreamwolf.entity.dynamic.Vip;
 import com.dreamwolf.dynamic.business.service.*;
+import com.dreamwolf.entity.member.*;
+import com.dreamwolf.entity.member.web_interface.Bang;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,10 +38,17 @@ public class DynamiccommentController {
     //动态的最新信息
     @SentinelResource(value = "entrance",fallback="handlerEntrance")
     @RequestMapping("/entrance")
-    public Map entrance() {
+    public ResponseData<Bang> entrance() {
         Integer id=1;
-        Map map= memberService.verify(id);
-        return map;
+        int code = 0;
+        String message="";
+        ResponseData<Bang> bangverify= memberService.verify(id);
+        Bang bang=bangverify.getData();
+        if (bangverify.getCode()!=0){
+            code=1;
+            message="接口出现问题";
+        }
+        return new ResponseData<Bang>(code,message,1,bang);
     }
     public Map handlerEntrance(@PathVariable Integer id, Throwable e) {
         Map map=new HashMap();
@@ -49,13 +59,11 @@ public class DynamiccommentController {
     //dynamicComment表所有信息
     @SentinelResource(value = "dynamicComment",fallback="handlerDynamicComment")
     @RequestMapping("/dynamicComment")
-    public Map dynamicComment(){
+    public ResponseData<List<Dynamiccomment>> dynamicComment(){
         QueryWrapper<Dynamiccomment> wrapper = new QueryWrapper<>();
         wrapper.eq("udID","1");
         List<Dynamiccomment> relations=dynamiccommentService.list(wrapper);
-        Map<String, Object> map=new HashMap<String, Object>();
-        map.put("dynamicComment",relations);
-        return map;
+        return new ResponseData<List<Dynamiccomment>>(0,"",1,relations);
     }
     public Map handlerDynamicComment(@PathVariable Integer id, Throwable e) {
         Map map=new HashMap();
@@ -66,33 +74,31 @@ public class DynamiccommentController {
     //动态评论简略信息
     @SentinelResource(value = "reply",fallback="handlerReply")
     @GetMapping("/reply")
-    public Map reply(Integer dynamic_id,Integer sort){//dynamic_id 动态id sort 1按照热度 2按照时间排序
-        Map<String,Object> map=new HashMap<>();
-        map.put("code",0);
-        map.put("message",0);
-        map.put("ttl",1);
-        Map<String, Object> data=new HashMap<String, Object>();
-        Map<String, Object> page=new HashMap<String, Object>();
-        QueryWrapper<Dynamiccomment> queryWrapper=new QueryWrapper();
-        queryWrapper.eq("udID",dynamic_id);
-        List<Map<String,Object>> dynamiccomment=dynamiccommentService.listMaps(queryWrapper);//返回对应动态id的父评论
-        page.put("count",dynamiccomment.size());//父评论数
-        page.put("num",1);
-        page.put("size",10);
-        Integer[] list = new Integer[dynamiccomment.size()];//数组 用来储存所有父评论id
-        for (int i=0;i<dynamiccomment.size();i++){
-            list[i]=(Integer)dynamiccomment.get(i).get("cID");
+    public ResponseData<Reply> reply(Integer dynamic_id, Integer sort){//dynamic_id 动态id sort 1按照热度 2按照时间排序
+        int code = 0;
+        String message="";
+        Reply reply=null;
+        if(dynamic_id!=null && sort!=null){
+            QueryWrapper<Dynamiccomment> queryWrapper=new QueryWrapper();
+            queryWrapper.eq("udID",dynamic_id);
+            List<Dynamiccomment> dynamiccomment=dynamiccommentService.list(queryWrapper);//返回对应动态id的父评论
+            Page page=new Page(dynamiccomment.size(),dynamiccomment.size(),1,10);
+            Integer[] list = new Integer[dynamiccomment.size()];//数组 用来储存所有父评论id
+            for (int i=0;i<dynamiccomment.size();i++){
+                list[i]=dynamiccomment.get(i).getcID();
+            }
+            List<Map<String,Object>> replies = new ArrayList<>();//
+            if (list.length>0){
+                replies=commentService.commselecarlist(sort,list);
+            }
+            //显示 评论对象集合的ListMap
+            //page.put("acount",);//父加子总评论数
+            reply=new Reply(page);
+        }else{
+            code=1;
+            message="dynamic_id和sort不许为空";
         }
-        List<Map<String,Object>> replies = new ArrayList<>();
-        if (list.length>0){
-            replies=commentService.commselecarlist(sort,list);
-        }
-        //显示 评论对象集合的ListMap
-        //page.put("acount",);//父加子总评论数
-        data.put("replies",replies);
-        data.put("page",page);
-        map.put("data",data);
-        return  map;
+        return  new ResponseData<Reply>(code,message,1,reply);
     }
     public Map handlerReply(@PathVariable Integer id, Throwable e) {
         Map map=new HashMap();
@@ -132,33 +138,28 @@ public class DynamiccommentController {
     }
 
     //member发表评论人对象
-    @SentinelResource(value = "memberid",fallback="handlerMemberid")
     @GetMapping("/memberid")
-    public Map memberid(Integer id){
-        Map<String,Object> data=new HashMap<String, Object>();
-        User user=memberService.useruid(id);
-        data.put("mid",user.getuID());
-        data.put("sex",user.getSex()==1?"男":"女");
-        data.put("uname",user.getNickName());
-        data.put("avatar",user.getHeadImgPath());
-        Map<String,Object> level_info=new HashMap<String, Object>();
-        Userdata userdata=memberService.Userdataid(id);
-        level_info.put("current_level",userdata.getLevel());
-        data.put("level_info",level_info);
-        Map<String,Object> vip=new HashMap<String, Object>();
-        Vip vips=memberService.vipid(id);
-        if(vips!=null){
-            vip.put("status",true);
+    public ResponseData<Member> memberid(Integer id){
+        int code = 0;
+        String message="";
+        Member member=null;
+        if (id!=null){
+            ResponseData<User> user=memberService.useruid(id);
+            ResponseData<Userdata> userdata=memberService.userdata(id);
+            if (userdata.getCode()!=0){
+                code=1;
+                message="接口出现问题";
+            }
+            Level_info level_info=new Level_info(userdata.getData().getLevel());
+            ResponseData<Vip> vip= memberService.vip(id);
+            VipStatus vipStatus=new VipStatus(vip.getData()!=null);
+            member=new Member(user.getData().getuID(),user.getData().getSex()==1?"男":"女",user.getData().getNickName(),user.getData().getHeadImgPath(),level_info,vipStatus);
         }else{
-            vip.put("status",false);
+            code=1;
+            message="id不能为空";
         }
-        data.put("vip",vip);
-        return data;
+        return new ResponseData<Member>(code,message,1,member);
     }
-    public Map handlerMemberid(@PathVariable Integer id, Throwable e) {
-        Map map=new HashMap();
-        map.put(444,"[业务异常兜底降级方法],exception内容:"+e.getMessage());
-        return map;
-    }
+
 }
 
