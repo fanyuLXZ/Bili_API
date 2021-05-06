@@ -1,21 +1,18 @@
 server:
-  port: 8088
+  port: 8090
+#spring
 spring:
   application:
-    #应用名
-    name: safety-service
+    name: image-resource-service
   cloud:
     nacos:
       #注册服务地址
       discovery:
-        server-addr: localhost:8848
+        server-addr: 127.0.0.1:8848
       #配置服务地址
       config:
-        server-addr: localhost:8848
+        server-addr: 127.0.0.1:8848
         file-extension: yaml
         extension-configs[0]:
           data-id: sentinel-config.yaml
-          refresh: true
-        extension-configs[1]:
-          data-id: redis-data-config
           refresh: true

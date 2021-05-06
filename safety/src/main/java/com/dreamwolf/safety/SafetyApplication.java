@@ -1,8 +1,10 @@
 package com.dreamwolf.safety;
 
+import com.dreamwolf.entity.ResponseData;
 import com.dreamwolf.safety.util.TokenUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +22,7 @@ import java.util.Map.Entry;
 
 @RestController
 @RefreshScope
-@SpringBootApplication
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 //@EnableFeignClients(basePackages = "com.dreamwolf.safety.*")
 public class SafetyApplication {
     public static void main(String[] args) {
@@ -31,22 +34,8 @@ public class SafetyApplication {
     @Resource
     private StringRedisTemplate stringRedisTemplate;
 
-
-    @GetMapping("/a")
-    public String a(HttpServletResponse response){
-        // 生成token
-        String token = TokenUtil.creat();
-        // 将token存入cookie
-        Cookie cookie = new Cookie("token",token);
-        cookie.setPath("/");
-        response.addCookie(cookie);
-        // 将token和id存入redis
-        stringRedisTemplate.boundHashOps("tokens").put("2",token);
-        return "a";
-    }
-
     @PostMapping("/login")
-    public Map login(String tel, Integer code, String username, String password, HttpServletResponse response) {
+    public Map login(String tel, Integer code, String username, String password, HttpServletResponse response, HttpServletRequest request) {
         HashMap<String,Object> map = new HashMap<>();
         // 判断是使用手机验证码登陆还是账号密码登陆
         if (tel != null && !tel.equals("") && code != null) {
@@ -67,7 +56,6 @@ public class SafetyApplication {
                 // 将token存入cookie
                 Cookie cookie = new Cookie("token",token);
                 response.addCookie(cookie);
-
                 // 判断此uid是否已经存过 有则删除
                 BoundHashOperations<String, String, String> tokens = stringRedisTemplate.boundHashOps("tokens");
                 Map<String,String> tokensMap = tokens.entries();
@@ -91,5 +79,36 @@ public class SafetyApplication {
             }
         }
         return map;
+    }
+
+    /**
+     * 根据tokon获取uid的请求
+     * @param token token
+     * @return
+     *  code可能值：
+     *  0 成功
+     *  1 token为空
+     *  2 token过期
+     *  其他值详见ResponseData类注释
+     */
+    @GetMapping("/landed-uid")
+    public ResponseData<String> landed_uid(String token){
+        int code = 0;
+        String message = "";
+        String uid = null;
+        if (token==null||token.equals("")){
+            code=1;
+            message="token不能为空";
+        }else {
+            BoundHashOperations<String, String, String> tokens = stringRedisTemplate.boundHashOps("tokens");
+            Boolean hasKey = tokens.hasKey(token);
+            if (hasKey==null || !hasKey){
+                code=2;
+                message="token已过期";
+            }else {
+                uid = tokens.get(token);
+            }
+        }
+        return new ResponseData<>(code,message,1,uid);
     }
 }
