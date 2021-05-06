@@ -20,7 +20,6 @@
 ## api文档
 
 * ### 视频模块 Vide 
-* 	[aaa](#根据视频id查看视频信息-/videobvID)
 	1. 查看子分区下视频  /videobvldZoning  
 	    参数：
 	    * bvChildZoning 子分区id Integer   
@@ -39,7 +38,7 @@
 		 	- bvChildZoning： 视频子分区ID
 		 	- bvIsDel： 是否已删除，0为未删除，1为已删除
 		 	
-	2. ###根据视频id查看视频信息 /videobvID   
+	2. 根据视频id查看视频信息 /videobvID   
 	    参数:  
     	* bvID 视频id Integer   
     	
