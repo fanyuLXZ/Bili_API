@@ -3,11 +3,10 @@ package com.dreamwolf.dynamic.business.Controller;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.dreamwolf.entity.dynamic.Dynamiccomment;
-import com.dreamwolf.entity.dynamic.Dynamicdata;
-import com.dreamwolf.entity.dynamic.Dynamiclike;
-import com.dreamwolf.entity.dynamic.Userdynamic;
+import com.dreamwolf.entity.ResponseData;
+import com.dreamwolf.entity.dynamic.*;
 import com.dreamwolf.dynamic.business.service.*;
+import com.dreamwolf.entity.member.Vip;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,13 +42,11 @@ public class UserdynamicController {
     //获取对应用户id的所有动态
     @SentinelResource(value = "userdynamicList",fallback="handlerUserdynamicList")
     @RequestMapping("/userdynamicList")
-    public Map userdynamicList(Integer uid){
+    public ResponseData<List<Userdynamic>> userdynamicList(Integer uid){
         QueryWrapper<Userdynamic> wrapper = new QueryWrapper<>();
         wrapper.eq("uID",uid);
-        Map<String, Object> map=new HashMap<String, Object>();
         List<Userdynamic> userdynamics=userdynamicService.list(wrapper);
-        map.put("userdynamics",userdynamics);
-        return map;
+        return new ResponseData<List<Userdynamic>>(0,"",1,userdynamics);
     }
     public Map handlerUserdynamicList(@PathVariable Integer id, Throwable e) {
         Map map=new HashMap();
@@ -60,13 +57,11 @@ public class UserdynamicController {
     //获取动态id的所有信息
     @SentinelResource(value = "userdynamic",fallback="handlerUserdynamic")
     @RequestMapping("/userdynamic")
-    public Map userdynamic(Integer udID){
+    public ResponseData<List<Userdynamic>> userdynamic(Integer udID){
         QueryWrapper<Userdynamic> wrapper = new QueryWrapper<>();
         wrapper.eq("udID",udID);
-        Map<String, Object> map=new HashMap<String, Object>();
         List<Userdynamic> userdynamics=userdynamicService.list(wrapper);
-        map.put("userdynamics",userdynamics);
-        return map;
+        return new ResponseData<List<Userdynamic>>(0,"",1,userdynamics);
     }
     public Map handlerUserdynamic(@PathVariable Integer id, Throwable e) {
         Map map=new HashMap();
@@ -93,13 +88,6 @@ public class UserdynamicController {
         QueryWrapper<Userdynamic> wrapper = new QueryWrapper<>();//条件构造器
         wrapper.in("uID",resultList).orderByDesc("updateTime").last("limit "+20);
         List<Map<String,Object>> userdynamic=userdynamicService.listMaps(wrapper);//返回关注up的最新的20条动态 userdynamic表
-        /*List<String> dynamicList=new ArrayList<>();//放userdynamic表数据中的udID
-        for(int i=0;i<userdynamic.size();i++){
-            dynamicList.add(userdynamic.get(i).get("udID").toString());
-        }
-        QueryWrapper<Dynamicdata> dynamicwrapper = new QueryWrapper<>();//条件构造器
-        wrapper.in("udID",dynamicList);
-        List<Map<String,Object>> dynamic=dynamicdataService.listMaps(dynamicwrapper);//返回所有的dynamicdata表*/
         for (int i=0;i<userdynamic.size();i++){
             Map <String, Object> listmap=new HashMap<String, Object>();//内部层
             Map<String, Object> desc=new HashMap<String, Object>();
@@ -133,14 +121,14 @@ public class UserdynamicController {
             info.put("face",inin.get("headImgPath"));
             user_profile.put("info",info);
             Map<String,Object> vip=new HashMap<>();
-            Map<String,Object> vipin=memberService.vip((Integer)userdynamic.get(i).get("uID"));
+            ResponseData<Vip> vipin=memberService.vip((Integer)userdynamic.get(i).get("uID"));
             if(vipin!=null){
                 vip.put("status",true);
                 Calendar cal = Calendar.getInstance();//时间对象
                 int month = (cal.get(Calendar.MONTH)) + 1;//月
                 int day_of_month = cal.get(Calendar.DAY_OF_MONTH);//日
                 vip.put("type",month+"/"+day_of_month=="4/1"?0:1);//会员类型
-                vip.put("due_date",vipin.get("ExpirationTime"));
+                //vip.put("due_date",vipin.get("ExpirationTime"));
             }else{
                 vip.put("status",false);
                 vip.put("type","无");//会员类型
@@ -148,8 +136,8 @@ public class UserdynamicController {
             }
             user_profile.put("vip",vip);
             Map<String,Object> level_info=new HashMap<>();
-            Map<String,Object> userdata=memberService.userdata((Integer)userdynamic.get(i).get("uID"));
-            level_info.put("current_info",userdata.get("Level"));
+            ////ResponseData<Userdata> userdata=memberService.userdata((Integer)userdynamic.get(i).get("uID"));
+            ////level_info.put("current_info",userdata.get("Level"));
             user_profile.put("level_info",level_info);
             desc.put("user_profile",user_profile);
             listmap.put("card",userdynamic.get(i).get("content"));
@@ -219,14 +207,14 @@ public class UserdynamicController {
             info.put("face",inin.get("headImgPath"));
             user_profile.put("info",info);
             Map<String,Object> vip=new HashMap<>();
-            Map<String,Object> vipin=memberService.vip((Integer)userdynamic.get(i).get("uID"));//接口调接口
+            ResponseData<Vip> vipin=memberService.vip((Integer)userdynamic.get(i).get("uID"));//接口调接口
             if(vipin!=null){
                 vip.put("status",true);
                 Calendar cal = Calendar.getInstance();//时间对象
                 int month = (cal.get(Calendar.MONTH)) + 1;//月
                 int day_of_month = cal.get(Calendar.DAY_OF_MONTH);//日
                 vip.put("type",month+"/"+day_of_month=="4/1"?0:1);//会员类型
-                vip.put("due_date",vipin.get("ExpirationTime"));
+                //vip.put("due_date",vipin.get("ExpirationTime"));
             }else{
                 vip.put("status",false);
                 vip.put("type","无");//会员类型
@@ -234,8 +222,8 @@ public class UserdynamicController {
             }
             user_profile.put("vip",vip);
             Map<String,Object> level_info=new HashMap<>();
-            Map<String,Object> userdata=memberService.userdata((Integer)userdynamic.get(i).get("uID"));
-            level_info.put("current_info",userdata.get("Level"));
+            //Map<String,Object> userdata=memberService.userdata((Integer)userdynamic.get(i).get("uID"));
+            ////level_info.put("current_info",userdata.get("Level"));
             user_profile.put("level_info",level_info);
 
             desc.put("user_profile",user_profile);
@@ -330,14 +318,14 @@ public class UserdynamicController {
             info.put("face",inin.get("headImgPath"));
             user_profile.put("info",info);
             Map<String,Object> vip=new HashMap<>();
-            Map<String,Object> vipin=memberService.vip((Integer)userdynamic.get(i).get("uID"));
+            ResponseData<Vip> vipin=memberService.vip((Integer)userdynamic.get(i).get("uID"));
             if(vipin!=null){
                 vip.put("status",true);
                 Calendar cal = Calendar.getInstance();//时间对象
                 int month = (cal.get(Calendar.MONTH)) + 1;//月
                 int day_of_month = cal.get(Calendar.DAY_OF_MONTH);//日
                 vip.put("type",month+"/"+day_of_month=="4/1"?0:1);//会员类型
-                vip.put("due_date",vipin.get("ExpirationTime"));
+                //vip.put("due_date",vipin.get("ExpirationTime"));
             }else{
                 vip.put("status",false);
                 vip.put("type","无");//会员类型
@@ -345,8 +333,8 @@ public class UserdynamicController {
             }
             user_profile.put("vip",vip);
             Map<String,Object> level_info=new HashMap<>();
-            Map<String,Object> userdata=memberService.userdata((Integer)userdynamic.get(i).get("uID"));
-            level_info.put("current_info",userdata.get("Level"));
+            //Map<String,Object> userdata=memberService.userdata((Integer)userdynamic.get(i).get("uID"));
+            //level_info.put("current_info",userdata.get("Level"));
             user_profile.put("level_info",level_info);
             desc.put("user_profile",user_profile);
             listmap.put("card",userdynamic.get(i).get("content"));

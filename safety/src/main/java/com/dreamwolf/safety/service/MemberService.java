@@ -11,4 +11,5 @@ import java.util.Map;
 public interface MemberService {
     @PostMapping("/user/verify")
     Map verify(@RequestParam String username,@RequestParam String password);
+
 }

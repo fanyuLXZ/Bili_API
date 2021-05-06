@@ -2,6 +2,8 @@ package com.dreamwolf.dynamic.business.Controller;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.dreamwolf.dynamic.business.entity.Reply;
+import com.dreamwolf.entity.ResponseData;
 import com.dreamwolf.entity.dynamic.Dynamicdata;
 import com.dreamwolf.dynamic.business.service.DynamicdataService;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,15 +31,11 @@ public class DynamicdataController {
     //通过动态idID dynamicdata表所有信息 点赞数 转发数 评论数
     @SentinelResource(value = "dynamicdata",fallback="handlerDynamicdata")
     @RequestMapping("/dynamicdata")
-    public Map dynamicdata(Integer id){
+    public ResponseData<Dynamicdata> dynamicdata(Integer id){
         QueryWrapper<Dynamicdata> wrapper = new QueryWrapper<>();
         wrapper.eq("udID",id);
-        Map<String, Object> map=new HashMap<String, Object>();
         Dynamicdata dynamicdata=dynamicdataService.getOne(wrapper);
-        map.put("udLikeNum",dynamicdata.getUdLikeNum());
-        map.put("udRetweetNum",dynamicdata.getUdRetweetNum());
-        map.put("udCommentNum",dynamicdata.getUdCommentNum());
-        return map;
+        return new ResponseData<Dynamicdata>(0,"",1,dynamicdata);
     }
     public Map handlerDynamicdata(@PathVariable Integer id, Throwable e) {
         Map map=new HashMap();

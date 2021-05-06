@@ -3,15 +3,11 @@ package com.dreamwolf.member.business.Controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dreamwolf.entity.ResponseData;
-import com.dreamwolf.entity.member.Relations;
-import com.dreamwolf.entity.member.User;
-import com.dreamwolf.entity.member.Userdata;
-import com.dreamwolf.entity.member.Vip;
+import com.dreamwolf.entity.member.*;
 import com.dreamwolf.entity.member.web_interface.*;
 import com.dreamwolf.member.business.service.*;
 import com.dreamwolf.member.business.util.Hide;
 import com.dreamwolf.member.business.util.md5;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -30,21 +26,21 @@ import java.util.*;
  */
 @RestController
 public class UserController {
-    @Autowired
+    @Resource
     UserService userService;
-    @Autowired
+    @Resource
     UserdataService userdataService;
-    @Autowired
+    @Resource
     VipService vipService;
-    @Autowired
+    @Resource
     RelationsService relationsService;
     @Resource
     Userdynamic userdynamic;
 
     //登录
     @RequestMapping("/user/verify")
-    public Map verify(String username,String password) throws Exception {
-        Map<String, Object> map=new HashMap<String, Object>();
+    public ResponseData<UserVerify> verify(String username,String password)throws Exception{
+        UserVerify userVerify=null;
         if(username!=null && !username.equals("") && password!=null && !password.equals("") ){
             QueryWrapper<User> wrapper = new QueryWrapper<>();
             wrapper.eq("boundPhone",username).or().eq("boundEmail",username);
@@ -52,23 +48,14 @@ public class UserController {
             if(user!=null){
                 md5 md=new md5();//加密
                 if(md.message(user.getPassword()).toUpperCase().equals(password.toUpperCase()) && user.getPassword()!=null && !user.getPassword().equals("")){//查看密码是否正确
-                    map.put("succeed",true);//是否登录成功
-                    map.put("uid",user.getuID());//对应用户id
-                }else{
-                    map.put("succeed",false);//是否登录成功
-                    map.put("message","密码不正确");
+                    userVerify=new UserVerify(true,user.getuID(),"登录成功");
                 }
             }else{
-                map.put("succeed",false);//是否登录成功
-                map.put("message","密码账号不正确");
+                userVerify=new UserVerify(false,null,"登录失败");
             }
-        }else{
-            map.put("succeed",false);
-            map.put("message","账号或密码为空");
         }
-        return map;
+        return new ResponseData<UserVerify>(0,"",1,userVerify);
     }
-
 
     //账号基本信息
     @RequestMapping("/account/info")
@@ -99,216 +86,123 @@ public class UserController {
                 user.getBoundPhone()!=null,user.getBoundEmail()!=null);
         return new ResponseData<UserInfo>(0,"",1,userInfo);
     }
-    //接口调接口
-    /*@RequestMapping("/bang")
-    public Map bang(Integer id){
-        Map<String, Object> map=new HashMap<String, Object>();
-        if(id!=null){
-            map.put("code",0);//"code":0,"message":"0","ttl":1,
-            map.put("message",0);
-            map.put("ttl",1);
-            Map<String, Object> data=new HashMap<String, Object>();
 
-            entrance.put("icon",user.getHeadImgPath());//头像
-            entrance.put("mid",user.getuID());//用户唯一id
-            entrance.put("type","up");
-            data.put("entrance",entrance);
-            map.put("data",data);
-        }else{
-            map.put("code",400);
-            map.put("message","id不能为空");
-        }
-        return map;
-    }*/
     //接口调接口
-    /*@RequestMapping("/bang")
+    @RequestMapping("/bang")
     public ResponseData<Bang> bang(Integer id){
-        Map<String, Object> entrance=new HashMap<String, Object>();
-        User user=userService.getById(id);
-        Bang bang = new Bang(user.getHeadImgPath()
-                ,user.getuID()
-                ,"up");
-        return new ResponseData<Bang>(0,"",1,bang);
-    }*/
-
-    //通过id返回User表所有对应id信息
-    @RequestMapping("/useruid")
-    public User useruid(Integer uid){
-        User user=userService.getById(uid);
-        return user;
-    }
-    //通过id返回User表所有对应id信息
-    @RequestMapping("/User/id")
-    public User userid(Integer id){
-        User user=userService.getById(id);
-        return user;
-    }
-
-    //通过id返回User表所有对应id信息
-    @RequestMapping("/User")
-    public Map User(Integer uid){
-        User user=userService.getById(uid);
-        Map<String, Object> map=new HashMap<String, Object>();
-        if(uid !=null && !uid.equals("")){
-            map.put("uID",user.getuID());
-            map.put("userName",user.getUserName());
-            map.put("password",user.getPassword());
-            map.put("nickName",user.getNickName());
-            map.put("sex",user.getSex());
-            map.put("birthday",user.getBirthday());
-            map.put("boundEmail",user.getBoundEmail());
-            map.put("boundPhone",user.getBoundEmail());
-            map.put("boundQQ",user.getBoundQQ());
-            map.put("headImgPath",user.getHeadImgPath());
-        }else{
-            map.put("code",400);
-            map.put("message","值不能为空");
+        int code = 0;
+        String message="";
+        Bang bang=null;
+        if(id!=null){
+            User user=userService.getById(id);
+            bang = new Bang(user.getHeadImgPath(),user.getuID(),"up");
+        }else {
+            code =1;
+            message="id不能为空";
         }
-        return map;
+        return new ResponseData<Bang>(code,message,1,bang);
     }
 
+    //通过id返回User表所有对应id信息
+    @GetMapping("/useruid")
+    public ResponseData<User> userid(Integer uid){
+        int code = 0;
+        String message="";
+        User user=null;
+        if(uid!=null){
+            user=userService.getById(uid);
+        }else{
+            code=1;
+            message="uid不能为空";
+        }
+        return new ResponseData<User>(code,message,1,user);
+    }
 
-
-    //评论回复用户对象 接口调接口
     @GetMapping("/membe")
-    public Map membe(Integer uID){
-        Map<String, Object> map=new HashMap<String, Object>();
+    public ResponseData<Member> membe(Integer uID){
         User user=userService.getById(uID);
-        map.put("mid",user.getuID());//用户唯一id
-        map.put("uname",user.getNickName());//用户昵称
-        map.put("sex",user.getSex()==1?"男":"女");//性别
-        map.put("face",user.getHeadImgPath());//头像
-        Map<String, Object> level_info=new HashMap<String, Object>();
         QueryWrapper<Userdata> wrapper = new QueryWrapper<>();
         wrapper.eq("uID",uID);
-        level_info.put("current_level",userdataService.getOne(wrapper).getLevel());//用户等级
-        map.put("level_info",level_info);
-        Map<String, Object> vip=new HashMap<String, Object>();
+        Level_info level_info=new Level_info(userdataService.getOne(wrapper).getLevel());
         QueryWrapper<Vip> vipQueryWrapper = new QueryWrapper<>();
         wrapper.eq("uID",uID);
-        vip.put("status",vipService.getOne(vipQueryWrapper)!=null);//是否有vip
-        map.put("vip",vip);
-        return map;
+        VipStatus vipStatus=new VipStatus(vipService.getOne(vipQueryWrapper)!=null);
+        Member member=new Member(user.getuID(),user.getNickName(),user.getSex()==1?"男":"女",user.getHeadImgPath(),level_info,vipStatus);
+        return new ResponseData<Member>(0,"",1,member);
     }
 
-    //用户基本信息
     @GetMapping("/basic-info-by-uid")
-    public Map basic(Integer mid){
-        Integer id=1;
-        Map<String, Object> map=new HashMap<String, Object>();
-        if(mid!=null) {
-            map.put("code", 0);
-            map.put("message","");
-            map.put("ttl", 1);
-            User user=userService.getById(mid);
-            Map<String,Object> data=new HashMap<String, Object>();
-            data.put("mid",user.getuID());//id
-            data.put("name",user.getNickName());//名称
-            data.put("face",user.getHeadImgPath());//头像
-            data.put("sex",user.getSex());//性别
-            QueryWrapper<Userdata> userdataQueryWrapper=new QueryWrapper<>();
-            userdataQueryWrapper.eq("uID",id);
-            Userdata userdata=userdataService.getOne(userdataQueryWrapper);
-            data.put("fans",userdata.gettFansNum());
-            data.put("friend",userdata.gettFollowNum());
-            Map<String,Object> level_info=new HashMap<String, Object>();
-            level_info.put("current_level",userdata.getLevel());
-            data.put("level_info",level_info);
-            Map<String,Object> vip=new HashMap<String, Object>();
-            Vip vips=vipService.getById(mid);
-            if(vips!=null){
-                Calendar cal = Calendar.getInstance();
-                int month = (cal.get(Calendar.MONTH)) + 1;//月
-                int day_of_month = cal.get(Calendar.DAY_OF_MONTH);//日
-                vip.put("type",month+"/"+day_of_month=="4/1"?0:1);//会员类型
-                vip.put("status",true);
-            }else{
-                vip.put("type",null);//会员类型
-                vip.put("status",false);
-            }
-            data.put("vip",vip);
-            QueryWrapper<Relations> relationsQueryWrapper=new QueryWrapper<>();
-            relationsQueryWrapper.eq("followUID",id).eq("uID",mid);
-            Relations relations=relationsService.getOne(relationsQueryWrapper);
-            if(relations!=null){
-                data.put("following",true);
-            }else{
-                data.put("following",false);
-            }
-            map.put("data",data);
-        }else{
-            map.put("code",400);
-            map.put("message","uid值不能为空");
-        }
-        return map;
+    public ResponseData<Member> basic(Integer mid){
+        User user=userService.getById(mid);
+        QueryWrapper<Userdata> userdataQueryWrapper=new QueryWrapper<>();
+        userdataQueryWrapper.eq("uID",mid);
+        Userdata userdata=userdataService.getOne(userdataQueryWrapper);
+        Level_info level_info=new Level_info(userdata.getLevel());
+        Vip vips=vipService.getById(mid);
+        Calendar cal = Calendar.getInstance();
+        int month = (cal.get(Calendar.MONTH)) + 1;//月
+        int day_of_month = cal.get(Calendar.DAY_OF_MONTH);//日
+        VipStatus vipStatus=new VipStatus(vips!=null,(month+"/"+day_of_month).equals("4/1")?0:1);
+        QueryWrapper<Relations> relationsQueryWrapper=new QueryWrapper<>();
+        relationsQueryWrapper.eq("followUID",mid).eq("uID",mid);
+        Relations relations=relationsService.getOne(relationsQueryWrapper);
+        Member member=new Member(user.getuID(),user.getNickName(),user.getSex()==1?"男":"女",user.getHeadImgPath(),
+                userdata.gettFansNum(),userdata.gettFollowNum(),
+                level_info,vipStatus,relations!=null);
+        return new ResponseData<Member>(0,"",1,member);
     }
 
     @GetMapping("/user/infos")
-    public List<Map<String,Object>> infos(Integer [] uids){
-        List<Map<String,Object>> listMap=new ArrayList<>();
+    public ResponseData<List<Member>> infos(Integer [] uids){
+        List<Member> list=new ArrayList();
         if (uids.length>0){
             QueryWrapper<User> userQueryWrapper=new QueryWrapper<>();
             userQueryWrapper.in("uID",uids);
-            List<Map<String,Object>> user=userService.listMaps(userQueryWrapper);
+            List<User> user=userService.list(userQueryWrapper);
             for(int i=0;i<user.size();i++){
-                Map<String,Object> map=new HashMap<>();
-                map.put("mid",user.get(i).get("uID"));
-                map.put("uname",user.get(i).get("userName"));
-                map.put("face",user.get(i).get("headImgPath"));
-                listMap.add(map);
+                Member member=new Member(user.get(i).getuID(),user.get(i).getUserName(),user.get(i).getHeadImgPath());
+                list.add(member);
             }
         }
-        return  listMap;
+        return new ResponseData<List<Member>>(0,"",1,list);
     }
 
     //当前登陆的用户基本信息
-    @GetMapping("card/info")
-    public Map<String,Object> cardinfos(){
-        Map<String,Object> map=new HashMap<>();
+    @GetMapping("/card/info")
+    public ResponseData<Member> cardinfos(){
         Integer id=1;
         User user=userService.getById(id);
-        Map<String,Object> data=new HashMap<>();
-        data.put("mid",user.getuID());//用户id
-        data.put("name",user.getNickName());//用户昵称
-        data.put("face",user.getHeadImgPath());//用户头像
         QueryWrapper<Relations> integerQueryWrapper=new QueryWrapper<>();
         integerQueryWrapper.eq("uID",id);//查找uID为id的 关注up的
-        List<Relations> shu=relationsService.list(integerQueryWrapper);
         QueryWrapper<Relations> integerWrapper=new QueryWrapper<>();
         integerWrapper.eq("followUID",id);//查找followUID为id的 up关注的
-        List<Relations> shu2=relationsService.list(integerWrapper);
-        data.put("fans",shu.size());//粉丝数
-        data.put("friend",shu2.size());//关注数
-        map.put("data",data);
-        return  map;
+        Member member=new Member(user.getuID(),user.getNickName(),user.getHeadImgPath(),
+                (long)relationsService.list(integerQueryWrapper).size(),(long)relationsService.list(integerWrapper).size());
+        return new ResponseData<Member>(0,"",1,member);
     }
 
     //用户对象数组
     @GetMapping("/users")
-    public List<Map<String,Object>> users(Integer[] list,Integer uid){//评论着用户id数组  发布动态用户id
-        List<Map<String,Object>> listmap=new ArrayList<>();
+    public ResponseData<List<Users>> users(Integer[] list,Integer uid){//评论着用户id数组  发布动态用户id
+        List<Users> usersList=new ArrayList<>();
         QueryWrapper<User> userQueryWrapper=new QueryWrapper<>();//userdynamic 查找udID为i status=1的用户id
         userQueryWrapper.in("uID",list);
         List<User> dzuser=userService.list(userQueryWrapper);
         for(int i=0;i<list.length;i++){
-            Map<String,Object> usermap=new HashMap<>();
-            usermap.put("mid",dzuser.get(i).getuID());//点赞对象的id
-            usermap.put("nickname",dzuser.get(i).getNickName());//~昵称
-            usermap.put("avatar",dzuser.get(i).getHeadImgPath());//~头像
             QueryWrapper<Relations> relationsWrapper=new QueryWrapper<>();//判断评论用户是否关注了
             relationsWrapper.eq("followUID",dzuser.get(i).getuID()).eq("uID",uid);
             Relations relations=relationsService.getOne(relationsWrapper);
-            usermap.put("follow",relations!=null?true:false);//是否关注
-            usermap.put("native_uri","个人中心地址");
-            listmap.add(usermap);
+            Users users=new Users(dzuser.get(i).getuID(),dzuser.get(i).getNickName(),
+                    dzuser.get(i).getHeadImgPath(),relations!=null,"个人中心地址");
+            usersList.add(users);
         }
-        return listmap;
+        return new ResponseData<List<Users>>(0,"",1,usersList);
     }
 
+    //回复我的用户对象List 接口调接口
     @GetMapping("/replyuser")
-    public List<Map<String,Object>> replyuser(Integer[] uids,Integer id){//回复人  和原评论
-        //Map<String,Object> map=new HashMap<>();
-        List<Map<String,Object>> listmap=new ArrayList<>();
+    public ResponseData<List<ReplyUser>> replyuser(Integer[] uids,Integer id){//评论着用户id数组  发布动态用户id
+        List<ReplyUser> replyUserList=new ArrayList<>();
         QueryWrapper<User> userQueryWrapper=new QueryWrapper<>();
         userQueryWrapper.in("uID",uids);
         List<User> userlist=userService.list(userQueryWrapper);//获取全部人员信息 重复不会查询
@@ -317,42 +211,29 @@ public class UserController {
             userlisttwo.put(user.getuID(),user);
         }
         for(int i=0;i<uids.length;i++){
-            Map<String,Object> map=new HashMap<>();
             User user=userlisttwo.get(uids[i]);
-            map.put("mid",user.getuID());
-            map.put("nickname",user.getNickName());
-            map.put("avatar",user.getHeadImgPath());
             //判断是否关注 判断我是否关注他
             QueryWrapper<Relations> relationsQueryWrapper=new QueryWrapper<>();
             relationsQueryWrapper.eq("uID",user.getuID()).eq("followUID",id);
-            List<Relations> relationsList=relationsService.list(relationsQueryWrapper);//查询用户是否关注回复人
-            if(relationsList!=null){
-                map.put("follow",true);
-            }else{
-                map.put("follow",false);
-            }
-            listmap.add(map);
+            Relations relations=relationsService.getOne(relationsQueryWrapper);//查询用户是否关注回复人
+            ReplyUser replyUser=new ReplyUser(user.getuID(),user.getNickName(),user.getHeadImgPath(),relations!=null);
+            replyUserList.add(replyUser);
         }
-        return listmap;
+        return new ResponseData<List<ReplyUser>>(0,"",1,replyUserList);
     }
+
+    //回复我的用户对象 接口调接口
     @GetMapping("/replyuserb")
-    public Map<String,Object> replyuserb(Integer uid,Integer id){//回复人  和原评论
-        User userlist=userService.getById(uid);//获取全部人员信息 重复不会查询
-        Map<String,Object> map=new HashMap<>();
-        map.put("mid",userlist.getuID());
-        map.put("nickname",userlist.getNickName());
-        map.put("avatar",userlist.getHeadImgPath());
+    public ResponseData<ReplyUser> replyuserb(Integer uid,Integer id){//回复人  和原评论
+        User userlist=userService.getById(uid);//查询对应uid的用户信息
         //判断是否关注 判断我是否关注他
         QueryWrapper<Relations> relationsQueryWrapper=new QueryWrapper<>();
         relationsQueryWrapper.eq("uID",uid).eq("followUID",id);
-        Relations relationsList=relationsService.getOne(relationsQueryWrapper);//查询用户是否关注回复人
-        if(relationsList!=null){
-            map.put("follow",true);
-        }else{
-            map.put("follow",false);
-        }
-        return map;
+        Relations relations=relationsService.getOne(relationsQueryWrapper);//查询用户是否关注回复人
+        ReplyUser replyUser=new ReplyUser(userlist.getuID(),userlist.getNickName(),userlist.getHeadImgPath(),relations!=null);
+        return new ResponseData<ReplyUser>(0,"",1,replyUser);
     }
+
     //接口调接口
     @GetMapping("/data")
     public List<Map<String,Object>> list(Integer id){
@@ -370,7 +251,7 @@ public class UserController {
             item.put("image",replyitem.get(i).get("image"));
             item.put("native_uri",replyitem.get(i).get("native_uri"));
             //item.put("id",chuan.get("data").get("uid"));
-            Map<String,Object> user=replyuserb((Integer) replyitem.get(i).get("id"),id);
+            Map<String,Object> user= (Map<String, Object>) replyuserb((Integer) replyitem.get(i).get("id"),id);
             //Map<String,Object> repl=replyuserb((Integer) replyitem.get(i).get("id"),id);
             //user.put("mid",repl.get("mid"));
             map.put("item",item);
@@ -382,7 +263,7 @@ public class UserController {
 
     //根据用户id查询对象 /video/info
     @GetMapping("/video/info")
-    public VideoinfoOwnerInfo video_info(Integer uid,Integer mid){//当前用户id  用户id
+    public ResponseData<VideoinfoOwnerInfo> video_info(Integer uid,Integer mid){//当前用户id  用户id
         User user=userService.getById(mid);
         QueryWrapper<Userdata> userdataQueryWrapper=new QueryWrapper<>();
         userdataQueryWrapper.eq("uID",mid);
@@ -390,13 +271,14 @@ public class UserController {
         QueryWrapper<Relations> relationsQueryWrapper=new QueryWrapper<>();
         relationsQueryWrapper.eq("followUID",uid).eq("uID",mid);
         Relations relations=relationsService.getOne(relationsQueryWrapper);
-        return new VideoinfoOwnerInfo(user,userdata,relations!=null);
+        VideoinfoOwnerInfo videoinfoOwnerInfo=new VideoinfoOwnerInfo(user,userdata,relations!=null);
+        return new ResponseData<VideoinfoOwnerInfo>(0,"",1,videoinfoOwnerInfo);
     }
 
     @GetMapping("/ownerinfo")
-    public OwnerInfo OwnerInfo(Integer uID){
+    public ResponseData<OwnerInfo> OwnerInfo(Integer uID){
         User user=userService.getById(uID);
-        return new OwnerInfo(user);
+        return new ResponseData<OwnerInfo>(0,"",1,new OwnerInfo(user));
     }
 }
 
