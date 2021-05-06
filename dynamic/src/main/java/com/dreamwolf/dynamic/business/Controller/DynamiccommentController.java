@@ -116,10 +116,10 @@ public class DynamiccommentController {
         Map<String, Object> data=new HashMap<String, Object>();
         QueryWrapper<Dynamiccomment> queryWrapper=new QueryWrapper();
         queryWrapper.eq("udID",dynamic_id);
-        List<Map<String,Object>> dynamiccomment=dynamiccommentService.listMaps(queryWrapper);//返回对应动态id的父评论
+        List<Dynamiccomment> dynamiccomment=dynamiccommentService.list(queryWrapper);//返回对应动态id的父评论
         Integer[] list = new Integer[dynamiccomment.size()];//数组 用来储存所有父评论id
         for (int i=0;i<dynamiccomment.size();i++){
-            list[i]=(Integer)dynamiccomment.get(i).get("cID");
+            list[i]=dynamiccomment.get(i).getcID();
         }
         List<Map<String,Object>> replies = new ArrayList<>();
         if (list.length>0){

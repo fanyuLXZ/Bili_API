@@ -40,6 +40,8 @@ public class UserController {
     //登录
     @RequestMapping("/user/verify")
     public ResponseData<UserVerify> verify(String username,String password)throws Exception{
+        int code = 0;
+        String message="";
         UserVerify userVerify=null;
         if(username!=null && !username.equals("") && password!=null && !password.equals("") ){
             QueryWrapper<User> wrapper = new QueryWrapper<>();
@@ -49,12 +51,18 @@ public class UserController {
                 md5 md=new md5();//加密
                 if(md.message(user.getPassword()).toUpperCase().equals(password.toUpperCase()) && user.getPassword()!=null && !user.getPassword().equals("")){//查看密码是否正确
                     userVerify=new UserVerify(true,user.getuID(),"登录成功");
+                }else{
+                    code = 1;
+                    message="密码或者账号异常";
                 }
             }else{
                 userVerify=new UserVerify(false,null,"登录失败");
             }
+        }else{
+            code = 1;
+            message="密码或者账号不能为空";
         }
-        return new ResponseData<UserVerify>(0,"",1,userVerify);
+        return new ResponseData<UserVerify>(code,message,1,userVerify);
     }
 
     //账号基本信息
