@@ -1,7 +1,10 @@
 package com.dreamwolf.video.controller;
 
 
+import com.dreamwolf.entity.ResponseData;
 import com.dreamwolf.entity.video.Videofavorite;
+import com.dreamwolf.entity.video.web_interface.VideoCount;
+import com.dreamwolf.entity.video.web_interface.VideoList;
 import com.dreamwolf.video.service.VideofavoriteService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,48 +30,37 @@ public class VideofavoriteController {
     private VideofavoriteService videofavoriteService;
 
     @PostMapping("/videocount")
-    public int selectint(Integer favListID){
+    public ResponseData<VideoCount> selectint(Integer favListID){
         Integer count = videofavoriteService.selectfavListID(favListID);
-
-        return count;
+        VideoCount videoCount = new VideoCount(count);
+        return new ResponseData(0,"",0,videoCount);
     }
 
 
     @GetMapping(value = "/videofavbvID")
-    public Map selectbvid(Integer bvID){
+    public ResponseData selectbvid(Integer bvID){
         Map map = new HashMap();
+        Videofavorite videofavorite = new Videofavorite();
         if(bvID !=null) {
             map.put("code",0);
             map.put("message","0");
         //根据被收藏的视频id查询收藏的视频收藏夹id
-            Videofavorite videofavorite = videofavoriteService.selectbvID(bvID);
-            map.put("data",videofavorite);
+            videofavorite = videofavoriteService.selectbvID(bvID);
         }else{
             map.put("code",400);
             map.put("message","传入的参数(bvID)不能为空");
             map.put("data",null);
         }
-
-
-        return map;
+        return new ResponseData(0,"",0,videofavorite);
     }
 
     @GetMapping(value = "/videofavlist")
-    public Map selectlistt(){
+    public ResponseData selectlistt(){
         Map map = new HashMap();
-        if(map !=null) {
-            map.put("code",0);
-            map.put("message","0");
         //查询视频收藏表所有数据
             List<Videofavorite> videofavoriteList = videofavoriteService.selectlist();
-            map.put("data",videofavoriteList);
-        }else{
-            map.put("code",400);
-            map.put("message","数据为空");
-            map.put("data",null);
-        }
-
-        return map;
+        VideoList videoList = new VideoList(videofavoriteList);
+        return new ResponseData(0,"",0,videoList);
     }
 
 

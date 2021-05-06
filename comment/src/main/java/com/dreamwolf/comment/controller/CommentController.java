@@ -1,9 +1,11 @@
 package com.dreamwolf.comment.controller;
 
 import com.dreamwolf.comment.service.*;
+import com.dreamwolf.entity.ResponseData;
 import com.dreamwolf.entity.comment.Comment;
 import com.dreamwolf.entity.comment.Commentdata;
 import com.dreamwolf.entity.comment.Commentlike;
+import com.dreamwolf.entity.comment.web_interface.*;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -54,47 +56,23 @@ public class CommentController {
      * @return
      */
     @GetMapping("/reply")
-    public Map selectrepd(Integer rpid,Integer pn,Integer ps){
-        Map map = new HashMap();
-        if(map!=null && rpid!=null && pn!=null && ps !=null){
+    public ResponseData selectrepd(Integer rpid, Integer pn, Integer ps){
             List<Comment> list = commentService.selectrpid(rpid,pn,ps);  //根据评论id查询子评论数并分页处理
-            if(list !=null) {
-                Map remap = new HashMap();
                 List comlist = new ArrayList();
                 for (Comment com : list) {
-                    Map maplist = new HashMap();
-                    maplist.put("id", com.getCID());
-                    maplist.put("rpid", com.getCIDreply()); //回复评论id
+                    //少个用户对象没写
                     Integer count = commentService.commcountcIDreply(com.getCIDreply());    //子评论总数
-                    Map mappage = new HashMap();
-                    mappage.put("count",count);  //子评论总数
-                    mappage.put("num",pn);  //页码
-                    mappage.put("size",ps); //每页总条数
-                    maplist.put("page",mappage);
-                        Map usermap = usermapService.membe(com.getUID());   //用户对象
-                    maplist.put("member",usermap);     //评论的用户id调接口返回对象
-                    maplist.put("like", com.getCommentdata().getCLikeNum()); //评论点赞数
-                    maplist.put("dislike", com.getCommentdata().getCUnLikeNum()); //评论点踩数
-                    maplist.put("ctime", com.getCreateTime()); //评论时间
-                        Map cmap = new HashMap();
-                        cmap.put("message",com.getCText());
-                    maplist.put("content", cmap); //评论内容
-                    comlist.add(maplist);
+                    CommentPage commentPage = new CommentPage(count,pn,ps);
+                    Messagecontext maplist = new Messagecontext(com.getCText());
+                    Commentinfo commentinfo = new Commentinfo(com.getCID(),com.getCIDreply(),
+                            commentPage,com.getCommentdata().getCLikeNum(),com.getCommentdata().getCUnLikeNum(),
+                            com.getCreateTime(),maplist);
+//                        Map usermap = usermapService.membe(com.getUID());   //用户对象
+//                    maplist.put("member",usermap);     //评论的用户id调接口返回对象
+                    comlist.add(commentinfo);
                 }
-                map.put("code",0);
-                map.put("message",null);
-                remap.put("replies",comlist);
-                map.put("data",remap);
-            }else{
-                map.put("replies","list为空");
-            }
-        }else{
-            map.put("code",400);
-            map.put("message","map为空或rpid参数为空或页码为空或每页总条数为空");
-            map.put("replies",null);
-        }
-
-        return map;
+        CommentList commentList = new CommentList(comlist);
+        return new ResponseData(0,"",0,commentList);
     }
 
     /***
@@ -103,9 +81,11 @@ public class CommentController {
      * @return
      */
     @GetMapping("/commcidcount")
-    public Integer selebvidint(Integer[] arr){
-//        Integer[] a = new Integer[]{1,2,3};
-        return commentService.selectbvidint(arr);
+    public ResponseData selebvidint(Integer[] arr){
+//        Integer[] arr = new Integer[]{1,2,3};
+        Integer count=commentService.selectbvidint(arr);
+        CommentInteger commentList = new CommentInteger(count);
+        return new ResponseData(0,"",0,commentList);
     }
 
     /**
@@ -113,9 +93,11 @@ public class CommentController {
      * @param uid
      * @return
      */
-        @GetMapping("/commuidlist")
-    public List<Integer> selectuidlisst(Integer uid){
-        return commentService.selectuidlist(uid);
+    @GetMapping("/commuidlist")
+    public ResponseData<List<Integer>> selectuidlisst(Integer uid){
+        List<Integer> integers = commentService.selectuidlist(uid);
+//        CommentList commentList = new CommentList(integers);
+        return new ResponseData(0,"",0,integers);
     }
 
     /**
@@ -124,8 +106,10 @@ public class CommentController {
      * @return
      */
     @GetMapping("/commcidarray")
-    public List<Comment> commentsarrlist(Integer[] array){
-        return commentService.commentuidlist(array);
+    public ResponseData<List<Comment>> commentsarrlist(Integer[] array){
+        List<Comment> comments = commentService.commentuidlist(array);
+//        CommentList commentList = new CommentList(comments);
+        return new ResponseData(0,"",0,comments);
     }
 
 
@@ -135,23 +119,10 @@ public class CommentController {
      * @return
      */
     @GetMapping("/commcidlistmap")
-    public Map<String,Map<String,Object>> commcidlist(Integer cid){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Map map = new HashMap();
+    public ResponseData<Commcidmap> commcidlist(Integer cid){
         Comment comment = commentService.commcidlist(cid);
-        if(cid != null && comment != null){
-            Map commap  = new HashMap();
-            commap.put("source_content",comment.getCText());
-            commap.put("reply_time",simpleDateFormat.format(comment.getCreateTime()));
-            commap.put("uid",comment.getUID());
-            map.put("data",commap);
-
-        }else{
-            map.put("data",null);
-            map.put("code",400);
-            map.put("message","参数cid为空或者map为空或者查询的数据为空");
-        }
-        return map;
+        Commcidmap commap = new Commcidmap(comment.getUID(),comment.getCText(),comment.getCreateTime());
+        return new ResponseData(0,"",0,commap);
     }
 
     /**
@@ -160,8 +131,10 @@ public class CommentController {
      * @return
      */
     @GetMapping("/comseletcilll")
-    public List<Comment> comseletcidli(Integer[] array){
-        return commentService.commselectarrcidlist(array);
+    public ResponseData comseletcidli(Integer[] array){
+        List<Comment> commentList = commentService.commselectarrcidlist(array);
+        CommentList commap = new CommentList(commentList);
+        return new ResponseData(0,"",0,commap);
     }
 
 
@@ -170,8 +143,9 @@ public class CommentController {
      * @return
      */
     @GetMapping("/selecomuid")
-    public List<Comment> selecomuid(Integer uid){
-        return commentService.commselectlistuid(uid);
+    public ResponseData<List<Comment>> selecomuid(Integer uid){
+        List<Comment> commentList = commentService.commselectlistuid(uid);
+        return new ResponseData(0,"",0,commentList);
     }
 
     /**
@@ -180,8 +154,9 @@ public class CommentController {
      * @return
      */
     @GetMapping("/selecomcid")
-    public List<Comment> selecomcid(Integer cid){
-        return commentService.commselectlistcid(cid);
+    public ResponseData<List<Comment>> selecomcid(Integer cid){
+        List<Comment> commentList = commentService.commselectlistcid(cid);
+        return new ResponseData(0,"",0,commentList);
     }
 
 
@@ -190,11 +165,10 @@ public class CommentController {
      * @return
      */
     @GetMapping("/commselectcarrlist")
-    public List<Map<String,Object>> commselecarlist(Integer id,Integer[] array){
+    public ResponseData<CommListMap> commselecarlist(Integer id,Integer[] array){
 //        Integer[] array = new Integer[]{1,2,3};
         //  id 1 为热度排序  2 为时间排序
-        List<Map<String,Object>> maplist = new ArrayList();
-        if(id !=null && array!=null && array.length>0) {
+        List<CommListMap> maplist = new ArrayList();
             //热度排序
             if (id == 1) {
                 List<Comment> list = commentService.commentuidlist(array); //通过评论id数组查询cIDreply=0的数据
@@ -216,23 +190,23 @@ public class CommentController {
                 for (Comment comarrlistlist : comlistlist) {
                     //根据评论id查询评论点赞数据和点踩数据
                     Commentdata commentdata = commentdataService.selectcID(comarrlistlist.getCID());
-                    Map commap = new HashMap();
+                    CommListMap commaplistmap = new CommListMap();
                     Integer comcount = commentService.commcountcIDreply(comarrlistlist.getCID());  //子评论数量
                     //获得被点赞的评论数据
                     Commentlike comlike = commentlikeService.commlikecidlist(comarrlistlist.getCID(), comarrlistlist.getUID());
                     if (comlike != null) {
-                        commap.put("action", comlike.getStatus());
+                        commaplistmap.setAction(comlike.getStatus());  //点赞状态
                     } else {
-                        commap.put("action", null);
+                        commaplistmap.setAction(null);
                     }
-                    Map comtent = new HashMap();
-                    comtent.put("message", comarrlistlist.getCText());
-                    commap.put("content", comtent);     //评论内容对象
-                    commap.put("count", comcount);       //子评论数量
-                    commap.put("ctime", simpleDateFormat.format(comarrlistlist.getCreateTime()));    //评论时间
-                    commap.put("like", commentdata.getCLikeNum());   //点赞数
-                    Map menmmap = dvnamicService.memberid(comarrlistlist.getUID());
-                    commap.put("member", menmmap);   //发表人评论id 对象
+                    Messagecontext comtent = new Messagecontext(comarrlistlist.getCText());
+                    commaplistmap.setContent(comtent);     //评论内容对象
+                    commaplistmap.setCount(comcount);     //子评论数量
+                    commaplistmap.setCtime(comarrlistlist.getCreateTime());    //评论时间
+                    commaplistmap.setLike(commentdata.getCLikeNum());  //点赞数
+                    //少个用户对象
+//                    Map menmmap = dvnamicService.memberid(comarrlistlist.getUID());
+//                    commap.put("member", menmmap);   //发表人评论id 对象
 
                     List<Comment> comlist = commentService.selelistcIDreply(comarrlistlist.getCID()); //获取当前评论id下面的子评论
                     List<Integer> cidarr = new ArrayList(); //子评论下面的cid集合
@@ -245,27 +219,26 @@ public class CommentController {
                     for (Commentdata commentdatalist : comdata) {
                         comlistcida.add(commentdatalist.getCID());
                     }
-                    List comarrlist_repl = new ArrayList();
+                    List<CommReplies> comarrlist_repl = new ArrayList();
                     List<Comment> comarrlist = commentService.comarrlist(comlistcida.toArray(new Integer[0]));
                     for (Comment commentarr : comarrlist) {
                         //根据cid去拿子评论的点赞对象
                         Commentdata commentdataarr = commentdataService.selectcID(commentarr.getCID());
-                        Map comdatamap = new HashMap();
+                        CommReplies commReplies=null;
                         if (commentdataarr != null) {
-                            Map conmap = new HashMap();
-                            conmap.put("message", commentarr.getCText());
-                            comdatamap.put("content", conmap);   //回复内容
-                            comdatamap.put("ctime",simpleDateFormat.format( commentarr.getCreateTime()));     //回复评论时间
-                            comdatamap.put("like", commentdataarr.getCLikeNum());    //点赞数量
-                            Map dvmap=dvnamicService.memberid(commentarr.getUID());
-                            comdatamap.put("member", dvmap);       //用户对象
+                            Messagecontext mm = new Messagecontext(commentarr.getCText());
+                            commReplies = new CommReplies(mm,commentarr.getCreateTime(),
+                                    commentdataarr.getCLikeNum());
+                            //少个用户
+//                            Map dvmaps=dvnamicService.memberid(commentarr.getUID());
+//                            comdatamap.put("member", dvmaps);       //用户id
                         } else {
-                            comdatamap.put("为空", null);
+                            commReplies = new CommReplies(null,null,null);
                         }
-                        comarrlist_repl.add(comdatamap);
+                        comarrlist_repl.add(commReplies);
                     }
-                    commap.put("replies", comarrlist_repl); //子评论集合
-                    maplist.add(commap);
+                    commaplistmap.setReplies(comarrlist_repl); //子评论集合
+                    maplist.add(commaplistmap);
                 }
             } else {
                 List<Comment> list = commentService.comdatalisttime(array); //通过评论id数组查询cIDreply=0的数据
@@ -273,23 +246,23 @@ public class CommentController {
                 for (Comment comment : list) {
                     //根据评论id查询评论点赞数据和点踩数据
                     Commentdata commentdata = commentdataService.selectcID(comment.getCID());
-                    Map commap = new HashMap();
+                    CommListMap commaplistmap = new CommListMap();
                     Integer comcount = commentService.commcountcIDreply(comment.getCID());  //子评论数量
                     //获得被点赞的评论数据
                     Commentlike comlike = commentlikeService.commlikecidlist(comment.getCID(), comment.getUID());
                     if (comlike != null) {
-                        commap.put("action", comlike.getStatus());
+                        commaplistmap.setAction(comlike.getStatus());
                     } else {
-                        commap.put("action", null);
+                        commaplistmap.setAction(null);
                     }
-                    Map comtent = new HashMap();
-                    comtent.put("message", comment.getCText());
-                    commap.put("content", comtent);     //评论内容对象
-                    commap.put("count", comcount);       //子评论数量
-                    commap.put("ctime",simpleDateFormat.format( comment.getCreateTime()));    //评论时间
-                    commap.put("like", commentdata.getCLikeNum());   //点赞数
-                    Map dvmap=dvnamicService.memberid(comment.getUID());
-                    commap.put("member", dvmap);   //发表人评论id 对象
+                    Messagecontext mm2=  new Messagecontext(comment.getCText());
+                    commaplistmap.setContent(mm2);  //评论内容对象
+                    commaplistmap.setCount(comcount);       //子评论数量
+                    commaplistmap.setCtime(comment.getCreateTime());    //评论时间
+                    commaplistmap.setLike(commentdata.getCLikeNum());   //点赞数
+                    //少个用户对象
+//                   Map dvmap=dvnamicService.memberid(commentarr.getUID());
+//                  comdatamap.put("member", dvmap);       //用户对象
 
                     List<Comment> comlist = commentService.selelistcIDreply(comment.getCID()); //获取当前评论id下面的子评论
                     List<Integer> cidarr = new ArrayList(); //子评论下面的cid集合
@@ -307,31 +280,24 @@ public class CommentController {
                     for (Comment commentarr : comarrlist) {
                         //根据cid去拿子评论的点赞对象
                         Commentdata commentdataarr = commentdataService.selectcID(commentarr.getCID());
-                        Map comdatamap = new HashMap();
+                        CommReplies commReplies=null;
                         if (commentdataarr != null) {
-                            Map conmap = new HashMap();
-                            conmap.put("message", commentarr.getCText());
-                            comdatamap.put("content", conmap);   //回复内容
-                            comdatamap.put("ctime", simpleDateFormat.format(commentarr.getCreateTime()));     //回复评论时间
-                            comdatamap.put("like", commentdataarr.getCLikeNum());    //点赞数量
-                            Map dvmaps=dvnamicService.memberid(commentarr.getUID());
-                            comdatamap.put("member", dvmaps);       //用户id
+                            Messagecontext mm3 = new Messagecontext(commentarr.getCText());
+                            commReplies = new CommReplies(mm3,commentarr.getCreateTime(),
+                                    commentdataarr.getCLikeNum());
+                            //少个用户
+//                            Map dvmaps=dvnamicService.memberid(commentarr.getUID());
+//                            comdatamap.put("member", dvmaps);       //用户id
                         } else {
-                            comdatamap.put("为空", null);
+                            commReplies = new CommReplies(null,null,null);
                         }
-                        comarrlist_repl.add(comdatamap);
+                        comarrlist_repl.add(commReplies);
                     }
-                    commap.put("replies", comarrlist_repl); //子评论集合
-                    maplist.add(commap);
+                    commaplistmap.setReplies(comarrlist_repl); //子评论集合
+                    maplist.add(commaplistmap);
                 }
             }
-        }else{
-            Map map = new HashMap();
-            map.put("code",400);
-            map.put("message","id为空或者array为空没数据");
-            maplist.add(map);
-        }
-        return maplist;
+        return new ResponseData(0,"",0,maplist);
     }
 
 
@@ -344,11 +310,10 @@ public class CommentController {
      * @return
      */
     @GetMapping("/commselectcarrlistpage")
-    public List<Map<String,Object>> commselecarlistpage(Integer id,Integer[] array,Integer next){
-//        Integer[] array = new Integer[]{1};
+    public ResponseData<CommListMap> commselecarlistpage(Integer id,Integer[] array,Integer next){
+//        Integer[] array = new Integer[]{1,2,3};
         //  id 1 为热度排序  2 为时间排序
-        List<Map<String,Object>> maplist = new ArrayList();
-        if(id !=null && array!=null && array.length>0 && next !=null) {
+        List<CommListMap> maplist = new ArrayList();
             //热度排序
             if (id == 1) {
                 //通过评论id数组查询cIDreply=0的数据
@@ -360,14 +325,10 @@ public class CommentController {
                 //根据评论id数组拿到前10条的热度 评论点赞表 分页
                 List<Commentdata> comdatlist = commentdataService.commdatalistpage(comarrlistss.toArray(new Integer[0]),next);
                 List<Integer> clist = new ArrayList<>();
-//                if(comdatlist!=null){
                     //拿到评论点赞表热度前10的id数组
                     for (Commentdata comdatacom : comdatlist) {
                         clist.add(comdatacom.getCID());
                     }
-//                }else {
-//                    clist.add(1);
-//                }
 
 
                 //根据热度前10 cid数组查询评论表数据
@@ -375,29 +336,27 @@ public class CommentController {
                 for (Comment comarrlistlist : comlistlist) {
                     //根据评论id查询评论点赞数据和点踩数据
                     Commentdata commentdata = commentdataService.selectcID(comarrlistlist.getCID());
-                    Map commap = new HashMap();
+                    CommListMap commaplistmap = new CommListMap();
                     Integer comcount = commentService.commcountcIDreply(comarrlistlist.getCID());  //子评论数量
                     //获得被点赞的评论数据
                     Commentlike comlike = commentlikeService.commlikecidlist(comarrlistlist.getCID(), comarrlistlist.getUID());
                     if (comlike != null) {
-                        commap.put("action", comlike.getStatus());  //点赞状态
+                        commaplistmap.setAction(comlike.getStatus());  //点赞状态
                     } else {
-                        commap.put("action", null);
+                        commaplistmap.setAction(null);
                     }
-
-                    Map comtent = new HashMap();
-                    comtent.put("message", comarrlistlist.getCText());
-                    commap.put("content", comtent);     //评论内容对象
-                    commap.put("count", comcount);       //子评论数量
-                    commap.put("ctime", simpleDateFormat.format(comarrlistlist.getCreateTime()));    //评论时间
+                    Messagecontext messagecontext = new Messagecontext(comarrlistlist.getCText());
+                    commaplistmap.setContent(messagecontext);     //评论内容对象
+                    commaplistmap.setCount(comcount);       //子评论数量
+                    commaplistmap.setCtime(comarrlistlist.getCreateTime());    //评论时间
                     if(commentdata !=null){
-                        commap.put("like", commentdata.getCLikeNum());   //点赞数
+                        commaplistmap.setLike(commentdata.getCLikeNum());   //点赞数
                     }else {
-                        commap.put("like", null);   //点赞数
+                        commaplistmap.setLike(null);   //点赞数
                     }
-
-                    Map menmmap = dvnamicService.memberid(comarrlistlist.getUID());
-                    commap.put("member", menmmap);   //发表人评论id 对象
+                    //少个用户对象
+//                    Map menmmap = dvnamicService.memberid(comarrlistlist.getUID());
+//                    commap.put("member", menmmap);   //发表人评论id 对象
 
                     List<Comment> comlist = commentService.selelistcIDreply(comarrlistlist.getCID()); //获取当前评论id下面的子评论
                     List<Integer> cidarr = new ArrayList(); //子评论下面的cid集合
@@ -415,57 +374,48 @@ public class CommentController {
                     for (Comment commentarr : comarrlist) {
                         //根据cid去拿子评论的点赞对象
                         Commentdata commentdataarr = commentdataService.selectcID(commentarr.getCID());
-                        Map comdatamap = new HashMap();
+                        CommReplies commReplies = null;
                         if (commentdataarr != null) {
-                            Map conmap = new HashMap();
-                            conmap.put("message", commentarr.getCText());
-                            comdatamap.put("content", conmap);   //回复内容
-                            comdatamap.put("ctime",simpleDateFormat.format( commentarr.getCreateTime()));     //回复评论时间
-                            if(commentdataarr !=null){
-                                comdatamap.put("like", commentdataarr.getCLikeNum());    //点赞数量
-                            }else {
-                                comdatamap.put("like", null);    //点赞数量
-                            }
-
-                            Map dvmap=dvnamicService.memberid(commentarr.getUID());
-                            comdatamap.put("member", dvmap);       //用户id
+                            Messagecontext mm4 = new Messagecontext(commentarr.getCText());
+                            commReplies = new CommReplies(mm4,commentarr.getCreateTime(),
+                                    commentdataarr.getCLikeNum());
+                            //少个用户
+//                            Map dvmap=dvnamicService.memberid(commentarr.getUID());
+//                            comdatamap.put("member", dvmap);       //用户id//用户id
                         } else {
-                            comdatamap.put("为空", null);
+                            commReplies = new CommReplies(null,null,null);
                         }
-                        comarrlist_repl.add(comdatamap);
+                        comarrlist_repl.add(commReplies);
                     }
-                    commap.put("replies", comarrlist_repl); //子评论集合
-                    maplist.add(commap);
+                    commaplistmap.setReplies(comarrlist_repl); //子评论集合
+                    maplist.add(commaplistmap);
                 }
             } else {
                 List<Comment> list = commentService.comdatalisttimepage(array,next); //通过评论id数组查询cIDreply=0的数据
-                if(list!=null) {
-//            List<Integer> comarrlistss = new ArrayList<>();    //评论id数组
                     for (Comment comment : list) {
                         //根据评论id查询评论点赞数据和点踩数据
                         Commentdata commentdata = commentdataService.selectcID(comment.getCID());
-                        Map commap = new HashMap();
+                        CommListMap commaps = new CommListMap();
                         Integer comcount = commentService.commcountcIDreply(comment.getCID());  //子评论数量
                         //获得被点赞的评论数据
                         Commentlike comlike = commentlikeService.commlikecidlist(comment.getCID(), comment.getUID());
                         if (comlike != null) {
-                            commap.put("action", comlike.getStatus());  //点赞状态
+                            commaps.setAction(comlike.getStatus());  //点赞状态
                         } else {
-                            commap.put("action", null);
+                            commaps.setAction(null);
                         }
-
-                        Map comtent = new HashMap();
-                        comtent.put("message", comment.getCText());
-                        commap.put("content", comtent);     //评论内容对象
-                        commap.put("count", comcount);       //子评论数量
-                        commap.put("ctime", simpleDateFormat.format(comment.getCreateTime()));    //评论时间
+                        Messagecontext mes = new Messagecontext(comment.getCText());
+                        commaps.setContent(mes);     //评论内容对象
+                        commaps.setCount(comcount);       //子评论数量
+                        commaps.setCtime(comment.getCreateTime());    //评论时间
                         if (commentdata != null) {
-                            commap.put("like", commentdata.getCLikeNum());   //点赞数
+                            commaps.setLike(commentdata.getCLikeNum());   //点赞数
                         } else {
-                            commap.put("like", null);   //点赞数
+                            commaps.setLike(null);   //点赞数
                         }
-                        Map dvmap = dvnamicService.memberid(comment.getUID());
-                        commap.put("member", dvmap);   //发表人评论id 对象
+                        //少个用户对象
+//                        Map dvmap = dvnamicService.memberid(comment.getUID());
+//                        commap.put("member", dvmap);   //发表人评论id 对象
 
                         List<Comment> comlist = commentService.selelistcIDreply(comment.getCID()); //获取当前评论id下面的子评论
                         List<Integer> cidarr = new ArrayList(); //子评论下面的cid集合
@@ -483,39 +433,24 @@ public class CommentController {
                         for (Comment commentarr : comarrlist) {
                             //根据cid去拿子评论的点赞对象
                             Commentdata commentdataarr = commentdataService.selectcID(commentarr.getCID());
-                            Map comdatamap = new HashMap();
+                            CommReplies commReplies = null;
                             if (commentdataarr != null) {
-                                Map conmap = new HashMap();
-                                conmap.put("message", commentarr.getCText());
-                                comdatamap.put("content", conmap);   //回复内容
-                                comdatamap.put("ctime", simpleDateFormat.format(commentarr.getCreateTime()));     //回复评论时间
-                                if (commentdataarr != null) {
-                                    commap.put("like", commentdataarr.getCLikeNum());   //点赞数
-                                } else {
-                                    commap.put("like", null);   //点赞数
-                                }
-                                Map dvmaps = dvnamicService.memberid(commentarr.getUID());
-                                comdatamap.put("member", dvmaps);       //用户id
+                                Messagecontext mmn = new Messagecontext(commentarr.getCText());
+                                commReplies = new CommReplies(mmn,commentarr.getCreateTime(),
+                                        commentdataarr.getCLikeNum());
+                                //少个用户
+//                            Map dvmap=dvnamicService.memberid(commentarr.getUID());
+//                            comdatamap.put("member", dvmap);       //用户id//用户id
                             } else {
-                                comdatamap.put("为空", null);
+                                commReplies = new CommReplies(null,null,null);
                             }
-                            comarrlist_repl.add(comdatamap);
+                            comarrlist_repl.add(commReplies);
                         }
-                        commap.put("replies", comarrlist_repl); //子评论集合
-                        maplist.add(commap);
+                        commaps.setReplies(comarrlist_repl); //子评论集合
+                        maplist.add(commaps);
                     }
-                }else {
-                    Map map = new HashMap();
-                    map.put("message", "list为空");
-                    maplist.add(map);
-                }
             }
-        }else{
-            Map map = new HashMap();
-            map.put("message","id为空或者array或next为空");
-            maplist.add(map);
-        }
-        return maplist;
+        return new ResponseData(0,"",0,maplist);
     }
 
 

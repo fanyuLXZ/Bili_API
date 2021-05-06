@@ -1,7 +1,10 @@
 package com.dreamwolf.video.controller;
 
 
+import com.dreamwolf.entity.ResponseData;
+import com.dreamwolf.entity.video.Video;
 import com.dreamwolf.entity.video.Videocomment;
+import com.dreamwolf.entity.video.web_interface.VideoList;
 import com.dreamwolf.video.service.VideocommentService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,14 +30,19 @@ public class VideocommentController {
 
     //根据视频id数组查询视频评论表数据
     @GetMapping("/viderbvidcommlist")
-    public List<Videocomment> videocombvidlist(Integer[] array){
-        return videocommentService.selectvidercomlist(array);
+    public ResponseData<List<Videocomment>> videocombvidlist(Integer[] array){
+        List<Videocomment> videocomments= videocommentService.selectvidercomlist(array);
+//        VideoList videoList = new VideoList();
+//        videoList.setList(videocomments);
+        return new ResponseData(0,"",0,videocomments);
     }
 
     //根据视频id数组查询视频评论id 返回list
     @GetMapping("/videocommmarr")
-    public List<Integer> selectarr(Integer[] arr){
-        return videocommentService.selectbvidarray(arr);
+    public ResponseData<List<Integer>> selectarr(Integer[] arr){
+        List<Integer> integer= videocommentService.selectbvidarray(arr);
+//        VideoList videoList = new VideoList(integer);
+        return new ResponseData(0,"",0,integer);
     }
 
     /**
@@ -43,26 +51,17 @@ public class VideocommentController {
      * @return
      */
     @GetMapping(value = "/videocommbvid")
-    public List<Videocomment> selectbvids(Integer bvid){
-            List<Videocomment> videocommentList = videocommentService.selectbvID(bvid);//根据视频id查询评论id
-
-        return videocommentList;
+    public ResponseData selectbvids(Integer bvid){
+        List<Videocomment> videocommentList = videocommentService.selectbvID(bvid);//根据视频id查询评论id
+        VideoList videoList = new VideoList(videocommentList);
+        return new ResponseData(0,"",0,videoList);
     }
 
     @GetMapping(value = "/videocommlist")
-    public Map selectlist(){
-        Map map = new HashMap();
-        if(map !=null) {
-            map.put("code",0);
-            map.put("message","0");
-            List<Videocomment> videocommentList = videocommentService.selectlist();//查询视频评论表所有数据
-            map.put("data",videocommentList);
-        }else{
-            map.put("code",400);
-            map.put("message","数据为空");
-            map.put("data",null);
-        }
-        return map;
+    public ResponseData selectlist(){
+        List<Videocomment> videocommentList = videocommentService.selectlist();//查询视频评论表所有数据
+        VideoList videoList = new VideoList(videocommentList);
+        return new ResponseData(0,"",0,videoList);
     }
 
 }

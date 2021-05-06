@@ -17,7 +17,7 @@ public interface VideofavoriteMapper extends BaseMapper<Videofavorite> {
      * @param favListID
      * @return
      */
-    public List<Videofavorite> selectlist(@Param("favListID") Integer favListID);
+    public List<Videofavorite> selectlist(Integer favListID);
 
 
 }
