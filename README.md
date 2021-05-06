@@ -20,7 +20,7 @@
 ## api文档
 
 * ### 视频模块 Vide 
-	1. #### 查看子分区下视频  /videobvldZoning  
+	1. #### 查看子分区下视频 /videobvldZoning  
 	    参数：
 	    * bvChildZoning 子分区id Integer   
 	    
@@ -77,7 +77,7 @@
 
 		 	
 	4. 查询所有视频的基础信息  /videolist   
-[aaa](#查看子分区下视频--/videobvldzoning)
+[aaa](#查看子分区下视频-/videobvldZoning)
 		返回值：查询视频基础信息表所有数据，返回list   
 		* code：0
 		* message：0
