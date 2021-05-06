@@ -55,6 +55,7 @@
 		 	- bvPostTime： 创建时间
 		 	- bvChildZoning： 视频子分区ID
 		 	- bvIsDel： 是否已删除，0为未删除，1为已删除
+
 		 	
 	3. 查看作者下面发布的视频  /videouID  
 	    参数:  
@@ -73,8 +74,10 @@
 		 	- bvPostTime： 创建时间
 		 	- bvChildZoning： 视频子分区ID
 		 	- bvIsDel： 是否已删除，0为未删除，1为已删除
+
 		 	
 	4. 查询所有视频的基础信息  /videolist   
+[aaa](#项目人员分配)
 		返回值：查询视频基础信息表所有数据，返回list   
 		* code：0
 		* message：0
