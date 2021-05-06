@@ -1,0 +1,13 @@
+package com.dreamwolf.entity.video.web_interface;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class VideoCount {
+
+    private Integer count;  //总数
+}

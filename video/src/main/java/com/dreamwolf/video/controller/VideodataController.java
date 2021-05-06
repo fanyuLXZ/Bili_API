@@ -1,6 +1,8 @@
 package com.dreamwolf.video.controller;
 
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.dreamwolf.entity.ResponseData;
 import com.dreamwolf.entity.member.web_interface.OwnerInfo;
 import com.dreamwolf.entity.member.web_interface.VideoinfoOwnerInfo;
 import com.dreamwolf.entity.video.Video;
@@ -14,6 +16,7 @@ import com.dreamwolf.entity.zoning.web_interface.Deputydivision;
 import com.dreamwolf.entity.zoning.web_interface.Mainpartition;
 import com.dreamwolf.video.service.*;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -50,50 +53,35 @@ public class VideodataController {
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
     @GetMapping(value = "/videodatabvID")
-    public Map selectdvid(Integer bvID){
-        Map map = new HashMap();
-        if(bvID !=null) {
-            map.put("code",0);
-            map.put("message","0");
-            Videodata videodata = videodataService.selectbvID(bvID); //根据bvID查询的视频基本数据
-            map.put("data",videodata);
-        }else{
-            map.put("code",400);
-            map.put("message","传入的参数(bvID)不能为空");
-            map.put("data",null);
-        }
+    @SentinelResource(value = "fallback", fallback = "handlerFallback")
+    public ResponseData selectdvid(Integer bvID){
+        Videodata videodata = videodataService.selectbvID(bvID); //根据bvID查询的视频基本数据
+        return new ResponseData(0,"",0,videodata);
+    }
 
-        return map;
+    public ResponseData handlerFallback(Integer bvID, Throwable e) {
+        Map map = new HashMap();
+        map.put("444","[业务异常兜底降级方法],exception内容:  " + e.getMessage());
+        return new ResponseData(0,"",0,map);
     }
 
     @GetMapping(value = "/videodatalist")
-    public Map selectlistt(){
+    public ResponseData selectlistt(){
         Map map = new HashMap();
+        List<Videodata> videodata = new ArrayList<>();
         if(map !=null) {
             map.put("code",0);
             map.put("message","0");
-            List<Videodata> videodata = videodataService.selectlist();//查询视频数据表所有数据
-            map.put("data",videodata);
+            videodata = videodataService.selectlist();//查询视频数据表所有数据
         }else{
             map.put("code",400);
             map.put("message","数据为空");
             map.put("data",null);
         }
 
-        return map;
+        return new ResponseData(0,"",0,videodata);
     }
 
-//    @GetMapping("/aaa")
-//    public List lis(){
-//        Integer bvid=1;
-//        //随机数
-//        Random random = new Random();
-//        int pagesum = random.nextInt(100);
-////        List<Video> videolist = videoService.selecvideolistpa(bvid,pagesum);   //随机查询20条不等于当前视频id的数据
-//        List list=  new ArrayList();
-//        list.add(pagesum);
-//        return list;
-//    }
 
     /**
      * 视频显示
@@ -101,7 +89,7 @@ public class VideodataController {
      * @return
      */
     @GetMapping("/video/info")
-    public Videodatainfo videodatabvidobject(Integer bvid){
+    public ResponseData videodatabvidobject(Integer bvid){
         Integer uid=1; //当前用户id
         Videodatainfo videodatainfo = new Videodatainfo();
         Videodata videodata = videodataService.selectbvID(bvid);    //视频显示对象
@@ -162,7 +150,8 @@ public class VideodataController {
         videodatainfo.setMainpartition(mainpartition);
         Deputydivision deputydivision =userpageService.deputydivision(video.getBvChildZoning());
         videodatainfo.setDeputydivision(deputydivision);
-        return videodatainfo;
+
+        return new ResponseData(0,"",0,videodatainfo);
     }
 
 

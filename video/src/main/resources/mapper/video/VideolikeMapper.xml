@@ -21,12 +21,10 @@
     <select id="selectbvidlist" resultMap="videolikemap">
         SELECT * FROM `videolike`
         <where>
-            <if test="bvidlist!=null and bvidlist.length>0">
-                `bvID` IN
-                <foreach collection="bvidlist" index="index" item="item" open="(" separator="," close=")">
-                    #{item}
-                </foreach>
-            </if>
+            `bvID` IN
+            <foreach collection="bvidlist" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
         </where>
     </select>
 

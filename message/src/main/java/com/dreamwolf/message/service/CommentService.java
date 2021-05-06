@@ -1,7 +1,9 @@
 package com.dreamwolf.message.service;
 
+import com.dreamwolf.entity.ResponseData;
 import com.dreamwolf.entity.comment.Comment;
 import com.dreamwolf.entity.comment.Commentlike;
+import com.dreamwolf.entity.comment.web_interface.Commcidmap;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,24 +27,33 @@ public interface CommentService {
      * 根据uid用户查询评论表发布的评论数据
      * @return
      */
+//    @GetMapping("/selecomuid")
+//    public List<Comment> selecomuid(@RequestParam Integer uid);
+
     @GetMapping("/selecomuid")
-    public List<Comment> selecomuid(@RequestParam Integer uid);
+    public ResponseData<List<Comment>> selecomuid(@RequestParam Integer uid);
 
     /**
      * 根据评论主键cid查询数据
      * @param cid
      * @return
      */
+//    @GetMapping("/selecomcid")
+//    public List<Comment> selecomcid(@RequestParam Integer cid);
+
     @GetMapping("/selecomcid")
-    public List<Comment> selecomcid(@RequestParam Integer cid);
+    public ResponseData<List<Comment>> selecomcid(@RequestParam Integer cid);
 
     /**
      * 根据评论id查询评论数据
      * @param cid
      * @return
      */
+//    @GetMapping("/commcidlistmap")
+//    public Map<String,Map<String,Object>> commcidlist(@RequestParam Integer cid);
+
     @GetMapping("/commcidlistmap")
-    public Map<String,Map<String,Object>> commcidlist(@RequestParam Integer cid);
+    public ResponseData<Commcidmap> commcidlist(@RequestParam Integer cid);
 
     /**
      * 根据评论id查询评论总数
@@ -57,23 +68,32 @@ public interface CommentService {
      * @param uid
      * @return
      */
+//    @GetMapping("/commuidlist")
+//    public List<Integer> selectuidlisst(@RequestParam Integer uid);
+
     @GetMapping("/commuidlist")
-    public List<Integer> selectuidlist(@RequestParam Integer uid);
+    public ResponseData<List<Integer>> selectuidlisst(@RequestParam Integer uid);
 
     /**
      * 根据评论id查询评论点赞表的数据
      * @param arr
      * @return
      */
+//    @GetMapping("/selectlikearr")
+//    public List<Commentlike> selectarrlist(@RequestParam Integer[] arr);
+
     @GetMapping("/selectlikearr")
-    public List<Commentlike> selectarrlist(@RequestParam Integer[] arr);
+    public ResponseData<List<Commentlike>> selectarrlist(@RequestParam Integer[] arr);
 
     /**
      * 根据评论id表主键数组查询评论id数据
      * @param array
      * @return
      */
+//    @GetMapping("/commcidarray")
+//    public List<Comment> commentsarrlist(@RequestParam Integer[] array);
+
     @GetMapping("/commcidarray")
-    public List<Comment> commentsarrlist(@RequestParam Integer[] array);
+    public ResponseData<List<Comment>> commentsarrlist(@RequestParam Integer[] array);
 
 }
