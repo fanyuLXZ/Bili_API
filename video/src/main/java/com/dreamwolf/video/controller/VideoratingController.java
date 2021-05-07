@@ -1,7 +1,9 @@
 package com.dreamwolf.video.controller;
 
 
+import com.dreamwolf.entity.ResponseData;
 import com.dreamwolf.entity.video.Videorating;
+import com.dreamwolf.entity.video.web_interface.VideoList;
 import com.dreamwolf.video.service.VideoratingService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,38 +28,18 @@ public class VideoratingController {
     private VideoratingService videoratingService;
 
     @GetMapping(value = "/videoratbvID")
-    public Map selectbvidl(Integer bvID){
-        Map map = new HashMap();
-        if(bvID !=null) {
-            map.put("code", 0);
-            map.put("message", "0");
+    public ResponseData selectbvidl(Integer bvID){
             //根据视频id查询视频评分
             Videorating videorating = videoratingService.selectbvid(bvID);
-            map.put("data",videorating);
-        }else{
-            map.put("code",400);
-            map.put("message","传入的参数(bvID)不能为空");
-            map.put("data",null);
-        }
-
-        return map;
+        return new ResponseData(0,"",0,videorating);
     }
 
     @GetMapping(value = "/videoratlist")
-    public Map selectlists(){
-        Map map = new HashMap();
-        if(map !=null) {
-            map.put("code", 0);
-            map.put("message", "0");
+    public ResponseData selectlists(){
             //查询视频评分表所有数据
-            List<Videorating> videoratings = videoratingService.selectlist();
-            map.put("data",videoratings);
-        }else{
-            map.put("code",400);
-            map.put("message","数据为空");
-            map.put("data",null);
-        }
-        return map;
+        List<Videorating> videoratings = videoratingService.selectlist();
+        VideoList videoList = new VideoList(videoratings);
+        return new ResponseData(0,"",0,videoList);
     }
 
 

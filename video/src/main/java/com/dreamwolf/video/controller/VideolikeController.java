@@ -1,7 +1,9 @@
 package com.dreamwolf.video.controller;
 
 
+import com.dreamwolf.entity.ResponseData;
 import com.dreamwolf.entity.video.Videolike;
+import com.dreamwolf.entity.video.web_interface.VideoList;
 import com.dreamwolf.video.service.VideoService;
 import com.dreamwolf.video.service.VideolikeService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,39 +32,19 @@ public class VideolikeController {
     private VideoService videoService;
 
     @GetMapping(value = "/videolikebvid")
-    public Map selectbvid(Integer bvid){
-        Map map = new HashMap();
-        if(bvid !=null) {
-            map.put("code", 0);
-            map.put("message", "0");
+    public ResponseData selectbvid(Integer bvid){
             //根据视频id查询视频下的点赞用户id
-            List<Videolike> listmap = videolikeService.selectbvid(bvid);
-            map.put("data", listmap);
-        }else{
-            map.put("code",400);
-            map.put("message","传入的参数(bvid)不能为空");
-            map.put("data",null);
-        }
-
-        return map;
+        List<Videolike> listmap = videolikeService.selectbvid(bvid);
+        VideoList videoList = new VideoList(listmap);
+        return new ResponseData(0,"",0,videoList);
     }
 
     @GetMapping(value = "/videolikelist")
-    public Map selectlistt(){
-        Map map = new HashMap();
-        if(map !=null) {
-            map.put("code", 0);
-            map.put("message", "0");
-            //查询视频点赞表的所有数据
-            List<Videolike> listmap = videolikeService.selectlist();
-            map.put("data",listmap);
-        }else{
-            map.put("code",400);
-            map.put("message","数据为空");
-            map.put("data",null);
-        }
-
-        return map;
+    public ResponseData selectlistt(){
+        //查询视频点赞表的所有数据
+        List<Videolike> listmap = videolikeService.selectlist();
+        VideoList videoList = new VideoList(listmap);
+        return new ResponseData(0,"",0,videoList);
     }
 
 
@@ -72,9 +54,10 @@ public class VideolikeController {
      * @return
      */
     @GetMapping("/videolikeuid")
-    public List<Videolike> sellist(Integer[] array)
+    public ResponseData<List<Videolike>> sellist(Integer[] array)
     {
-        return videolikeService.selectbvidlist(array);
+        List<Videolike> videolikes = videolikeService.selectbvidlist(array);
+        return new ResponseData(0,"",0,videolikes);
     }
 
 

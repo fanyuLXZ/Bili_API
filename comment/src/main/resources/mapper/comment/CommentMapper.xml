@@ -9,7 +9,7 @@
         <result column="createTime" property="createTime" />
         <result column="cText" property="cText" />
         <result column="isDel" property="isDel" />
-        <association property="commentdata" javaType="com.dreamwolf.comment.pojo.Commentdata">
+        <association property="commentdata" javaType="com.dreamwolf.entity.comment.Commentdata">
             <id column="cID" property="cID"/>
             <result column="cLikeNum" property="cLikeNum" />
             <result column="cUnLikeNum" property="cUnLikeNum" />

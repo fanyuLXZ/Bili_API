@@ -2,6 +2,7 @@ package com.dreamwolf.zoning.business.Controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.dreamwolf.entity.ResponseData;
 import com.dreamwolf.entity.video.web_interface.ArchivesInfo;
 import com.dreamwolf.entity.zoning.web_interface.Deputydivision;
 import com.dreamwolf.entity.zoning.web_interface.DynamicRegion;
@@ -45,11 +46,6 @@ public class ZoningController {
         map.put("ttl",1);
         Map<String, Object> data=new HashMap<String, Object>();
         Map<String, Object> kele=videoCount.selmap("2021-04-21");
-        /*Map<String, Object> kele=new HashMap<String, Object>();
-        data.put("list",list);
-        for (Video str : list) {
-            kele.put(str.getBvChild().toString(),str.getCountbv());
-        }*/
         data.put("region_count",kele);
         map.put("data",data);
         return map;
@@ -177,28 +173,29 @@ public class ZoningController {
 
     //父分区
     @GetMapping("/mainpartition")
-    public Mainpartition mainpartition(Integer bvChildZoning){
+    public ResponseData<Mainpartition> mainpartition(Integer bvChildZoning){
         QueryWrapper<Zoning> zoningQueryWrapperfu=new QueryWrapper<>();
         zoningQueryWrapperfu.eq("zID",bvChildZoning);
         Zoning zoning=iZoningService.getById(bvChildZoning);//子信息
         Zoning zoningfu=iZoningService.getById(zoning.getzFatherID());//父信息
-        return new Mainpartition(zoningfu);
+        return new ResponseData<Mainpartition>(0,"",1,new Mainpartition(zoningfu));
     }
     //子分区
     @GetMapping("/deputydivision")
-    public Deputydivision deputydivision(Integer bvChildZoning){
+    public ResponseData<Deputydivision> deputydivision(Integer bvChildZoning){
         QueryWrapper<Zoning> zoningQueryWrapperfu=new QueryWrapper<>();
         zoningQueryWrapperfu.eq("zID",bvChildZoning);
         Zoning zoning=iZoningService.getById(bvChildZoning);//子信息
-        return new Deputydivision(zoning);
+        return new ResponseData<Deputydivision>(0,"",1, new Deputydivision(zoning));
     }
 
+    //子分区最新动态（四个）
     @GetMapping("/dynamic/region")
-    public DynamicRegion dynamicRegion(Integer rid, Integer pn, Integer ps){//子分区 页码 没页数
+    public ResponseData<DynamicRegion> dynamicRegion(Integer rid, Integer pn, Integer ps){//子分区 页码 没页数
         Integer count=videoCount.selectidcoutn(rid);
         Page page=new Page(count,pn,ps);
         List<ArchivesInfo> archivesInfo=videoCount.selectvideorid(rid,pn,ps);
-        return new DynamicRegion(page,archivesInfo);
+        return new ResponseData<DynamicRegion>(0,"",1,new DynamicRegion(page,archivesInfo));
     }
 }
 
