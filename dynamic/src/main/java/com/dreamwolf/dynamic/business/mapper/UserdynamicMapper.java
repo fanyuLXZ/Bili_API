@@ -19,5 +19,5 @@ import java.util.Map;
 @Mapper
 public interface UserdynamicMapper extends BaseMapper<Userdynamic> {
 
-    List<Map<String,Object>> listmap(@Param("udID")Integer udID,Integer[] shuzu);
+    List<Userdynamic> listmap(@Param("udID")Integer udID,Integer[] shuzu);
 }

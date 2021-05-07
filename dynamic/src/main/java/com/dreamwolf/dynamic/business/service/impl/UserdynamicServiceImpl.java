@@ -24,7 +24,7 @@ public class UserdynamicServiceImpl extends ServiceImpl<UserdynamicMapper, Userd
     UserdynamicMapper userdynamicMapper;
 
     @Override
-    public List<Map<String, Object>> listmap(Integer udID,Integer[] shuzu) {
+    public List<Userdynamic> listmap(Integer udID,Integer[] shuzu) {
         return userdynamicMapper.listmap(udID,shuzu);
     }
 }

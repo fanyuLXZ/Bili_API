@@ -1,5 +1,7 @@
 package com.dreamwolf.member.business.service;
 
+import com.dreamwolf.entity.ResponseData;
+import com.dreamwolf.entity.message.web_interface.MMItems;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,5 +13,5 @@ import java.util.Map;
 public interface Userdynamic {
 
     @GetMapping("/replyitem")
-    public List<Map<String,Object>> replyitem(@RequestParam Integer userdy);
+    public ResponseData<List<MMItems>> replyitem(@RequestParam Integer userdy);
 }

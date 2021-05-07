@@ -2,6 +2,9 @@ package com.dreamwolf.entity.member;
 
 import lombok.Data;
 
+/**
+ * 点赞用户信息
+ */
 @Data
 public class Users {
     private Integer mid;//点赞对象的id

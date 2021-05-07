@@ -15,5 +15,5 @@ import java.util.Map;
  * @since 2021-04-12
  */
 public interface UserdynamicService extends IService<Userdynamic> {
-    List<Map<String,Object>> listmap(Integer udID,Integer[] shuzu);
+    List<Userdynamic> listmap(Integer udID,Integer[] shuzu);
 }

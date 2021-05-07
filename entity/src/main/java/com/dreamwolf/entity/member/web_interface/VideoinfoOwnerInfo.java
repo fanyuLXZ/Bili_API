@@ -17,6 +17,9 @@ public class VideoinfoOwnerInfo {
     private String sign;//个人简历
     private String face;//头像
 
+    public VideoinfoOwnerInfo() {
+    }
+
     public VideoinfoOwnerInfo(Integer mid, String upname, Integer fans, boolean attention, String sign, String face) {
         this.mid = mid;
         this.upname = upname;

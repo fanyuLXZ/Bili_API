@@ -1,4 +1,4 @@
-package com.dreamwolf.dynamic.business.entity;
+package com.dreamwolf.entity.dynamic;
 
 import lombok.Data;
 

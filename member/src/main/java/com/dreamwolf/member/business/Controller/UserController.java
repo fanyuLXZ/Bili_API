@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dreamwolf.entity.ResponseData;
 import com.dreamwolf.entity.member.*;
 import com.dreamwolf.entity.member.web_interface.*;
+import com.dreamwolf.entity.message.web_interface.MMItems;
+import com.dreamwolf.entity.message.web_interface.MMres;
 import com.dreamwolf.member.business.service.*;
 import com.dreamwolf.member.business.util.Hide;
 import com.dreamwolf.member.business.util.md5;
@@ -126,6 +128,7 @@ public class UserController {
         return new ResponseData<User>(code,message,1,user);
     }
 
+
     @GetMapping("/membe")
     public ResponseData<Member> membe(Integer uID){
         User user=userService.getById(uID);
@@ -138,6 +141,8 @@ public class UserController {
         Member member=new Member(user.getuID(),user.getNickName(),user.getSex()==1?"男":"女",user.getHeadImgPath(),level_info,vipStatus);
         return new ResponseData<Member>(0,"",1,member);
     }
+
+
 
     @GetMapping("/basic-info-by-uid")
     public ResponseData<Member> basic(Integer mid){
@@ -244,29 +249,19 @@ public class UserController {
 
     //接口调接口
     @GetMapping("/data")
-    public List<Map<String,Object>> list(Integer id){
-        List<Map<String,Object>> listmap=new ArrayList<>();
-        List<Map<String,Object>> replyitem=userdynamic.replyitem(id);
+    public ResponseData<List<MMres>> list(Integer id){
+        List<MMres> reply=new ArrayList<>();
+        List<MMItems> replyitem=userdynamic.replyitem(id).getData();
         for(int i=0;i<replyitem.size();i++){
-            Map<String,Object> map=new HashMap<>();
-            Map<String,Object> item=new HashMap<>();
-            item.put("source_content",replyitem.get(i).get("source_content"));
-            item.put("type",replyitem.get(i).get("type"));
-            item.put("business",replyitem.get(i).get("business"));
-            item.put("title",replyitem.get(i).get("title"));
-            item.put("reply_time",replyitem.get(i).get("reply_time"));
-            item.put("url",replyitem.get(i).get("url"));
-            item.put("image",replyitem.get(i).get("image"));
-            item.put("native_uri",replyitem.get(i).get("native_uri"));
-            //item.put("id",chuan.get("data").get("uid"));
-            Map<String,Object> user= (Map<String, Object>) replyuserb((Integer) replyitem.get(i).get("id"),id);
-            //Map<String,Object> repl=replyuserb((Integer) replyitem.get(i).get("id"),id);
-            //user.put("mid",repl.get("mid"));
-            map.put("item",item);
-            map.put("user",user);
-            listmap.add(map);
+            MMItems mmItems=new MMItems(replyitem.get(i).getSource_content(),replyitem.get(i).getType(),
+                    replyitem.get(i).getBusiness(),replyitem.get(i).getTitle(),replyitem.get(i).getReply_time(),
+                    replyitem.get(i).getUri(),replyitem.get(i).getBvid(),replyitem.get(i).getImage(),
+                    replyitem.get(i).getNative_uri());
+            ReplyUser repl=replyuserb(replyitem.get(i).getBvid(),id).getData();
+            MMres mm = new MMres(repl,mmItems);
+            reply.add(mm);
         }
-        return listmap;
+        return new ResponseData(0,"",1,reply);
     }
 
     //根据用户id查询对象 /video/info

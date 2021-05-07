@@ -4,11 +4,15 @@ package com.dreamwolf.zoning.business.Controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dreamwolf.entity.ResponseData;
 import com.dreamwolf.entity.video.web_interface.ArchivesInfo;
+import com.dreamwolf.entity.video.web_interface.Region;
+import com.dreamwolf.entity.video.web_interface.Result;
+import com.dreamwolf.entity.video.web_interface.VideoMaplist;
 import com.dreamwolf.entity.zoning.web_interface.Deputydivision;
 import com.dreamwolf.entity.zoning.web_interface.DynamicRegion;
 import com.dreamwolf.entity.zoning.web_interface.Mainpartition;
 import com.dreamwolf.entity.zoning.Zoning;
 import com.dreamwolf.entity.zoning.web_interface.Page;
+import com.dreamwolf.zoning.business.entity.NewList;
 import com.dreamwolf.zoning.business.service.IZoningService;
 import com.dreamwolf.zoning.business.service.VideoCount;
 import com.dreamwolf.zoning.business.util.Count;
@@ -55,7 +59,7 @@ public class ZoningController {
     @GetMapping("/region/dynamic")
     public Map dynamic(Integer ps,Integer rid){
         Map<String, Object> map=new HashMap<String, Object>();
-        if(ps!=null && !ps.equals("") && rid!=null) {
+        if(ps != null && rid != null) {
             map.put("code", 0);
             map.put("message", "");
             map.put("ttl", 1);
@@ -76,11 +80,16 @@ public class ZoningController {
                     Count cot=new Count();//随机数
                     Integer suiji=cot.count(ps,count);
                     page.put("count",suiji);//当前页 随即页
-                    Map<String, Object> archives=videoCount.videopage(list,suiji,ps);
+                    ResponseData<List<VideoMaplist>> archives=videoCount.videopage(list,suiji,ps);
                     if(archives!=null){
-                        data.put("page",page);
-                        data.put("archives",archives.get("data"));
-                        map.put("data",data);
+                        if (archives.getCode()==0){
+                            data.put("page",page);
+                            data.put("archives",archives.getData());
+                            map.put("data",data);
+                        }else {
+                            map.put("code",archives.getCode());
+                            map.put("message",archives.getMessage());
+                        }
                     }else{
                         map.put("code",400);
                         map.put("message","视频集合为空");
@@ -164,13 +173,6 @@ public class ZoningController {
         return zName;
     }
 
-    //子分区最新动态(四个)
-    /*@GetMapping("/dynamic/region")
-    public MainpardeputyInfo region(Integer rid, Integer pn, Integer ps){//子分区id 页码 每页数
-
-        return map;
-    }*/
-
     //父分区
     @GetMapping("/mainpartition")
     public ResponseData<Mainpartition> mainpartition(Integer bvChildZoning){
@@ -192,10 +194,35 @@ public class ZoningController {
     //子分区最新动态（四个）
     @GetMapping("/dynamic/region")
     public ResponseData<DynamicRegion> dynamicRegion(Integer rid, Integer pn, Integer ps){//子分区 页码 没页数
-        Integer count=videoCount.selectidcoutn(rid);
+        Integer count=  videoCount.selectidcoutn(rid);
         Page page=new Page(count,pn,ps);
-        List<ArchivesInfo> archivesInfo=videoCount.selectvideorid(rid,pn,ps);
+        List<ArchivesInfo> archivesInfo=videoCount.selectvideorid(rid,pn,ps).getData();
         return new ResponseData<DynamicRegion>(0,"",1,new DynamicRegion(page,archivesInfo));
+    }
+
+    //子分区视频按投稿时间排序（二十个）
+    @GetMapping("/cate/search")
+    public ResponseData<DynamicRegion> catesearch(Integer rid, Integer pn, Integer ps){//子分区 页码 没页数
+        Integer count=  videoCount.selectidcoutn(rid);
+        Page page=new Page(count,pn,ps);
+        List<ArchivesInfo> archivesInfo=videoCount.selectvideorid(rid,pn,ps).getData();
+        return new ResponseData<DynamicRegion>(0,"",1,new DynamicRegion(page,archivesInfo));
+    }
+
+    //子分区视频按视频热度排序(二十个)
+    @GetMapping("/newlist")
+    public  ResponseData<NewList> newlist(Integer rid, Integer pn, Integer ps){
+
+        List<Result> result=videoCount.selectbvidlistpage(rid,pn,ps).getData();
+        NewList newList=new NewList(result.size(),result.size()/ps,pn,ps,result);
+        return  new ResponseData<NewList>(0,"",1,newList);
+    }
+
+    //排行榜（十个）ranking/region
+    @GetMapping("/ranking/region")
+    public ResponseData<List<Region>> region(Integer rid){
+        List<Region> listResponseData=videoCount.selectbvidlistpagelist(rid).getData();
+        return  new ResponseData<List<Region>>(0,"",1,listResponseData);
     }
 }
 

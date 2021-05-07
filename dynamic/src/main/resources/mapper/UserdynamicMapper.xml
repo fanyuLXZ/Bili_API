@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dreamwolf.dynamic.business.mapper.UserdynamicMapper">
 
-    <select id="listmap" resultType="java.util.HashMap" >
+    <select id="listmap" resultType="com.dreamwolf.entity.dynamic.Userdynamic" >
         SELECT * FROM
         (SELECT `userdynamic`.*,@rownum := @rownum+1 AS rownum
         FROM `userdynamic`,(SELECT @rownum:=0) r

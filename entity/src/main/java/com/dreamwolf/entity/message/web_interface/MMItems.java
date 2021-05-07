@@ -30,5 +30,4 @@ public class MMItems {
     private String image;//当前 视频，动态的封面
     private String native_uri;
 
-
 }

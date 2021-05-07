@@ -3,9 +3,10 @@ package com.dreamwolf.dynamic.business.Controller;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.dreamwolf.dynamic.business.entity.Page;
-import com.dreamwolf.dynamic.business.entity.Reply;
+import com.dreamwolf.entity.dynamic.Page;
+import com.dreamwolf.entity.dynamic.Reply;
 import com.dreamwolf.entity.ResponseData;
+import com.dreamwolf.entity.comment.web_interface.CommListMap;
 import com.dreamwolf.entity.dynamic.Dynamiccomment;
 import com.dreamwolf.entity.dynamic.Userdata;
 import com.dreamwolf.dynamic.business.service.*;
@@ -82,18 +83,23 @@ public class DynamiccommentController {
             QueryWrapper<Dynamiccomment> queryWrapper=new QueryWrapper();
             queryWrapper.eq("udID",dynamic_id);
             List<Dynamiccomment> dynamiccomment=dynamiccommentService.list(queryWrapper);//返回对应动态id的父评论
-            Page page=new Page(dynamiccomment.size(),dynamiccomment.size(),1,10);
+
             Integer[] list = new Integer[dynamiccomment.size()];//数组 用来储存所有父评论id
             for (int i=0;i<dynamiccomment.size();i++){
                 list[i]=dynamiccomment.get(i).getcID();
             }
-            List<Map<String,Object>> replies = new ArrayList<>();//
+            ResponseData<List<CommListMap>> replies=null;
             if (list.length>0){
                 replies=commentService.commselecarlist(sort,list);
             }
+            Integer i=dynamiccomment.size();
+            for(CommListMap commListMap:replies.getData()){
+                i+=commListMap.getCount();
+            }
+            Page page=new Page(i,dynamiccomment.size(),1,10);
             //显示 评论对象集合的ListMap
             //page.put("acount",);//父加子总评论数
-            reply=new Reply(page);
+            reply=new Reply(page,replies.getData());
         }else{
             code=1;
             message="dynamic_id和sort不许为空";
@@ -108,28 +114,28 @@ public class DynamiccommentController {
 
     @SentinelResource(value = "replymain",fallback="handlerReplymain")
     @GetMapping("/reply/main")
-    public Map replymain(Integer sort,Integer dynamic_id,Integer next){//sort1按热度 2按时间 动态dynamic_id  next页码
-        Map<String,Object> map=new HashMap<>();
-        map.put("code",0);
-        map.put("message",0);
-        map.put("ttl",1);
-        Map<String, Object> data=new HashMap<String, Object>();
-        QueryWrapper<Dynamiccomment> queryWrapper=new QueryWrapper();
-        queryWrapper.eq("udID",dynamic_id);
-        List<Dynamiccomment> dynamiccomment=dynamiccommentService.list(queryWrapper);//返回对应动态id的父评论
-        Integer[] list = new Integer[dynamiccomment.size()];//数组 用来储存所有父评论id
-        for (int i=0;i<dynamiccomment.size();i++){
-            list[i]=dynamiccomment.get(i).getcID();
+    public ResponseData<List<CommListMap>> replymain(Integer sort,Integer dynamic_id,Integer next){//sort1按热度 2按时间 动态dynamic_id  next页码
+        int code = 0;
+        String message="";
+        ResponseData<List<CommListMap>> replies=null;
+        if(sort!=null && dynamic_id!=null && next!=null){
+            QueryWrapper<Dynamiccomment> queryWrapper=new QueryWrapper();
+            queryWrapper.eq("udID",dynamic_id);
+            List<Dynamiccomment> dynamiccomment=dynamiccommentService.list(queryWrapper);//返回对应动态id的父评论
+            Integer[] list = new Integer[dynamiccomment.size()];//数组 用来储存所有父评论id
+            for (int i=0;i<dynamiccomment.size();i++){
+                list[i]=dynamiccomment.get(i).getcID();
+            }
+            if (list.length>0){
+                replies=commentService.commselecarlistpage(sort,list,next);
+            }else{
+                message="当前动态没有评论";
+            }
+        }else{
+            code = 1;
+            message="请传入参数";
         }
-        List<Map<String,Object>> replies = new ArrayList<>();
-        if (list.length>0){
-            replies=commentService.commselecarlistpage(sort,list,next);
-        }
-        //显示 评论对象集合的ListMap
-        //page.put("acount",);//父加子总评论数
-        data.put("replies",replies);
-        map.put("data",data);
-        return  map;
+        return new ResponseData<List<CommListMap>>(code,message,1,replies.getData());
     }
     public Map handlerReplymain(@PathVariable Integer id, Throwable e) {
         Map map=new HashMap();
