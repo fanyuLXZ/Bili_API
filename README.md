@@ -522,7 +522,7 @@
                     - level_info 等级对象 object
                         - current_level 当前等级 int
             - card 内容 string
-    6. 动态简略评论信息 /reply   
+    6. ####动态简略评论信息 /reply   
         参数：
         * dynamic_id 动态id
         * sort 排序方法 0为热度 1为时间

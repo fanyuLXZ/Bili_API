@@ -130,25 +130,6 @@
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.23" level="project" />
     <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:3.11.4" level="project" />
     <orderEntry type="library" name="Maven: io.swagger:swagger-annotations:1.5.20" level="project" />
-    <orderEntry type="module" module-name="gateway" />
-    <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-starter-gateway:3.0.2" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-gateway-server:3.0.2" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-webflux:2.4.2" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-reactor-netty:2.4.2" level="project" />
-    <orderEntry type="library" name="Maven: io.projectreactor.netty:reactor-netty-http:1.0.3" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-codec-http:4.1.58.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-codec-http2:4.1.58.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-resolver-dns:4.1.58.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-codec-dns:4.1.58.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-resolver-dns-native-macos:osx-x86_64:4.1.58.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-transport-native-unix-common:4.1.58.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-transport-native-epoll:linux-x86_64:4.1.58.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.projectreactor.netty:reactor-netty-core:1.0.3" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-handler-proxy:4.1.58.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-codec-socks:4.1.58.Final" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-webflux:5.3.3" level="project" />
-    <orderEntry type="library" name="Maven: com.alibaba.csp:sentinel-spring-cloud-gateway-adapter:1.8.0" level="project" />
-    <orderEntry type="library" name="Maven: com.alibaba.csp:sentinel-api-gateway-adapter-common:1.8.0" level="project" />
     <orderEntry type="module" module-name="entity" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.4.2" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:2.4.2" level="project" />
