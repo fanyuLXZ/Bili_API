@@ -60,7 +60,7 @@
             - bvIsDel： 是否已删除，0为未删除，1为已删除
             - 依赖
             
-    3. ####查看作者下面发布的视频 /videouID  
+    3. #### 查看作者下面发布的视频 /videouID  
         参数:  
         
         * uID 作者id Integer   
