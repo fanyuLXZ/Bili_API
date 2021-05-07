@@ -1,6 +1,7 @@
 package com.dreamwolf.entity.fav.web_interface;
 
 import com.dreamwolf.entity.member.User;
+import com.dreamwolf.entity.member.web_interface.OwnerInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,8 +18,8 @@ public class Favvideofav {
     private String cover;//封面
     private Integer page;
     private Integer type;
-//    private usermap;//用户对象
     private String bvid;//bv号
+    private OwnerInfo upper;//用户对象
 
 
 }

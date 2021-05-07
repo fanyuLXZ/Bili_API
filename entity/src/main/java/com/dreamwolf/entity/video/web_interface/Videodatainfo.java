@@ -18,10 +18,10 @@ import java.util.List;
 public class Videodatainfo {
 
     private Integer aid;    //视频id
-    private VideoinfoOwnerInfo videoinfoOwnerInfo;    //用户对象
-    private Videoinfo videoinfo;//视频对象
-    private Statinfo statinfo;  //对象集合
-    private List relatedinfo;//视频推荐数组
+    private VideoinfoOwnerInfo owner;    //用户对象
+    private Videoinfo video;//视频对象
+    private Statinfo stat;  //对象集合
+    private List related;//视频推荐数组
     private Mainpartition mainpartition;
     private Deputydivision deputydivision;
 

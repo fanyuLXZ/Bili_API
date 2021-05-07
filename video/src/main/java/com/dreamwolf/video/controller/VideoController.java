@@ -1,6 +1,7 @@
 package com.dreamwolf.video.controller;
 
 import com.dreamwolf.entity.ResponseData;
+import com.dreamwolf.entity.member.User;
 import com.dreamwolf.entity.member.web_interface.OwnerInfo;
 import com.dreamwolf.entity.video.Video;
 import com.dreamwolf.entity.video.Videodata;
@@ -87,23 +88,29 @@ public class VideoController {
 //    pageSize 从第几页开始
 //    pagecount 一页显示多少条
     @GetMapping("/videopage")
-    public ResponseData selectpage(Integer[] list,Integer count,Integer ps){
+    public ResponseData<List<VideoMaplist>> selectpage(Integer[] list,Integer ps,Integer count){
             //子分区集合查询视频数据 返回的分页集合
-            List<Video> videolist = videoService.videoPagebvzoing(list,count,ps);
-            List listma = new ArrayList<>();
+            List<Video> videolist = videoService.videoPagebvzoing(list,ps,count);
+            List<VideoMaplist> listma = new ArrayList<>();
                 for (Video vid : videolist) {
-                    Map usermap = usermapService.user(vid.getUID());
-                    OwnerInfo owner = new OwnerInfo((Integer) usermap.get("uID"),usermap.get("userName").toString(),null);
+                    User usermap = usermapService.userid(vid.getUID()).getData();
+                    OwnerInfo owner = new OwnerInfo(usermap.getuID(),usermap.getUserName(),null);
 //                    根据bvid查询的视频基本数据（硬币，点赞数等）
                     Videodata videodata = videodataService.selectbvID(vid.getBvID());
-                    StatMap stat = new StatMap(videodata.getBvID(),videodata.getBvCoinNum(),videodata.getBvPopupsNum(),
-                            videodata.getBvLikeNum());
+                    StatMap stat=null;
+                    if(videodata != null){
+                        stat = new StatMap(videodata.getBvID(),videodata.getBvCoinNum(),videodata.getBvPopupsNum(),
+                                videodata.getBvLikeNum());
+                    }else {
+                        stat = new StatMap(null,null,null,null);
+                    }
+
                     VideoMaplist videoMaplist = new VideoMaplist(vid.getBvID(),vid.getBvCoverImgPath(),null,null,null,
                             vid.getBvTitle(),owner,stat,vid.getDuration(),"bv" + vid.getBvID(),0,null,null);
                     listma.add(videoMaplist);
                 }
-        VideoList videoList = new VideoList(listma);
-        return  new ResponseData(0,"",0,videoList);
+//        VideoList videoList = new VideoList(listma);
+        return  new ResponseData(0,"",0,listma);
     }
 
     /**
@@ -125,7 +132,7 @@ public class VideoController {
      * @return
      */
     @GetMapping("/videodeorating")
-    public ResponseData selectdeorating(Integer[] bvChildZoning, Integer datetime){
+    public ResponseData<List> selectdeorating(Integer[] bvChildZoning, Integer datetime){
 
         Calendar  cr = Calendar.getInstance();
         int year=cr.get(Calendar.YEAR); //年
@@ -137,21 +144,32 @@ public class VideoController {
         String hou=year+"-"+month+"-"+b;
             List<Video> list = videoService.videoZoningIdlist(bvChildZoning,qian,hou);
                 List listmap = new ArrayList();
-                for(Video video : list){
-                    VideoMaplist videoMaplist = new VideoMaplist();
-                    videoMaplist.setAid(video.getBvID());
-                    videoMaplist.setPic(video.getBvCoverImgPath());
-                    videoMaplist.setBvid("bv"+video.getBvID());
-                    videoMaplist.setTitle(video.getBvTitle());
-//                    String cname=userpageService.elementby(video.getBvChildZoning());
-//                    videoMaplist.setTypename(cname);
-                    Videorating videorating = videoratingService.selectbvid(video.getBvID());
-                    videoMaplist.setPts(videorating.getOverallRating());
+                VideoMaplist videoMaplist =null;
+                if(list!=null){
+                    for(Video video : list){
+                        videoMaplist = new VideoMaplist();
+                        videoMaplist.setAid(video.getBvID());
+                        videoMaplist.setPic(video.getBvCoverImgPath());
+                        videoMaplist.setBvid("bv"+video.getBvID());
+                        videoMaplist.setTitle(video.getBvTitle());
+                        String cname=userpageService.elementby(video.getBvChildZoning());
+                        videoMaplist.setTypename(cname);
+                        Videorating videorating = videoratingService.selectbvid(video.getBvID());
+                        if(videorating!=null){
+                            videoMaplist.setPts(videorating.getOverallRating());
+                        }else {
+                            videoMaplist.setPts(0);
+                        }
+
+                        listmap.add(videoMaplist);
+                    }
+                }else {
+                    videoMaplist = new VideoMaplist();
                     listmap.add(videoMaplist);
                 }
-                VideoList videoList = new VideoList(listmap);
+//                VideoList videoList = new VideoList(listmap);
 
-        return new ResponseData(0,"",0,videoList);
+        return new ResponseData(0,"",0,listmap);
     }
 
     /**
@@ -174,8 +192,8 @@ public class VideoController {
 
 
     @GetMapping("/videoBvidlist")
-    public ResponseData selectbbid(Integer[] bvidlist){
-        List listmap = new ArrayList();
+    public ResponseData<List<VideoMaplist>> selectbbid(Integer[] bvidlist){
+        List<VideoMaplist> listmap = new ArrayList();
         List<Video> list = videoService.selectlistBvid(bvidlist);
             for(Video video : list){
                 VideoMaplist videoMaplist = new VideoMaplist(null,null,video.getBvCoverImgPath(),
@@ -184,8 +202,8 @@ public class VideoController {
                 );
                 listmap.add(videoMaplist);
             }
-        List list1 = new ArrayList(listmap);
-        return new ResponseData(0,"",0,list1);
+//        List list1 = new ArrayList(listmap);
+        return new ResponseData(0,"",0,listmap);
 
     }
 
@@ -217,9 +235,9 @@ public class VideoController {
      * @return
      */
     @GetMapping("/videoridlists")
-    public ResponseData selectvideorid(Integer rid, Integer pn, Integer ps){
+    public ResponseData<List<ArchivesInfo>> selectvideorid(Integer rid, Integer pn, Integer ps){
 //        Integer rid = 310;
-        List list = new ArrayList();
+        List<ArchivesInfo> list = new ArrayList();
         List<Video> videoList = videoService.videoliselectridlist(rid,pn,ps); //查询最新的4条记录
         for(Video video : videoList){
             ArchivesInfo archivesInfo = new ArchivesInfo();
@@ -230,8 +248,8 @@ public class VideoController {
             archivesInfo.setDuration(video.getDuration());  //时长
             archivesInfo.setPic(video.getBvCoverImgPath()); //图片
             archivesInfo.setTitle(video.getBvTitle());  //标题
-            OwnerInfo ownerInfo = usermapService.OwnerInfo(video.getUID());
-            archivesInfo.setOwner(ownerInfo);   //用户信息
+            ResponseData<OwnerInfo> ownerInfo = usermapService.OwnerInfo(video.getUID());
+            archivesInfo.setOwner(ownerInfo.getData());   //用户信息
             String name= userpageService.elementby(video.getBvChildZoning());
             archivesInfo.setTname(name);    //分区名
                 Statinfo statinfo = new Statinfo();
@@ -262,9 +280,9 @@ public class VideoController {
             }
             list.add(archivesInfo);
         }
-        VideoList videoList1 = new VideoList(list);
+//        VideoList videoList1 = new VideoList(list);
 
-        return new ResponseData(0,"",0,videoList1);
+        return new ResponseData(0,"",0,list);
     }
 
 
@@ -273,11 +291,11 @@ public class VideoController {
      * @return
      */
     @GetMapping("/selectlistvieopage")
-    public ResponseData selectlistvieopage(Integer rid,Integer pn,Integer ps){
+    public ResponseData<List<ArchivesInfo>> selectlistvieopage(Integer rid,Integer pn,Integer ps){
 //        Integer rid = 310;
 //        Integer pn=0;
 //        Integer ps=20;
-        List list = new ArrayList();
+        List<ArchivesInfo> list = new ArrayList();
         List<Video> videoList = videoService.videolistselectpage(rid,pn,ps);
         for(Video video : videoList){
             ArchivesInfo archivesInfo = new ArchivesInfo();
@@ -288,8 +306,8 @@ public class VideoController {
             archivesInfo.setDuration(video.getDuration());  //时长
             archivesInfo.setPic(video.getBvCoverImgPath()); //图片
             archivesInfo.setTitle(video.getBvTitle());  //标题
-            OwnerInfo ownerInfo = usermapService.OwnerInfo(video.getUID());
-            archivesInfo.setOwner(ownerInfo);   //用户信息
+            ResponseData<OwnerInfo> ownerInfo = usermapService.OwnerInfo(video.getUID());
+            archivesInfo.setOwner(ownerInfo.getData());   //用户信息
             String name= userpageService.elementby(video.getBvChildZoning());
             archivesInfo.setTname(name);    //分区名
             Statinfo statinfo = new Statinfo();
@@ -321,9 +339,8 @@ public class VideoController {
             list.add(archivesInfo);
 
         }
-        VideoList videoList1 = new VideoList(list);
 
-        return new ResponseData(0,"",0,videoList1);
+        return new ResponseData(0,"",0,list);
     }
 
 
@@ -334,40 +351,49 @@ public class VideoController {
      * @return
      */
     @GetMapping("/selectbvidlistpagerid")
-    public ResponseData selectbvidlistpage(Integer rid){
-        Integer pn =0;
-        Integer ps= 20;
+    public ResponseData<List<Result>> selectbvidlistpage(Integer rid,Integer pn,Integer ps){
+//        Integer pn=0;
+//        Integer ps= 20;
         List<Integer> array = videoService.videoselezoingid(rid); //根据子分区查询视频id
         List<Videodata> arraydata = videodataService.videodatabvid(array.toArray(new Integer[0]));//按热度查
-        List<Integer> arrayvideo = new ArrayList();  //按热度排序后的视频id
-        for(Videodata videodata : arraydata){
-            arrayvideo.add(videodata.getBvID());
-        }
-        List<Video> videoList = videoService.selectvideovlidlsit(arrayvideo.toArray(new Integer[0]),pn,ps);
+        Result result = null;
         List list = new ArrayList();
-        for(Video video : videoList){
-            Result result = new Result();
-            OwnerInfo ownerInfo = usermapService.OwnerInfo(video.getUID());
-            String uname = ownerInfo.getName();
-            result.setAuthor(uname); //作者名称
-            result.setBvid(video.getBvID());      //视频id
-            result.setDescription(video.getBvDesc());   //文章
-            result.setDuration(video.getDuration());    //时长
-            Videodata videodata = videodataService.selectbvID(video.getBvID()); //根据视频id查询视频数据
-            result.setFavorites(videodata.getBvFavoriteNum());  //收藏数
-            result.setMid(video.getUID());  //作者id
-            result.setPic(video.getBvCoverImgPath());   //预览图
-            result.setPlay(videodata.getBvPlayNum());   //观看数
-            result.setPubdate(video.getBvPostTime());   //发表时间
-            result.setReview(videodata.getBvCommentNum());  //评论数
-            result.setTitle(video.getBvTitle());    //标题
-            String name= userpageService.elementby(video.getBvChildZoning());
-            result.setType(name);   //视频类型
-            list.add(result);
+        if(arraydata.size()>0){
+            List<Integer> arrayvideo = new ArrayList();  //按热度排序后的视频id
+            for(Videodata videodata : arraydata){
+                arrayvideo.add(videodata.getBvID());
+            }
+            List<Video> videoList =null;
+            if(arrayvideo!=null){
+                videoList= videoService.selectvideovlidlsit(arrayvideo.toArray(new Integer[0]),pn,ps);
+            }
+            for(Video video : videoList){
+                result = new Result();
+                ResponseData<OwnerInfo> ownerInfo = usermapService.OwnerInfo(video.getUID()); //用户对象
+                String uname = ownerInfo.getData().getName();
+                result.setAuthor(uname); //作者名称
+                result.setBvid(video.getBvID());      //视频id
+                result.setDescription(video.getBvDesc());   //文章
+                result.setDuration(video.getDuration());    //时长
+                Videodata videodata = videodataService.selectbvID(video.getBvID()); //根据视频id查询视频数据
+                result.setFavorites(videodata.getBvFavoriteNum());  //收藏数
+                result.setMid(video.getUID());  //作者id
+                result.setPic(video.getBvCoverImgPath());   //预览图
+                result.setPlay(videodata.getBvPlayNum());   //观看数
+                result.setPubdate(video.getBvPostTime());   //发表时间
+                result.setReview(videodata.getBvCommentNum());  //评论数
+                result.setTitle(video.getBvTitle());    //标题
+                String name= userpageService.elementby(video.getBvChildZoning());
+                result.setType(name);   //视频类型
+                list.add(result);
+            }
+        }else{
+            list.add(null);
         }
-        VideoList videoList1 = new VideoList(list);
 
-        return new ResponseData(0,"",0,videoList1);
+//        VideoList videoList1 = new VideoList(list);
+
+        return new ResponseData(0,"",0,list);
     }
 
 
@@ -379,42 +405,49 @@ public class VideoController {
      * @return
      */
     @GetMapping("/selectbvidlistpagelist")
-    public ResponseData selectbvidlistpagelist(Integer rid){
+    public ResponseData<List<Region>> selectbvidlistpagelist(Integer rid){
         List<Integer> array = videoService.videoselezoingid(rid); //根据子分区查询视频id
         List<Videodata> arraydata = videodataService.videodatabvid(array.toArray(new Integer[0]));//按热度查
-        List<Integer> arrayvideo = new ArrayList();  //按热度排序后的视频id
-        for(Videodata videodata : arraydata){
-            arrayvideo.add(videodata.getBvID());
+        List<Region> list = new ArrayList();
+        Region result= null;
+        if(arraydata.size()>0){
+            List<Integer> arrayvideo = new ArrayList();  //按热度排序后的视频id
+            for(Videodata videodata : arraydata){
+                arrayvideo.add(videodata.getBvID());
+            }
+            //查询前10条
+            List<Video> videoList = videoService.selectlispagelsit(arrayvideo.toArray(new Integer[0]));
+
+            for(Video video : videoList){
+                Videodata videodata = videodataService.selectbvID(video.getBvID()); //根据视频id查询视频数据
+                result= new Region();
+                ResponseData<OwnerInfo> ownerInfo = usermapService.OwnerInfo(video.getUID());
+                String uname = ownerInfo.getData().getName();
+                result.setAuthor(uname); //作者名称
+                result.setAid(video.getBvID());      //视频id
+                result.setBvid("bv"+video.getBvID());   //bv号
+                result.setCoins(videodata.getBvCoinNum());  //投币数
+                result.setDescription(video.getBvDesc());   //文章
+                result.setDuration(video.getDuration());    //时长
+                result.setFavorites(videodata.getBvFavoriteNum());  //收藏数
+                result.setMid(video.getUID());  //作者id
+                result.setPic(video.getBvCoverImgPath());   //预览图
+                result.setPlay(videodata.getBvPlayNum());   //观看数
+                Videorating videorating = videoratingService.selectbvid(video.getBvID());
+                result.setPts(videorating.getOverallRating());
+                result.setCreate(video.getBvPostTime());   //发表时间
+                result.setReview(videodata.getBvCommentNum());  //评论数
+                result.setTitle(video.getBvTitle());    //标题
+                String name= userpageService.elementby(video.getBvChildZoning());
+                result.setTypename(name);   //视频类型
+                list.add(result);
+            }
+        }else {
+            list.add(null);
         }
-        //查询前10条
-        List<Video> videoList = videoService.selectlispagelsit(arrayvideo.toArray(new Integer[0]));
-        List list = new ArrayList();
-        for(Video video : videoList){
-            Videodata videodata = videodataService.selectbvID(video.getBvID()); //根据视频id查询视频数据
-            Region result = new Region();
-            OwnerInfo ownerInfo = usermapService.OwnerInfo(video.getUID());
-            String uname = ownerInfo.getName();
-            result.setAuthor(uname); //作者名称
-            result.setAid(video.getBvID());      //视频id
-            result.setBvid("bv"+video.getBvID());   //bv号
-            result.setCoins(videodata.getBvCoinNum());  //投币数
-            result.setDescription(video.getBvDesc());   //文章
-            result.setDuration(video.getDuration());    //时长
-            result.setFavorites(videodata.getBvFavoriteNum());  //收藏数
-            result.setMid(video.getUID());  //作者id
-            result.setPic(video.getBvCoverImgPath());   //预览图
-            result.setPlay(videodata.getBvPlayNum());   //观看数
-            Videorating videorating = videoratingService.selectbvid(video.getBvID());
-            result.setPts(videorating.getOverallRating());
-            result.setCreate(video.getBvPostTime());   //发表时间
-            result.setReview(videodata.getBvCommentNum());  //评论数
-            result.setTitle(video.getBvTitle());    //标题
-            String name= userpageService.elementby(video.getBvChildZoning());
-            result.setTypename(name);   //视频类型
-            list.add(result);
-        }
-        VideoList videoList1 = new VideoList(list);
-        return new ResponseData(0,"",0,videoList1);
+
+//        VideoList videoList1 = new VideoList(list);
+        return new ResponseData(0,"",0,list);
     }
 
     /**
@@ -423,10 +456,10 @@ public class VideoController {
      * @return
      */
     @GetMapping("/selectidcoutn")
-    public ResponseData selectidcoutn(Integer rid){
+    public Integer selectidcoutn(Integer rid){
         Integer count =videoService.selectridcount(rid);
-        VideoCount videoCount = new VideoCount(count);
-        return new ResponseData(0,"",0,videoCount);
+//        VideoCount videoCount = new VideoCount(count);
+        return count;
     }
 
 

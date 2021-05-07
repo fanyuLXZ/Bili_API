@@ -89,7 +89,7 @@ public class VideodataController {
      * @return
      */
     @GetMapping("/video/info")
-    public ResponseData videodatabvidobject(Integer bvid){
+    public ResponseData<Videodatainfo> videodatabvidobject(Integer bvid){
         Integer uid=1; //当前用户id
         Videodatainfo videodatainfo = new Videodatainfo();
         Videodata videodata = videodataService.selectbvID(bvid);    //视频显示对象
@@ -107,8 +107,8 @@ public class VideodataController {
                     relatedinfo.setAid(vide.getBvID());   //视频id
                     relatedinfo.setPic(vide.getBvCoverImgPath());   //图片
                     relatedinfo.setTitle(vide.getBvTitle()); //标题
-                OwnerInfo ownerInfo = usermapService.OwnerInfo(vide.getUID());
-                    relatedinfo.setOwnerInfo(ownerInfo); //用户对象
+                ResponseData<OwnerInfo> ownerInfo = usermapService.OwnerInfo(vide.getUID());
+                    relatedinfo.setOwnerInfo(ownerInfo.getData()); //用户对象
                 if(videodata2!=null){
                     statinfo.setView(videodata2.getBvPlayNum());
                     relatedinfo.setStatinfo(statinfo);  //播放量
@@ -118,14 +118,14 @@ public class VideodataController {
                 relatedinfoList.add(relatedinfo);
 
             }
-        videodatainfo.setRelatedinfo(relatedinfoList);         //视频推荐数组
+        videodatainfo.setRelated(relatedinfoList);         //视频推荐数组
             Videodata videodata1 = videodataService.selectbvID(bvid);   //根据视频id查询视频显示数据
 
             statinfo.setView(videodata1.getBvPlayNum()); //播放量
             statinfo.setFavorite(videodata1.getBvFavoriteNum()); //收藏数
             statinfo.setCoin(videodata1.getBvCoinNum()); //投币数
             statinfo.setLike(videodata1.getBvLikeNum()); //点赞数
-        videodatainfo.setStatinfo(statinfo);        //对象集合
+            videodatainfo.setStat(statinfo);        //对象集合
             Video video = videoService.videobvIDlist(bvid);
             List<Videorating> videoratings = videoratingService.selectvideolist();  //查询所有视频评分数据按评分排序
             int a=0;
@@ -143,13 +143,13 @@ public class VideodataController {
             videoinfo.setDesc(video.getBvDesc());      //简介
             videoinfo.setCtime(video.getBvPostTime());     //发表时间
             videoinfo.setRank(i);       //排名
-        videodatainfo.setVideoinfo(videoinfo);       //视频对象
-        VideoinfoOwnerInfo videoinfoOwnerInfo= usermapService.video_info(uid,video.getUID());  //当前用户id,用户id
-        videodatainfo.setVideoinfoOwnerInfo(videoinfoOwnerInfo);   //用户对象
-        Mainpartition mainpartition =userpageService.mainpartition(video.getBvChildZoning());
-        videodatainfo.setMainpartition(mainpartition);
-        Deputydivision deputydivision =userpageService.deputydivision(video.getBvChildZoning());
-        videodatainfo.setDeputydivision(deputydivision);
+        videodatainfo.setVideo(videoinfo);       //视频对象
+        ResponseData<VideoinfoOwnerInfo> videoinfoOwnerInfo= usermapService.video_info(uid,video.getUID());  //当前用户id,用户id
+        videodatainfo.setOwner(videoinfoOwnerInfo.getData());   //用户对象
+        ResponseData<Mainpartition> mainpartition =userpageService.mainpartition(video.getBvChildZoning());
+        videodatainfo.setMainpartition(mainpartition.getData());
+        ResponseData<Deputydivision> deputydivision =userpageService.deputydivision(video.getBvChildZoning());
+        videodatainfo.setDeputydivision(deputydivision.getData());
 
         return new ResponseData(0,"",0,videodatainfo);
     }

@@ -1,5 +1,7 @@
 package com.dreamwolf.video.service;
 
+import com.dreamwolf.entity.ResponseData;
+import com.dreamwolf.entity.member.User;
 import com.dreamwolf.entity.member.web_interface.OwnerInfo;
 import com.dreamwolf.entity.member.web_interface.VideoinfoOwnerInfo;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -11,14 +13,19 @@ import java.util.Map;
 @FeignClient(name = "member-service")
 public interface UsermapService {
 
-    @GetMapping("/User")
-    public Map user(@RequestParam Integer uid);
+//    @GetMapping("/User")
+//    public Map user(@RequestParam Integer uid);
+    @GetMapping("/useruid")
+    public ResponseData<User> userid(@RequestParam Integer uid);
 
     @GetMapping("/video/info")
-    public VideoinfoOwnerInfo video_info(@RequestParam Integer uid, @RequestParam Integer mid);
+    public ResponseData<VideoinfoOwnerInfo> video_info(@RequestParam Integer uid, @RequestParam Integer mid);
+
+//    @GetMapping("/ownerinfo")
+//    public OwnerInfo OwnerInfo(@RequestParam Integer uID);
 
     @GetMapping("/ownerinfo")
-    public OwnerInfo OwnerInfo(@RequestParam Integer uID);
+    public ResponseData<OwnerInfo> OwnerInfo(@RequestParam Integer uID);
 
 
 

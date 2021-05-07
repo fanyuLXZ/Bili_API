@@ -15,11 +15,16 @@
         SELECT bvID,(`bvLikeNum`-`bvDislike`) AS aaa FROM `videodata`
          <where>
              `bvID` IN
-             <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
-                 #{item}
-             </foreach>
-             ORDER BY aaa DESC
+             <if test="array.length>0">
+                 <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+                     #{item}
+                 </foreach>
+             </if>
+             <if test="array.length==0">
+                 (0)
+             </if>
          </where>
+        ORDER BY aaa DESC
     </select>
 
 </mapper>

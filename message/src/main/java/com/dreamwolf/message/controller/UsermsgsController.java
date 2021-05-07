@@ -4,6 +4,8 @@ import com.dreamwolf.entity.ResponseData;
 import com.dreamwolf.entity.comment.Comment;
 import com.dreamwolf.entity.comment.Commentlike;
 import com.dreamwolf.entity.comment.web_interface.Commcidmap;
+import com.dreamwolf.entity.member.ReplyUser;
+import com.dreamwolf.entity.member.Users;
 import com.dreamwolf.entity.message.Usermsgs;
 import com.dreamwolf.entity.message.web_interface.*;
 import com.dreamwolf.entity.video.Video;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -72,7 +73,6 @@ public class UsermsgsController {
             ResponseData<List<Comment>> commentscidarr = commentService.commentsarrlist(comarr.getData().toArray(new Integer[0]));//拿到评论id的数据
             List itemlist = new ArrayList();
             int i =1;
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date last_like_time = null;
             for(Comment comm : commentscidarr.getData()){
                 MsgsVideoItem commap = new MsgsVideoItem();
@@ -88,9 +88,8 @@ public class UsermsgsController {
                     continue;
                 }
                 //少个用户
-//                List uselist =  memberService.users(user_ids2.toArray(new Integer[0]),uid);
-//
-//                commap.put("users",uselist);//用户对象
+                ResponseData<List<Users>> uselist =  memberService.users(user_ids2.toArray(new Integer[0]),uid);
+                commap.setUsers(uselist.getData());//用户对象
                 Items mlist = new Items();
                 mlist.setItem_id(comm.getCID());    //评论id
                 if(comm.getCID() ==comm.getCID()){
@@ -118,12 +117,11 @@ public class UsermsgsController {
                         user_ids.add(videolike.getUID());
                     }
                 }
-                //少个用户
-//                List uselist2 =  memberService.users(user_ids.toArray(new Integer[0]),uid);
-//                if (uselist2.size()<=0){
-//                    continue;
-//                }
-//                itemObject.put("users",uselist2);//用户对象
+                ResponseData<List<Users>> uselist2 =  memberService.users(user_ids.toArray(new Integer[0]),uid);
+                if (uselist2.getData().size()<=0){
+                    continue;
+                }
+               itemObject.setUsers(uselist2.getData());//用户对象
                 Items mlist = new Items();
                 mlist.setItem_id(video.getBvID());    //视频id
                 if(video.getBvID() ==video.getBvID()){
@@ -164,7 +162,7 @@ public class UsermsgsController {
         return new ResponseData(0,"",1,msgstotal);
     }
 
-//有问题
+
     //回复我的
     @GetMapping("/reply")
     public ResponseData<Msgsreply> usermsglist(){
@@ -175,7 +173,7 @@ public class UsermsgsController {
             //根据视频id数组拿到视频评论表所有数据
             ResponseData<List<Videocomment>> bvidcomm =videoService.videocombvidlist((Integer[]) videoarr.getData().list.toArray(new Integer[0]));
             ResponseData<List<Comment>> comments = commentService.selecomuid(uid);    //根据uid查询发布的评论
-            List listitem = new ArrayList();
+            List<MMres> listitem = new ArrayList();
             for(Comment comme_nlist : comments.getData()){
                 MMres itemmaps = new MMres();
                 MMItems comm_map = new MMItems();
@@ -194,9 +192,8 @@ public class UsermsgsController {
                     comm_map.setNative_uri(null);
                     userid=clist.getUID();
                 }
-                //少个用户
-//                Map<String,Object> usemap = memberService.replyuserb(userid,uid);
-//                itemmaps.put("user",usemap);       //回复的用户对象
+                ResponseData<ReplyUser> usemap = memberService.replyuserb(userid,uid);
+                itemmaps.setUser(usemap.getData());       //回复的用户对象
                 itemmaps.setItem(comm_map);   //回复我的评论对象
                 listitem.add(itemmaps);
             }
@@ -219,21 +216,23 @@ public class UsermsgsController {
                     videoitem.setBvid(videomap.getData().getBvID());
                     videoitem.setImage(videomap.getData().getBvCoverImgPath());   //当前 视频，动态的封面
                     videoitem.setNative_uri(null);
-                    Integer id= (Integer) commlistmap.getData().getUid();
-                    //少个用户
+                    Integer id=commlistmap.getData().getUid();
+
+                ResponseData<ReplyUser> usemap = memberService.replyuserb(id,uid);
+                itemmap.setUser(usemap.getData());//回复的用户对象
 //                Map<String,Object> usemap = memberService.replyuserb(id,uid);
-//                itemmap.put("user",usemap);       //回复的用户对象
                 itemmap.setItem(videoitem);   //回复我的评论对象
                 listitem.add(itemmap);
             }
+//            listitem.sort(Comparator.comparing(MMres::getItem).reversed());
             //动态
-//            List<Map<String,Object>> menmap = memberService.list(uid);
-//            for(Map<String,Object> umap : menmap){
-//                Map m = new HashMap();
-//                m.put("user",umap.get("user"));
-//                m.put("item",umap.get("item"));
-//                listitem.add(m);
-//            }
+            ResponseData<List<MMres>> menmap = memberService.list(uid);
+            for(MMres umap : menmap.getData()){
+                MMres m = new MMres();
+                m.setUser(umap.getUser());
+                m.setItem(umap.getItem());
+                listitem.add(m);
+            }
 
 
             //把itemlist按照最大时间在前排序

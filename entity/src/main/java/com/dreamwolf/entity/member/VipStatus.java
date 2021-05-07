@@ -39,4 +39,5 @@ public class VipStatus {
         this.status = status;
         this.type = type;
     }
+    public VipStatus(){}
 }
