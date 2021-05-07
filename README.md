@@ -37,7 +37,8 @@
             - bvDesc： 视频简介
             - bvPostTime： 创建时间
             - bvChildZoning： 视频子分区ID
-            - bvIsDel： 是否已删除，0为未删除，1为已删除
+            - bvIsDel： 是否已删除，0为未删除，1为已删除  
+            
         依赖 : [aaa](#查看作者下面发布的视频-videouid)
             
     2. 根据视频id查看视频信息 /videobvID   
