@@ -17,10 +17,10 @@ import java.util.Map;
 @FeignClient(name = "zoning-service")
 public interface UserpageService {
 
-    @GetMapping("/selisy")
-    public Map selectlistid(@RequestParam ArrayList<Integer> list, @RequestParam Integer count, @RequestParam Integer ps);
+//    @GetMapping("/selisy")
+//    public Map selectlistid(@RequestParam ArrayList<Integer> list, @RequestParam Integer count, @RequestParam Integer ps);
 
-    @GetMapping("elementby")
+    @GetMapping("/elementby")
     public String elementby(@RequestParam Integer zID); //根据分区id拿到分区名
 
     @GetMapping("/mainpartition")

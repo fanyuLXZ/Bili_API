@@ -16,6 +16,7 @@ import java.util.List;
 public class CommListMap {
 
 
+    private Integer rpid;//评论id
     private Integer action;//点赞状态
     private Messagecontext content; //评论内容对象
     private Integer count;//子评论数量

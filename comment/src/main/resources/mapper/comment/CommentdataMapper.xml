@@ -25,9 +25,9 @@
                 <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
                     #{item}
                 </foreach>
-                ORDER BY aaa DESC LIMIT 0,3
             </if>
         </where>
+        ORDER BY aaa DESC LIMIT 0,3
     </select>
 
 

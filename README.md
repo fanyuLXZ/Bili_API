@@ -479,7 +479,7 @@
         * data : 
             - count : 总数 int
 
-    31. #### 视频显示 /video/info
+    31. #### 视频显示 /info
         参数：
         bvid bvid int   
         返回值：
@@ -505,7 +505,7 @@
                 - coin 投币数 int
                 - like 点赞数 int
             - related 视频推荐对象数组 &lt;object&gt;
-                - aid 视频id int
+                - aid 视频id int  
                 - pic 图片 String
                 - title 标题 String
                 - owner up对象 object
@@ -519,6 +519,18 @@
             - deputydivision 副分区
                 - id 主分区 int
                 - name 分区名 string
+                
+    32. #### 根据子分区id数组查询当天子分区下的视频总数 /videoridcountselec   
+        参数 ：
+        
+         * rid  父分区id int
+         * array  子分区id集合 int
+         * datetime  时间 date
+         
+        返回值 ： 返回一个对象
+        * data : 
+            - countbv : 父分区id int
+            - bvChild ： 子分区id集合下的视频总数量 int
         
 * ### 用户消息模块 Message
     1. #### 收到的点赞 /like   
