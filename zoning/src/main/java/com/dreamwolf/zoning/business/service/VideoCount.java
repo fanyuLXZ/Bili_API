@@ -26,16 +26,16 @@ public interface VideoCount {
     public ResponseData<List<ArchivesInfo>> selectvideorid(@RequestParam Integer rid,@RequestParam Integer pn,@RequestParam Integer ps);
 
     @GetMapping("/videocount")
-    public Integer vcount(@RequestParam Integer[] list);
+    public ResponseData<Integer> selcount(@RequestParam Integer[] list);
 
     @GetMapping("/videopage")
     public ResponseData<List<VideoMaplist>> videopage(@RequestParam Integer[] list, @RequestParam Integer count, @RequestParam Integer ps);
 
     @GetMapping("/videodeorating")
-    public Map<String, Object> selectdeorating(@RequestParam Integer[] bvChildZoning,@RequestParam Integer datetime);
+    public ResponseData<List<VideoMaplist>>  selectdeorating(@RequestParam Integer[] bvChildZoning,@RequestParam Integer datetime);
 
     @GetMapping("/videoseldate")
-    public Map<String, Object> selmap(@RequestParam String str);
+    public ResponseData selmap(@RequestParam String str);
 
     //提前写好
     @GetMapping("/videomap")

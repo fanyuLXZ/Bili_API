@@ -551,7 +551,7 @@
                 - type  video代表视频，dynamic代表动态 reply代表文字 String
                 - title 视频标题,如果传text时，这里可传文字 String
                 - desc 视频描述 String
-                - image 视频封面图 String
+                - `image` 视频封面图 String
                 - uri   视频链接 String
                 - ctime 点赞时间 String
                   -counts 此评论的总人数 int
@@ -740,7 +740,7 @@
             - master 主人视角
             - guest 客人视角
 * ### 动态模块 Dynamic
-    1. 动态的最新信息 /entrance  
+    1. #### 动态的最新信息 /entrance  
        参考链接：https://api.bilibili.com/x/web-interface/dynamic/entrance?video_offset=0&article_offset=0&alltype_offset=0   
        返回值：
         * entrance 最新动态的up主对象
@@ -753,7 +753,11 @@
                 * up-up主维度的更新提醒 展示 头像+红点;
                 * dyn-动态维度的图标提醒 展示 头像+红点;
                 * dot-动态维度的红点提醒 展示 红点
-    2. 查询指定多个uid的动态数 /dynamic_num
+
+        依赖：
+        * entrance &gt; [`dynamic /bang`](#通过用户id查看user头像id等-bang)   
+
+    2. #### 查询指定多个uid的动态数 /dynamic_num
         参考链接：https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_num_ex?csrf=7f16078c913c8540075a3d85b52b36e0&uids=433899970   
         参数：
         * uids uid集合
@@ -763,7 +767,8 @@
         动态数对象：
             - uid uid int
             - num 动态数 int
-    3. 最新的20条动态信息 /dynamic_new 
+      
+    3. #### 最新的20条动态信息 /dynamic_new 
         参考链接：https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?csrf=4c7784a8355557a9595ccefc268e2f28&uid=26119890&type_list=268435455&from=weball&platform=web   
         返回值：
         * cards 动态信息对象集合 list&lt;object&gt;   
@@ -788,7 +793,7 @@
                     - level_info 等级对象 object
                         - current_level 当前等级 int
             - card 内容 string
-    4. 根据偏移动态id获取后面20条动态信息 /dynamic_history
+    4. #### 根据偏移动态id获取后面20条动态信息 /dynamic_history
         参考链接：https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_history?csrf=4c7784a8355557a9595ccefc268e2f28&uid=26119890&offset_dynamic_id=516351783052848953&type=268435455&from=weball&platform=web
         参数：
         * offset_dynamic_id 偏移动态id
@@ -816,7 +821,7 @@
                     - level_info 等级对象 object
                         - current_level 当前等级 int
             - card 内容 string
-    5. 动态详细信息 /dynamic_detail  
+    5. #### 动态详细信息 /dynamic_detail  
        https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/get_dynamic_detail?csrf=4c7784a8355557a9595ccefc268e2f28&dynamic_id=517512923173368485   
         参数：  
         * dynamic_id 动态id
@@ -842,7 +847,7 @@
                     - level_info 等级对象 object
                         - current_level 当前等级 int
             - card 内容 string
-    6. ####动态简略评论信息 /reply   
+    6. #### 动态简略评论信息 /reply   
         参数：
         * dynamic_id 动态id
         * sort 排序方法 0为热度 1为时间
@@ -884,7 +889,7 @@
                         - current_level 用户等级 int
                     - vip 回复评论人会员对象 object
                         - status 是否是会员 Boolean
-    7. 动态详细评论信息 /reply/main
+    7. #### 动态详细评论信息 /reply/main
         参数：
         * dynamic_id 动态id
         * next 页码 int
@@ -921,12 +926,20 @@
                         - current_level 用户等级 int
                     - vip 回复评论人会员对象 object
                         - status 是否是会员 Boolean
+    8. #### 通过用户id查看user头像id等 /bang
+       参数 id
+       返回值：
+       *entrance 对象
+            -icon 头像
+            -mid 唯一id
+            -type "up"
+    9.  
 * ### 分区模块 Zoning
-    1. 全部分区当日新投稿数量 /online/all   
+    1. #### 全部分区当日新投稿数量 /online/all   
        参考链接：http://api.bilibili.com/x/web-interface/online      
        返回值：
         * region_count 数量键值对 map 键为分区id 值为数量
-    2. 分区楼层视频卡片数据 /region/dynamic   
+    2. #### 分区楼层视频卡片数据 /region/dynamic   
        参考链接：http://api.bilibili.com/x/web-interface/dynamic/region?ps=12&rid=1   
        参数：
         * ps 数量
@@ -951,7 +964,7 @@
                 - like 点赞数 int
             - duration 时长 int 单位秒
             - bvid bv号（为"bv"+bvid）
-    3. 指定分区排行榜（前12个）/region/ranking   
+    3. #### 指定分区排行榜（前12个）/region/ranking   
        参考链接：   
        https://api.bilibili.com/x/web-interface/ranking/region?rid=1&day=3&original=0   
        参数： 
@@ -965,7 +978,7 @@
         * title 标题 string
         * typename 子分区名 string
         * pts 评分 int
-    4. 子分区最新动态（四个） dynamic/region
+    4. #### 子分区最新动态（四个） dynamic/region
         参考链接：
        https://api.bilibili.com/x/web-interface/dynamic/region?jsonp=jsonp&pn=1&ps=5&rid=24&callback=jsonCallback_bili_5019176969914881  
        参数：  
@@ -1002,7 +1015,7 @@
                 - view 观看数 int
                 - his_rank 排名 int
       
-    5. 子分区视频按投稿时间排序（二十个） /cate/search
+    5. #### 子分区视频按投稿时间排序（二十个） /cate/search
        参考链接：  
        https://s.search.bilibili.com/cate/search?main_ver=v3&search_type=video&view_type=hot_rank&order=click&copy_right=-1&cate_id=24&page=2&pagesize=20&jsonp=jsonp&time_from=20210422&time_to=20210429&callback=jsonCallback_bili_38590292299397416     
        参数：
@@ -1038,7 +1051,7 @@
                 - his_rank 排名 int
             - title 视频标题 string 
             - tname 视频分区 string
-    6. 子分区视频按视频热度排序（二十个） /newlist  
+    6. #### 子分区视频按视频热度排序（二十个） /newlist  
         参考链接：  
         https://api.bilibili.com/x/web-interface/newlist?rid=24&type=0&pn=1&ps=20&jsonp=jsonp&callback=jsonCallback_bili_480916365086748953   
         参数：
@@ -1064,7 +1077,7 @@
             - title 视频标题 string
             - type 视频类型 string 
     
-    7. 排行榜（十个） /ranking/region  
+    7. #### 排行榜（十个） /ranking/region  
        参考链接：
        https://api.bilibili.com/x/web-interface/ranking/region?jsonp=jsonp&rid=210&day=7&original=0&callback=jsonCallback_bili_0849387551523184111  
        参数： 
@@ -1089,7 +1102,7 @@
         
             
 * ### 视频观看记录模块 Watch-History
-    1. /list   
+    1. #### /list   
        参考链接：https://api.bilibili.com/x/web-interface/history/cursor   
        参数：
         * ps 数量

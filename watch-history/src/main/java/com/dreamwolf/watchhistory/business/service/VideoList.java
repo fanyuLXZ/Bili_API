@@ -1,5 +1,7 @@
 package com.dreamwolf.watchhistory.business.service;
 
+import com.dreamwolf.entity.ResponseData;
+import com.dreamwolf.entity.video.web_interface.VideoMaplist;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,8 +14,7 @@ import java.util.Map;
 public interface VideoList {
 
     @GetMapping("/videoBvidlist")
-    public List<Map<String,Object>> selectbbid(@RequestParam Integer[] bvidlist);
-
+    public ResponseData<List<VideoMaplist>> selectbbid(@RequestParam Integer[] bvidlist);
 
 }
 

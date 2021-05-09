@@ -97,7 +97,7 @@ public class UserController {
         return new ResponseData<UserInfo>(0,"",1,userInfo);
     }
 
-    //接口调接口
+    //接口调接口 动态的最新信息entrance
     @RequestMapping("/bang")
     public ResponseData<Bang> bang(Integer id){
         int code = 0;

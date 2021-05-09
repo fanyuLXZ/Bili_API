@@ -39,7 +39,7 @@ public class DynamiccommentController {
     //动态的最新信息
     @SentinelResource(value = "entrance",fallback="handlerEntrance")
     @RequestMapping("/entrance")
-    public ResponseData<Bang> entrance() {
+    public ResponseData<Bang> entrance(){
         Integer id=1;
         int code = 0;
         String message="";

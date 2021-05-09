@@ -2,7 +2,6 @@ package com.dreamwolf.entity.member;
 
 import lombok.Data;
 //用户对象
-@Data
 public class Member {
     private Integer mid;//用户唯一id
     private String uname;//用户昵称
@@ -71,4 +70,131 @@ public class Member {
     }
     public Member(){}
 
+    public Integer getMid() {
+        return mid;
+    }
+
+    public void setMid(Integer mid) {
+        this.mid = mid;
+    }
+
+    public String getUname() {
+        return uname;
+    }
+
+    public void setUname(String uname) {
+        this.uname = uname;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getFace() {
+        return face;
+    }
+
+    public void setFace(String face) {
+        this.face = face;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getFans() {
+        return fans;
+    }
+
+    public void setFans(Long fans) {
+        this.fans = fans;
+    }
+
+    public Long getFriend() {
+        return friend;
+    }
+
+    public void setFriend(Long friend) {
+        this.friend = friend;
+    }
+
+    public Level_info getLevel_info() {
+        return level_info;
+    }
+
+    public void setLevel_info(Level_info level_info) {
+        this.level_info = level_info;
+    }
+
+    public VipStatus getVip() {
+        return vip;
+    }
+
+    public void setVip(VipStatus vip) {
+        this.vip = vip;
+    }
+
+    public boolean isFollowing() {
+        return following;
+    }
+
+    public void setFollowing(boolean following) {
+        this.following = following;
+    }
+
+    public boolean getIsLogin() {
+        return isLogin;
+    }
+
+    public void setIsLogin(boolean login) {
+        isLogin = login;
+    }
+
+    public Integer getMoney() {
+        return money;
+    }
+
+    public void setMoney(Integer money) {
+        this.money = money;
+    }
+
+    public Integer getBcoin_balance() {
+        return bcoin_balance;
+    }
+
+    public void setBcoin_balance(Integer bcoin_balance) {
+        this.bcoin_balance = bcoin_balance;
+    }
+
+    public boolean isEmail_verified() {
+        return email_verified;
+    }
+
+    public void setEmail_verified(boolean email_verified) {
+        this.email_verified = email_verified;
+    }
+
+    public boolean isMobile_verified() {
+        return mobile_verified;
+    }
+
+    public void setMobile_verified(boolean mobile_verified) {
+        this.mobile_verified = mobile_verified;
+    }
 }

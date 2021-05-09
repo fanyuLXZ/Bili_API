@@ -3,6 +3,7 @@ package com.dreamwolf.zoning.business.service;
 import com.dreamwolf.entity.zoning.web_interface.Video;
 import com.dreamwolf.entity.zoning.Zoning;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
