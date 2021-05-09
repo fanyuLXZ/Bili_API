@@ -44,7 +44,7 @@ public class UserfavoritelistController {
     private UserlistService selectuser;
 
     @GetMapping("/folder")
-    public ResponseData<FavData> userfavlist(){
+    public ResponseData<List> userfavlist(){
 
         List data = new ArrayList<>();
         int[] array = new int[]{1, 2};
@@ -64,13 +64,13 @@ public class UserfavoritelistController {
         List list = new ArrayList();
         list.add(favMapOne);
         list.add(favMaoTwo);
-        FavData favData = new FavData(list);
-        return new ResponseData(0,"",1,favData);
+//        FavData favData = new FavData(list);
+        return new ResponseData(0,"",1,list);
     }
 
 
     @GetMapping("/resource")
-    public ResponseData<FavData> fovresource(Integer media_id){
+    public ResponseData<List> fovresource(Integer media_id){
         //根据收藏夹id(media_id)查询视频
         List<Videofavorite> list= videofavoriteService.selectlist(media_id);
         List<Favvideofav> map = new ArrayList<>();
@@ -82,9 +82,9 @@ public class UserfavoritelistController {
 
             map.add(data);
         }
-        FavData favData = new FavData(map);
+//        FavData favData = new FavData(map);
 
-        return new ResponseData(0,"",1,favData);
+        return new ResponseData(0,"",1,map);
     }
 
 

@@ -17,7 +17,7 @@ import java.util.List;
 @Data
 public class IikesItems {
     private Integer id;//个人id
-    private Users users;//用户信息对象数组
+    private List<Users> users;//用户信息对象数组
     private Items item;//被点赞的对象
     private String counts;//此评论的总人数
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
@@ -27,9 +27,9 @@ public class IikesItems {
     public IikesItems() {
     }
 
-    public IikesItems(Integer id, Users users, Items item, String counts, LocalDateTime like_time) {
+    public IikesItems(Integer id, List<Users> users, Items item, String counts, LocalDateTime like_time) {
         this.id = id;
-        this.users = users;
+        this.users=users;
         this.item = item;
         this.counts = counts;
         this.like_time = like_time;

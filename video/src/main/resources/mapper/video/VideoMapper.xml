@@ -15,6 +15,17 @@
         <result column="duration" property="duration" />
     </resultMap>
 
+    <select id="videoridcountselect" resultType="int">
+        SELECT COUNT(*) FROM `video`
+         <where>
+             `bvChildZoning` IN
+             <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+                 #{item}
+             </foreach>
+             AND `bvPostTime` LIKE CONCAT(#{bvPostTime},'%')
+         </where>
+    </select>
+
     <select id="selectridcount" resultType="int">
         SELECT COUNT(*) FROM `video` WHERE `bvChildZoning` =#{rid}
     </select>

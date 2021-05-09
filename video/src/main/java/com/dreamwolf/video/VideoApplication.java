@@ -15,8 +15,4 @@ public class VideoApplication {
         SpringApplication.run(VideoApplication.class, args);
     }
 
-    @GetMapping("a")
-    public String a(){
-        return "a";
-    }
 }

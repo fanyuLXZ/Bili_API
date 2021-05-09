@@ -20,7 +20,7 @@
 ## api文档
 
 * ### 视频模块 Vide 
-	1. 查看子分区下视频  /videobvldZoning  
+	1. #### 查看子分区下视频  /videobvldZoning  
         参数：
 
         * bvChildZoning 子分区id Integer  
@@ -38,9 +38,8 @@
             - bvPostTime： 创建时间
             - bvChildZoning： 视频子分区ID
             - bvIsDel： 是否已删除，0为未删除，1为已删除
-            - 依赖
             
-    2. 根据视频id查看视频信息 /videobvID   
+    2. #### 根据视频id查看视频信息 /videobvID   
         参数:  
 
         * bvID 视频id Integer   
@@ -58,9 +57,8 @@
             - bvPostTime： 创建时间
             - bvChildZoning： 视频子分区ID
             - bvIsDel： 是否已删除，0为未删除，1为已删除
-            - 依赖
             
-    3. ####查看作者下面发布的视频 /videouID  
+    3. #### 查看作者下面发布的视频 /videouID  
         参数:  
         
         * uID 作者id Integer   
@@ -78,9 +76,8 @@
             - bvPostTime： 创建时间
             - bvChildZoning： 视频子分区ID
             - bvIsDel： 是否已删除，0为未删除，1为已删除
-            - 依赖
             
-    4. 查询所有视频的基础信息  /videolist   
+    4. #### 查询所有视频的基础信息  /videolist   
         返回值：查询视频基础信息表所有数据，返回list   
         * code：0
         * message：0
@@ -94,9 +91,8 @@
             - bvPostTime： 创建时间
             - bvChildZoning： 视频子分区ID
             - bvIsDel： 是否已删除，0为未删除，1为已删除
-            - 依赖
             
-    5. 根据视频id查看下面的评论 /videocommbvid   
+    5. #### 根据视频id查看下面的评论 /videocommbvid   
         参数:   
         
         * bvid 视频id Integer   
@@ -108,18 +104,16 @@
             - cID：评论集合
                 - bvID：视频id
                 - ID: 评论id
-            - 依赖
                 
-    6. 查询视频评论表所有数据  /videocommlist      
+    6. #### 查询视频评论表所有数据  /videocommlist      
         返回值： 返回lsit 查询所有数据   
         * code：0
         * message：0
         * data : list集合
             - bvID：视频ID
             - cID：评论ID
-            - 依赖
 
-    7. 查看视频的基础信息(播放数弹幕等) /videodatabvID   
+    7. #### 查看视频的基础信息(播放数弹幕等) /videodatabvID   
         参数:   
         
         * bvID 视频id Integer   
@@ -136,9 +130,8 @@
             - bvFavoriteNum : 视频收藏数
             - bvRetweetNum : 视频转发数
             - bvCommentNum : 视频评论数
-            - 依赖
             
-    8. 查询视频数据表所有数据  /videodatalist   
+    8. #### 查询视频数据表所有数据  /videodatalist   
         返回值：查询视频数据表所有信息 返回list   
         * code：0
         * message：0
@@ -151,9 +144,8 @@
             - bvFavoriteNum : 视频收藏数
             - bvRetweetNum : 视频转发数
             - bvCommentNum : 视频评论数
-            - 依赖
 
-    9. 查询被收藏的视频在那个收藏夹下  /videofavbvID   
+    9. #### 查询被收藏的视频在那个收藏夹下  /videofavbvID   
         参数:   
         
         * bvID 被收藏的视频id Integer   
@@ -165,9 +157,8 @@
          - bvID： 被收藏的视频ID
          - favListID： 视频收藏夹ID
          - favTime： 收藏时间，默认为当前时间，不支持设置系统时间
-         - 依赖
          
-    10. 查询视频收藏表所有数据 /videofavlist   
+    10. #### 查询视频收藏表所有数据 /videofavlist   
         返回值：查询视频收藏表所有数据 返回list   
         * code：0
         * message：0
@@ -175,9 +166,8 @@
          - bvID： 被收藏的视频ID
          - favListID： 视频收藏夹ID
          - favTime： 收藏时间，默认为当前时间，不支持设置系统时间
-         - 依赖
 
-    11. 查看该视频的视频评分 /videoratbvID  
+    11. #### 查看该视频的视频评分 /videoratbvID  
         参数:   
         * bvID 视频id Integer   
                   
@@ -187,18 +177,16 @@
         * data: 对象
          - bvID： 视频ID
          - OverallRating： 视频综合评分，评分规则详见数据库说明书。
-         - 依赖
          
-    12. 查看所有的视频评分 /videoratlist   
+    12. #### 查看所有的视频评分 /videoratlist   
         返回值：查询视频评分表所有数据 返回lsit      
         * code：0
         * message：0
         * data: list集合对象
          - bvID： 视频ID
          - OverallRating： 视频综合评分，评分规则详见数据库说明书。
-         - 依赖
 
-    13. 查看该视频下面的点赞用户 /videolikebvid   
+    13. #### 查看该视频下面的点赞用户 /videolikebvid   
         参数:   
         
         * bvid 视频id Integer   
@@ -211,9 +199,8 @@
          - uID： 点赞的用户ID
          - status： 点赞状态，0为未作任何操作，1为点赞，默认为0
          - createTime： 点赞时间
-         - 依赖
          
-    14. 查询视频点赞表所有数据 /videolikelist   
+    14. #### 查询视频点赞表所有数据 /videolikelist   
         返回值：查询视频点赞表所有数据 返回集合   
         * code：0
         * message：0
@@ -222,9 +209,8 @@
          - uID： 点赞的用户ID
          - status： 点赞状态，0为未作任何操作，1为点赞，默认为0
          - createTime： 点赞时间
-         - 依赖
     
-    15. 根据子分区集合查询视频数据并分页处理 /videopage   
+    15. #### 根据子分区集合查询视频数据并分页处理 /videopage   
         参数:  
         
          * bvChildZoninglist： 子分区集合 Integer[] list
@@ -245,9 +231,8 @@
             - bvChildZoning： 视频子分区ID
             - bvIsDel： 是否已删除，0为未删除，1为已删除
             - duration ： 时长
-            - 依赖
     
-    16. 根据子分区查找的视频总数 /videocount   
+    16. #### 根据子分区查找的视频总数 /videocount   
         参数：
         
         * bvChildZoninglist： 子分区集合  Integer[] list
@@ -257,9 +242,8 @@
         * message：0  
         * data: 返回一个int
             - count : 返回的总数 int类型
-            - 依赖
 
-    17. 根据子分区id查询视频信息集合 /videodeorating   
+    17. #### 根据子分区id查询视频信息集合 /videodeorating   
         参数:
         
         * bvChildZoninglist : 子分区id	int
@@ -273,9 +257,8 @@
             - title ：标题
             - typename ： 分区名称	
             - pts ：视频评分
-            - 依赖
 
-    18. 根据时间查找子分区id和子分区id的总数	/videoseldate   
+    18. #### 根据时间查找子分区id和子分区id的总数	/videoseldate   
         参数：
         
         * str ： 时间类型
@@ -286,9 +269,8 @@
         * data : 
             - countbv : 总数
             - bvChild : 子分区id
-            - 依赖
 
-    19. 根据视频id数组查询视频评论表数据	/viderbvidcommlist   
+    19. #### 根据视频id数组查询视频评论表数据	/viderbvidcommlist   
          参数 ：
         
            * array : 视频id数组 int[]
@@ -297,9 +279,8 @@
          * data :  list
             - bvid ： 视频id int
             - cid : 评论id
-            - 依赖
 
-    20. 根据视频id数组查询视频评论id 返回list /videocommmarr   
+    20. #### 根据视频id数组查询视频评论id 返回list /videocommmarr   
         参数 ：
         
           * array : 视频id数组 int[]
@@ -307,9 +288,8 @@
         返回值 ： 返回list 集合
         * data :  list
             - cid : 评论id
-            - 依赖
 
-    21. 根据bvid视频id去查找评论id	/videocommbvid   
+    21. #### 根据bvid视频id去查找评论id	/videocommbvid   
         参数 ： 
         
            * bvid : 视频id int
@@ -317,9 +297,8 @@
         返回值 ： 返回list
         * data : 
             - cid : 评论id
-            - 依赖
 
-    22. 根据视频id数组查询视频数据 /videoBvidlist   
+    22. #### 根据视频id数组查询视频数据 /videoBvidlist   
         参数 ： 
         
            * bvidlist 视频id数组 int[]
@@ -333,9 +312,8 @@
             - uid ： 作者id int
             - uri : 视频路径 
             - duration ： 视频总时长 int
-            - 依赖
 
-    23. 通过bvid查询对象 /videobvidlists   
+    23. #### 通过bvid查询对象 /videobvidlists   
         参数 ： 
         
            * bvid ： 视频id int
@@ -351,9 +329,8 @@
             - bvPostTime： 创建时间
             - bvChildZoning： 视频子分区ID
             - bvIsDel： 是否已删除，0为未删除，1为已删除
-            - 依赖
 
-    24. 根据用户下面的视频id数组拿到用户下所有的点赞了的视频 /videolikeuid   
+    24. #### 根据视频id数组拿到用户下所有的点赞了的视频 /videolikeuid   
         参数 ： 
         
           * array : 视频id数组 int[]
@@ -364,9 +341,8 @@
             - uID : 用户id int
             - status : 点赞状态，0为未作任何操作，1为点赞 默认为0
             - createTime :点赞时间
-            - 依赖
 
-    25. 根据视频id批量查询视频数据 /videobvidli  
+    25. #### 根据视频id批量查询视频数据 /videobvidli  
         参数： 
 
          * array : 视频id数组 Integer[]
@@ -383,9 +359,8 @@
             - bvChildZoning： 视频子分区ID
             - bvIsDel： 是否已删除，0为未删除，1为已删除
             - duration : 时长
-            - 依赖
 
-    26. 根据子分区id查询最新的4条数据 /videoridlist    
+    26. #### 根据子分区id查询最新的4条数据 /videoridlist    
         参数 ：
         
           * rid ： 子分区id int
@@ -416,9 +391,8 @@
                 - share 转发数 int
                 - view 观看数 int
                 - his_rank 排名 int
-            - 依赖
 
-    27. 根据子分区id查询最新的数据并分页处理 按时间排序 /selectlistvieopage   
+    27. #### 根据子分区id查询最新的数据并分页处理 按时间排序 /selectlistvieopage   
         参数 ：
         
           * rid ： 子分区id int
@@ -449,9 +423,8 @@
                 - his_rank 排名 int
             - title 视频标题 string 
             - tname 视频分区 string
-            - 依赖
 
-    28. 根据子分区id按视频热度查询 /selectbvidlistpagerid   
+    28. #### 根据子分区id按视频热度查询 /selectbvidlistpagerid   
         参数 ：
         
           * rid ： 子分区id int
@@ -473,9 +446,8 @@
                 - review 评论数 int
                 - title 视频标题 string
                 - type 视频类型 string 
-                - 依赖
 
-    29. 根据子分区id按热度查询视频排行榜前10个 /selectbvidlistpagelist   
+    29. #### 根据子分区id按热度查询视频排行榜前10个 /selectbvidlistpagelist   
         参数 ： 
         
          * rid ： 子分区id int
@@ -497,9 +469,8 @@
             - review 评论数 int  
             - title 视频标题 string  
             - typename 视频分区 string 
-            - 依赖 
 
-    30. 根据子分区id查询视频总数 /selectidcoutn   
+    30. #### 根据子分区id查询视频总数 /selectidcoutn   
         参数 ：
         
           * rid ： 子分区id int
@@ -507,9 +478,8 @@
         返回值 ： 返回一个Integer总数
         * data : 
             - count : 总数 int
-            - 依赖
 
-    31. 视频显示 /video/info
+    31. #### 视频显示 /video/info
         参数：
         bvid bvid int   
         返回值：
@@ -549,8 +519,9 @@
             - deputydivision 副分区
                 - id 主分区 int
                 - name 分区名 string
+        
 * ### 用户消息模块 Message
-    1. 收到的点赞 /like   
+    1. #### 收到的点赞 /like   
     参考链接：https://api.bilibili.com/x/msgfeed/like?csrf=4c7784a8355557a9595ccefc268e2f28&platform=web&build=0&mobi_app=web   
     返回值:
     * total 点赞集合 &lt;object&gt;
@@ -574,7 +545,7 @@
                   -counts 此评论的总人数 int
                   -like_time 最新点赞的时间 Date
              
-    2. 回复我的 /reply   
+    2. #### 回复我的 /reply   
        参考链接：https://api.bilibili.com/x/msgfeed/reply?csrf=ed03730a1cd49540995b9fa002c1cf1e&build=0&mobi_app=web       
        返回值:
         - reply 回复集合数组 object
@@ -594,7 +565,7 @@
                 - image 当前 视频，动态的封面 string
                 - native_uri 个人中心的地址 string
 
-    3. 我的消息 /get_sessions
+    3. #### 我的消息 /get_sessions
        参考链接：https://api.vc.bilibili.com/session_svr/v1/session_svr/get_sessions?csrf=ed03730a1cd49540995b9fa002c1cf1e&session_type=1&group_fold=1&unfollow_fold=0&sort_rule=2&build=0&mobi_app=web
         * session_list 会话集合数组 list&lt;object&gt;
             - talker_id 对话id int
@@ -605,7 +576,7 @@
                 - receiver_id 最新聊天数据的接收这者 int
                 - content 最新聊天的内容 String
     
-    4. 聊天记录 /fetch_session_msgs   
+    4. #### 聊天记录 /fetch_session_msgs   
        参考链接：https://api.vc.bilibili.com/svr_sync/v1/svr_sync/fetch_session_msgs?csrf=ed03730a1cd49540995b9fa002c1cf1e&sender_device_id=1&talker_id=402923390&session_type=1&size=20&build=0&mobi_app=web   
        * messages 对象数组   
         - sender_uid 最后一条数据的发送者,类似出轨的狼的id int
@@ -613,7 +584,7 @@
         - content 传一条数据的  String
         - timestamp 发送这一条数据的时间 Date
         
-     5. 根据发送信息的用户userID 查询数据 /usermsguid   
+     5. #### 根据发送信息的用户userID查询数据 /usermsguid   
         参数：
         
         * userID : 发送信息的用户ID int
@@ -627,9 +598,8 @@
             - receiver ： 留言接收者(用户名)
             - updateTime ： 发送信息时间
             - content ： 留言内容
-            - 依赖 ： 
     
-    6. 根据接收信息的用户friendID 查询数据 /usermsgsfid   
+    6. #### 根据接收信息的用户friendID 查询数据 /usermsgsfid   
         参数：
         
         * friendID : 接收信息的用户ID int
@@ -643,7 +613,6 @@
             - receiver ： 留言接收者(用户名)
             - updateTime ： 发送信息时间
             - content ： 留言内容
-            - 依赖 ： 
             
 * ### 用户模块 Member
     1. 用户信息 /all-info  
@@ -1131,7 +1100,7 @@
             - view_at 最后观看的时间 date
 
 * ### 收藏模块 Favorite
-    1. /folder    
+    1. #### /folder    
        参考链接：https://api.bilibili.com/x/v3/fav/folder/list4navigate   
        返回值： 返回list 固定返回两个值 第一个值为普通收藏夹("我创建的收藏夹") 第二个为稍后再看
         * id id int 固定值：普通收藏夹为1，稍后再看为2
@@ -1144,7 +1113,8 @@
                 - mid uid int
                 - title 收藏夹名 string
                 - media_count 收藏夹内视频(媒体)数 int
-    2. /resource 参考链接：https://api.bilibili.com/x/v3/fav/resource/list4navigate?platform=web   
+    2. #### /resource    
+       参考链接：https://api.bilibili.com/x/v3/fav/resource/list4navigate?platform=web   
        参数：
             * media_id 收藏夹id
 
@@ -1199,7 +1169,7 @@
         * token token string
         返回值：uid int(data直接为uid)
 * ### 评论模块 comment
-    1. 评论回复信息 /commentlist   
+    1. #### 评论回复信息 /commentlist   
        参数：
        
         * rpid 评论id int
@@ -1221,9 +1191,8 @@
             - ctime 评论时间 date
             - content 内容对象 object
                 - message 评论内容 string 
-            - 依赖 ： 
     
-    2.  根据评论id查询数据 /commdatacid     
+    2.  #### 根据评论id查询数据 /commdatacid     
         参数：
         
          * cID 评论id int
@@ -1233,9 +1202,8 @@
             - cID : 评论id
             - cLikeNum : 点赞数量
             - cUnLikeNum ： 点踩数量
-            - 依赖 ： 
 
-    3. 根据被点赞评论id查询评论点赞表的数据 /selectlikearr   
+    3. #### 根据被点赞评论id查询评论点赞表的数据 /selectlikearr   
        参数：
           * arr : 被点赞的评论id数组	Integer[]
            
@@ -1245,28 +1213,25 @@
             - uid : 点赞的用户ID int
             - status : 点赞状态，未做任何操作为0，点赞为1，点踩为2 默认为0   int
             - createTime: 点赞时间，默认为当前时间 Date
-            - 依赖 ： 
 
-    4. 根据评论id数组查询评论总数 /commcidcount   
+    4. #### 根据评论id数组查询评论总数 /commcidcount   
        参数 ：
        
         * arr ： 评论id数组 Integer[]
            
        返回值 ： Integer 
         * Integer : int
-        - 依赖 ： 
 
-    5. 根据当前用户id查询用户下的评论id /commuidlist   
+    5. #### 根据当前用户id查询用户下的评论id /commuidlist   
        参数 ：
        
          * uid : 用户id
          
        返回值： 返回lsit list集合
         * data : 
-            - cid : 评论id
-            - 依赖 ： 
+            - cid : 评论id 
 
-    6. 根据点赞评论id数组查询评论id基本数据 /commcidarray   
+    6. #### 根据点赞评论id数组查询评论id基本数据 /commcidarray   
        参数 ：
        
           * array : 点赞评论id数组	Integer[]
@@ -1276,10 +1241,9 @@
             - cid : 评论id 	int
             - uid : 用户id	int
             - createTime : 评论时间 date
-            - ctext : 评论正文 回复的	评论
-            - 依赖 ： 
+            - ctext : 评论正文 回复的评论
 
-    7. 根据评论id查询评论数据 /commcidlistmap   
+    7. #### 根据评论id查询评论数据 /commcidlistmap   
        参数 ： 
        
           * cid : 评论id
@@ -1292,9 +1256,8 @@
             - createTime ： 评论时间 date
             - cText : 评论正文 ： text
             - isDel : 是否删除 0 未删除，1已删除
-            - 依赖 ： 
 
-    8. 根据用户uid查询用户下评论的数据cidreply！=0 则是评论的 /selecomuid   
+    8. #### 根据用户uid查询用户下评论的数据cidreply！=0 则是评论的 /selecomuid   
        参数:
        
          * uid : 用户id	int
@@ -1307,9 +1270,8 @@
             - ctext : 评论正文 text
             - createTime :评论时间 date
             - isDel : 是否删除 0未删除，1 已删除
-            - 依赖 ： 
 
-    9. 根据评论cid主键查询评论数据 /selecomcid   
+    9. #### 根据评论cid主键查询评论数据 /selecomcid   
         参数 ：
         
          * cid : 评论id int
@@ -1322,9 +1284,8 @@
             - ctext : 评论正文 text
             - createTime :评论时间 date
             - isDel : 是否删除 0未删除，1 已删除
-            - 依赖 ： 
 
-    10. 根据cid评论数组并且回复的评论id,cIDreply=0则是视频或者动态 id ：1 为热度排序  2 为时间排序 /commselectcarrlist   
+    10. #### 根据cid评论数组并且回复的评论id,cIDreply=0则是视频或者动态 /commselectcarrlist   
          参数 ： 
          
            * id : 按id排序 1为热度排序 2 为时间排序 int   
@@ -1346,9 +1307,8 @@
                     - ctime : 回复评论时间 date
                     - like : 点赞数量  int
                     - member : 回复评论人对象 obejct
-                - 依赖 ： 
 
-    11. 根据cid评论数组并且回复的评论id,cIDreply=0则是视频或者动态 id ：1 为热度排序  2 为时间排序 并分页处理 /commselectcarrlistpage   
+    11. #### 根据cid评论数组并且回复的评论id,cIDreply=0则是视频或者动态 id ：1 为热度排序  2 为时间排序 并分页处理 /commselectcarrlistpage   
          参数 ： 
          
            * id ： 1 为热度排序  2 为时间排序 int
@@ -1371,9 +1331,8 @@
                     - ctime : 回复评论时间 date
                     - like : 点赞数量  int
                     - member : 回复评论人对象 obejct
-                - 依赖 ： 
                 
-    12. 评论回复信息 /reply
+    12. #### 评论回复信息 /reply
         参数：  
         * rpid 评论id int
         * pn 页码 int
@@ -1399,7 +1358,6 @@
             - ctime 评论时间 date
             - content 内容对象 object
                 - message 评论内容 int
-            - 依赖 ： 
 
 * ### 图片资源模块 image-resource
     1. 上传图片 /upload-file   

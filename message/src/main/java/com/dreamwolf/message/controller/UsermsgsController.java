@@ -4,6 +4,7 @@ import com.dreamwolf.entity.ResponseData;
 import com.dreamwolf.entity.comment.Comment;
 import com.dreamwolf.entity.comment.Commentlike;
 import com.dreamwolf.entity.comment.web_interface.Commcidmap;
+import com.dreamwolf.entity.dynamic.IikesItems;
 import com.dreamwolf.entity.member.ReplyUser;
 import com.dreamwolf.entity.member.Users;
 import com.dreamwolf.entity.message.Usermsgs;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.time.ZoneId;
 import java.util.*;
 
 /**
@@ -87,7 +89,6 @@ public class UsermsgsController {
                 if (user_ids2.size()<=0){
                     continue;
                 }
-                //少个用户
                 ResponseData<List<Users>> uselist =  memberService.users(user_ids2.toArray(new Integer[0]),uid);
                 commap.setUsers(uselist.getData());//用户对象
                 Items mlist = new Items();
@@ -137,25 +138,44 @@ public class UsermsgsController {
                 itemObject.setLike_time(last_like_time);    //最新点赞的时间
                 itemlist.add(itemObject);
             }
+
             //动态
-//            List<Map<String,Object>> dylist  =dynamicService.likeitems(uid);
-//            for(Map<String,Object> limap :dylist ){
-//                Map slp = new HashMap();
-//                slp.put("id",i++);
-//                slp.put("users",limap.get("users"));
-//                slp.put("item",limap.get("item"));
-//                slp.put("counts",limap.get("counts"));
-//                slp.put("like_time",limap.get("like_time"));
-//                itemlist.add(slp);
-//            }
+             ResponseData<List<IikesItems>> dylist  =dynamicService.likeitems(uid);
+            for(IikesItems limap :dylist.getData() ){
+                MsgsVideoItem slp = new MsgsVideoItem();
+                slp.setId(i++);
+                slp.setUsers(limap.getUsers());
+                slp.setItem(limap.getItem());
+                slp.setCounts(Integer.parseInt(limap.getCounts()));
+                //把LocalDateTime 转成Date
+                Date date = Date.from(limap.getLike_time().atZone(ZoneId.systemDefault()).toInstant());
+                slp.setLike_time(date);
+                itemlist.add(slp);
+            }
+
             //把itemlist按照最大时间在前排序
-//            Collections.sort(itemlist, new Comparator<Map<String,Object>>(){
-//                public int compare(Map<String,Object> o1, Map<String,Object> o2) {
-//                    String name1 =o1.get("like_time").toString();//name1是从你list里面拿出来的一个
-//                    String name2= o2.get("like_time").toString(); //name1是从你list里面拿出来的第二个name
-//                    return name2.compareTo(name1);
-//                }
-//            });
+            Collections.sort(itemlist, new Comparator<MsgsVideoItem>(){
+                public int compare(MsgsVideoItem o1, MsgsVideoItem o2) {
+                    try {
+                        if(o1.getLike_time() == null || o2.getLike_time() == null){
+                            return 1;
+                        }
+                        Date dt1 = o1.getLike_time();
+                        Date dt2 = o2.getLike_time();
+
+                        if (dt1.getTime() > dt2.getTime()) {
+                            return -1;
+                        } else if (dt1.getTime() < dt2.getTime()) {
+                            return 1;
+                        } else {
+                            return 0;
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    return 0;
+                }
+            });
 
             Msgsitems msgsitems = new Msgsitems(itemlist);
             Msgstotal msgstotal = new Msgstotal(msgsitems);
@@ -224,6 +244,7 @@ public class UsermsgsController {
                 itemmap.setItem(videoitem);   //回复我的评论对象
                 listitem.add(itemmap);
             }
+//        listitem.sort(Comparator.comparing(MMres::g));
 //            listitem.sort(Comparator.comparing(MMres::getItem).reversed());
             //动态
             ResponseData<List<MMres>> menmap = memberService.list(uid);
@@ -234,15 +255,30 @@ public class UsermsgsController {
                 listitem.add(m);
             }
 
+            //按最新时间排序
+        Collections.sort(listitem, new Comparator<MMres>(){
+            public int compare(MMres o1, MMres o2) {
+                try {
+                    if(o1.getItem().getReply_time() == null || o2.getItem().getReply_time() == null){
+                        return 1;
+                    }
+                    Date dt1 = o1.getItem().getReply_time();
+                    Date dt2 = o2.getItem().getReply_time();
 
-            //把itemlist按照最大时间在前排序
-//            Collections.sort(listitem, new Comparator<Map<String, Map<String,Object>>>(){
-//                public int compare(Map<String,Map<String,Object>> o1, Map<String,Map<String,Object>> o2) {
-//                    String name1 =o1.get("item").get("reply_time").toString();//name1是从你list里面拿出来的一个
-//                    String name2= o2.get("item").get("reply_time").toString(); //name1是从你list里面拿出来的第二个name
-//                    return name2.compareTo(name1);
-//                }
-//            });
+                    if (dt1.getTime() > dt2.getTime()) {
+                        return -1;
+                    } else if (dt1.getTime() < dt2.getTime()) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return 0;
+            }
+        });
+
         Msgsreply mmdata = new Msgsreply(listitem);
         return new ResponseData(0,"",1,mmdata);
     }

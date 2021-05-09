@@ -40,6 +40,21 @@ public class VideoController {
     @Resource
     private VideoratingService videoratingService;
 
+    /**
+     * 根据子分区id数组查询当天子分区下的视频总数
+     * @param rid
+     * @return
+     */
+    @GetMapping("/videoridcountselec")
+    public ResponseData<Kele> videoridcountselec(Integer rid){
+        Integer[] array = new Integer[]{310,300};
+        String datetime = "2021-05-06";
+        Integer count =videoService.videoridcountselect(array,datetime);
+        Kele kele = new Kele(rid,count);
+        return new ResponseData(0,"",1,kele);
+    }
+
+
 
     //通过子分区id查视频,返回list
 //    @GetMapping("/videobvldZoning")
@@ -119,10 +134,9 @@ public class VideoController {
      * @return
      */
     @GetMapping("/videocount")
-    public ResponseData selcount(Integer[] list){
+    public ResponseData<Integer> selcount(Integer[] list){
         Integer count = videoService.videocount(list);
-        VideoCount videoCount = new VideoCount(count);
-        return new ResponseData(0,"",0,videoCount);
+        return new ResponseData(0,"",1,count);
     }
 
 
@@ -132,7 +146,7 @@ public class VideoController {
      * @return
      */
     @GetMapping("/videodeorating")
-    public ResponseData<List> selectdeorating(Integer[] bvChildZoning, Integer datetime){
+    public ResponseData<List<VideoMaplist>> selectdeorating(Integer[] bvChildZoning, Integer datetime){
 
         Calendar  cr = Calendar.getInstance();
         int year=cr.get(Calendar.YEAR); //年
@@ -143,7 +157,7 @@ public class VideoController {
         String qian=year+"-"+month+"-"+a;
         String hou=year+"-"+month+"-"+b;
             List<Video> list = videoService.videoZoningIdlist(bvChildZoning,qian,hou);
-                List listmap = new ArrayList();
+                List<VideoMaplist> listmap = new ArrayList();
                 VideoMaplist videoMaplist =null;
                 if(list!=null){
                     for(Video video : list){
@@ -174,20 +188,22 @@ public class VideoController {
 
     /**
      * 根据时间查找子分区id和子分区id的总数
-     * @param str
+     * @param
      * @return
      */
     @GetMapping("/videoseldate")
-    public ResponseData selmap(String str){
+    public ResponseData<List<Kele>> selmap(){
         List listmap = new ArrayList();
-//        String str="2021-04-21";
+        String str="2021-05-06";
         List<Video> list = videoService.selectcoutbvid(str);
-        Map<String, Object> kele=new HashMap<String, Object>();
         for (Video st : list) {
-            kele.put(st.getBvChild().toString(),st.getCountbv());
+            Kele kele= new Kele();
+            kele.setBvChild(st.getBvChild());
+            kele.setCountbv(st.getCountbv());
+            listmap.add(kele);
         }
 
-        return new ResponseData(0,"",0,kele);
+        return new ResponseData(0,"",0,listmap);
     }
 
 
@@ -196,7 +212,7 @@ public class VideoController {
         List<VideoMaplist> listmap = new ArrayList();
         List<Video> list = videoService.selectlistBvid(bvidlist);
             for(Video video : list){
-                VideoMaplist videoMaplist = new VideoMaplist(null,null,video.getBvCoverImgPath(),
+                VideoMaplist videoMaplist = new VideoMaplist(video.getBvID(),null,video.getBvCoverImgPath(),
                         video.getUID(),video.getBvVideoPath(),video.getBvTitle(),null,null,video.getDuration(),
                         null,0,null,null
                 );
