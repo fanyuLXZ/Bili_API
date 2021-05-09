@@ -1,6 +1,7 @@
 package com.dreamwolf.entity.message.web_interface;
 
 import com.dreamwolf.entity.member.ReplyUser;
+import com.dreamwolf.entity.member.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

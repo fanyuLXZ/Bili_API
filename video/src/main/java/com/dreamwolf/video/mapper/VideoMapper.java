@@ -94,6 +94,16 @@ public interface VideoMapper extends BaseMapper<Video> {
 
 
     /**
+     * 根据子分区id数组查询当天的分区下的视频数量
+     * @param array
+     * @param bvPostTime
+     * @return
+     */
+    public Integer videoridcountselect(Integer[] array,String bvPostTime);
+
+
+
+    /**
      * 根据子分区id查找视频并分页处理
      * @param bvChildZoninglist 子分区集合
      * @param pageSize 从第几页开始

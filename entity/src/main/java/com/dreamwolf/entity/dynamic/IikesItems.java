@@ -29,7 +29,7 @@ public class IikesItems {
 
     public IikesItems(Integer id, List<Users> users, Items item, String counts, LocalDateTime like_time) {
         this.id = id;
-        this.users = users;
+        this.users=users;
         this.item = item;
         this.counts = counts;
         this.like_time = like_time;

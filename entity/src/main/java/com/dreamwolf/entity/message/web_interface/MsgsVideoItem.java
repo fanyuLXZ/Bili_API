@@ -1,5 +1,6 @@
 package com.dreamwolf.entity.message.web_interface;
 
+import com.dreamwolf.entity.member.Users;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -19,5 +21,5 @@ public class MsgsVideoItem {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date like_time;//最新点赞的时间
     private Integer counts;//此评论/视频/动态的总人数
-//    private user;// 用户对象
+    private List<Users> users;// 用户对象
 }

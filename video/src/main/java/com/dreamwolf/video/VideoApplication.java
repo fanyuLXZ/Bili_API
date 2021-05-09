@@ -5,9 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
 @RefreshScope
 @SpringBootApplication
 @EnableFeignClients(basePackages = "com.dreamwolf.video.*")
@@ -17,8 +15,4 @@ public class VideoApplication {
         SpringApplication.run(VideoApplication.class, args);
     }
 
-    @GetMapping("a")
-    public String a(){
-        return "a";
-    }
 }

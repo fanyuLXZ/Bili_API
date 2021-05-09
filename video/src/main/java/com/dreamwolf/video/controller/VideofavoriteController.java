@@ -56,7 +56,6 @@ public class VideofavoriteController {
 
     @GetMapping(value = "/videofavlist")
     public ResponseData selectlistt(){
-        Map map = new HashMap();
         //查询视频收藏表所有数据
             List<Videofavorite> videofavoriteList = videofavoriteService.selectlist();
         VideoList videoList = new VideoList(videofavoriteList);

@@ -16,6 +16,14 @@ import java.util.List;
 public interface VideoService extends IService<Video> {
 
     /**
+     * 根据子分区id数组查询当天的分区下的视频数量
+     * @param array
+     * @param bvPostTime
+     * @return
+     */
+    public Integer videoridcountselect(Integer[] array,String bvPostTime);
+
+    /**
      * 根据子分区id查询视频总数
      * @param rid
      * @return

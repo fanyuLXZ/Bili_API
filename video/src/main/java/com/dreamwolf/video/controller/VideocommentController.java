@@ -32,8 +32,6 @@ public class VideocommentController {
     @GetMapping("/viderbvidcommlist")
     public ResponseData<List<Videocomment>> videocombvidlist(Integer[] array){
         List<Videocomment> videocomments= videocommentService.selectvidercomlist(array);
-//        VideoList videoList = new VideoList();
-//        videoList.setList(videocomments);
         return new ResponseData(0,"",0,videocomments);
     }
 

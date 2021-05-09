@@ -1,6 +1,7 @@
 package com.dreamwolf.video.service;
 
 
+import com.dreamwolf.entity.ResponseData;
 import com.dreamwolf.entity.zoning.web_interface.Deputydivision;
 import com.dreamwolf.entity.zoning.web_interface.Mainpartition;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -23,10 +24,10 @@ public interface UserpageService {
     public String elementby(@RequestParam Integer zID); //根据分区id拿到分区名
 
     @GetMapping("/mainpartition")
-    public Mainpartition mainpartition(@RequestParam Integer bvChildZoning);
+    public ResponseData<Mainpartition> mainpartition(@RequestParam Integer bvChildZoning);
 
     @GetMapping("/deputydivision")
-    public Deputydivision deputydivision(@RequestParam Integer bvChildZoning);
+    public ResponseData<Deputydivision> deputydivision(@RequestParam Integer bvChildZoning);
 
 
 

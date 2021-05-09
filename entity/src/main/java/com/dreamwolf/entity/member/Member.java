@@ -68,6 +68,7 @@ public class Member {
         this.vip = vipStatus;
         this.following = following;
     }
+    public Member(){}
 
     public Integer getMid() {
         return mid;

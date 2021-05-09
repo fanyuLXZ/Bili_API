@@ -7,18 +7,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="image-resource" />
-        <module name="zoning" />
         <module name="safety" />
-        <module name="watch-history" />
-        <module name="member" />
-        <module name="fav" />
-        <module name="dynamic" />
-        <module name="comment" />
-        <module name="video" />
-        <module name="message" />
         <module name="gateway" />
+        <module name="fav" />
         <module name="entity" />
+        <module name="comment" />
+        <module name="message" />
+        <module name="dynamic" />
+        <module name="member" />
+        <module name="video" />
+        <module name="image-resource" />
+        <module name="watch-history" />
+        <module name="zoning" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -26,15 +26,15 @@
       <module name="client_demo" target="1.8" />
       <module name="comment" target="1.8" />
       <module name="dynamic" target="1.8" />
-      <module name="entity" target="1.8" />
-      <module name="fav" target="1.8" />
-      <module name="gateway" target="1.8" />
+      <module name="entity" target="8" />
+      <module name="fav" target="8" />
+      <module name="gateway" target="8" />
       <module name="image-resource" target="1.8" />
       <module name="member" target="1.8" />
       <module name="message" target="1.8" />
       <module name="safety" target="1.8" />
       <module name="video" target="1.8" />
-      <module name="watch-history" target="1.8" />
+      <module name="watch-history" target="8" />
       <module name="watch_history" target="1.8" />
       <module name="zoning" target="1.8" />
     </bytecodeTargetLevel>
