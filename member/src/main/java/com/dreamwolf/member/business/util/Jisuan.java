@@ -26,15 +26,15 @@ public class Jisuan {
     public int residue(int i){//升级所需最小经验
         int x=0;
         if(i==1){
-            x=200;
+            x=0;
         }else if(i==2){
-            x=1500;
+            x=200;
         }else if(i==3){
-            x=4500;
+            x=1500;
         }else if(i==4){
-            x=10800;
+            x=4500;
         } else if(i==5){
-            x=28800;
+            x=10800;
         }else{
             x=28800;
         }

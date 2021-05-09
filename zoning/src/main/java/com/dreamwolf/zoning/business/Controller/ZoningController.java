@@ -42,18 +42,19 @@ public class ZoningController {
     VideoCount videoCount;
 
     //全部分区当日新投稿数量
-    @GetMapping("/online/all")
+    /*@GetMapping("/online/all")
     public Map online(){
-        Map<String, Object> map=new HashMap<String, Object>();
+        *//*Map<String, Object> map=new HashMap<String, Object>();
         map.put("code",0);
         map.put("message","");
         map.put("ttl",1);
         Map<String, Object> data=new HashMap<String, Object>();
-        Map<String, Object> kele=videoCount.selmap("2021-04-21");
-        data.put("region_count",kele);
-        map.put("data",data);
+        ResponseData kele=videoCount.selmap("2021-05-06");
+        data.put("region_count",kele.getData());
+        map.put("data",data);*//*
+        Map<Integer,List<String>> maplist=new HashMap<>();
         return map;
-    }
+    }*/
 
     //分区楼层视频卡片数据
     @GetMapping("/region/dynamic")
@@ -75,7 +76,7 @@ public class ZoningController {
                 for (int i=0;i<zoning.size();i++) {
                     list[i]=zoning.get(i).getzID();
                 }
-                Integer count=videoCount.vcount(list);//返回总子分区数
+                Integer count=videoCount.selcount(list).getData();//返回总子分区数
                 if(count!=null){
                     Count cot=new Count();//随机数
                     Integer suiji=cot.count(ps,count);
@@ -133,9 +134,11 @@ public class ZoningController {
 
     //指定分区排行榜 前十二个
     @GetMapping("/region/ranking")
-    public Map region(Integer rid,Integer day){
-        Map<String, Object> map = new HashMap<String, Object>();
-        if(rid!=null && !rid.equals("")){
+    public ResponseData<List<VideoMaplist>> region(Integer rid,Integer day){
+        int code = 0;
+        String message="";
+        List<VideoMaplist> maplist=null;
+        if(rid!=null && day!=null){
             QueryWrapper<Zoning> wrapper = new QueryWrapper<>();
             wrapper.eq("zFatherID", rid); //查找条件
             List<Zoning> zoning = iZoningService.list(wrapper);//获取对应父分区的子分区
@@ -144,22 +147,13 @@ public class ZoningController {
                 for (int i=0;i<zoning.size();i++) {
                     list[i]=zoning.get(i).getzID();
                 }
-                Map maplist=videoCount.selectdeorating(list,day);
-                if(maplist!=null){
-                    map.put("code", 0);
-                    map.put("message", "");
-                    map.put("ttl", 1);
-                    map.put("data",maplist.get("data"));
-                }else{
-                    map.put("code",400);
-                    map.put("message","返回的集合为空");
-                }
+                 maplist=videoCount.selectdeorating(list,day).getData();
             }
         }else{
-            map.put("code",400);
-            map.put("message","rid不能为空");
+            code = 1;
+            message="rid和day不能为空";
         }
-        return map;
+        return new ResponseData<List<VideoMaplist>>(code,message,1,maplist);
     }
 
     //Zong 通过组件id返回组件名称

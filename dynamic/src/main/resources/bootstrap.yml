@@ -13,10 +13,10 @@ spring:
     nacos:
       #注册服务地址
       discovery:
-        server-addr: api.bilibili.com:8848
+        server-addr: api.bilibili.org:8848
       #配置服务地址
       config:
-        server-addr: 192.168.43.102:8848
+        server-addr: api.bilibili.org:8848
         file-extension: yaml
         extension-configs[0]:
           data-id: sentinel-config.yaml

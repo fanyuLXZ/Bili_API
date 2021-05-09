@@ -47,7 +47,7 @@ public class UserdataController {
         Jisuan jisuan=new Jisuan();
         Integer id=1;
         Userdata userdata= userdataService.select(id);
-        Level_info level_info=new Level_info(userdata.getLevel(),jisuan.residue(userdata.getLevel()),userdata.getExp(),jisuan.mincurrent(userdata.getLevel(),userdata.getExp().intValue()));
+        Level_info level_info=new Level_info(userdata.getLevel(),jisuan.residue(userdata.getLevel()),userdata.getExp(),jisuan.residue(userdata.getLevel()+1));//jisuan.mincurrent(userdata.getLevel(),userdata.getExp().intValue()) 经验计算
         //会员相关
         Vip ivip= vipService.vipselect(id);
         //判断会员类型 4.1号为小会员

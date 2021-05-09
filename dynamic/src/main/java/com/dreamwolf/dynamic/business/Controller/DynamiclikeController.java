@@ -62,7 +62,7 @@ public class DynamiclikeController {
     @SentinelResource(value = "likeitems",fallback="handlerLikeitems")
     @RequestMapping("/likesitems")
     public ResponseData<List<IikesItems>> likeitems(Integer id){
-        List<IikesItems> iikesItems=null;
+        List<IikesItems> iikesItems=new ArrayList<>();
         QueryWrapper<Userdynamic> queryWrapper=new QueryWrapper<>();//userdynamic 获取id1的全部动态
         queryWrapper.eq("uID",id);
         List<Userdynamic> fuitem=userdynamicService.list(queryWrapper);
@@ -77,7 +77,7 @@ public class DynamiclikeController {
         QueryWrapper<Dynamicdata> DynamicdataQueryWrapper=new QueryWrapper<>();//id1的全部动态 判断出被点过赞的动态
         DynamicdataQueryWrapper.in("udID",list);
         List<Dynamicdata> statecommend=dynamicdataService.list(DynamicdataQueryWrapper);
-        for(int i=1;i<=statecommend.size();i++){
+        for(int i=0;i<statecommend.size();i++){
             QueryWrapper<Dynamiclike> dynamiclikeQueryWrapper=new QueryWrapper<>();//点过赞的固定id的动态
             dynamiclikeQueryWrapper.eq("udID",statecommend.get(i).getUdID()).eq("status",1).orderByDesc("createTime");
             List<Dynamiclike> mapList=dynamiclikeService.list(dynamiclikeQueryWrapper);
@@ -85,19 +85,26 @@ public class DynamiclikeController {
             for (int is=0;is<mapList.size();is++){
                 ints[is]=mapList.get(is).getuID();
             }
-
-            LocalDateTime da= mapList.get(i).getCreateTime();
+            List<Users> users=memberService.users(ints,id).getData();//点赞对应id动态的用户
+            LocalDateTime da=fuitem.get(i).getUpdateTime();
             Date datt = Date.from(da.atZone(ZoneId.systemDefault()).toInstant());
-
             Items items=new Items(statecommend.get(i).getUdID(),"dynamic",
                     mapintuser.get(statecommend.get(i).getUdID()).getContent(),
                     "","","",datt);
-
-            List<Users> users=memberService.users(ints,id).getData();//点赞对应id动态的用户
-
-            IikesItems ii=new IikesItems(id,users.get(i),items,statecommend.get(i).getUdCommentNum().toString(),
+            IikesItems ii=new IikesItems(id,users,items,statecommend.get(i).getUdCommentNum().toString(),
                     mapList.get(0).getCreateTime());
             iikesItems.add(ii);
+
+            /*for(int z=0;z<mapList.size();z++){
+                LocalDateTime da= mapList.get(z).getCreateTime();
+                Date datt = Date.from(da.atZone(ZoneId.systemDefault()).toInstant());
+                Items items=new Items(statecommend.get(z).getUdID(),"dynamic",
+                        mapintuser.get(statecommend.get(z).getUdID()).getContent(),
+                        "","","",datt);
+                IikesItems ii=new IikesItems(id,users.get(z),items,statecommend.get(z).getUdCommentNum().toString(),
+                        mapList.get(0).getCreateTime());
+                iikesItems.add(ii);
+            }*/
         }
         return new ResponseData<List<IikesItems>>(0,"",1,iikesItems);
     }

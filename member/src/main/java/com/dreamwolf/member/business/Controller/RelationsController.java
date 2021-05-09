@@ -60,7 +60,7 @@ public class RelationsController {
         String message="";
         List<Relations> relations=null;
         if (followUID!=null && !followUID.equals("")){
-            QueryWrapper<Relations> relationsQueryWrapper=new QueryWrapper<>();
+            QueryWrapper<Relations> relationsQueryWrapper=new QueryWrapper<Relations>();
             relationsQueryWrapper.eq("followUID",followUID);
             relations=relationsService.list(relationsQueryWrapper);
         }else{
