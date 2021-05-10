@@ -78,7 +78,7 @@
     <select id="selecvideolistpa" resultMap="videomap">
         SELECT * FROM video
         <where>
-            `bvID` !=#{bvid} LIMIT #{pagesum},20
+            `bvID` !=#{bvid} LIMIT #{pagesum},40
         </where>
     </select>
 

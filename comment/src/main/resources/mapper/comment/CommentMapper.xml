@@ -18,13 +18,13 @@
     </resultMap>
 
     <select id="selectrpid" resultMap="comremap">
-        SELECT * FROM `comment` t1 LEFT JOIN `commentdata` t2 ON t1.`cID`=t2.cID
+        SELECT *,(t2.`cLikeNum`-t2.`cUnLikeNum`) AS aaa FROM `comment` t1 LEFT JOIN `commentdata` t2 ON t1.`cID`=t2.cID
         <where>
             <if test="cIDreply !=null">
                 cIDreply =#{cIDreply}
             </if>
-            LIMIT #{pn},#{ps}
         </where>
+        ORDER BY aaa DESC LIMIT #{pn},#{ps}
     </select>
 
     <select id="selectbvidint" resultType="int">
@@ -85,7 +85,7 @@
     </select>
 
     <select id="commcountcIDreply" resultType="int">
-         SELECT COUNT(`cIDreply`) FROM `comment`
+         SELECT COUNT(*) FROM `comment`
          <where>
              <if test="cIDreply!=null">
                  `cIDreply`=#{cIDreply}

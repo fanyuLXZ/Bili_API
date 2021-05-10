@@ -42,14 +42,18 @@ public class VideoController {
 
     /**
      * 根据子分区id数组查询当天子分区下的视频总数
-     * @param rid
+     * @param rid  父分区id
+     * @param array  子分区id集合
+     * @param datetime  时间
      * @return
      */
     @GetMapping("/videoridcountselec")
-    public ResponseData<Kele> videoridcountselec(Integer rid){
-        Integer[] array = new Integer[]{310,300};
-        String datetime = "2021-05-06";
+    public ResponseData<Kele> videoridcountselec(Integer rid,Integer[] array,String datetime){
+//        Integer[] array = new Integer[]{310,300};
+//        String datetime = "2021-05-06";
         Integer count =videoService.videoridcountselect(array,datetime);
+//        Map<Object,Object> map = new HashMap<>();
+//        map.put(rid,count);
         Kele kele = new Kele(rid,count);
         return new ResponseData(0,"",1,kele);
     }

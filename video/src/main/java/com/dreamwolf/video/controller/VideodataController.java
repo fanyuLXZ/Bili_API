@@ -8,10 +8,7 @@ import com.dreamwolf.entity.member.web_interface.VideoinfoOwnerInfo;
 import com.dreamwolf.entity.video.Video;
 import com.dreamwolf.entity.video.Videodata;
 import com.dreamwolf.entity.video.Videorating;
-import com.dreamwolf.entity.video.web_interface.Relatedinfo;
-import com.dreamwolf.entity.video.web_interface.Statinfo;
-import com.dreamwolf.entity.video.web_interface.Videodatainfo;
-import com.dreamwolf.entity.video.web_interface.Videoinfo;
+import com.dreamwolf.entity.video.web_interface.*;
 import com.dreamwolf.entity.zoning.web_interface.Deputydivision;
 import com.dreamwolf.entity.zoning.web_interface.Mainpartition;
 import com.dreamwolf.video.service.*;
@@ -88,13 +85,14 @@ public class VideodataController {
      * @param bvid
      * @return
      */
-    @GetMapping("/video/info")
-    public ResponseData<Videodatainfo> videodatabvidobject(Integer bvid){
+    @GetMapping("/info")
+    public ResponseData<VideoDataMap> videodatabvidobject(Integer bvid){
         Integer uid=1; //当前用户id
-        Videodatainfo videodatainfo = new Videodatainfo();
-        Videodata videodata = videodataService.selectbvID(bvid);    //视频显示对象
-        videodatainfo.setAid(videodata.getBvID());  //视频id
-        Statinfo statinfo = new Statinfo();
+//        Videodatainfo videodatainfo = null;
+//        Videodata videodata = videodataService.selectbvID(bvid);    //视频显示对象
+        Videodatainfo  videodatainfo = new Videodatainfo();
+            videodatainfo.setAid(bvid);  //视频id
+            Statinfo statinfo = new Statinfo();
             //随机数
             Random random = new Random();
             int pagesum = random.nextInt(100);
@@ -108,24 +106,29 @@ public class VideodataController {
                     relatedinfo.setPic(vide.getBvCoverImgPath());   //图片
                     relatedinfo.setTitle(vide.getBvTitle()); //标题
                 ResponseData<OwnerInfo> ownerInfo = usermapService.OwnerInfo(vide.getUID());
-                    relatedinfo.setOwnerInfo(ownerInfo.getData()); //用户对象
+                    relatedinfo.setOwner(ownerInfo.getData()); //用户对象
                 if(videodata2!=null){
                     statinfo.setView(videodata2.getBvPlayNum());
-                    relatedinfo.setStatinfo(statinfo);  //播放量
+                    relatedinfo.setStat(statinfo);  //播放量
                 }else{
-                    relatedinfo.setStatinfo(null);  //播放量
+                    relatedinfo.setStat(new Statinfo());  //播放量
                 }
                 relatedinfoList.add(relatedinfo);
 
             }
-        videodatainfo.setRelated(relatedinfoList);         //视频推荐数组
+            videodatainfo.setRelated(relatedinfoList);         //视频推荐数组
             Videodata videodata1 = videodataService.selectbvID(bvid);   //根据视频id查询视频显示数据
-
+            if(videodata1!=null){
             statinfo.setView(videodata1.getBvPlayNum()); //播放量
             statinfo.setFavorite(videodata1.getBvFavoriteNum()); //收藏数
             statinfo.setCoin(videodata1.getBvCoinNum()); //投币数
             statinfo.setLike(videodata1.getBvLikeNum()); //点赞数
             videodatainfo.setStat(statinfo);        //对象集合
+
+            }else {
+                Statinfo statinfo2 = new Statinfo();
+                videodatainfo.setStat(statinfo2);
+            }
             Video video = videoService.videobvIDlist(bvid);
             List<Videorating> videoratings = videoratingService.selectvideolist();  //查询所有视频评分数据按评分排序
             int a=0;
@@ -142,6 +145,7 @@ public class VideodataController {
             videoinfo.setTitle(video.getBvTitle()); //标题
             videoinfo.setDesc(video.getBvDesc());      //简介
             videoinfo.setCtime(video.getBvPostTime());     //发表时间
+            videoinfo.setPath(video.getBvVideoPath());//路径
             videoinfo.setRank(i);       //排名
         videodatainfo.setVideo(videoinfo);       //视频对象
         ResponseData<VideoinfoOwnerInfo> videoinfoOwnerInfo= usermapService.video_info(uid,video.getUID());  //当前用户id,用户id
@@ -151,7 +155,10 @@ public class VideodataController {
         ResponseData<Deputydivision> deputydivision =userpageService.deputydivision(video.getBvChildZoning());
         videodatainfo.setDeputydivision(deputydivision.getData());
 
-        return new ResponseData(0,"",0,videodatainfo);
+        VideoDataMap videoDataMap = new VideoDataMap(videodatainfo);
+
+
+        return new ResponseData(0,"",0,videoDataMap);
     }
 
 

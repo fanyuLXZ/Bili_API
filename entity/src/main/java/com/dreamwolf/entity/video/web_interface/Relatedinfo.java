@@ -13,7 +13,7 @@ public class Relatedinfo {
     private int aid;//视频id
     private String pic;//图片
     private String title;   //标题
-    private OwnerInfo ownerInfo;     //用户对象
-    private Statinfo statinfo;//播放量对象
+    private OwnerInfo owner;     //用户对象
+    private Statinfo stat;//播放量对象
 
 }

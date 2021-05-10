@@ -19,6 +19,7 @@ public class Videoinfo {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date ctime; //发布时间
+    private String path;//路径
     private int rank;   //排名
 
 
