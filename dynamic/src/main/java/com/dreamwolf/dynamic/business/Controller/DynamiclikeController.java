@@ -43,12 +43,12 @@ public class DynamiclikeController {
     @Resource
     MemberService memberService;
 
-    //通过动态id 查看谁点赞和点赞时间
+    //通过动态id查看谁点赞和点赞时间
     @SentinelResource(value = "info",fallback="handlerInfo")
     @RequestMapping("/dynamiclike")
-    public ResponseData<List<Dynamiclike>> info(){
+    public ResponseData<List<Dynamiclike>> info(Integer id){
         QueryWrapper<Dynamiclike> wrapper = new QueryWrapper<>();
-        wrapper.eq("udID","2");
+        wrapper.eq("udID",id);
         List<Dynamiclike> dynamiclike=dynamiclikeService.list(wrapper);
         return new ResponseData<List<Dynamiclike>>(0,"",1,dynamiclike);
     }
@@ -58,7 +58,7 @@ public class DynamiclikeController {
         return map;
     }
 
-    //收到的点赞
+    //收到的点赞 接口调接口
     @SentinelResource(value = "likeitems",fallback="handlerLikeitems")
     @RequestMapping("/likesitems")
     public ResponseData<List<IikesItems>> likeitems(Integer id){
@@ -95,16 +95,6 @@ public class DynamiclikeController {
                     mapList.get(0).getCreateTime());
             iikesItems.add(ii);
 
-            /*for(int z=0;z<mapList.size();z++){
-                LocalDateTime da= mapList.get(z).getCreateTime();
-                Date datt = Date.from(da.atZone(ZoneId.systemDefault()).toInstant());
-                Items items=new Items(statecommend.get(z).getUdID(),"dynamic",
-                        mapintuser.get(statecommend.get(z).getUdID()).getContent(),
-                        "","","",datt);
-                IikesItems ii=new IikesItems(id,users.get(z),items,statecommend.get(z).getUdCommentNum().toString(),
-                        mapList.get(0).getCreateTime());
-                iikesItems.add(ii);
-            }*/
         }
         return new ResponseData<List<IikesItems>>(0,"",1,iikesItems);
     }

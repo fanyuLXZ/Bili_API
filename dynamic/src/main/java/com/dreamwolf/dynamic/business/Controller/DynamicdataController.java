@@ -27,7 +27,7 @@ public class DynamicdataController {
     @Resource
     DynamicdataService dynamicdataService;
 
-    //通过动态idID dynamicdata表所有信息 点赞数 转发数 评论数
+    //通过动态idIDdynamicdata表所有信息点赞数转发数评论数
     @SentinelResource(value = "dynamicdata",fallback="handlerDynamicdata")
     @RequestMapping("/dynamicdata")
     public ResponseData<Dynamicdata> dynamicdata(Integer id){

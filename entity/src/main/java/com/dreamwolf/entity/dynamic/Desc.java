@@ -17,17 +17,17 @@ public class Desc {
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime timestamp;//发布时间
     private Integer dynamic_id;//动态id
-    private UserProfile userProfile;//用户信息
+    private UserProfile user_profile;//用户信息
 
     public Desc(Integer uid, Integer type, Integer comment, Integer like, Integer is_liked, LocalDateTime timestamp, Integer dynamic_id, UserProfile userProfile) {
         this.uid = uid;
         this.type = type;
-        this.comment = comment;
-        this.like = like;
-        this.is_liked = is_liked;
+        this.comment = comment!=null?comment:0;
+        this.like = like!=null?like:0;
+        this.is_liked = is_liked!=null?is_liked:0;
         this.timestamp = timestamp;
         this.dynamic_id = dynamic_id;
-        this.userProfile = userProfile;
+        this.user_profile = userProfile;
     }
 
     public Desc() {

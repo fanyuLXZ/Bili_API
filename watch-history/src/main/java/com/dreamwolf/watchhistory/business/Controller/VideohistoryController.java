@@ -42,7 +42,7 @@ public class VideohistoryController {
     @Resource
     UserService userService;
 
-    @GetMapping("/cursor2")
+    /*@GetMapping("/cursor2")
     public Map list2(){
         Map<String, Object> map=new HashMap<String, Object>();
         map.put("code",0);
@@ -89,7 +89,7 @@ public class VideohistoryController {
         data.put("list",zhi);
         map.put("data",data);
         return map;
-    }
+    }*/
 
     @GetMapping("/cursor")
     public ResponseData<CursorLisr> list(Integer ps,String max,String view_at,String business){

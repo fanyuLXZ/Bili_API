@@ -727,6 +727,96 @@
         * favourite 收藏夹对象(有主人视角和客人视角的原因是有私密的文件夹, 不过因为本项目并无此功能,所以二者均为当前用户所以收藏夹内视频总数)
             - master 主人视角
             - guest 客人视角
+    
+    12. ####  通过用户id查看对应id的粉丝id /relations
+        参数: uid 用户本人id
+        返回值:
+        Relations 对象集合
+        *uID 用户本人 id
+        *followUID 粉丝id
+        
+    13. #### 通过粉丝id查看对应关注的up主id /intuid
+        参数: followUID 粉丝id
+        返回值:
+        Relations 对象集合
+        *uID 用户本人 id
+        *followUID 粉丝id
+    
+    14. #### 通过id返回User表所有对应id信息
+        参数: uid 用户id
+        返回值:
+        User对象 返回整个User对象
+        
+    15. #### 通过用户id 获得用户如下信息 /membe
+        参数: uID 用户id
+        返回值:
+        *mid 用户唯一id
+        *uname 用户昵称
+        *sex 性别
+        *face 头像
+        *current_lecel 等级对象
+            -level_info 用户等级
+        *vip vip对象
+            -status 是否拥有vip
+
+    16. #### 回复我的用户对象List /replyuser
+        参数:
+        uid 数组回复人
+        id 原评论
+        返回值:
+        对象集合
+        *mid 点赞对象的id
+        *nickname 昵称
+        *avatar 头像
+        *follow 是否关注
+        *native_uri "个人中心地址"
+        
+    17. #### 回复我的用户对象 /replyuserb
+        参数:
+        uid 回复人
+        id 原评论
+        返回值:
+        对象
+        *mid 点赞对象的id
+        *nickname 昵称
+        *avatar 头像
+        *follow 是否关注
+        *native_uri "个人中心地址"
+        
+    18. #### 回复我的对象 /data
+        参数: id 用户id
+        返回值:
+      - user 回复我的用户对象 object
+          - mid 评论对象的id int
+          - nickname 评论对象的名字 String
+          - avatar  对象头像img String
+          - follow   是否关注 boolean
+      - item 回复我的评论对象 object  
+          - source_content 被回复的评论内容 String
+          - type ideo代表视频，dynamic代表动态 reply代表文字 String,
+          - business  视频，动态，文字三个参数 string
+          - title 被回复的评论或视频 string,
+          - reply_time 当前时间 date
+          - uri 当前评论，视频，动态的地址 string
+          - image 当前 视频，动态的封面 string
+          - native_uri 个人中心的地址 string
+    
+    19. #### 查询简略用户信息 /ownerinfo
+        参数:
+        uID 用户id
+        返回值:
+        *mid 用户id
+        *name 用户名
+        *face 头像地址
+        
+    20. #### 通过用户id查询对应大会员信息 /Vip
+        参数: uID 用户id
+        返回值:
+        vip对象数据
+        
+    
+
+
 * ### 动态模块 Dynamic
     1. #### 动态的最新信息 /entrance  
        参考链接：https://api.bilibili.com/x/web-interface/dynamic/entrance?video_offset=0&article_offset=0&alltype_offset=0   
@@ -877,6 +967,10 @@
                         - current_level 用户等级 int
                     - vip 回复评论人会员对象 object
                         - status 是否是会员 Boolean
+            
+          依赖：
+        * replies &gt; [`comment/commselectcarrlist`](#根据cid评论数组并且回复的评论id,cIDreply=0则是视频或者动态-commselectcarrlist)
+    
     7. #### 动态详细评论信息 /reply/main
         参数：
         * dynamic_id 动态id
@@ -915,13 +1009,95 @@
                     - vip 回复评论人会员对象 object
                         - status 是否是会员 Boolean
     8. #### 通过用户id查看user头像id等 /bang
-       参数 id
+       参数 
+       *id 用户id
        返回值：
-       *entrance 对象
+       *entrance 对象 object
             -icon 头像
             -mid 唯一id
             -type "up"
-    9.  
+
+  9. #### 收到的点赞 /likesitems
+        参数:
+        * id 动态id
+        返回值
+        * id 个人id int
+        * users 用户信息对象数组
+            - mid 点赞对象的id int
+            - nickname 点赞对象的名字 String
+            - avatar  对象头像img String
+            - follow   是否关注 boolean
+            - native_uri 个人中心的地址 string
+        * item 被点赞的对象 object
+            - item_id 被点赞的对象id int
+            - type  video代表视频，dynamic代表动态 reply代表文字 String
+            - title 视频标题,如果传text时，这里可传文字 String
+            - desc 视频描述 String
+            - image 视频封面图 String
+            - uri   视频链接 String
+            - ctime 点赞时间 String
+        *counts 此评论的总人数 int
+        *like_time 最新点赞的时间 Date
+              
+    10. #### dynamicComment表所有信息 /dynamicComment
+        返回值:
+        *dynamicComment 对象
+            -udID 动态id
+            -cID 评论id
+        
+    11. #### 发表评论人对象 /memberid
+        参数:
+        id 用户id
+        返回值:
+        *mid 用户id
+        *sex 性别
+        *uname 昵称
+        *avatar 头像
+        *level_info 对象
+            -current_level 用户等级
+        *vip 对象
+            -status 是否是vip
+        
+    12. #### 通过动态idIDdynamicdata表所有信息点赞数转发数评论数 /dynamicdata
+        参数:
+        id 动态id
+        返回值:
+        *udLikeNum 动态点赞总数
+        *udRetweetNum 动态转发数
+        *udCommentNum 动态评论数
+        
+    13. #### 通过动态udID查看点赞的用户以及点赞时间等/dynamiclike
+        参数:
+        id 动态id
+        返回值:
+        *dynamiclike 对象集合
+            -udID  动态id
+            -uID 点赞的用户id
+            -status 点赞状态
+            -createTime 点赞时间
+        
+    14.  #### 获取对应用户uid的所有动态 /userdynamicList
+        参数:
+        uid 用户id
+        返回:
+        *userdynamicsList 对象集合
+            -udID 单条动态id
+            -uID 用户id
+            -content	动态正文
+            -updateTime 发表动态的时间
+            -isDel 是否删除
+    
+    15. #### 通过动态udID查看该动态信息 /userdynamic
+        参数:
+        udID 动态id
+        返回:
+        *userdynamic: 对象
+            -udID 单条动态id
+            -uID 用户id
+            -content 动态正文
+            -updateTime 发表动态的时间
+            -isDel 是否删除
+
 * ### 分区模块 Zoning
     1. #### 全部分区当日新投稿数量 /online/all   
        参考链接：http://api.bilibili.com/x/web-interface/online      
@@ -1087,7 +1263,46 @@
         - review 评论数 int  
         - title 视频标题 string  
         - typename 视频分区 string  
+    
+    8. #### 返回父组件 /zoning
+       返回值:
+         对象集合
+       *zID 父组件id
+       *zFatherID 为null
+       *zName 父组件名
+       
+    9. #### 返回对应父组件的子组件 /zoning/id
+        参数:
+        id 父组价id
+        返回值:
+        对象集合
+       *zID 子组件id
+       *zFatherID 父组件id
+       *zName 子组件名
+       
+    10. #### Zong通过组件id返回组件名称 /elementby
+        参数:
+        id 组件id
+        返回值
+        *String 组件名
         
+    11. #### 按子分区id查找对应父分区信息 /mainpartition
+        参数:
+        bvChildZoning 子分区id
+        返回值:
+        父对象
+        *id 父组件id
+        *name 父组件名
+        
+    12. #### id查找对应子分区和父分区信息 /deputydivision
+        参数:
+        bvChildZoning 分区id
+        返回值:
+        对象
+        id 组件id
+        name 组件名
+
+
             
 * ### 视频观看记录模块 Watch-History
     1. #### /list   

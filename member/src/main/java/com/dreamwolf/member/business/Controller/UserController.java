@@ -128,7 +128,7 @@ public class UserController {
         return new ResponseData<User>(code,message,1,user);
     }
 
-
+    //通过用户id 获得用户如下信息
     @GetMapping("/membe")
     public ResponseData<Member> membe(Integer uID){
         User user=userService.getById(uID);
@@ -247,7 +247,7 @@ public class UserController {
         return new ResponseData<ReplyUser>(0,"",1,replyUser);
     }
 
-    //接口调接口
+    //接口调接口 回复我的对象
     @GetMapping("/data")
     public ResponseData<List<MMres>> list(Integer id){
         List<MMres> reply=new ArrayList<>();
@@ -278,6 +278,7 @@ public class UserController {
         return new ResponseData<VideoinfoOwnerInfo>(0,"",1,videoinfoOwnerInfo);
     }
 
+    //查询简略用户信息
     @GetMapping("/ownerinfo")
     public ResponseData<OwnerInfo> OwnerInfo(Integer uID){
         User user=userService.getById(uID);

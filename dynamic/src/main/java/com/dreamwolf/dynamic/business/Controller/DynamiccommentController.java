@@ -79,31 +79,32 @@ public class DynamiccommentController {
         int code = 0;
         String message="";
         Reply reply=null;
-        if(dynamic_id!=null && sort!=null){
-            QueryWrapper<Dynamiccomment> queryWrapper=new QueryWrapper();
-            queryWrapper.eq("udID",dynamic_id);
-            List<Dynamiccomment> dynamiccomment=dynamiccommentService.list(queryWrapper);//返回对应动态id的父评论
-
-            Integer[] list = new Integer[dynamiccomment.size()];//数组 用来储存所有父评论id
-            for (int i=0;i<dynamiccomment.size();i++){
-                list[i]=dynamiccomment.get(i).getcID();
-            }
-            ResponseData<List<CommListMap>> replies=null;
-            if (list.length>0){
-                replies=commentService.commselecarlist(sort,list);
-            }
-            Integer i=dynamiccomment.size();
+        if(dynamic_id==null){
+            dynamic_id=1;
+        }
+        if(  sort==null){
+            sort=1;
+        }
+        QueryWrapper<Dynamiccomment> queryWrapper=new QueryWrapper();
+        queryWrapper.eq("udID",dynamic_id);
+        List<Dynamiccomment> dynamiccomment=dynamiccommentService.list(queryWrapper);//返回对应动态id的父评论
+        Integer[] list = new Integer[dynamiccomment.size()];//数组 用来储存所有父评论id
+        for (int i=0;i<dynamiccomment.size();i++){
+            list[i]=dynamiccomment.get(i).getcID();
+        }
+        ResponseData<List<CommListMap>> replies=null;
+        if (list.length>0){
+            replies=commentService.commselecarlist(sort,list);
+        }
+        Integer i=dynamiccomment.size();
+        if(replies!=null){
             for(CommListMap commListMap:replies.getData()){
                 i+=commListMap.getCount();
             }
-            Page page=new Page(i,dynamiccomment.size(),1,10);
-            //显示 评论对象集合的ListMap
-            //page.put("acount",);//父加子总评论数
-            reply=new Reply(page,replies.getData());
-        }else{
-            code=1;
-            message="dynamic_id和sort不许为空";
         }
+        List<CommListMap> listcommlist=new ArrayList<>();
+        Page page=new Page(i,dynamiccomment.size(),1,10);
+        reply=new Reply(page,replies!=null?replies.getData():listcommlist);
         return  new ResponseData<Reply>(code,message,1,reply);
     }
     public Map handlerReply(@PathVariable Integer id, Throwable e) {
@@ -112,6 +113,7 @@ public class DynamiccommentController {
         return map;
     }
 
+    //动态详细评论信息
     @SentinelResource(value = "replymain",fallback="handlerReplymain")
     @GetMapping("/reply/main")
     public ResponseData<List<CommListMap>> replymain(Integer sort,Integer dynamic_id,Integer next){//sort1按热度 2按时间 动态dynamic_id  next页码
@@ -143,7 +145,7 @@ public class DynamiccommentController {
         return map;
     }
 
-    //member发表评论人对象
+    //member发表评论人对象 接口调接口
     @GetMapping("/memberid")
     public ResponseData<Member> memberid(Integer id){
         int code = 0;
@@ -159,7 +161,7 @@ public class DynamiccommentController {
             Level_info level_info=new Level_info(userdata.getData().getLevel());
             ResponseData<Vip> vip= memberService.vip(id);
             VipStatus vipStatus=new VipStatus(vip.getData()!=null);
-            member=new Member(user.getData().getuID(),user.getData().getSex()==1?"男":"女",user.getData().getNickName(),user.getData().getHeadImgPath(),level_info,vipStatus);
+            member=new Member(user.getData().getuID(),user.getData().getNickName(),user.getData().getSex()==1?"男":"女",user.getData().getHeadImgPath(),level_info,vipStatus);
         }else{
             code=1;
             message="id不能为空";
