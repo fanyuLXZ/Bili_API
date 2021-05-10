@@ -19,7 +19,7 @@
 
 ## api文档
 
-* ### 视频模块 Vide 
+* ### 视频模块 Video 
 	1. #### 查看子分区下视频  /videobvldZoning  
         参数：
 
@@ -49,6 +49,7 @@
         * message：0
         * data: video对象
             - bvID： bv号
+            - type : 类型
             - uID： 视频作者ID
             - bvCoverImgPath： 视频封面图
             - bvVideoPath： 视频文件路径
@@ -57,6 +58,9 @@
             - bvPostTime： 创建时间
             - bvChildZoning： 视频子分区ID
             - bvIsDel： 是否已删除，0为未删除，1为已删除
+            
+        依赖：
+        * type &gt; [`Zoning/elementby`](#zong通过组件id返回组件名称-elementby)
             
     3. #### 查看作者下面发布的视频 /videouID  
         参数:  
@@ -221,16 +225,18 @@
         * code：0   
         * message：0   
         * data: list集合   
-            - bvID：bv号   
-            - uID ：视频作者ID
-            - bvCoverImgPath： 视频封面图
-            - bvVideoPath： 视频文件路径
-            - bvTitle： 视频标题
-            - bvDesc： 视频简介
-            - bvPostTime： 创建时间
-            - bvChildZoning： 视频子分区ID
-            - bvIsDel： 是否已删除，0为未删除，1为已删除
-            - duration ： 时长
+            - aid：bvid   
+            - pic ：视频封面图
+            - title： 标题
+            - owner： 用户对象
+                - uID : 用户id
+                - userName : 用户名
+            - stat： 视频数据对象
+            - duration： 视频时长
+            - bvid： bv号
+            
+        依赖 ：
+        * owner &gt; [`Member/useruid`](#通过id返回user表所有对应id信息-useruid)
     
     16. #### 根据子分区查找的视频总数 /videocount   
         参数：
@@ -257,6 +263,9 @@
             - title ：标题
             - typename ： 分区名称	
             - pts ：视频评分
+         
+        依赖：
+        * typename &gt; [`Zoning/elementby`](#zong通过组件id返回组件名称-elementby)
 
     18. #### 根据时间查找子分区id和子分区id的总数	/videoseldate   
         参数：
@@ -360,7 +369,7 @@
             - bvIsDel： 是否已删除，0为未删除，1为已删除
             - duration : 时长
 
-    26. #### 根据子分区id查询最新的4条数据 /videoridlist    
+    26. #### 根据子分区id查询最新的4条数据 /videoridlists    
         参数 ：
         
           * rid ： 子分区id int
@@ -391,6 +400,10 @@
                 - share 转发数 int
                 - view 观看数 int
                 - his_rank 排名 int
+                
+        依赖 ：
+        * owner &gt; [`Member/ownerinfo`](#查询简略用户信息-ownerinfo)
+        * tname &gt; [`Zoning/elementby`](#zong通过组件id返回组件名称-elementby)
 
     27. #### 根据子分区id查询最新的数据并分页处理 按时间排序 /selectlistvieopage   
         参数 ：
@@ -423,6 +436,10 @@
                 - his_rank 排名 int
             - title 视频标题 string 
             - tname 视频分区 string
+            
+        依赖：
+        * owner &gt; [`Member/ownerinfo`](#查询简略用户信息-ownerinfo)
+        * tname &gt; [`Zoning/elementby`](#zong通过组件id返回组件名称-elementby)
 
     28. #### 根据子分区id按视频热度查询 /selectbvidlistpagerid   
         参数 ：
@@ -446,7 +463,10 @@
                 - review 评论数 int
                 - title 视频标题 string
                 - type 视频类型 string 
-
+        依赖：
+        * author &gt; [`Member/ownerinfo`](#查询简略用户信息-ownerinfo)
+        * type &gt; [`Zoning/elementby`](#zong通过组件id返回组件名称-elementby)
+        
     29. #### 根据子分区id按热度查询视频排行榜前10个 /selectbvidlistpagelist   
         参数 ： 
         
@@ -469,6 +489,10 @@
             - review 评论数 int  
             - title 视频标题 string  
             - typename 视频分区 string 
+         
+        依赖：
+        * author &gt; [`Member/ownerinfo`](#查询简略用户信息-ownerinfo)
+        * typename &gt; [`Zoning/elementby`](#zong通过组件id返回组件名称-elementby)
 
     30. #### 根据子分区id查询视频总数 /selectidcoutn   
         参数 ：
@@ -519,6 +543,12 @@
             - deputydivision 副分区
                 - id 主分区 int
                 - name 分区名 string
+        
+        依赖 ：
+        * owner &gt; video_info [`Member/videoinfo`](#据用户id查询对象-videoinfo)
+        * related/owner &gt; [`Member/ownerinfo`](#查询简略用户信息-ownerinfo)
+        * mainpartition &gt; [`Zoning/mainpartition`](#按子分区id查找对应父分区信息-mainpartition)
+        * deputydivision &gt; [`Zoning/deputydivision`](#id查找对应子分区和父分区信息-deputydivision)
                 
     32. #### 根据子分区id数组查询当天子分区下的视频总数 /videoridcountselec   
         参数 ：
@@ -556,6 +586,10 @@
                 - ctime 点赞时间 String
                   -counts 此评论的总人数 int
                   -like_time 最新点赞的时间 Date
+    
+    依赖：
+    * users &gt; [`赵霖漏了没写`](#)
+    * items &gt; [`Dynamic/likesitems`](#收到的点赞-likesitems)
              
     2. #### 回复我的 /reply   
        参考链接：https://api.bilibili.com/x/msgfeed/reply?csrf=ed03730a1cd49540995b9fa002c1cf1e&build=0&mobi_app=web       
@@ -576,7 +610,11 @@
                 - uri 当前评论，视频，动态的地址 string
                 - image 当前 视频，动态的封面 string
                 - native_uri 个人中心的地址 string
-
+                
+        依赖：
+        * user &gt; [`Member/replyuserb`](#回复我的用户对象-replyuserb)
+        * reply &gt; [`Member/data`](#回复我的对象-data)
+         
     3. #### 我的消息 /get_sessions
        参考链接：https://api.vc.bilibili.com/session_svr/v1/session_svr/get_sessions?csrf=ed03730a1cd49540995b9fa002c1cf1e&session_type=1&group_fold=1&unfollow_fold=0&sort_rule=2&build=0&mobi_app=web
         * session_list 会话集合数组 list&lt;object&gt;
@@ -754,7 +792,7 @@
         *uID 用户本人 id
         *followUID 粉丝id
     
-    14. #### 通过id返回User表所有对应id信息
+    14. #### 通过id返回User表所有对应id信息 /useruid
         参数: uid 用户id
         返回值:
         User对象 返回整个User对象
@@ -1353,6 +1391,10 @@
                 - mid uid int
                 - title 收藏夹名 string
                 - media_count 收藏夹内视频(媒体)数 int
+                
+        依赖：
+        * media_count &gt; [`Video/videocount`](#根据子分区查找的视频总数-videocount)
+                
     2. #### /resource    
        参考链接：https://api.bilibili.com/x/v3/fav/resource/list4navigate?platform=web   
        参数：
@@ -1373,6 +1415,10 @@
             - face 头像图片路径 string
         * bvid bv号 string
         * duration 时长 int
+        
+        依赖：
+        * upper &gt; [`Member/ownerinfo`](#查询简略用户信息-ownerinfo)
+        
 * ### 前端接口 web-interface
     1. /nav/stat   
        返回值：
@@ -1409,7 +1455,7 @@
         * token token string
         返回值：uid int(data直接为uid)
 * ### 评论模块 comment
-    1. #### 评论回复信息 /commentlist   
+    1. #### 评论回复信息 /commentlist   有点离谱我找不到这个
        参数：
        
         * rpid 评论id int
@@ -1547,6 +1593,10 @@
                     - ctime : 回复评论时间 date
                     - like : 点赞数量  int
                     - member : 回复评论人对象 obejct
+                    
+        依赖：
+        * member &gt; [`Dynamic/memberid`](#发表评论人对象-memberid)
+        * replies/member &gt; [`Dynamic/memberid`](#发表评论人对象-memberid)
 
     11. #### 根据cid评论数组并且回复的评论id,cIDreply=0则是视频或者动态 id ：1 为热度排序  2 为时间排序 并分页处理 /commselectcarrlistpage   
          参数 ： 
@@ -1571,6 +1621,10 @@
                     - ctime : 回复评论时间 date
                     - like : 点赞数量  int
                     - member : 回复评论人对象 obejct
+                    
+        依赖：
+        * member &gt; [`Dynamic/memberid`](#发表评论人对象-memberid)
+        * replies/member &gt; [`Dynamic/memberid`](#发表评论人对象-memberid)
                 
     12. #### 评论回复信息 /reply
         参数：  
@@ -1598,6 +1652,9 @@
             - ctime 评论时间 date
             - content 内容对象 object
                 - message 评论内容 int
+        
+        依赖：
+        * member &gt; [`Member/membe`](#通过用户id-获得用户如下信息-membe)
 
 * ### 图片资源模块 image-resource
     1. 上传图片 /upload-file   
