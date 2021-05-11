@@ -51,19 +51,23 @@ public class UserdataController {
         if (logon_uid_result.getCode()==0) {
             Integer id = logon_uid_result.getData();
             Userdata userdata = userdataService.select(id);
-            Level_info level_info = new Level_info(userdata.getLevel(), jisuan.residue(userdata.getLevel()), userdata.getExp(), jisuan.residue(userdata.getLevel() + 1));//jisuan.mincurrent(userdata.getLevel(),userdata.getExp().intValue()) 经验计算
-            //会员相关
-            Vip ivip = vipService.vipselect(id);
-            //判断会员类型 4.1号为小会员
-            Calendar cal = Calendar.getInstance();
-            int month = (cal.get(Calendar.MONTH)) + 1;//月
-            int day_of_month = cal.get(Calendar.DAY_OF_MONTH);//日
-            VipStatus vipStatus = new VipStatus((month + "/" + day_of_month).equals("4/1") ? 0 : 1, ivip != null, ivip.getExpirationTime(), new Label("", "大会员", "vip", "#FFFFFF", "1", "#FB7299", ""), "http://i0.hdslb.com/bfs/vip/icon_Certification_big_member_22_3x.png");
-            User user = userService.getById(id);
-            Member member = new Member(true, user.getuID(), user.getUserName(), user.getHeadImgPath(), level_info, vipStatus, userdata.getCoinsNum().intValue(), userdata.getBCoinsNum().intValue(), user.getBoundEmail() != null, user.getBoundPhone() != null);
-            return new ResponseData<Member>(0, "", 1, member);
+            if(userdata!=null){
+                Level_info level_info = new Level_info(userdata.getLevel(), jisuan.residue(userdata.getLevel()), userdata.getExp(), jisuan.residue(userdata.getLevel() + 1));//jisuan.mincurrent(userdata.getLevel(),userdata.getExp().intValue()) 经验计算
+                //会员相关
+                Vip ivip = vipService.vipselect(id);
+                //判断会员类型 4.1号为小会员
+                Calendar cal = Calendar.getInstance();
+                int month = (cal.get(Calendar.MONTH)) + 1;//月
+                int day_of_month = cal.get(Calendar.DAY_OF_MONTH);//日
+                VipStatus vipStatus = new VipStatus((month + "/" + day_of_month).equals("4/1") ? 0 : 1, ivip != null, ivip.getExpirationTime(), new Label("", "大会员", "vip", "#FFFFFF", "1", "#FB7299", ""), "http://i0.hdslb.com/bfs/vip/icon_Certification_big_member_22_3x.png");
+                User user = userService.getById(id);
+                Member member = new Member(true, user.getuID(), user.getUserName(), user.getHeadImgPath(), level_info, vipStatus, userdata.getCoinsNum().intValue(), userdata.getBCoinsNum().intValue(), user.getBoundEmail() != null, user.getBoundPhone() != null);
+                return new ResponseData<>(0, "", 1, member);
+            }else {
+                return new ResponseData<>(3, "用户错误", 1, null);
+            }
         }else {
-            return new ResponseData<Member>(logon_uid_result.getCode(), logon_uid_result.getMessage(), 1, null);
+            return new ResponseData<>(logon_uid_result.getCode(), logon_uid_result.getMessage(), 1, null);
         }
 
     }
