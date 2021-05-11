@@ -20,6 +20,7 @@ import com.dreamwolf.entity.member.User;
 import com.dreamwolf.entity.member.Vip;
 import com.dreamwolf.entity.message.web_interface.Items;
 import com.dreamwolf.entity.message.web_interface.MMItems;
+import com.dreamwolf.safety.util.TokenUtil;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -51,6 +53,8 @@ public class UserdynamicController {
     CommentService commentService;
     @Resource
     DynamiccommentService dynamiccommentService;
+    @Resource
+    SafetyService safetyService;
 
     //获取对应用户id的所有动态
     @SentinelResource(value = "userdynamicList",fallback="handlerUserdynamicList")
@@ -85,50 +89,54 @@ public class UserdynamicController {
     //最新的20条动态
     @RequestMapping("/dynamic_new")
     @SentinelResource(value = "dynamic_new",fallback="handlerDynamic_new")
-    public ResponseData<DynamicCards> dynamic_new(){
-
-        Integer id=1;
-        List<Relations> listMap=memberService.intuid(id).getData();
-        List<String> resultList=new ArrayList<>();
-        for (int i=0; i<listMap.size();i++){
-            resultList.add(listMap.get(i).getuID().toString());
-        }
-        List<Cards> cards=new ArrayList<>();
-        QueryWrapper<Userdynamic> wrapper = new QueryWrapper<>();//条件构造器
-        wrapper.in("uID",resultList).orderByDesc("updateTime").last("limit "+20);
-        List<Userdynamic> userdynamic=userdynamicService.list(wrapper);//返回关注up的最新的20条动态 userdynamic表
-        for (int i=0;i<userdynamic.size();i++){
-            QueryWrapper<Dynamicdata> dynamicwrapper = new QueryWrapper<>();//条件构造器
-            dynamicwrapper.eq("udID",userdynamic.get(i).getUdID().toString());
-            Dynamicdata mapdynamic=dynamicdataService.getOne(dynamicwrapper);//
-            QueryWrapper<Dynamiclike> dynamiclikewrapper = new QueryWrapper<>();//条件构造器
-            dynamiclikewrapper.eq("udID",userdynamic.get(i).getUdID().toString()).eq("uID",id);
-            Dynamiclike dynamiclike=dynamiclikeService.getOne(dynamiclikewrapper);
-            User inin=memberService.useruid(userdynamic.get(i).getuID()).getData();//查询User对象
-            Member member=new Member(inin.getuID(),inin.getNickName(),inin.getHeadImgPath());
-            Vip vipin=memberService.vip(userdynamic.get(i).getuID()).getData();
-            Calendar cal = Calendar.getInstance();//时间对象
-            int month = (cal.get(Calendar.MONTH)) + 1;//月
-            int day_of_month = cal.get(Calendar.DAY_OF_MONTH);//日
-            VipStatus vipStatus=null;
-            if(vipin!=null){
-                vipStatus=new VipStatus(true,(month+"/"+day_of_month).equals("4/1")?0:1,vipin.getExpirationTime());
+    public ResponseData<DynamicCards> dynamic_new(HttpServletRequest request){
+        ResponseData<Integer> logon_uid_result = safetyService.logon_uid(TokenUtil.getToken(request));
+        if (logon_uid_result.getCode()==0) {
+            Integer id = logon_uid_result.getData();
+            List<Relations> listMap = memberService.intuid(id).getData();
+            List<String> resultList = new ArrayList<>();
+            for (int i = 0; i < listMap.size(); i++) {
+                resultList.add(listMap.get(i).getuID().toString());
             }
-            Userdata userdata=memberService.userdata(userdynamic.get(i).getuID()).getData();
-            Level_info level_info=new Level_info(userdata.getLevel());
-            Desc desc=new Desc(
-                    userdynamic.get(i).getuID(),
-                    2,
-                    mapdynamic!=null?mapdynamic.getUdCommentNum().intValue():null,
-                    mapdynamic!=null?mapdynamic.getUdLikeNum().intValue():null,
-                    dynamiclike!=null?dynamiclike.getStatus():null,
-                    userdynamic.get(i).getUpdateTime(),
-                    userdynamic.get(i).getUdID(),
-                    new UserProfile(member,vipStatus,level_info));
-            String card=userdynamic.get(i).getContent();
-            cards.add(new Cards(desc,card));
+            List<Cards> cards = new ArrayList<>();
+            QueryWrapper<Userdynamic> wrapper = new QueryWrapper<>();//条件构造器
+            wrapper.in("uID", resultList).orderByDesc("updateTime").last("limit " + 20);
+            List<Userdynamic> userdynamic = userdynamicService.list(wrapper);//返回关注up的最新的20条动态 userdynamic表
+            for (int i = 0; i < userdynamic.size(); i++) {
+                QueryWrapper<Dynamicdata> dynamicwrapper = new QueryWrapper<>();//条件构造器
+                dynamicwrapper.eq("udID", userdynamic.get(i).getUdID().toString());
+                Dynamicdata mapdynamic = dynamicdataService.getOne(dynamicwrapper);//
+                QueryWrapper<Dynamiclike> dynamiclikewrapper = new QueryWrapper<>();//条件构造器
+                dynamiclikewrapper.eq("udID", userdynamic.get(i).getUdID().toString()).eq("uID", id);
+                Dynamiclike dynamiclike = dynamiclikeService.getOne(dynamiclikewrapper);
+                User inin = memberService.useruid(userdynamic.get(i).getuID()).getData();//查询User对象
+                Member member = new Member(inin.getuID(), inin.getNickName(), inin.getHeadImgPath());
+                Vip vipin = memberService.vip(userdynamic.get(i).getuID()).getData();
+                Calendar cal = Calendar.getInstance();//时间对象
+                int month = (cal.get(Calendar.MONTH)) + 1;//月
+                int day_of_month = cal.get(Calendar.DAY_OF_MONTH);//日
+                VipStatus vipStatus = null;
+                if (vipin != null) {
+                    vipStatus = new VipStatus(true, (month + "/" + day_of_month).equals("4/1") ? 0 : 1, vipin.getExpirationTime());
+                }
+                Userdata userdata = memberService.userdata(userdynamic.get(i).getuID()).getData();
+                Level_info level_info = new Level_info(userdata.getLevel());
+                Desc desc = new Desc(
+                        userdynamic.get(i).getuID(),
+                        2,
+                        mapdynamic != null ? mapdynamic.getUdCommentNum().intValue() : null,
+                        mapdynamic != null ? mapdynamic.getUdLikeNum().intValue() : null,
+                        dynamiclike != null ? dynamiclike.getStatus() : null,
+                        userdynamic.get(i).getUpdateTime(),
+                        userdynamic.get(i).getUdID(),
+                        new UserProfile(member, vipStatus, level_info));
+                String card = userdynamic.get(i).getContent();
+                cards.add(new Cards(desc, card));
+            }
+            return new ResponseData<DynamicCards>(0, "", 1, new DynamicCards(cards));
+        }else {
+            return new ResponseData<DynamicCards>(logon_uid_result.getCode(), logon_uid_result.getMessage(), 1, null);
         }
-        return new  ResponseData<DynamicCards>(0,"",1,new DynamicCards(cards));
     }
     public Map handlerDynamic_new(@PathVariable Integer id, Throwable e) {
         Map map=new HashMap();
@@ -139,47 +147,52 @@ public class UserdynamicController {
     //根据偏移动态id获取后面20条动态信息 /dynamic_history
     @SentinelResource(value = "dynamic_history",fallback="handlerDynamic_history")
     @GetMapping("dynamic_history")
-    public ResponseData<DynamicCards> dynamic_history(Integer offset_dynamic_id){
-        Integer id=1;
-        List<Relations> listMap=memberService.intuid(id).getData();
-        List<Integer> resultList=new ArrayList<>();
-        for (int i=0; i<listMap.size();i++){
-            resultList.add(listMap.get(i).getuID());
-        }
-        List<Cards> cards=new ArrayList<>();
-        List<Userdynamic> userdynamic=userdynamicService.listmap(offset_dynamic_id,resultList.toArray(new Integer[0]));
-        for (int i=0;i<userdynamic.size();i++){
-            QueryWrapper<Dynamicdata> dynamicwrapper = new QueryWrapper<>();//条件构造器
-            dynamicwrapper.eq("udID",userdynamic.get(i).getUdID().toString());
-            Dynamicdata mapdynamic=dynamicdataService.getOne(dynamicwrapper);//
-            QueryWrapper<Dynamiclike> dynamiclikewrapper = new QueryWrapper<>();//条件构造器
-            dynamiclikewrapper.eq("udID",userdynamic.get(i).getUdID().toString()).eq("uID",id);
-            Dynamiclike dynamiclike=dynamiclikeService.getOne(dynamiclikewrapper);
-            User inin=memberService.useruid(userdynamic.get(i).getuID()).getData();//查询User对象
-            Member member=new Member(inin.getuID(),inin.getNickName(),inin.getHeadImgPath());
-            Vip vipin=memberService.vip(userdynamic.get(i).getuID()).getData();
-            Calendar cal = Calendar.getInstance();//时间对象
-            int month = (cal.get(Calendar.MONTH)) + 1;//月
-            int day_of_month = cal.get(Calendar.DAY_OF_MONTH);//日
-            VipStatus vipStatus=null;
-            if(vipin!=null){
-                vipStatus=new VipStatus(true,(month+"/"+day_of_month).equals("4/1")?0:1,vipin.getExpirationTime());
+    public ResponseData<DynamicCards> dynamic_history(Integer offset_dynamic_id,HttpServletRequest request){
+        ResponseData<Integer> logon_uid_result = safetyService.logon_uid(TokenUtil.getToken(request));
+        if (logon_uid_result.getCode()==0) {
+            Integer id = logon_uid_result.getData();
+            List<Relations> listMap = memberService.intuid(id).getData();
+            List<Integer> resultList = new ArrayList<>();
+            for (int i = 0; i < listMap.size(); i++) {
+                resultList.add(listMap.get(i).getuID());
             }
-            Userdata userdata=memberService.userdata(userdynamic.get(i).getuID()).getData();
-            Level_info level_info=new Level_info(userdata.getLevel());
-            Desc desc=new Desc(
-                    userdynamic.get(i).getuID(),
-                    2,
-                    mapdynamic!=null?mapdynamic.getUdCommentNum().intValue():null,
-                    mapdynamic!=null?mapdynamic.getUdLikeNum().intValue():null,
-                    dynamiclike!=null?dynamiclike.getStatus():null,
-                    userdynamic.get(i).getUpdateTime(),
-                    userdynamic.get(i).getUdID(),
-                    new UserProfile(member,vipStatus,level_info));
-            String card=userdynamic.get(i).getContent();
-            cards.add(new Cards(desc,card));
+            List<Cards> cards = new ArrayList<>();
+            List<Userdynamic> userdynamic = userdynamicService.listmap(offset_dynamic_id, resultList.toArray(new Integer[0]));
+            for (int i = 0; i < userdynamic.size(); i++) {
+                QueryWrapper<Dynamicdata> dynamicwrapper = new QueryWrapper<>();//条件构造器
+                dynamicwrapper.eq("udID", userdynamic.get(i).getUdID().toString());
+                Dynamicdata mapdynamic = dynamicdataService.getOne(dynamicwrapper);//
+                QueryWrapper<Dynamiclike> dynamiclikewrapper = new QueryWrapper<>();//条件构造器
+                dynamiclikewrapper.eq("udID", userdynamic.get(i).getUdID().toString()).eq("uID", id);
+                Dynamiclike dynamiclike = dynamiclikeService.getOne(dynamiclikewrapper);
+                User inin = memberService.useruid(userdynamic.get(i).getuID()).getData();//查询User对象
+                Member member = new Member(inin.getuID(), inin.getNickName(), inin.getHeadImgPath());
+                Vip vipin = memberService.vip(userdynamic.get(i).getuID()).getData();
+                Calendar cal = Calendar.getInstance();//时间对象
+                int month = (cal.get(Calendar.MONTH)) + 1;//月
+                int day_of_month = cal.get(Calendar.DAY_OF_MONTH);//日
+                VipStatus vipStatus = null;
+                if (vipin != null) {
+                    vipStatus = new VipStatus(true, (month + "/" + day_of_month).equals("4/1") ? 0 : 1, vipin.getExpirationTime());
+                }
+                Userdata userdata = memberService.userdata(userdynamic.get(i).getuID()).getData();
+                Level_info level_info = new Level_info(userdata.getLevel());
+                Desc desc = new Desc(
+                        userdynamic.get(i).getuID(),
+                        2,
+                        mapdynamic != null ? mapdynamic.getUdCommentNum().intValue() : null,
+                        mapdynamic != null ? mapdynamic.getUdLikeNum().intValue() : null,
+                        dynamiclike != null ? dynamiclike.getStatus() : null,
+                        userdynamic.get(i).getUpdateTime(),
+                        userdynamic.get(i).getUdID(),
+                        new UserProfile(member, vipStatus, level_info));
+                String card = userdynamic.get(i).getContent();
+                cards.add(new Cards(desc, card));
+            }
+            return new ResponseData<DynamicCards>(0, "", 1, new DynamicCards(cards));
+        }else{
+            return new ResponseData<DynamicCards>(logon_uid_result.getCode(), logon_uid_result.getMessage(), 1, null);
         }
-        return new  ResponseData<DynamicCards>(0,"",1,new DynamicCards(cards));
     }
     public Map handlerDynamic_history(@PathVariable Integer id, Throwable e) {
         Map map=new HashMap();
@@ -192,42 +205,47 @@ public class UserdynamicController {
     //动态详细信息
     @SentinelResource(value = "dynamic_detail",fallback="handlerDynamic_detail")
     @GetMapping("/dynamic_detail")
-    public ResponseData<DynamicCardsid> dynamic_detail(Integer dynamic_id){
-        Integer id=1;
-        QueryWrapper<Userdynamic> wrapper = new QueryWrapper<>();//条件构造器
-        wrapper.eq("udID",dynamic_id);
-        Userdynamic userdynamic=userdynamicService.getOne(wrapper);//返回关注up的最新的20条动态 userdynamic表
+    public ResponseData<DynamicCardsid> dynamic_detail(Integer dynamic_id,HttpServletRequest request){
+        ResponseData<Integer> logon_uid_result = safetyService.logon_uid(TokenUtil.getToken(request));
+        if (logon_uid_result.getCode()==0) {
+            Integer id = logon_uid_result.getData();
+            QueryWrapper<Userdynamic> wrapper = new QueryWrapper<>();//条件构造器
+            wrapper.eq("udID", dynamic_id);
+            Userdynamic userdynamic = userdynamicService.getOne(wrapper);//返回关注up的最新的20条动态 userdynamic表
 
-        QueryWrapper<Dynamicdata> dynamicwrapper = new QueryWrapper<>();//条件构造器
-        dynamicwrapper.eq("udID",userdynamic.getUdID().toString());
-        Dynamicdata mapdynamic=dynamicdataService.getOne(dynamicwrapper);//
-        QueryWrapper<Dynamiclike> dynamiclikewrapper = new QueryWrapper<>();//条件构造器
-        dynamiclikewrapper.eq("udID",userdynamic.getUdID().toString()).eq("uID",id);
-        Dynamiclike dynamiclike=dynamiclikeService.getOne(dynamiclikewrapper);
-        User inin=memberService.useruid(userdynamic.getuID()).getData();//查询User对象
-        Member member=new Member(inin.getuID(),inin.getNickName(),inin.getHeadImgPath());
-        Vip vipin=memberService.vip(userdynamic.getuID()).getData();
-        Calendar cal = Calendar.getInstance();//时间对象
-        int month = (cal.get(Calendar.MONTH)) + 1;//月
-        int day_of_month = cal.get(Calendar.DAY_OF_MONTH);//日
-        VipStatus vipStatus=null;
-        if(vipin!=null){
-            vipStatus=new VipStatus(true,(month+"/"+day_of_month).equals("4/1")?0:1,vipin.getExpirationTime());
+            QueryWrapper<Dynamicdata> dynamicwrapper = new QueryWrapper<>();//条件构造器
+            dynamicwrapper.eq("udID", userdynamic.getUdID().toString());
+            Dynamicdata mapdynamic = dynamicdataService.getOne(dynamicwrapper);//
+            QueryWrapper<Dynamiclike> dynamiclikewrapper = new QueryWrapper<>();//条件构造器
+            dynamiclikewrapper.eq("udID", userdynamic.getUdID().toString()).eq("uID", id);
+            Dynamiclike dynamiclike = dynamiclikeService.getOne(dynamiclikewrapper);
+            User inin = memberService.useruid(userdynamic.getuID()).getData();//查询User对象
+            Member member = new Member(inin.getuID(), inin.getNickName(), inin.getHeadImgPath());
+            Vip vipin = memberService.vip(userdynamic.getuID()).getData();
+            Calendar cal = Calendar.getInstance();//时间对象
+            int month = (cal.get(Calendar.MONTH)) + 1;//月
+            int day_of_month = cal.get(Calendar.DAY_OF_MONTH);//日
+            VipStatus vipStatus = null;
+            if (vipin != null) {
+                vipStatus = new VipStatus(true, (month + "/" + day_of_month).equals("4/1") ? 0 : 1, vipin.getExpirationTime());
+            }
+            Userdata userdata = memberService.userdata(userdynamic.getuID()).getData();
+            Level_info level_info = new Level_info(userdata.getLevel());
+            Desc desc = new Desc(
+                    userdynamic.getuID(),
+                    2,
+                    mapdynamic != null ? mapdynamic.getUdCommentNum().intValue() : null,
+                    mapdynamic != null ? mapdynamic.getUdLikeNum().intValue() : null,
+                    dynamiclike != null ? dynamiclike.getStatus() : null,
+                    userdynamic.getUpdateTime(),
+                    userdynamic.getUdID(),
+                    new UserProfile(member, vipStatus, level_info));
+            String card = userdynamic.getContent();//文本
+            Cards cards = new Cards(desc, card);
+            return new ResponseData<DynamicCardsid>(0, "", 1, new DynamicCardsid(cards));
+        }else {
+            return new ResponseData<DynamicCardsid>(logon_uid_result.getCode(), logon_uid_result.getMessage(), 1, null);
         }
-        Userdata userdata=memberService.userdata(userdynamic.getuID()).getData();
-        Level_info level_info=new Level_info(userdata.getLevel());
-        Desc desc=new Desc(
-                userdynamic.getuID(),
-                2,
-                mapdynamic!=null?mapdynamic.getUdCommentNum().intValue():null,
-                mapdynamic!=null?mapdynamic.getUdLikeNum().intValue():null,
-                dynamiclike!=null?dynamiclike.getStatus():null,
-                userdynamic.getUpdateTime(),
-                userdynamic.getUdID(),
-                new UserProfile(member,vipStatus,level_info));
-        String card=userdynamic.getContent();//文本
-        Cards cards=new Cards(desc,card);
-        return new ResponseData<DynamicCardsid>(0,"",1,new DynamicCardsid(cards));
     }
     public Map handlerDynamic_detail(@PathVariable Integer id, Throwable e) {
         Map map=new HashMap();

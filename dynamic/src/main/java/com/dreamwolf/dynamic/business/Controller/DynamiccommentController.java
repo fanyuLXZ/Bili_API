@@ -12,12 +12,14 @@ import com.dreamwolf.entity.dynamic.Userdata;
 import com.dreamwolf.dynamic.business.service.*;
 import com.dreamwolf.entity.member.*;
 import com.dreamwolf.entity.member.web_interface.Bang;
+import com.dreamwolf.safety.util.TokenUtil;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -36,20 +38,28 @@ public class DynamiccommentController {
     MemberService memberService;
     @Resource
     CommentService commentService;
+    @Resource
+    SafetyService safetyService;
+
     //动态的最新信息
     @SentinelResource(value = "entrance",fallback="handlerEntrance")
     @RequestMapping("/entrance")
-    public ResponseData<Bang> entrance(){
-        Integer id=1;
-        int code = 0;
-        String message="";
-        ResponseData<Bang> bangverify= memberService.verify(id);
-        Bang bang=bangverify.getData();
-        if (bangverify.getCode()!=0){
-            code=1;
-            message="接口出现问题";
+    public ResponseData<Bang> entrance(HttpServletRequest request){
+        ResponseData<Integer> logon_uid_result = safetyService.logon_uid(TokenUtil.getToken(request));
+        if (logon_uid_result.getCode()==0) {
+            Integer id = logon_uid_result.getData();
+            int code = 0;
+            String message = "";
+            ResponseData<Bang> bangverify = memberService.verify(id);
+            Bang bang = bangverify.getData();
+            if (bangverify.getCode() != 0) {
+                code = 1;
+                message = "接口出现问题";
+            }
+            return new ResponseData<Bang>(code, message, 1, bang);
+        }else {
+            return new ResponseData<Bang>(logon_uid_result.getCode(), logon_uid_result.getMessage(), 1, null);
         }
-        return new ResponseData<Bang>(code,message,1,bang);
     }
     public Map handlerEntrance(@PathVariable Integer id, Throwable e) {
         Map map=new HashMap();
