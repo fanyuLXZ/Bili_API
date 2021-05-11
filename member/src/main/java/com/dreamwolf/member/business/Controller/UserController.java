@@ -10,6 +10,7 @@ import com.dreamwolf.entity.message.web_interface.MMres;
 import com.dreamwolf.member.business.service.*;
 import com.dreamwolf.member.business.util.Hide;
 import com.dreamwolf.member.business.util.md5;
+import com.dreamwolf.safety.util.TokenUtil;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.*;
 
@@ -42,6 +44,9 @@ public class UserController {
     RelationsService relationsService;
     @Resource
     Userdynamic userdynamic;
+    @Resource
+    SafetyService safetyService;
+
 
     //登录
     @RequestMapping("/user/verify")
@@ -82,23 +87,33 @@ public class UserController {
 
     //账号基本信息
     @RequestMapping("/exp/reward")
-    public ResponseData<ExpReward> reward(){
-        Integer id=1;//默认id
-        User user= userService.getById(id);
-        ExpReward expReward = new ExpReward(true,true,5,true,user.getBoundEmail()!=null,user.getBoundPhone()!=null);
-        return new ResponseData<ExpReward>(0,"",1,expReward);
+    public ResponseData<ExpReward> reward(HttpServletRequest request){
+        ResponseData<Integer> logon_uid_result = safetyService.logon_uid(TokenUtil.getToken(request));
+        if (logon_uid_result.getCode()==0) {
+            Integer id = logon_uid_result.getData();
+            User user= userService.getById(id);
+            ExpReward expReward = new ExpReward(true,true,5,true,user.getBoundEmail()!=null,user.getBoundPhone()!=null);
+            return new ResponseData<ExpReward>(0,"",1,expReward);
+        }else {
+            return new ResponseData<ExpReward>(logon_uid_result.getCode(), logon_uid_result.getMessage(), 1, null);
+        }
     }
 
     //用户基本信息
     @RequestMapping("/user/info")
-    public ResponseData<UserInfo> userinfo(){
-        Integer id=1;//默认id
-        User user= userService.getById(id);
-        Hide hide=new Hide();//加密工具类
-        UserInfo userInfo = new UserInfo(hide.hidePhoneNum(user.getBoundPhone())
-                ,hide.hidePhoneNum(user.getBoundEmail()),
-                user.getBoundPhone()!=null,user.getBoundEmail()!=null);
-        return new ResponseData<UserInfo>(0,"",1,userInfo);
+    public ResponseData<UserInfo> userinfo(HttpServletRequest request){
+        ResponseData<Integer> logon_uid_result = safetyService.logon_uid(TokenUtil.getToken(request));
+        if (logon_uid_result.getCode()==0) {
+            Integer id = logon_uid_result.getData();
+            User user= userService.getById(id);
+            Hide hide=new Hide();//加密工具类
+            UserInfo userInfo = new UserInfo(hide.hidePhoneNum(user.getBoundPhone())
+                    ,hide.hidePhoneNum(user.getBoundEmail()),
+                    user.getBoundPhone()!=null,user.getBoundEmail()!=null);
+            return new ResponseData<UserInfo>(0,"",1,userInfo);
+        }else {
+            return new ResponseData<UserInfo>(logon_uid_result.getCode(), logon_uid_result.getMessage(), 1, null);
+        }
     }
 
     //接口调接口 动态的最新信息entrance
@@ -186,16 +201,21 @@ public class UserController {
 
     //当前登陆的用户基本信息
     @GetMapping("/card/info")
-    public ResponseData<Member> cardinfos(){
-        Integer id=1;
-        User user=userService.getById(id);
-        QueryWrapper<Relations> integerQueryWrapper=new QueryWrapper<>();
-        integerQueryWrapper.eq("uID",id);//查找uID为id的 关注up的
-        QueryWrapper<Relations> integerWrapper=new QueryWrapper<>();
-        integerWrapper.eq("followUID",id);//查找followUID为id的 up关注的
-        Member member=new Member(user.getuID(),user.getNickName(),user.getHeadImgPath(),
-                (long)relationsService.list(integerQueryWrapper).size(),(long)relationsService.list(integerWrapper).size());
-        return new ResponseData<Member>(0,"",1,member);
+    public ResponseData<Member> cardinfos(HttpServletRequest request){
+        ResponseData<Integer> logon_uid_result = safetyService.logon_uid(TokenUtil.getToken(request));
+        if (logon_uid_result.getCode()==0) {
+            Integer id = logon_uid_result.getData();
+            User user=userService.getById(id);
+            QueryWrapper<Relations> integerQueryWrapper=new QueryWrapper<>();
+            integerQueryWrapper.eq("uID",id);//查找uID为id的 关注up的
+            QueryWrapper<Relations> integerWrapper=new QueryWrapper<>();
+            integerWrapper.eq("followUID",id);//查找followUID为id的 up关注的
+            Member member=new Member(user.getuID(),user.getNickName(),user.getHeadImgPath(),
+                    (long)relationsService.list(integerQueryWrapper).size(),(long)relationsService.list(integerWrapper).size());
+            return new ResponseData<Member>(0,"",1,member);
+        }else {
+            return new ResponseData<Member>(logon_uid_result.getCode(), logon_uid_result.getMessage(), 1, null);
+        }
     }
 
     //用户对象数组
