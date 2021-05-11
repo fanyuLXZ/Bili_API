@@ -26,4 +26,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public User select(String userName) {
         return userMapper.select(userName);
     }
+
+    @Override
+    public Boolean saveToUser(User user){
+       return userMapper.insertToUser(user)>0;
+    }
 }

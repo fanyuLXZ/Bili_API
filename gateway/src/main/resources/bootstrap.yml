@@ -1,5 +1,5 @@
 server:
-  port: 80
+  port: 8000
 spring:
   application:
     #应用名
@@ -16,3 +16,15 @@ spring:
         extension-configs[0]:
           data-id: sentinel-config.yaml
           refresh: true
+  gateway:
+    globalcors:
+      cors-configurations:
+        '[/**]':
+          allow-credentials: true
+          allowed-origins:
+          allowed-headers: "*"
+          allowed-methods:
+            - OPTIONS
+            - GET
+            - POST
+          max-age: 3600

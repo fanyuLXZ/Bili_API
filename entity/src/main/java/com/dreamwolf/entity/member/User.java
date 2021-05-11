@@ -45,15 +45,15 @@ public class User implements Serializable {
     private String password;
 
     /**
-     * 用户昵称
+     * 用户昵称（唯一）
      */
     @TableField("nickName")
-    private String nickName;
+    private String nickName="这是个名称";
 
     /**
      * 用户性别，1为男，2为女，0为私密
      */
-    private Integer sex;
+    private Integer sex=1;
 
     /**
      * 用户生日
@@ -166,5 +166,13 @@ public class User implements Serializable {
 
     public void setHeadImgPath(String headImgPath) {
         this.headImgPath = headImgPath;
+    }
+
+    // 注册专用构造器
+
+    public User(String password, String nickName, String boundPhone) {
+        this.password = password;
+        this.nickName = nickName;
+        this.boundPhone = boundPhone;
     }
 }

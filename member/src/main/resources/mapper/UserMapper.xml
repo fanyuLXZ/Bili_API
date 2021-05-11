@@ -4,4 +4,8 @@
     <select id="select" parameterType="int" resultType="User">
         SELECT uID,`password` FROM`user` WHERE `userName`=${userName}
     </select>
+    <insert id="insertToUser" parameterType="com.dreamwolf.entity.member.User" useGeneratedKeys="true" keyProperty="uID">
+        insert into user(password,nickName,sex,boundPhone)
+        values (#{password},#{nickName},#{sex},#{boundPhone});
+    </insert>
 </mapper>

@@ -1450,7 +1450,7 @@
         参数：  
         * username 用户名
         * password 密码
-    3. 根据token获取uid /landed-uid (提供给内部接口用于接口调接口) (参数不适用HttpServletRequest或Cookie类的原因是考虑到接口掉接口会产生不必要的网络资源消耗)
+    3. 根据token获取uid /logon-uid (提供给内部接口用于接口调接口) (参数不适用HttpServletRequest或Cookie类的原因是考虑到接口掉接口会产生不必要的网络资源消耗)
         参数：
         * token token string
         返回值：uid int(data直接为uid)

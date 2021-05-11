@@ -10,12 +10,16 @@ import com.dreamwolf.entity.message.web_interface.MMres;
 import com.dreamwolf.member.business.service.*;
 import com.dreamwolf.member.business.util.Hide;
 import com.dreamwolf.member.business.util.md5;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.*;
 
 /**
@@ -252,13 +256,13 @@ public class UserController {
     public ResponseData<List<MMres>> list(Integer id){
         List<MMres> reply=new ArrayList<>();
         List<MMItems> replyitem=userdynamic.replyitem(id).getData();
-        for(int i=0;i<replyitem.size();i++){
-            MMItems mmItems=new MMItems(replyitem.get(i).getSource_content(),replyitem.get(i).getType(),
-                    replyitem.get(i).getBusiness(),replyitem.get(i).getTitle(),replyitem.get(i).getReply_time(),
-                    replyitem.get(i).getUri(),replyitem.get(i).getBvid(),replyitem.get(i).getImage(),
-                    replyitem.get(i).getNative_uri());
-            ReplyUser repl=replyuserb(replyitem.get(i).getBvid(),id).getData();
-            MMres mm = new MMres(repl,mmItems);
+        for (MMItems items : replyitem) {
+            MMItems mmItems = new MMItems(items.getSource_content(), items.getType(),
+                    items.getBusiness(), items.getTitle(), items.getReply_time(),
+                    items.getUri(), items.getBvid(), items.getImage(),
+                    items.getNative_uri());
+            ReplyUser repl = replyuserb(items.getBvid(), id).getData();
+            MMres mm = new MMres(repl, mmItems);
             reply.add(mm);
         }
         return new ResponseData(0,"",1,reply);
@@ -282,7 +286,128 @@ public class UserController {
     @GetMapping("/ownerinfo")
     public ResponseData<OwnerInfo> OwnerInfo(Integer uID){
         User user=userService.getById(uID);
-        return new ResponseData<OwnerInfo>(0,"",1,new OwnerInfo(user));
+        return new ResponseData<>(0, "", 1, new OwnerInfo(user));
+    }
+
+    /**
+     * 增加用户
+     * @param nickname 昵称
+     * @param password 密码
+     * @param phone 手机号
+     * @return
+     * code 可能性
+     * 0 注册成功
+     * 1 注册失败
+     * 2 提交用户名失败
+     * 3 参数为空
+     * 4 昵称已存在
+     * 5 手机号已注册
+     */
+    @Transactional
+    @PostMapping("/register")
+    public ResponseData<User> register(String nickname,String password,String phone){
+        int code = 0;
+        String message="";
+        User data = null;
+        if (nickname!=null&&!nickname.equals("")&&password!=null&&!password.equals("")&&phone!=null&&!phone.equals("")){
+            // 验证是否重名
+            ResponseData<Boolean> responseData_checkNickname = checkNickname(nickname);
+            ResponseData<Boolean> responseData_checkPhone = checkPhone(phone);
+            if (!responseData_checkNickname.getData()){
+                message="昵称已存在";
+                code=4;
+            }else if (!responseData_checkPhone.getData()){
+                message="手机号已注册";
+                code=5;
+            }else {
+                // 添加用户
+                User user = new User(nickname,password,phone);
+                user.setNickName(nickname);
+                user.setPassword(password);
+                user.setBoundPhone(phone);
+                Boolean isSave;
+                isSave = userService.saveToUser(user);
+                // 判断是否添加成功
+                if (isSave){
+                    user.setUserName("bili_"+user.getuID().toString());
+                    // 提交用户名
+                    if (userService.updateById(user)){
+                        data=user;
+                    }else {
+                        message="服务器异常";
+                        code=2;
+                        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                    }
+                }else {
+                    message="注册失败";
+                    code=1;
+                }
+            }
+        }else {
+            message="参数异常";
+            code=3;
+        }
+        return new ResponseData<>(code,message,1,data);
+    }
+
+    /**
+     * 验证昵称
+     * @param nickName 昵称
+     * @return
+     * code 可能性
+     *  0 昵称不存在
+     *  1 昵称已存在
+     */
+    @GetMapping("/check/nickname")
+    public ResponseData<Boolean> checkNickname(String nickName){
+        int code = 0;
+        String message;
+        boolean data = false;
+        if (nickName!=null&&!nickName.equals("")){
+            QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("nickName",nickName);
+            data = userService.getOne(queryWrapper)==null;
+            if (!data){
+                message="昵称已存在";
+                code=1;
+            }else {
+                message="";
+            }
+        }else {
+            message="昵称不能为空";
+            code=1;
+        }
+        return new ResponseData<>(code,message,1,data);
+    }
+
+    /**
+     * 验证手机号
+     * @param phone 手机号
+     * @return
+     * code 可能性
+     *  0 手机号不存在
+     *  1 手机号已存在
+     */
+    @GetMapping("/check/phone")
+    public ResponseData<Boolean> checkPhone(String phone){
+        int code = 0;
+        String message;
+        boolean data = false;
+        if (phone!=null&&!phone.equals("")){
+            QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("boundPhone",phone);
+            data = userService.getOne(queryWrapper)==null;
+            if (!data){
+                message="手机号已存在";
+                code=1;
+            }else {
+                message="";
+            }
+        }else {
+            message="手机号不能为空";
+            code=1;
+        }
+        return new ResponseData<>(code,message,1,data);
     }
 }
 

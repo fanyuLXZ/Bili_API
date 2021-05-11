@@ -10,16 +10,16 @@ import com.dreamwolf.entity.member.Label;
 import com.dreamwolf.entity.member.Level_info;
 import com.dreamwolf.entity.member.Member;
 import com.dreamwolf.entity.member.VipStatus;
-import com.dreamwolf.member.business.service.RelationsService;
-import com.dreamwolf.member.business.service.UserService;
-import com.dreamwolf.member.business.service.UserdataService;
-import com.dreamwolf.member.business.service.VipService;
+import com.dreamwolf.member.business.service.*;
 import com.dreamwolf.member.business.util.Jisuan;
+import com.dreamwolf.safety.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Calendar;
 
 /**
@@ -40,24 +40,32 @@ public class UserdataController {
     VipService vipService;
     @Autowired
     RelationsService relationsService;
+    @Resource
+    SafetyService safetyService;
 
     //用户信息
     @RequestMapping("/all-info")
-    public ResponseData<Member> info(){
+    public ResponseData<Member> info(HttpServletRequest request){
         Jisuan jisuan=new Jisuan();
-        Integer id=1;
-        Userdata userdata= userdataService.select(id);
-        Level_info level_info=new Level_info(userdata.getLevel(),jisuan.residue(userdata.getLevel()),userdata.getExp(),jisuan.residue(userdata.getLevel()+1));//jisuan.mincurrent(userdata.getLevel(),userdata.getExp().intValue()) 经验计算
-        //会员相关
-        Vip ivip= vipService.vipselect(id);
-        //判断会员类型 4.1号为小会员
-        Calendar cal = Calendar.getInstance();
-        int month = (cal.get(Calendar.MONTH)) + 1;//月
-        int day_of_month = cal.get(Calendar.DAY_OF_MONTH);//日
-        VipStatus vipStatus=new VipStatus((month+"/"+day_of_month).equals("4/1")?0:1,ivip!=null, ivip.getExpirationTime(),new Label("","大会员","vip","#FFFFFF","1","#FB7299",""),"http://i0.hdslb.com/bfs/vip/icon_Certification_big_member_22_3x.png");
-        User user= userService.getById(id);
-        Member member=new Member(true,user.getuID(),user.getUserName(),user.getHeadImgPath(),level_info, vipStatus,userdata.getCoinsNum().intValue(),userdata.getBCoinsNum().intValue(),user.getBoundEmail()!=null,user.getBoundPhone()!=null);
-        return new ResponseData<Member>(0,"",1,member);
+        ResponseData<Integer> logon_uid_result = safetyService.logon_uid(TokenUtil.getToken(request));
+        if (logon_uid_result.getCode()==0) {
+            Integer id = logon_uid_result.getData();
+            Userdata userdata = userdataService.select(id);
+            Level_info level_info = new Level_info(userdata.getLevel(), jisuan.residue(userdata.getLevel()), userdata.getExp(), jisuan.residue(userdata.getLevel() + 1));//jisuan.mincurrent(userdata.getLevel(),userdata.getExp().intValue()) 经验计算
+            //会员相关
+            Vip ivip = vipService.vipselect(id);
+            //判断会员类型 4.1号为小会员
+            Calendar cal = Calendar.getInstance();
+            int month = (cal.get(Calendar.MONTH)) + 1;//月
+            int day_of_month = cal.get(Calendar.DAY_OF_MONTH);//日
+            VipStatus vipStatus = new VipStatus((month + "/" + day_of_month).equals("4/1") ? 0 : 1, ivip != null, ivip.getExpirationTime(), new Label("", "大会员", "vip", "#FFFFFF", "1", "#FB7299", ""), "http://i0.hdslb.com/bfs/vip/icon_Certification_big_member_22_3x.png");
+            User user = userService.getById(id);
+            Member member = new Member(true, user.getuID(), user.getUserName(), user.getHeadImgPath(), level_info, vipStatus, userdata.getCoinsNum().intValue(), userdata.getBCoinsNum().intValue(), user.getBoundEmail() != null, user.getBoundPhone() != null);
+            return new ResponseData<Member>(0, "", 1, member);
+        }else {
+            return new ResponseData<Member>(logon_uid_result.getCode(), logon_uid_result.getMessage(), 1, null);
+        }
+
     }
 
     //通过用户id 返回Userdata表所有信息 用户等级经验等.通过id返回Userdata表所有对应id信息

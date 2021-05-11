@@ -19,3 +19,4 @@ spring:
         extension-configs[1]:
           data-id: redis-data-config
           refresh: true
+domain: bilibili.org
