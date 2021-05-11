@@ -5,6 +5,7 @@ import com.dreamwolf.entity.comment.Comment;
 import com.dreamwolf.entity.comment.Commentlike;
 import com.dreamwolf.entity.comment.web_interface.Commcidmap;
 import com.dreamwolf.entity.dynamic.IikesItems;
+import com.dreamwolf.entity.member.Member;
 import com.dreamwolf.entity.member.ReplyUser;
 import com.dreamwolf.entity.member.Users;
 import com.dreamwolf.entity.message.Usermsgs;
@@ -14,11 +15,13 @@ import com.dreamwolf.entity.video.Videocomment;
 import com.dreamwolf.entity.video.Videolike;
 import com.dreamwolf.entity.video.web_interface.VideoList;
 import com.dreamwolf.message.service.*;
+import com.dreamwolf.safety.util.TokenUtil;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.time.ZoneId;
 import java.util.*;
 
@@ -48,6 +51,9 @@ public class UsermsgsController {
     @Resource
     private DynamicService dynamicService;
 
+    @Resource
+    SafetyService safetyService;
+
     @GetMapping("/usermsgsfid")
     public ResponseData<List<Usermsgs>> selectlistfid(Integer fid){
         List<Usermsgs> usermsgsList = usermsgsService.selectusmsgsfid(fid);
@@ -63,9 +69,11 @@ public class UsermsgsController {
 
     //收到的点赞
     @GetMapping("/like")
-    public ResponseData<Msgstotal> selectmeslist(){
+    public ResponseData<Msgstotal> selectmeslist(HttpServletRequest request){
+        ResponseData<Integer> logon_uid_result = safetyService.logon_uid(TokenUtil.getToken(request));
+        if (logon_uid_result.getCode()==0) {
             Integer uid = 1; //当前用户id
-            ResponseData<VideoList>  bv_ids = videoService.videouID(uid);
+            ResponseData<VideoList> bv_ids = videoService.videouID(uid);
             ResponseData<List<Videolike>> video_like_list = videoService.sellist((Integer[]) bv_ids.getData().list.toArray(new Integer[0]));  //根据视频id数组查询点赞表
             //根据视频id数组批量查询视频数据
             ResponseData<List<Video>> videos = videoService.selectbvidlist((Integer[]) bv_ids.getData().list.toArray(new Integer[0]));
@@ -74,26 +82,26 @@ public class UsermsgsController {
             ResponseData<List<Commentlike>> commentlikelist = commentService.selectarrlist(comarr.getData().toArray(new Integer[0])); //根据评论id数组拿到评论点赞的数据
             ResponseData<List<Comment>> commentscidarr = commentService.commentsarrlist(comarr.getData().toArray(new Integer[0]));//拿到评论id的数据
             List itemlist = new ArrayList();
-            int i =1;
+            int i = 1;
             Date last_like_time = null;
-            for(Comment comm : commentscidarr.getData()){
+            for (Comment comm : commentscidarr.getData()) {
                 MsgsVideoItem commap = new MsgsVideoItem();
                 commap.setId(i++);
                 List<Integer> user_ids2 = new ArrayList<>(); //用户id数组
-                for (Commentlike commentslike:commentlikelist.getData()){ //遍历视频点赞表数据
+                for (Commentlike commentslike : commentlikelist.getData()) { //遍历视频点赞表数据
                     if (commentslike.getCID().equals(comm.getCID())) {
-                        last_like_time=commentslike.getCreateTime();
+                        last_like_time = commentslike.getCreateTime();
                         user_ids2.add(commentslike.getUID());
                     }
                 }
-                if (user_ids2.size()<=0){
+                if (user_ids2.size() <= 0) {
                     continue;
                 }
-                ResponseData<List<Users>> uselist =  memberService.users(user_ids2.toArray(new Integer[0]),uid);
+                ResponseData<List<Users>> uselist = memberService.users(user_ids2.toArray(new Integer[0]), uid);
                 commap.setUsers(uselist.getData());//用户对象
                 Items mlist = new Items();
                 mlist.setItem_id(comm.getCID());    //评论id
-                if(comm.getCID() ==comm.getCID()){
+                if (comm.getCID() == comm.getCID()) {
                     mlist.setType("reply");   //类型video代表视频，dynamic代表动态 reply代表文字 String
                 }
                 mlist.setTitle(comm.getCText());  //正文
@@ -107,31 +115,31 @@ public class UsermsgsController {
                 itemlist.add(commap);
 
             }
-            for(Video video:videos.getData()){
+            for (Video video : videos.getData()) {
                 MsgsVideoItem itemObject = new MsgsVideoItem();
                 itemObject.setId(i++);
 
                 List<Integer> user_ids = new ArrayList<>(); //用户id数组
-                for (Videolike videolike:video_like_list.getData()){ //遍历视频点赞表数据
+                for (Videolike videolike : video_like_list.getData()) { //遍历视频点赞表数据
                     if (videolike.getBvID().equals(video.getBvID())) {
-                        last_like_time=videolike.getCreateTime();
+                        last_like_time = videolike.getCreateTime();
                         user_ids.add(videolike.getUID());
                     }
                 }
-                ResponseData<List<Users>> uselist2 =  memberService.users(user_ids.toArray(new Integer[0]),uid);
-                if (uselist2.getData().size()<=0){
+                ResponseData<List<Users>> uselist2 = memberService.users(user_ids.toArray(new Integer[0]), uid);
+                if (uselist2.getData().size() <= 0) {
                     continue;
                 }
-               itemObject.setUsers(uselist2.getData());//用户对象
+                itemObject.setUsers(uselist2.getData());//用户对象
                 Items mlist = new Items();
                 mlist.setItem_id(video.getBvID());    //视频id
-                if(video.getBvID() ==video.getBvID()){
+                if (video.getBvID() == video.getBvID()) {
                     mlist.setType("video");   //类型video代表视频，dynamic代表动态 reply代表文字 String
                 }
                 mlist.setTitle(video.getBvTitle());  //标题
                 mlist.setDesc(video.getBvDesc());     //描述
                 mlist.setImage(video.getBvCoverImgPath());    //封面图
-                mlist.setUri( video.getBvVideoPath());     //链接
+                mlist.setUri(video.getBvVideoPath());     //链接
                 mlist.setCtime(video.getBvPostTime());   //发表视频时间
                 itemObject.setItem(mlist);
                 itemObject.setCounts(user_ids.size());      //此评论/视频/动态的总人数
@@ -140,8 +148,8 @@ public class UsermsgsController {
             }
 
             //动态
-             ResponseData<List<IikesItems>> dylist  =dynamicService.likeitems(uid);
-            for(IikesItems limap :dylist.getData() ){
+            ResponseData<List<IikesItems>> dylist = dynamicService.likeitems(uid);
+            for (IikesItems limap : dylist.getData()) {
                 MsgsVideoItem slp = new MsgsVideoItem();
                 slp.setId(i++);
                 slp.setUsers(limap.getUsers());
@@ -154,10 +162,10 @@ public class UsermsgsController {
             }
 
             //把itemlist按照最大时间在前排序
-            Collections.sort(itemlist, new Comparator<MsgsVideoItem>(){
+            Collections.sort(itemlist, new Comparator<MsgsVideoItem>() {
                 public int compare(MsgsVideoItem o1, MsgsVideoItem o2) {
                     try {
-                        if(o1.getLike_time() == null || o2.getLike_time() == null){
+                        if (o1.getLike_time() == null || o2.getLike_time() == null) {
                             return 1;
                         }
                         Date dt1 = o1.getLike_time();
@@ -179,13 +187,19 @@ public class UsermsgsController {
 
             Msgsitems msgsitems = new Msgsitems(itemlist);
             Msgstotal msgstotal = new Msgstotal(msgsitems);
-        return new ResponseData(0,"",1,msgstotal);
+            return new ResponseData(0, "", 1, msgstotal);
+        }else {
+            return new ResponseData<>(logon_uid_result.getCode(), logon_uid_result.getMessage(), 1, null);
+        }
     }
 
 
     //回复我的
     @GetMapping("/reply")
-    public ResponseData<Msgsreply> usermsglist(){
+    public ResponseData<Msgsreply> usermsglist(HttpServletRequest request){
+        ResponseData<Integer> logon_uid_result = safetyService.logon_uid(TokenUtil.getToken(request));
+        if(logon_uid_result.getCode()==0){
+
             Integer uid = 1;
             ResponseData<VideoList>  videoarr = videoService.videouID(uid);    //根据用户id拿到所有视频 视频id数组
             //根据视频id数组拿到视频下面的评论id
@@ -281,12 +295,19 @@ public class UsermsgsController {
 
         Msgsreply mmdata = new Msgsreply(listitem);
         return new ResponseData(0,"",1,mmdata);
+
+        }else {
+            return new ResponseData<>(logon_uid_result.getCode(), logon_uid_result.getMessage(), 1, null);
+        }
     }
 
 
     //我的消息
     @GetMapping("/get_sessions")
-    public ResponseData<UserMsgsList> usermsguid(){
+    public ResponseData<UserMsgsList> usermsguid(HttpServletRequest request){
+        ResponseData<Integer> logon_uid_result = safetyService.logon_uid(TokenUtil.getToken(request));
+        if(logon_uid_result.getCode()==0){
+
         Integer uid = 1;    //当前用户id，默认为1
         UserMsgsList userMsgsList=null;
         if(uid !=null) {
@@ -320,6 +341,10 @@ public class UsermsgsController {
 
         return new ResponseData(0,"",1,userMsgsList);
 
+        }else {
+            return new ResponseData<>(logon_uid_result.getCode(), logon_uid_result.getMessage(), 1, null);
+        }
+
     }
 
     /**
@@ -327,7 +352,10 @@ public class UsermsgsController {
      * @return
      */
     @GetMapping("/fetch_session_msgs")
-    public ResponseData<Messlist> usermsuidfidlist(Integer fid){
+    public ResponseData<Messlist> usermsuidfidlist(Integer fid,HttpServletRequest request){
+        ResponseData<Integer> logon_uid_result = safetyService.logon_uid(TokenUtil.getToken(request));
+        if(logon_uid_result.getCode()==0){
+
         Integer uid = 1;
         List<Usermsgs> usermsgsList = usermsgsService.usermsgslistuidfid(uid,fid);
         List list = new ArrayList();
@@ -341,6 +369,10 @@ public class UsermsgsController {
         }
         Messlist messlist = new Messlist(list);
         return new ResponseData(0,"",1,messlist);
+
+        }else {
+            return new ResponseData<>(logon_uid_result.getCode(), logon_uid_result.getMessage(), 1, null);
+        }
     }
 
 
