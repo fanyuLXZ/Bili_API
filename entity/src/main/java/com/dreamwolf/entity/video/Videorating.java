@@ -33,7 +33,7 @@ public class Videorating implements Serializable {
 
     @ApiModelProperty(value = "视频综合评分，评分规则详见数据库说明书。")
     @TableField("OverallRating")
-    private Double OverallRating;
+    private Double OverallRating=0.0;
 
 
 }

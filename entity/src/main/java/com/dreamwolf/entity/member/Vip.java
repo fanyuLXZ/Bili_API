@@ -49,7 +49,7 @@ public class Vip implements Serializable {
      * 会员积分
      */
     @TableField("vPoint")
-    private Integer vPoint;
+    private Integer vPoint=0;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;

@@ -32,61 +32,61 @@ public class Userdata implements Serializable {
      * 用户等级
      */
     @TableField("Level")
-    private Integer Level;
+    private Integer Level=0;
 
     /**
      * 用户现有经验
      */
     @TableField("Exp")
-    private Long Exp;
+    private Long Exp=0L;
 
     /**
      * 用户现有硬币数量
      */
     @TableField("CoinsNum")
-    private Double CoinsNum;
+    private Double CoinsNum=0.0;
 
     /**
      * 用户现有B币数量
      */
     @TableField("BCoinsNum")
-    private Long BCoinsNum;
+    private Long BCoinsNum=0L;
 
     /**
      * 用户总关注up主数量
      */
     @TableField("tFollowNum")
-    private Long tFollowNum;
+    private Long tFollowNum=0L;
 
     /**
      * 用户总粉丝数量
      */
     @TableField("tFansNum")
-    private Long tFansNum;
+    private Long tFansNum=0L;
 
     /**
      * 用户总获赞数
      */
     @TableField("tLikeNum")
-    private Long tLikeNum;
+    private Long tLikeNum=0L;
 
     /**
      * 用户上传的视频的总播放数
      */
     @TableField("tPlaysNum")
-    private Long tPlaysNum;
+    private Long tPlaysNum=0L;
 
     /**
      * 用户撰写的专栏的总阅读数
      */
     @TableField("tReadNum")
-    private Long tReadNum;
+    private Long tReadNum=0L;
 
     /**
      * 用户简介
      */
     @TableField("uDescription")
-    private String uDescription;
+    private String uDescription="这个人很懒什么都没写";
 
     public static long getSerialVersionUID() {
         return serialVersionUID;

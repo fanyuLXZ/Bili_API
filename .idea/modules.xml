@@ -13,7 +13,9 @@
       <module fileurl="file://$PROJECT_DIR$/message/message.iml" filepath="$PROJECT_DIR$/message/message.iml" />
       <module fileurl="file://$PROJECT_DIR$/safety/safety.iml" filepath="$PROJECT_DIR$/safety/safety.iml" />
       <module fileurl="file://$PROJECT_DIR$/video/video.iml" filepath="$PROJECT_DIR$/video/video.iml" />
+      <module fileurl="file://$PROJECT_DIR$/video-resource/video-resource.iml" filepath="$PROJECT_DIR$/video-resource/video-resource.iml" />
       <module fileurl="file://$PROJECT_DIR$/watch-history/watch-history.iml" filepath="$PROJECT_DIR$/watch-history/watch-history.iml" />
+      <module fileurl="file://$PROJECT_DIR$/web-interface/web-interface.iml" filepath="$PROJECT_DIR$/web-interface/web-interface.iml" />
       <module fileurl="file://$PROJECT_DIR$/zoning/zoning.iml" filepath="$PROJECT_DIR$/zoning/zoning.iml" />
     </modules>
   </component>

@@ -27,4 +27,13 @@ public class UserdataServiceImpl extends ServiceImpl<UserdataMapper, Userdata> i
     public Userdata select(int uID) {
         return userdataMapper.select(uID);
     }
+
+    @Override
+    public boolean changeWhereExist(Userdata userdata){
+        return userdataMapper.updateWhereExist(userdata)>0;
+    }
+    @Override
+    public boolean coin_add(int uID){
+        return userdataMapper.coin_add(uID)>0;
+    }
 }

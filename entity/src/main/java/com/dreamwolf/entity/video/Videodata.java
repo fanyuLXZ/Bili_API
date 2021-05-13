@@ -33,34 +33,36 @@ public class Videodata implements Serializable {
 
     @ApiModelProperty(value = "视频播放数")
     @TableField("bvPlayNum")
-    private Long bvPlayNum;
+    private Long bvPlayNum=0L;
 
     @ApiModelProperty(value = "视频弹幕数")
     @TableField("bvPopupsNum")
-    private Long bvPopupsNum;
+    private Long bvPopupsNum=0L;
 
     @ApiModelProperty(value = "视频顶数")
     @TableField("bvLikeNum")
-    private Long bvLikeNum;
+    private Long bvLikeNum=0L;
 
     @ApiModelProperty(value = "视频硬币数")
     @TableField("bvCoinNum")
-    private Long bvCoinNum;
+    private Long bvCoinNum=0L;
 
     @ApiModelProperty(value = "视频收藏数")
     @TableField("bvFavoriteNum")
-    private Long bvFavoriteNum;
+    private Long bvFavoriteNum=0L;
 
     @ApiModelProperty(value = "视频转发数")
     @TableField("bvRetweetNum")
-    private Long bvRetweetNum;
+    private Long bvRetweetNum=0L;
 
     @ApiModelProperty(value = "视频评论数")
     @TableField("bvCommentNum")
-    private Long bvCommentNum;
+    private Long bvCommentNum=0L;
 
     @TableField("bvDislike")
-    private Long bvDislike;
+    private Long bvDislike=0L;
 
-
+    public Videodata(Integer bvID) {
+        this.bvID = bvID;
+    }
 }

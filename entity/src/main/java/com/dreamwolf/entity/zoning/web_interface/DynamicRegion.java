@@ -9,11 +9,11 @@ import java.util.List;
 @Data
 public class DynamicRegion {
     private Page page;//分页
-    private List<ArchivesInfo> listarchives;//对象集合
+    private List<ArchivesInfo> archives;//对象集合
 
-    public DynamicRegion(Page page, List<ArchivesInfo> listarchives) {
+    public DynamicRegion(Page page, List<ArchivesInfo> archives) {
         this.page = page;
-        this.listarchives = listarchives;
+        this.archives = archives;
     }
 
     public DynamicRegion() {

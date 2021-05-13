@@ -4,4 +4,77 @@
     <select id="select" parameterType="int" resultType="Userdata">
         SELECT * FROM `userdata` WHERE `uID`=${uID}
     </select>
+    <insert id="updateWhereExist">
+        insert into userdata
+        (`uID`,`Level`,`Exp`,`CoinsNum`,`BCoinsNum`,`tFollowNum`,`tFansNum`,`tLikeNum`,`tPlaysNum`,`uDescription`)
+        values
+        (
+        <if test="uID!=null">
+            #{uID},
+        </if>
+        <if test="Level!=null">
+            #{Level},
+        </if>
+        <if test="Exp!=null">
+            #{Exp},
+        </if>
+        <if test="CoinsNum!=null">
+            #{CoinsNum},
+        </if>
+        <if test="BCoinsNum!=null">
+            #{BCoinsNum},
+        </if>
+        <if test="tFollowNum!=null">
+            #{tFollowNum},
+        </if>
+        <if test="tFansNum!=null">
+            #{tFansNum},
+        </if>
+        <if test="tPlaysNum!=null">
+            #{tPlaysNum},
+        </if>
+        <if test="tReadNum!=null">
+            #{tReadNum},
+        </if>
+        <if test="uDescription!=null">
+            #{uDescription},
+        </if>
+        )
+        ON DUPLICATE KEY UPDATE
+        <if test="Level!=null">
+            Level=#{Level},
+        </if>
+        <if test="Exp!=null">
+            Exp=#{Exp},
+        </if>
+        <if test="CoinsNum!=null">
+            CoinsNum=#{CoinsNum},
+        </if>
+        <if test="BCoinsNum!=null">
+            BCoinsNum=#{BCoinsNum},
+        </if>
+        <if test="tFollowNum!=null">
+            tFollowNum=#{tFollowNum},
+        </if>
+        <if test="tFansNum!=null">
+            tFansNum=#{tFansNum},
+        </if>
+        <if test="tPlaysNum!=null">
+            tPlaysNum=#{tPlaysNum},
+        </if>
+        <if test="tReadNum!=null">
+            tReadNum=#{tReadNum},
+        </if>
+        <if test="uDescription!=null">
+            uDescription=#{uDescription},
+        </if>
+    </insert>
+    <insert id="coin_add">
+        insert into userdata
+        (`uID`,CoinsNum)
+        values
+        (#{uID},1)
+        ON DUPLICATE KEY UPDATE
+        CoinsNum=CoinsNum+1
+    </insert>
 </mapper>

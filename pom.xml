@@ -20,6 +20,8 @@
         <module>comment</module>
         <module>image-resource</module>
         <module>entity</module>
+        <module>web-interface</module>
+        <module>video-resource</module>
     </modules>
     <groupId>com.dream-wolf</groupId>
     <artifactId>Bili_API</artifactId>
@@ -105,12 +107,25 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter</artifactId>
         </dependency>
+
+        <!--热部署配置-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.4.2</version>
+                <configuration>
+                    <fork>true</fork>
+                    <addResources>true</addResources>
+                </configuration>
             </plugin>
         </plugins>
     </build>

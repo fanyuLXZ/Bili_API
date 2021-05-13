@@ -16,4 +16,7 @@ public interface MemberService {
 
     @PostMapping("/register")
     ResponseData<User> register(@RequestParam String nickname,@RequestParam String password,@RequestParam String phone);
+
+    @PostMapping("/add_coin")
+    ResponseData<Boolean> addCoin(@RequestParam Integer uid);
 }

@@ -18,7 +18,6 @@ import com.dreamwolf.entity.dynamic.web_interface.ItemsNumObject;
 import com.dreamwolf.entity.member.*;
 import com.dreamwolf.entity.member.User;
 import com.dreamwolf.entity.member.Vip;
-import com.dreamwolf.entity.message.web_interface.Items;
 import com.dreamwolf.entity.message.web_interface.MMItems;
 import com.dreamwolf.safety.util.TokenUtil;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -265,11 +264,20 @@ public class UserdynamicController {
             wrapper.select("`uID` AS uid,COUNT(`uID`) AS num");
             wrapper.in("uid",uids);
             wrapper.groupBy("uID");
-            List<Map<String,Object>> userdy=userdynamicService.listMaps(wrapper);
-            DynamicNumObject dynamicNumObject=null;
-            for(Map<String,Object> user:userdy){
-                dynamicNumObject=new DynamicNumObject(user);
-                dynamicNumObjectList.add(dynamicNumObject);
+            List<Map<String, Object>> userdy=userdynamicService.listMaps(wrapper);
+            if (userdy!=null&&userdy.size()!=0){
+                for(int i=0;i<uids.length;i++){
+                    Map<String, Object> userDyObject = userdy.get(i);
+                    long userDyNum = 0;
+                    if (userDyObject!=null){
+                        userDyNum = (long)userDyObject.get("num");
+                    }
+                    dynamicNumObjectList.add(new DynamicNumObject(uids[i],userDyNum));
+                }
+            }else {
+                for (Integer uid : uids) {
+                    dynamicNumObjectList.add(new DynamicNumObject(uid, 0L));
+                }
             }
         }else{
             code = 1;

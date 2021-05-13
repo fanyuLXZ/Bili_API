@@ -12,8 +12,13 @@ import com.dreamwolf.entity.member.Member;
 import com.dreamwolf.entity.member.VipStatus;
 import com.dreamwolf.member.business.service.*;
 import com.dreamwolf.member.business.util.Jisuan;
+import com.dreamwolf.safety.util.TimeUtil;
 import com.dreamwolf.safety.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.BoundHashOperations;
+import org.springframework.data.redis.core.BoundKeyOperations;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -51,23 +57,28 @@ public class UserdataController {
         if (logon_uid_result.getCode()==0) {
             Integer id = logon_uid_result.getData();
             Userdata userdata = userdataService.select(id);
-            if(userdata!=null){
-                Level_info level_info = new Level_info(userdata.getLevel(), jisuan.residue(userdata.getLevel()), userdata.getExp(), jisuan.residue(userdata.getLevel() + 1));//jisuan.mincurrent(userdata.getLevel(),userdata.getExp().intValue()) 经验计算
-                //会员相关
-                Vip ivip = vipService.vipselect(id);
-                //判断会员类型 4.1号为小会员
-                Calendar cal = Calendar.getInstance();
-                int month = (cal.get(Calendar.MONTH)) + 1;//月
-                int day_of_month = cal.get(Calendar.DAY_OF_MONTH);//日
-                VipStatus vipStatus = new VipStatus((month + "/" + day_of_month).equals("4/1") ? 0 : 1, ivip != null, ivip.getExpirationTime(), new Label("", "大会员", "vip", "#FFFFFF", "1", "#FB7299", ""), "http://i0.hdslb.com/bfs/vip/icon_Certification_big_member_22_3x.png");
-                User user = userService.getById(id);
-                Member member = new Member(true, user.getuID(), user.getUserName(), user.getHeadImgPath(), level_info, vipStatus, userdata.getCoinsNum().intValue(), userdata.getBCoinsNum().intValue(), user.getBoundEmail() != null, user.getBoundPhone() != null);
-                return new ResponseData<>(0, "", 1, member);
-            }else {
+            if (userdata==null){
+                userdata=new Userdata();
+            }
+            Level_info level_info = new Level_info(userdata.getLevel(), jisuan.residue(userdata.getLevel()), userdata.getExp(), jisuan.residue(userdata.getLevel() + 1));//jisuan.mincurrent(userdata.getLevel(),userdata.getExp().intValue()) 经验计算
+            //会员相关
+            Vip ivip = vipService.vipselect(id);
+            if (ivip==null){
+                ivip=new Vip();
+            }
+            //判断会员类型 4.1号为小会员
+            Calendar cal = Calendar.getInstance();
+            int month = (cal.get(Calendar.MONTH)) + 1;//月
+            int day_of_month = cal.get(Calendar.DAY_OF_MONTH);//日
+            VipStatus vipStatus = new VipStatus((month + "/" + day_of_month).equals("4/1") ? 0 : 1, ivip != null, ivip.getExpirationTime(), new Label("", "大会员", "vip", "#FFFFFF", "1", "#FB7299", ""), "http://i0.hdslb.com/bfs/vip/icon_Certification_big_member_22_3x.png");
+            User user = userService.getById(id);
+            if (user==null){
                 return new ResponseData<>(3, "用户错误", 1, null);
             }
+            Member member = new Member(true, user.getuID(), user.getUserName(), user.getHeadImgPath(), level_info, vipStatus, userdata.getCoinsNum().intValue(), userdata.getBCoinsNum().intValue(), user.getBoundEmail() != null, user.getBoundPhone() != null);
+            return new ResponseData<>(0, "", 1, member);
         }else {
-            return new ResponseData<>(logon_uid_result.getCode(), logon_uid_result.getMessage(), 1, null);
+            return new ResponseData<>(-101, "账号未登录", 1, new Member(false));
         }
 
     }
@@ -81,5 +92,50 @@ public class UserdataController {
         return new ResponseData<Userdata>(0,"",1,userdata);
     }
 
+
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
+
+    /**
+     * 硬币增加接口
+     * @param uid uid
+     * @return
+     * code可能性
+     * 0 成功
+     * 1 重复提交
+     * 2 redis异常
+     * 3 mysql异常
+     * 4 空参数
+     */
+    @PostMapping("/add_coin")
+    public ResponseData<Boolean> addCoin(Integer uid){
+        int code = 0;
+        String message = "";
+        boolean data = false;
+        if (uid==null){
+            code=4;
+            message = "uid不能为空！";
+        }else {
+            Boolean isLogin = stringRedisTemplate.hasKey("coin_logon_"+uid);
+            // 判断今天是否登录过
+            if (isLogin==null){
+                code=2;
+                message = "服务器异常！";
+            }else if (isLogin){
+                code=1;
+                message = "今天已经登录过啦！";
+            }else {
+                // 硬币增加
+                if (userdataService.coin_add(uid)){
+                    stringRedisTemplate.opsForValue().set("coin_logon_"+uid, "0", TimeUtil.getTomorrowSeconds(), TimeUnit.MINUTES);
+                    data=true;
+                }else {
+                    code=3;
+                    message = "服务器异常！";
+                }
+            }
+        }
+        return new ResponseData<>(code,message,1,data);
+    }
 }
 

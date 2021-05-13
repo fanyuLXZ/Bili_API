@@ -68,6 +68,11 @@ public class Member {
         this.vip = vipStatus;
         this.following = following;
     }
+    //账号未登录专用
+    public Member(boolean isLogin) {
+        this.isLogin = isLogin;
+    }
+
     public Member(){}
 
     public Integer getMid() {

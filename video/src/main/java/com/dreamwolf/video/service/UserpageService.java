@@ -8,9 +8,6 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.Map;
-
 /**
  * 接口调接口。从分区模块接收子分区
  */

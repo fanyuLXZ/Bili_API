@@ -13,11 +13,9 @@ import com.dreamwolf.entity.zoning.web_interface.Deputydivision;
 import com.dreamwolf.entity.zoning.web_interface.Mainpartition;
 import com.dreamwolf.video.service.*;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.swing.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 

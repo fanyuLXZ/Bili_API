@@ -1,0 +1,27 @@
+server:
+  port: 8090
+#spring
+spring:
+  application:
+    name: image-resource-service
+  cloud:
+    nacos:
+      #注册服务地址
+      discovery:
+        server-addr: 127.0.0.1:8848
+      #配置服务地址
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
+        extension-configs[0]:
+          data-id: sentinel-config.yaml
+          refresh: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  mvc:
+    async:
+      request-timeout: 3600000
+domain: i0.hdslb.org
+webpArgsConfig: "{w: '', h: '',q: '1-100',c: '1|0'}"

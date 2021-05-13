@@ -25,6 +25,6 @@ public class ArchivesInfo {
     private String pic;//预览图
     private String title;//视频标题
     private String tname;//视频分区
-    private Statinfo statinfo;//视频数据
+    private Statinfo stat;//视频数据
 
 }

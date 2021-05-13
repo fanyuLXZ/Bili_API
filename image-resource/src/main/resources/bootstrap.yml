@@ -16,3 +16,12 @@ spring:
         extension-configs[0]:
           data-id: sentinel-config.yaml
           refresh: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  mvc:
+    async:
+      request-timeout: 3600000
+domain: i0.hdslb.org
+webpArgsConfig: "{w: '', h: '',q: '1-100',c: '1|0'}"

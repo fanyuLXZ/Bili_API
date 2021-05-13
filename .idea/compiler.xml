@@ -8,6 +8,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="image-resource" />
+        <module name="video-resource" />
+        <module name="web-interface" />
+        <module name="video" />
+        <module name="message" />
         <module name="safety" />
         <module name="zoning" />
         <module name="watch-history" />
@@ -15,8 +19,6 @@
         <module name="fav" />
         <module name="comment" />
         <module name="dynamic" />
-        <module name="video" />
-        <module name="message" />
         <module name="gateway" />
         <module name="entity" />
       </profile>
@@ -26,16 +28,18 @@
       <module name="client_demo" target="1.8" />
       <module name="comment" target="1.8" />
       <module name="dynamic" target="1.8" />
-      <module name="entity" target="1.8" />
-      <module name="fav" target="1.8" />
-      <module name="gateway" target="1.8" />
+      <module name="entity" target="8" />
+      <module name="fav" target="8" />
+      <module name="gateway" target="8" />
       <module name="image-resource" target="1.8" />
       <module name="member" target="1.8" />
       <module name="message" target="1.8" />
       <module name="safety" target="1.8" />
       <module name="video" target="1.8" />
-      <module name="watch-history" target="1.8" />
+      <module name="video-resource" target="8" />
+      <module name="watch-history" target="8" />
       <module name="watch_history" target="1.8" />
+      <module name="web-interface" target="8" />
       <module name="zoning" target="1.8" />
     </bytecodeTargetLevel>
   </component>
@@ -52,8 +56,10 @@
       <module name="message" options="-parameters" />
       <module name="safety" options="-parameters" />
       <module name="video" options="-parameters" />
+      <module name="video-resource" options="-parameters" />
       <module name="watch-history" options="-parameters" />
       <module name="watch_history" options="-parameters" />
+      <module name="web-interface" options="-parameters" />
       <module name="zoning" options="-parameters" />
     </option>
   </component>

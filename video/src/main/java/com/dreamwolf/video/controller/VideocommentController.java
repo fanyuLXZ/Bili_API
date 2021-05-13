@@ -2,7 +2,6 @@ package com.dreamwolf.video.controller;
 
 
 import com.dreamwolf.entity.ResponseData;
-import com.dreamwolf.entity.video.Video;
 import com.dreamwolf.entity.video.Videocomment;
 import com.dreamwolf.entity.video.web_interface.VideoList;
 import com.dreamwolf.video.service.VideocommentService;
@@ -10,9 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>

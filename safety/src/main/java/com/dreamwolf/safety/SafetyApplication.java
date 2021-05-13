@@ -3,6 +3,7 @@ package com.dreamwolf.safety;
 import com.dreamwolf.entity.ResponseData;
 import com.dreamwolf.entity.member.User;
 import com.dreamwolf.entity.member.UserVerify;
+import com.dreamwolf.entity.safety.web_interface.LogoutResult;
 import com.dreamwolf.safety.service.MemberService;
 import com.dreamwolf.safety.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Value;
@@ -95,6 +96,9 @@ public class SafetyApplication {
             ResponseData<UserVerify> verifyResult= memberService.verify(username,password);
             // 判断是否验证成功
             if (verifyResult.getCode()==0){
+                responseDataUid=verifyResult.getData().getUid();
+                // 添加硬币
+                memberService.addCoin(responseDataUid);
                 saveToken(verifyResult.getData().getUid(),response);
             }else {
                 code=-400;
@@ -102,6 +106,48 @@ public class SafetyApplication {
             }
         }
         return new ResponseData<>(responseDataCode,message,1,responseDataUid);
+    }
+
+    /**
+     * 登出请求
+     * @param request 请求对象
+     * @param response 返回对象
+     * @return
+     * code可能值：
+     * 0 成功
+     * 1 接口异常
+     */
+    @PostMapping("/logout")
+    public ResponseData<LogoutResult> login(HttpServletRequest request, HttpServletResponse response,String gourl) {
+        String message = "登出成功";
+        int code = 0;
+        LogoutResult data = null;
+        try {
+            // 获取token
+            String token = "";
+            Cookie[] cookies = request.getCookies();
+            for (Cookie cookie:cookies){
+                if (cookie.getName().equals("token")){
+                    token=cookie.getValue();
+                }
+            }
+            // 移除redis中的token
+            BoundHashOperations<String, String, String> tokens = stringRedisTemplate.boundHashOps("tokens");
+            tokens.delete(token);
+            // 移除cookie中的token
+            Cookie cookie = new Cookie("token", token);
+            cookie.setPath("/");
+            cookie.setDomain(domain);
+            cookie.setMaxAge(0);
+            response.addCookie(cookie);
+            data=new LogoutResult(gourl);
+        }catch (Exception e){
+            code=1;
+            message = "接口异常";
+            e.printStackTrace();
+        }
+
+        return new ResponseData<>(code,message,1,data);
     }
 
     /**

@@ -13,4 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UserdataService extends IService<Userdata> {
     public Userdata select(int uID);
+    boolean changeWhereExist(Userdata userdata);
+    boolean coin_add(int uID);
 }

@@ -1153,7 +1153,7 @@
        参考链接：http://api.bilibili.com/x/web-interface/online      
        返回值：
         * region_count 数量键值对 map 键为分区id 值为数量
-    2. #### 分区楼层视频卡片数据 /region/dynamic   
+    2. #### 分区楼层视频卡片数据 /dynamic   
        参考链接：http://api.bilibili.com/x/web-interface/dynamic/region?ps=12&rid=1   
        参数：
         * ps 数量
@@ -1178,7 +1178,7 @@
                 - like 点赞数 int
             - duration 时长 int 单位秒
             - bvid bv号（为"bv"+bvid）
-    3. #### 指定分区排行榜（前12个）/region/ranking   
+    3. #### 指定分区排行榜（前12个）/ranking   
        参考链接：   
        https://api.bilibili.com/x/web-interface/ranking/region?rid=1&day=3&original=0   
        参数： 
@@ -1192,7 +1192,7 @@
         * title 标题 string
         * typename 子分区名 string
         * pts 评分 int
-    4. #### 子分区最新动态（四个） dynamic/region
+    4. #### 子分区最新动态 /dynamic/child
         参考链接：
        https://api.bilibili.com/x/web-interface/dynamic/region?jsonp=jsonp&pn=1&ps=5&rid=24&callback=jsonCallback_bili_5019176969914881  
        参数：  
@@ -1291,7 +1291,7 @@
             - title 视频标题 string
             - type 视频类型 string 
     
-    7. #### 排行榜（十个） /ranking/region  
+    7. #### 排行榜（十个） /ranking/child  
        参考链接：
        https://api.bilibili.com/x/web-interface/ranking/region?jsonp=jsonp&rid=210&day=7&original=0&callback=jsonCallback_bili_0849387551523184111  
        参数： 
@@ -1314,27 +1314,27 @@
         - title 视频标题 string  
         - typename 视频分区 string  
     
-    8. #### 返回父组件 /zoning
+    8. #### 返回父分区 /zoning
        返回值:
          对象集合
-       *zID 父组件id
+       *zID 父分区id
        *zFatherID 为null
-       *zName 父组件名
+       *zName 父分区名
        
-    9. #### 返回对应父组件的子组件 /zoning/id
+    9. #### 返回对应父分区的子组件 /zoning/id
         参数:
-        id 父组价id
+        id 父分区id
         返回值:
         对象集合
-       *zID 子组件id
-       *zFatherID 父组件id
-       *zName 子组件名
+       *zID 子分区id
+       *zFatherID 父分区id
+       *zName 子分区名
        
-    10. #### Zong通过组件id返回组件名称 /elementby
+    10. #### Zong通过组件id返回分区名称 /elementby
         参数:
-        id 组件id
+        id 分区id
         返回值
-        *String 组件名
+        *String 分区名
         
     11. #### 按子分区id查找对应父分区信息 /mainpartition
         参数:
@@ -1355,7 +1355,7 @@
 
             
 * ### 视频观看记录模块 Watch-History
-    1. #### /list   
+    1. #### /cursor   
        参考链接：https://api.bilibili.com/x/web-interface/history/cursor   
        参数：
         * ps 数量
@@ -1657,7 +1657,7 @@
         * member &gt; [`Member/membe`](#通过用户id-获得用户如下信息-membe)
 
 * ### 图片资源模块 image-resource
-    1. 上传图片 /upload-file   
+    1. 上传图片 /upload   
     参数：
     * image 二进制图片
     * type 类型 如：头像 视频封面等 将作为图片保存的分组

@@ -25,7 +25,7 @@ import java.util.Date;
 @NoArgsConstructor
 //@EqualsAndHashCode(callSuper = false)
 //@Accessors(chain = true)
-@ApiModel(value="Video对象", description="视频基础信息表")
+@ApiModel(value = "Video对象", description = "视频基础信息表")
 public class Video implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -75,9 +75,18 @@ public class Video implements Serializable {
 
     private String date;
     private String datetime;
-    
+
     private Integer countbv; // 数量
     private Integer bvChild; //子分区id
 
-
+    public Video(Integer uID, String bvCoverImgPath, String bvVideoPath, String bvTitle, String bvDesc, Date bvPostTime, Integer bvChildZoning,Integer duration) {
+        this.uID = uID;
+        this.bvCoverImgPath = bvCoverImgPath;
+        this.bvVideoPath = bvVideoPath;
+        this.bvTitle = bvTitle;
+        this.bvDesc = bvDesc;
+        this.bvPostTime = bvPostTime;
+        this.bvChildZoning = bvChildZoning;
+        this.duration = duration;
+    }
 }

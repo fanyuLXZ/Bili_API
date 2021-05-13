@@ -109,47 +109,51 @@ public class VideohistoryController {
                 ps = 20;
             }
             List<Videohistory> videohistoryList = videohistoryService.videohistory(id, ps, max, view_at);//历史数据库的的信息
-            if (max.equals("0")) {
-                QueryWrapper<Videohistory> queryWrapper = new QueryWrapper<>();
-                queryWrapper.orderByDesc("CloseTime").last("limit " + 1);
-                Videohistory videohistory = videohistoryService.getOne(queryWrapper);
-                shijian = videohistory.getCloseTime();
-            } else {
-                shijian = LocalDateTime.parse(max, df);
-            }
-
-            Integer[] array = new Integer[videohistoryList.size()];
-            for (int i = 0; i < videohistoryList.size(); i++) {
-                array[i] = videohistoryList.get(i).getBvID();
-            }
-            List<VideoMaplist> suan = videoList.selectbbid(array).getData();//通过视频id视频返回的内容 相同内容不会返回
-            Map<Integer, VideoMaplist> video_disc = new HashMap<>();
-            for (VideoMaplist a : suan) {
-                video_disc.put(a.getAid(), a);
-            }
+            Cursor cursorLisr = new Cursor();
+            cursorLisr.setPs(ps);
+            cursorLisr.setBusiness("archive");
             List<ListCursor> listCursors = new ArrayList<>();
-            Cursor cursorLisr = null;
-            for (int i = 0; i < videohistoryList.size(); i++) {
-                VideoMaplist videoObject = video_disc.get(videohistoryList.get(i).getBvID());
-                History history = new History(videohistoryList.get(i).getOid(), "archive", 1);
-                LocalTime localTime = videohistoryList.get(i).getTimelinePosition();
-                int hour = localTime.getHour();
-                int min = localTime.getMinute();
-                int sec = localTime.getSecond();
-                int zong = hour * 3600 + min * 60 + sec;
-                ListCursor Cursors = new ListCursor(videoObject.getTitle(), "",
-                        videoObject.getCover(), userService.userid(videohistoryList.get(i).getuID()).getData().getUserName(),
-                        videoObject.getUri(), history, videoObject.getDuration(),
-                        zong == (videoObject.getDuration()) ? -1 : videoObject.getDuration() - zong, "",
-                        videohistoryList.get(i).getCloseTime());
-                listCursors.add(Cursors);
-                cursorLisr = new Cursor(shijian,
-                        videohistoryList.get(videohistoryList.size() - 1).getCloseTime(), ps, "archive");
+            if (videohistoryList.size()!=0){
+                if (max==null||max.equals("0")) {
+                    QueryWrapper<Videohistory> queryWrapper = new QueryWrapper<>();
+                    queryWrapper.eq("uid",id).orderByDesc("CloseTime").last("limit " + 1);
+                    Videohistory videohistory = videohistoryService.getOne(queryWrapper);
+                    shijian = videohistory.getCloseTime();
+                } else {
+                    shijian = LocalDateTime.parse(max, df);
+                }
+
+                Integer[] array = new Integer[videohistoryList.size()];
+                for (int i = 0; i < videohistoryList.size(); i++) {
+                    array[i] = videohistoryList.get(i).getBvID();
+                }
+                List<VideoMaplist> suan = videoList.selectbbid(array).getData();//通过视频id视频返回的内容 相同内容不会返回
+                Map<Integer, VideoMaplist> video_disc = new HashMap<>();
+                for (VideoMaplist a : suan) {
+                    video_disc.put(a.getAid(), a);
+                }
+                for (int i = 0; i < videohistoryList.size(); i++) {
+                    VideoMaplist videoObject = video_disc.get(videohistoryList.get(i).getBvID());
+                    History history = new History(videohistoryList.get(i).getOid(), "archive", 1);
+                    LocalTime localTime = videohistoryList.get(i).getTimelinePosition();
+                    int hour = localTime.getHour();
+                    int min = localTime.getMinute();
+                    int sec = localTime.getSecond();
+                    int zong = hour * 3600 + min * 60 + sec;
+                    ListCursor Cursors = new ListCursor(videoObject.getTitle(), "",
+                            videoObject.getCover(), userService.userid(videohistoryList.get(i).getuID()).getData().getUserName(),
+                            videoObject.getUri(), history, videoObject.getDuration(),
+                            zong == (videoObject.getDuration()) ? -1 : videoObject.getDuration() - zong, "",
+                            videohistoryList.get(i).getCloseTime());
+                    listCursors.add(Cursors);
+                    cursorLisr = new Cursor(shijian,
+                            videohistoryList.get(videohistoryList.size() - 1).getCloseTime(), ps, "archive");
+                }
             }
 
-            return new ResponseData<CursorLisr>(0, "", 1, new CursorLisr(cursorLisr, listCursors));
+            return new ResponseData<>(0, "", 1, new CursorLisr(cursorLisr, listCursors));
         }else {
-            return new ResponseData<CursorLisr>(logon_uid_result.getCode(), logon_uid_result.getMessage(), 1, null);
+            return new ResponseData<>(logon_uid_result.getCode(), logon_uid_result.getMessage(), 1, null);
         }
     }
 }

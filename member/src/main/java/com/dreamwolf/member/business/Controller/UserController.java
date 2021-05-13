@@ -13,11 +13,7 @@ import com.dreamwolf.member.business.util.md5;
 import com.dreamwolf.safety.util.TokenUtil;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -73,16 +69,25 @@ public class UserController {
             code = 1;
             message="密码或者账号不能为空";
         }
-        return new ResponseData<UserVerify>(code,message,1,userVerify);
+        return new ResponseData<>(code,message,1,userVerify);
     }
 
     //账号基本信息
     @RequestMapping("/account/info")
-    public ResponseData<AccountInfo> account(){
-        Integer id=1;//默认id
-        User user= userService.getById(id);
-        AccountInfo accountInfo = new AccountInfo(user.getNickName(),user.getUserName(),user.getBirthday(),user.getSex()==1?"男":"女");
-        return new ResponseData<AccountInfo>(0,"",1,accountInfo);
+    public ResponseData<AccountInfo> account(HttpServletRequest request){
+        ResponseData<Integer> logon_uid_result = safetyService.logon_uid(TokenUtil.getToken(request));
+        if (logon_uid_result.getCode()==0) {
+            Integer id = logon_uid_result.getData();
+            User user= userService.getById(id);
+            if(user!=null) {
+                AccountInfo accountInfo = new AccountInfo(user.getNickName(),user.getUserName(),user.getBirthday(),user.getSex()==1?"男":"女");
+                return new ResponseData<>(0,"",1,accountInfo);
+            }else {
+                return new ResponseData<>(3, "用户错误", 1, null);
+            }
+        }else {
+            return new ResponseData<>(logon_uid_result.getCode(), logon_uid_result.getMessage(), 1, null);
+        }
     }
 
     //账号基本信息
@@ -92,10 +97,14 @@ public class UserController {
         if (logon_uid_result.getCode()==0) {
             Integer id = logon_uid_result.getData();
             User user= userService.getById(id);
-            ExpReward expReward = new ExpReward(true,true,5,true,user.getBoundEmail()!=null,user.getBoundPhone()!=null);
-            return new ResponseData<ExpReward>(0,"",1,expReward);
+            if(user!=null) {
+                ExpReward expReward = new ExpReward(true, true, 5, true, user.getBoundEmail() != null, user.getBoundPhone() != null);
+                return new ResponseData<>(0, "", 1, expReward);
+            }else {
+                return new ResponseData<>(3, "用户错误", 1, null);
+            }
         }else {
-            return new ResponseData<ExpReward>(logon_uid_result.getCode(), logon_uid_result.getMessage(), 1, null);
+            return new ResponseData<>(logon_uid_result.getCode(), logon_uid_result.getMessage(), 1, null);
         }
     }
 
@@ -205,16 +214,26 @@ public class UserController {
         ResponseData<Integer> logon_uid_result = safetyService.logon_uid(TokenUtil.getToken(request));
         if (logon_uid_result.getCode()==0) {
             Integer id = logon_uid_result.getData();
-            User user=userService.getById(id);
+            return cardInfoById(id);
+        }else {
+            return new ResponseData<Member>(logon_uid_result.getCode(), logon_uid_result.getMessage(), 1, null);
+        }
+    }
+
+    //根据uid查的用户基本信息
+    @GetMapping("/card/info/{aid}")
+    public ResponseData<Member> cardInfoById(@PathVariable Integer aid){
+        if (aid!=null){
+            User user=userService.getById(aid);
             QueryWrapper<Relations> integerQueryWrapper=new QueryWrapper<>();
-            integerQueryWrapper.eq("uID",id);//查找uID为id的 关注up的
+            integerQueryWrapper.eq("uID",aid);//查找uID为id的 关注up的
             QueryWrapper<Relations> integerWrapper=new QueryWrapper<>();
-            integerWrapper.eq("followUID",id);//查找followUID为id的 up关注的
+            integerWrapper.eq("followUID",aid);//查找followUID为id的 up关注的
             Member member=new Member(user.getuID(),user.getNickName(),user.getHeadImgPath(),
                     (long)relationsService.list(integerQueryWrapper).size(),(long)relationsService.list(integerWrapper).size());
             return new ResponseData<Member>(0,"",1,member);
         }else {
-            return new ResponseData<Member>(logon_uid_result.getCode(), logon_uid_result.getMessage(), 1, null);
+            return new ResponseData<Member>(1,"aid不能为空",1,null);
         }
     }
 

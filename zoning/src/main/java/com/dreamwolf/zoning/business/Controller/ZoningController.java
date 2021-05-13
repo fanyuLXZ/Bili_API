@@ -19,10 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -66,7 +63,7 @@ public class ZoningController {
     }
 
     //分区楼层视频卡片数据
-    @GetMapping("/region/dynamic")
+    @GetMapping("/dynamic")
     public Map dynamic(Integer ps,Integer rid){
         Map<String, Object> map=new HashMap<String, Object>();
         if(ps != null && rid != null) {
@@ -142,7 +139,7 @@ public class ZoningController {
     }
 
     //指定分区排行榜 前十二个
-    @GetMapping("/region/ranking")
+    @GetMapping("/ranking")
     public ResponseData<List<VideoMaplist>> region(Integer rid,Integer day){
         int code = 0;
         String message="";
@@ -194,13 +191,18 @@ public class ZoningController {
         return new ResponseData<Deputydivision>(0,"",1, new Deputydivision(zoning));
     }
 
-    //子分区最新动态（四个）
-    @GetMapping("/dynamic/region")
-    public ResponseData<DynamicRegion> dynamicRegion(Integer rid, Integer pn, Integer ps){//子分区 页码 没页数
-        Integer count=  videoCount.selectidcoutn(rid);
+    //子分区最新动态
+    @GetMapping("/dynamic/child")
+    public ResponseData<DynamicRegion> childRegionDynamic(Integer rid, Integer pn, Integer ps){//子分区 页码 没页数
+        Integer count= videoCount.selectidcoutn(rid);
+        // 如果没有传入页码则随机页码
+        if (pn==null){
+            int pc = count/ps;
+            pn = pc>0?new Random().nextInt(pc):0;
+        }
         Page page=new Page(count,pn,ps);
         List<ArchivesInfo> archivesInfo=videoCount.selectvideorid(rid,pn,ps).getData();
-        return new ResponseData<DynamicRegion>(0,"",1,new DynamicRegion(page,archivesInfo));
+        return new ResponseData<>(0,"",1,new DynamicRegion(page,archivesInfo));
     }
 
     //子分区视频按投稿时间排序（二十个）
@@ -221,8 +223,8 @@ public class ZoningController {
         return  new ResponseData<NewList>(0,"",1,newList);
     }
 
-    //排行榜（十个）ranking/region
-    @GetMapping("/ranking/region")
+    //排行榜（十个）ranking/child
+    @GetMapping("/ranking/child")
     public ResponseData<List<Region>> region(Integer rid){
         List<Region> listResponseData=videoCount.selectbvidlistpagelist(rid).getData();
         return  new ResponseData<List<Region>>(0,"",1,listResponseData);

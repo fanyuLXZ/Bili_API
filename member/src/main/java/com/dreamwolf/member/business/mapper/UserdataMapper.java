@@ -17,4 +17,6 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface UserdataMapper extends BaseMapper<Userdata> {
     public Userdata select(@Param("uID")int uID);
+    int updateWhereExist(Userdata userdata);
+    int coin_add(int uID);
 }

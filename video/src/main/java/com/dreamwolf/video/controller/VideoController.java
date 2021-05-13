@@ -1,17 +1,23 @@
 package com.dreamwolf.video.controller;
 
 import com.dreamwolf.entity.ResponseData;
+import com.dreamwolf.entity.imageresource.webinterface.UploadFileResult;
 import com.dreamwolf.entity.member.User;
 import com.dreamwolf.entity.member.web_interface.OwnerInfo;
 import com.dreamwolf.entity.video.Video;
 import com.dreamwolf.entity.video.Videodata;
 import com.dreamwolf.entity.video.Videorating;
 import com.dreamwolf.entity.video.web_interface.*;
+import com.dreamwolf.entity.videoresource.web_inerface.VideoInfo;
+import com.dreamwolf.safety.util.TokenUtil;
 import com.dreamwolf.video.service.*;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -294,9 +300,9 @@ public class VideoController {
                     }
                 }
                 statinfo.setHis_rank(i);    //排名
-                archivesInfo.setStatinfo(statinfo);
+                archivesInfo.setStat(statinfo);
             }else{
-                archivesInfo.setStatinfo(null);
+                archivesInfo.setStat(new Statinfo());
             }
             list.add(archivesInfo);
         }
@@ -352,9 +358,9 @@ public class VideoController {
                     }
                 }
                 statinfo.setHis_rank(i);    //排名
-                archivesInfo.setStatinfo(statinfo);
+                archivesInfo.setStat(statinfo);
             }else{
-                archivesInfo.setStatinfo(null);
+                archivesInfo.setStat(new Statinfo());
             }
             list.add(archivesInfo);
 
@@ -427,10 +433,28 @@ public class VideoController {
     @GetMapping("/selectbvidlistpagelist")
     public ResponseData<List<Region>> selectbvidlistpagelist(Integer rid){
         List<Integer> array = videoService.videoselezoingid(rid); //根据子分区查询视频id
-        List<Videodata> arraydata = videodataService.videodatabvid(array.toArray(new Integer[0]));//按热度查
+        List<Videodata> arraydataNoDefault = videodataService.videodatabvid(array.toArray(new Integer[0]));//按热度查
+        List<Videodata> arraydata = new ArrayList<>();//按热度查
+        // 将没有视频数据的视频加为默认数据
+        if (arraydataNoDefault.size()!=0){
+            int arraydataNoDefaultIndex = 0;
+            int firstIndexId = arraydataNoDefault.get(arraydataNoDefaultIndex).getBvID();
+            for (Integer i:array){
+                if (!i.equals(firstIndexId)){
+                    arraydata.add(new Videodata(i));
+                }else {
+                    arraydataNoDefaultIndex+=1;
+                    firstIndexId = arraydataNoDefault.get(arraydataNoDefaultIndex).getBvID();
+                }
+            }
+        }else {
+            for (Integer i:array){
+                arraydata.add(new Videodata(i));
+            }
+        }
         List<Region> list = new ArrayList();
         Region result= null;
-        if(arraydata.size()>0){
+        if(array.size()>0){
             List<Integer> arrayvideo = new ArrayList();  //按热度排序后的视频id
             for(Videodata videodata : arraydata){
                 arrayvideo.add(videodata.getBvID());
@@ -440,6 +464,9 @@ public class VideoController {
 
             for(Video video : videoList){
                 Videodata videodata = videodataService.selectbvID(video.getBvID()); //根据视频id查询视频数据
+                if (videodata==null){
+                    videodata=new Videodata();
+                }
                 result= new Region();
                 ResponseData<OwnerInfo> ownerInfo = usermapService.OwnerInfo(video.getUID());
                 String uname = ownerInfo.getData().getName();
@@ -454,6 +481,9 @@ public class VideoController {
                 result.setPic(video.getBvCoverImgPath());   //预览图
                 result.setPlay(videodata.getBvPlayNum());   //观看数
                 Videorating videorating = videoratingService.selectbvid(video.getBvID());
+                if (videorating==null){
+                    videorating=new Videorating();
+                }
                 result.setPts(videorating.getOverallRating());
                 result.setCreate(video.getBvPostTime());   //发表时间
                 result.setReview(videodata.getBvCommentNum());  //评论数
@@ -482,9 +512,113 @@ public class VideoController {
         return count;
     }
 
+    @Resource
+    VideoResourceService videoResourceService;
+    @Resource
+    ImageResourceService imageResourceService;
+    @Resource
+    SafetyService safetyService;
 
+    /**
+     *
+     * @param title 视频标题
+     * @param rid 分区id
+     * @param desc 简介
+     * @param cover 封面
+     * @param videoPath 视频路径
+     * @param request 请求对象
+     * @return
+     * code 可能值
+     * 4 未登录
+     * 5 空值
+     * 6 封面格式不支持
+     * 7 封面上传错误
+     * 8 sql插入错误
+     */
+    @PostMapping("upload")
+    public ResponseData<Boolean> upload(String title, Integer rid, String desc, MultipartFile cover, String videoPath, HttpServletRequest request){
+        int code = 0;
+        String message = "";
+        boolean data = false;
+        // 验证token
+        ResponseData<Integer> response_uid = safetyService.logon_uid(TokenUtil.getToken(request));
+        if (response_uid.getCode()==0){
+            if (title!=null&&!title.equals("")&&rid!=null&&rid!=1&&cover!=null&&videoPath!=null&&!videoPath.equals("")){
+                // 验证视频获取时长
+                ResponseData<VideoInfo> videoInfoResponseData = videoResourceService.verify(videoPath);
+                if (videoInfoResponseData.getCode()==0){
+                    VideoInfo videoInfo = videoInfoResponseData.getData();
+                    // 上传图片
+                    ResponseData<UploadFileResult> imageFileResultResponseData= imageResourceService.upload(cover,"video-cover");
+                    if (imageFileResultResponseData.getCode()==0){
+                        UploadFileResult coverInfo = imageFileResultResponseData.getData();
+                        if (videoService.save(new Video(response_uid.getData(),
+                                coverInfo.getFilePath(),videoInfo.getPath(),title,desc,new Date(),
+                                rid,new Long(videoInfo.getDuration()).intValue()))){
+                            message = "上传成功";
+                            data = true;
+                        }else {
+                            code = 8;
+                            message = "内部服务器错误";
+                        }
+                    }else if (imageFileResultResponseData.getCode()==2){
+                        code = 6;
+                        message = "封面格式不支持";
+                    }else {
+                        code = 7;
+                        message = "内部服务器错误";
+                    }
+                }else {
+                    code = videoInfoResponseData.getCode();
+                    message = videoInfoResponseData.getMessage();
+                }
+            }else {
+                code = 5;
+                message = "空值异常";
+            }
+        }else {
+            code = 4;
+            message = "未登录";
+        }
+        return new ResponseData<>(code,message,1,data);
+    }
 
-
-
+    /**
+     * 视频添加测试接口
+     * @param title 标题
+     * @param uid up主id
+     * @param rid 分区id
+     * @param desc 简介
+     * @param cover 封面路径
+     * @param videoPath 视频路径
+     * @return
+     */
+    @PostMapping("upload_test")
+    public ResponseData<Boolean> upload(String title,Integer uid, Integer rid, String desc, String cover, String videoPath){
+        int code = 0;
+        String message = "";
+        boolean data = false;
+        if (title!=null&&!title.equals("")&&rid!=null&&rid!=1&&cover!=null&&videoPath!=null&&!videoPath.equals("")){
+            // 验证视频获取时长
+            ResponseData<VideoInfo> videoInfoResponseData = videoResourceService.verify(videoPath);
+            if (videoInfoResponseData.getCode()==0){
+                VideoInfo videoInfo = videoInfoResponseData.getData();
+                if (videoService.save(new Video(uid,cover,videoInfo.getPath(),title,desc,new Date(),rid,new Long(videoInfo.getDuration()).intValue()))){
+                    message = "上传成功";
+                    data = true;
+                }else {
+                    code = 8;
+                    message = "内部服务器错误";
+                }
+            }else {
+                code = videoInfoResponseData.getCode();
+                message = videoInfoResponseData.getMessage();
+            }
+        }else {
+            code = 5;
+            message = "空值异常";
+        }
+        return new ResponseData<>(code,message,1,data);
+    }
 }
 
