@@ -315,6 +315,9 @@ public class UserController {
         QueryWrapper<Userdata> userdataQueryWrapper=new QueryWrapper<>();
         userdataQueryWrapper.eq("uID",mid);
         Userdata userdata=userdataService.getOne(userdataQueryWrapper);
+        if (userdata==null){
+            userdata=new Userdata();
+        }
         QueryWrapper<Relations> relationsQueryWrapper=new QueryWrapper<>();
         relationsQueryWrapper.eq("followUID",uid).eq("uID",mid);
         Relations relations=relationsService.getOne(relationsQueryWrapper);

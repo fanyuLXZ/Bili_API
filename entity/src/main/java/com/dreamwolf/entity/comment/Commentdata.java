@@ -35,11 +35,13 @@ public class Commentdata implements Serializable {
 
     @ApiModelProperty(value = "点赞数量")
     @TableField("cLikeNum")
-    private Long cLikeNum;
+    private Long cLikeNum=0L;
 
     @ApiModelProperty(value = "点踩数量")
     @TableField("cUnLikeNum")
-    private Long cUnLikeNum;
+    private Long cUnLikeNum=0L;
 
-
+    public Commentdata(Integer cID) {
+        this.cID = cID;
+    }
 }

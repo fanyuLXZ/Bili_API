@@ -57,9 +57,14 @@ public class Comment implements Serializable {
 
     @ApiModelProperty(value = "是否已删除，0为未删除，1为已删除")
     @TableField("isDel")
-    private Integer isDel;
+    private Integer isDel=0;
 
     private Commentdata commentdata;
 
-
+    public Comment(Integer uID, Integer cIDreply, Date createTime, String cText) {
+        this.uID = uID;
+        this.cIDreply = cIDreply;
+        this.createTime = createTime;
+        this.cText = cText;
+    }
 }

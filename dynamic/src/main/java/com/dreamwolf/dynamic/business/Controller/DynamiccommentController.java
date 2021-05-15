@@ -5,7 +5,7 @@ import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.dreamwolf.entity.dynamic.Page;
-import com.dreamwolf.entity.dynamic.Reply;
+import com.dreamwolf.entity.dynamic.VideoReply;
 import com.dreamwolf.entity.ResponseData;
 import com.dreamwolf.entity.comment.web_interface.CommListMap;
 import com.dreamwolf.entity.dynamic.Dynamiccomment;
@@ -84,14 +84,14 @@ public class DynamiccommentController {
     //动态评论简略信息
     @SentinelResource(value = "reply",fallback="handlerReply")
     @GetMapping("/reply")
-    public ResponseData<Reply> reply(Integer dynamic_id, Integer sort){//dynamic_id 动态id sort 1按照热度 2按照时间排序
+    public ResponseData<VideoReply> reply(Integer dynamic_id, Integer sort){//dynamic_id 动态id sort 1按照热度 2按照时间排序
         int code = 0;
         String message="";
-        Reply reply=null;
+        VideoReply reply=null;
         if(dynamic_id==null){
             dynamic_id=1;
         }
-        if(  sort==null){
+        if(sort==null){
             sort=1;
         }
         QueryWrapper<Dynamiccomment> queryWrapper=new QueryWrapper();
@@ -113,8 +113,8 @@ public class DynamiccommentController {
         }
         List<CommListMap> listcommlist=new ArrayList<>();
         Page page=new Page(i,dynamiccomment.size(),1,10);
-        reply=new Reply(page,replies!=null?replies.getData():listcommlist);
-        return  new ResponseData<Reply>(code,message,1,reply);
+        reply=new VideoReply(page,replies!=null?replies.getData():listcommlist);
+        return  new ResponseData<VideoReply>(code,message,1,reply);
     }
     public Map handlerReply(@PathVariable Integer id, Throwable e) {
         Map map=new HashMap();
@@ -138,7 +138,7 @@ public class DynamiccommentController {
                 list[i]=dynamiccomment.get(i).getcID();
             }
             if (list.length>0){
-                replies=commentService.commselecarlistpage(sort,list,next);
+                replies=commentService.commselecarlistpage(sort,list,next,10);
             }else{
                 message="当前动态没有评论";
             }
@@ -166,6 +166,9 @@ public class DynamiccommentController {
             if (userdata.getCode()!=0){
                 code=1;
                 message="接口出现问题";
+            }
+            if (userdata.getData()==null){
+                userdata.setData(new Userdata());
             }
             Level_info level_info=new Level_info(userdata.getData().getLevel());
             ResponseData<Vip> vip= memberService.vip(id);

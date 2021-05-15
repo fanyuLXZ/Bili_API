@@ -3,9 +3,9 @@
 <mapper namespace="com.dreamwolf.comment.mapper.CommentdataMapper">
 
     <resultMap id="comdatemap" type="Commentdata">
-        <id column="cID" property="cID" />
-        <result column="cLikeNum" property="cLikeNum" />
-        <result column="cUnLikeNum" property="cUnLikeNum" />
+        <id column="cID" property="cID"/>
+        <result column="cLikeNum" property="cLikeNum"/>
+        <result column="cUnLikeNum" property="cUnLikeNum"/>
     </resultMap>
 
     <select id="selectcID" resultMap="comdatemap">
@@ -18,7 +18,7 @@
     </select>
 
     <select id="commdatalist" resultMap="comdatemap">
-        SELECT cID,(`cLikeNum`-`cUnLikeNum`) AS aaa  FROM `commentdata`
+        SELECT cID,(`cLikeNum`-`cUnLikeNum`) AS aaa FROM `commentdata`
         <where>
             <if test="array!=null and array.length>0">
                 `cID`IN
@@ -32,7 +32,7 @@
 
 
     <select id="commdatalistarr" resultMap="comdatemap">
-        SELECT cID,(`cLikeNum`-`cUnLikeNum`) AS aaa  FROM `commentdata`
+        SELECT cID,(`cLikeNum`-`cUnLikeNum`) AS aaa FROM `commentdata`
         <where>
             <if test="array!=null and array.length>0">
                 `cID`IN
@@ -46,18 +46,17 @@
 
 
     <select id="commdatalistpage" resultMap="comdatemap">
-        SELECT cID,(`cLikeNum`-`cUnLikeNum`) AS aaa  FROM `commentdata`
+        SELECT cID,(`cLikeNum`-`cUnLikeNum`) AS aaa FROM `commentdata`
         <where>
             <if test="array!=null and array.length>0">
                 `cID`IN
                 <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
                     #{item}
                 </foreach>
-                ORDER BY aaa DESC LIMIT #{next},10
+                ORDER BY aaa DESC LIMIT #{next},#{ps}
             </if>
         </where>
     </select>
-
 
 
 </mapper>

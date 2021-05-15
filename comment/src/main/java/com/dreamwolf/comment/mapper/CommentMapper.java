@@ -33,8 +33,7 @@ public interface CommentMapper extends BaseMapper<Comment> {
      * next 页码
      * @return
      */
-    public List<Comment> comdatalisttimepage(Integer[] array,Integer next);
-
+    public List<Comment> comdatalisttimepage(Integer[] array,Integer next,Integer ps);
 
     /**
      * 根据评论id数组去查询数据
