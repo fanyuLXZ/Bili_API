@@ -25,8 +25,8 @@ public class VideofavoriteServiceImpl extends ServiceImpl<VideofavoriteMapper, V
 
 
     @Override
-    public int inertfav(Integer bvid, Integer favListID) {
-        return videofavoriteMapper.inertfav(bvid,favListID);
+    public Videofavorite selectfavbvid(Integer bvid) {
+        return videofavoriteMapper.selectfavbvid(bvid);
     }
 
     @Override

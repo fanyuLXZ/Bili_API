@@ -7,6 +7,10 @@
     </insert>
 
 
+    <select id="selectfavbvid" resultType="Videofavorite">
+        SELECT * FROM `videofavorite` WHERE `bvID` = #{bvid}
+    </select>
+
     <select id="selectfavListID" resultType="int">
         SELECT COUNT(*) FROM `videofavorite`
         <where>

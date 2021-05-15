@@ -43,6 +43,8 @@ public class UserController {
     Userdynamic userdynamic;
     @Resource
     SafetyService safetyService;
+    @Resource
+    CoinHistoryService coinHistoryService;
 
 
     //登录
@@ -491,16 +493,23 @@ public class UserController {
      * 每次调用接口硬币根据参数减 表示投币
      */
     @PostMapping("/insert/coins")
-    public ResponseData<Boolean> coins(Integer uID,Integer num){//参数1用户id 2 投币数
+    public ResponseData<Boolean> coins(Integer uID,Integer vID){//参数1用户id 2.视频id 3.投币数
         int code = 0;
         String message="";
         boolean bool = false;
-        if (uID!=null && num!=null){//参数不能为空
+        if (uID!=null && vID!=null){//参数不能为空
             Userdata userdata =userdataService.getById(uID);//获取硬币数
-            if(userdata.getCoinsNum()>=num){//判断硬币数是否够
-                UpdateWrapper<Userdata> userdataUpdateWrapper=new UpdateWrapper<>();//投币方法
-                userdataUpdateWrapper.eq("uID",uID).set("CoinsNum",userdata.getCoinsNum()-num);
+            if(userdata.getCoinsNum()>=1){//判断硬币数是否够 num目前不用 扩展
+                UpdateWrapper<Userdata> userdataUpdateWrapper=new UpdateWrapper<>();//投币后 用户硬币-1
+                userdataUpdateWrapper.eq("uID",uID).set("CoinsNum",userdata.getCoinsNum()-1);
                 bool=userdataService.update(null,userdataUpdateWrapper);//判断是否投币成功
+                if(bool){//投币成功后添加投币历史
+                    int coin=coinHistoryService.addcoin(new CoinHistory(uID,vID));
+                    if(coin<=0){
+                        code = 1;
+                        message="添加历史记录失败";
+                    }
+                }
             }else{
                 code = 1;
                 message="硬币数不足";

@@ -18,6 +18,9 @@ import java.util.List;
 public class Videodatainfo {
 
     private Integer aid;    //视频id
+    private boolean isLiked;//是否点赞
+    private boolean isCollected;//是否收藏
+    private boolean isCoined;//是否投币
     private VideoinfoOwnerInfo owner;    //用户对象
     private Videoinfo video;//视频对象
     private Statinfo stat;  //对象集合

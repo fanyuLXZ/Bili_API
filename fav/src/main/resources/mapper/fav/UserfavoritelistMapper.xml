@@ -11,6 +11,10 @@
         <result column="desc" property="desc" />
     </resultMap>
 
+    <select id="selectfavuid" resultMap="userfavlistmap">
+        SELECT * FROM `userfavoritelist` WHERE `uID` = #{uid}
+    </select>
+
     <select id="selectlistshow" resultMap="userfavlistmap">
         SELECT * FROM `userfavoritelist`
     </select>

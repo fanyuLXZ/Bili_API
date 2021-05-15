@@ -49,7 +49,7 @@ public class Automatically {
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
-        strategy.setInclude("user","userdata","relations","vip");//User`  userData  Relations  VIP
+        strategy.setInclude("coinhistory");//User`  userData  Relations  VIP
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true);

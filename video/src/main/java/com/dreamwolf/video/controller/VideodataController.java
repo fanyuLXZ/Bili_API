@@ -3,20 +3,21 @@ package com.dreamwolf.video.controller;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.dreamwolf.entity.ResponseData;
+import com.dreamwolf.entity.fav.Userfavoritelist;
 import com.dreamwolf.entity.member.web_interface.OwnerInfo;
 import com.dreamwolf.entity.member.web_interface.VideoinfoOwnerInfo;
-import com.dreamwolf.entity.video.Video;
-import com.dreamwolf.entity.video.Videodata;
-import com.dreamwolf.entity.video.Videorating;
+import com.dreamwolf.entity.video.*;
 import com.dreamwolf.entity.video.web_interface.*;
 import com.dreamwolf.entity.zoning.web_interface.Deputydivision;
 import com.dreamwolf.entity.zoning.web_interface.Mainpartition;
+import com.dreamwolf.safety.util.TokenUtil;
 import com.dreamwolf.video.service.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -45,6 +46,19 @@ public class VideodataController {
 
     @Resource
     private UserpageService userpageService;
+
+    @Resource
+    SafetyService safetyService;
+
+    @Resource
+    private FavService favService;
+
+    @Resource
+    private VideolikeService videolikeService;
+
+    @Resource
+    private VideofavoriteService videofavoriteService;
+
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
@@ -85,13 +99,37 @@ public class VideodataController {
      * @return
      */
     @GetMapping("/info")
-    public ResponseData<VideoDataMap> videodatabvidobject(Integer bvid){
+    public ResponseData<VideoDataMap> videodatabvidobject(Integer bvid, HttpServletRequest request){
+        ResponseData<Integer> logon_uid_result = safetyService.logon_uid(TokenUtil.getToken(request));
+        if(logon_uid_result.getCode()==0){
+
         Integer uid=1; //当前用户id
 //        Videodatainfo videodatainfo = null;
 //        Videodata videodata = videodataService.selectbvID(bvid);    //视频显示对象
         Videodatainfo  videodatainfo = new Videodatainfo();
             videodatainfo.setAid(bvid);  //视频id
             Statinfo statinfo = new Statinfo();
+            Videolike vlike = videolikeService.selestatusuid(bvid,uid);
+            boolean isliked = false;
+            if(vlike!=null){
+                isliked=true;
+            }else{
+                isliked = false;
+            }
+            videodatainfo.setLiked(isliked); //是否点赞
+
+            boolean isCollected=false;
+            ResponseData<List<Userfavoritelist>> favlist = favService.selecrfavuid(uid);
+            Videofavorite vfav = videofavoriteService.selectfavbvid(bvid);
+            for(Userfavoritelist f : favlist.getData()){
+                if(f.getFavListID() == vfav.getFavListID()){
+                    isCollected=true;
+                    break;
+                }
+            }
+            videodatainfo.setCollected(isCollected); //是否收藏
+            ResponseData<Boolean> coined=usermapService.coins(uid,bvid);
+            videodatainfo.setCoined(coined.getData());//是否投币
             //随机数
             Random random = new Random();
             int pagesum = random.nextInt(100);
@@ -158,6 +196,10 @@ public class VideodataController {
 
 
         return new ResponseData(0,"",0,videoDataMap);
+
+        }else {
+            return new ResponseData<>(logon_uid_result.getCode(), logon_uid_result.getMessage(), 1, null);
+        }
     }
 
     /**
