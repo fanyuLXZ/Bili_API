@@ -72,13 +72,13 @@ public class UsermsgsController {
     public ResponseData<Msgstotal> selectmeslist(HttpServletRequest request){
         ResponseData<Integer> logon_uid_result = safetyService.logon_uid(TokenUtil.getToken(request));
         if (logon_uid_result.getCode()==0) {
-            Integer uid = 1; //当前用户id
-            ResponseData<VideoList> bv_ids = videoService.videouID(uid);
+//            Integer uid = 1; //当前用户id
+            ResponseData<VideoList> bv_ids = videoService.videouID(logon_uid_result.getData());
             ResponseData<List<Videolike>> video_like_list = videoService.sellist((Integer[]) bv_ids.getData().list.toArray(new Integer[0]));  //根据视频id数组查询点赞表
             //根据视频id数组批量查询视频数据
             ResponseData<List<Video>> videos = videoService.selectbvidlist((Integer[]) bv_ids.getData().list.toArray(new Integer[0]));
 
-            ResponseData<List<Integer>> comarr = commentService.selectuidlisst(uid); //根据用户id拿到用户下的评论
+            ResponseData<List<Integer>> comarr = commentService.selectuidlisst(logon_uid_result.getData()); //根据用户id拿到用户下的评论
             ResponseData<List<Commentlike>> commentlikelist = commentService.selectarrlist(comarr.getData().toArray(new Integer[0])); //根据评论id数组拿到评论点赞的数据
             ResponseData<List<Comment>> commentscidarr = commentService.commentsarrlist(comarr.getData().toArray(new Integer[0]));//拿到评论id的数据
             List itemlist = new ArrayList();
@@ -97,7 +97,7 @@ public class UsermsgsController {
                 if (user_ids2.size() <= 0) {
                     continue;
                 }
-                ResponseData<List<Users>> uselist = memberService.users(user_ids2.toArray(new Integer[0]), uid);
+                ResponseData<List<Users>> uselist = memberService.users(user_ids2.toArray(new Integer[0]), logon_uid_result.getData());
                 commap.setUsers(uselist.getData());//用户对象
                 Items mlist = new Items();
                 mlist.setItem_id(comm.getCID());    //评论id
@@ -126,7 +126,7 @@ public class UsermsgsController {
                         user_ids.add(videolike.getUID());
                     }
                 }
-                ResponseData<List<Users>> uselist2 = memberService.users(user_ids.toArray(new Integer[0]), uid);
+                ResponseData<List<Users>> uselist2 = memberService.users(user_ids.toArray(new Integer[0]), logon_uid_result.getData());
                 if (uselist2.getData().size() <= 0) {
                     continue;
                 }
@@ -148,7 +148,7 @@ public class UsermsgsController {
             }
 
             //动态
-            ResponseData<List<IikesItems>> dylist = dynamicService.likeitems(uid);
+            ResponseData<List<IikesItems>> dylist = dynamicService.likeitems(logon_uid_result.getData());
             for (IikesItems limap : dylist.getData()) {
                 MsgsVideoItem slp = new MsgsVideoItem();
                 slp.setId(i++);
@@ -200,13 +200,13 @@ public class UsermsgsController {
         ResponseData<Integer> logon_uid_result = safetyService.logon_uid(TokenUtil.getToken(request));
         if(logon_uid_result.getCode()==0){
 
-            Integer uid = 1;
-            ResponseData<VideoList>  videoarr = videoService.videouID(uid);    //根据用户id拿到所有视频 视频id数组
+//            Integer uid = 1;
+            ResponseData<VideoList>  videoarr = videoService.videouID(logon_uid_result.getData());    //根据用户id拿到所有视频 视频id数组
             //根据视频id数组拿到视频下面的评论id
 //            ResponseData<List<Integer>> videocommmarr = videoService.selectarr((Integer[]) videoarr.getData().list.toArray(new Integer[0]));
             //根据视频id数组拿到视频评论表所有数据
             ResponseData<List<Videocomment>> bvidcomm =videoService.videocombvidlist((Integer[]) videoarr.getData().list.toArray(new Integer[0]));
-            ResponseData<List<Comment>> comments = commentService.selecomuid(uid);    //根据uid查询发布的评论
+            ResponseData<List<Comment>> comments = commentService.selecomuid(logon_uid_result.getData());    //根据uid查询发布的评论
             List<MMres> listitem = new ArrayList();
             for(Comment comme_nlist : comments.getData()){
                 MMres itemmaps = new MMres();
@@ -226,7 +226,7 @@ public class UsermsgsController {
                     comm_map.setNative_uri(null);
                     userid=clist.getUID();
                 }
-                ResponseData<ReplyUser> usemap = memberService.replyuserb(userid,uid);
+                ResponseData<ReplyUser> usemap = memberService.replyuserb(userid,logon_uid_result.getData());
                 itemmaps.setUser(usemap.getData());       //回复的用户对象
                 itemmaps.setItem(comm_map);   //回复我的评论对象
                 listitem.add(itemmaps);
@@ -252,7 +252,7 @@ public class UsermsgsController {
                     videoitem.setNative_uri(null);
                     Integer id=commlistmap.getData().getUid();
 
-                ResponseData<ReplyUser> usemap = memberService.replyuserb(id,uid);
+                ResponseData<ReplyUser> usemap = memberService.replyuserb(id,logon_uid_result.getData());
                 itemmap.setUser(usemap.getData());//回复的用户对象
 //                Map<String,Object> usemap = memberService.replyuserb(id,uid);
                 itemmap.setItem(videoitem);   //回复我的评论对象
@@ -261,7 +261,7 @@ public class UsermsgsController {
 //        listitem.sort(Comparator.comparing(MMres::g));
 //            listitem.sort(Comparator.comparing(MMres::getItem).reversed());
             //动态
-            ResponseData<List<MMres>> menmap = memberService.list(uid);
+            ResponseData<List<MMres>> menmap = memberService.list(logon_uid_result.getData());
             for(MMres umap : menmap.getData()){
                 MMres m = new MMres();
                 m.setUser(umap.getUser());
@@ -308,20 +308,20 @@ public class UsermsgsController {
         ResponseData<Integer> logon_uid_result = safetyService.logon_uid(TokenUtil.getToken(request));
         if(logon_uid_result.getCode()==0){
 
-        Integer uid = 1;    //当前用户id，默认为1
+//        Integer uid = 1;    //当前用户id，默认为1
         UserMsgsList userMsgsList=null;
-        if(uid !=null) {
-            List<Usermsgs> session_list = usermsgsService.selectusermsgs(uid);
+        if(logon_uid_result.getData() !=null) {
+            List<Usermsgs> session_list = usermsgsService.selectusermsgs(logon_uid_result.getData());
             List usmsgslist = new ArrayList();
             for (Usermsgs usermsgs : session_list) {
                 MsgsDatamap msgsDatamap = new MsgsDatamap();
-                if(usermsgs.getUserID()==uid){
+                if(usermsgs.getUserID()==logon_uid_result.getData()){
                     msgsDatamap.setTalker_id(usermsgs.getFriendID());        //对话的id
                 }else {
                     msgsDatamap.setTalker_id(usermsgs.getFriendID());           //对话的id
                 }
                 msgsDatamap.setAck_seqno(session_list.size());  //此对话id的长度
-                if (usermsgs.getUserID() == uid) {
+                if (usermsgs.getUserID() == logon_uid_result.getData()) {
                     msgsDatamap.setTalker_id(usermsgs.getFriendID());          //对话id
                 } else {
                     msgsDatamap.setTalker_id(usermsgs.getFriendID());          //对话id
@@ -356,8 +356,8 @@ public class UsermsgsController {
         ResponseData<Integer> logon_uid_result = safetyService.logon_uid(TokenUtil.getToken(request));
         if(logon_uid_result.getCode()==0){
 
-        Integer uid = 1;
-        List<Usermsgs> usermsgsList = usermsgsService.usermsgslistuidfid(uid,fid);
+//        Integer uid = 1;
+        List<Usermsgs> usermsgsList = usermsgsService.usermsgslistuidfid(logon_uid_result.getData(),fid);
         List list = new ArrayList();
         for(Usermsgs usermsgs : usermsgsList){
             Msgslastmsg msgslastmsg = new Msgslastmsg();
