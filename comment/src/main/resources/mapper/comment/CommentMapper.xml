@@ -17,6 +17,19 @@
 
     </resultMap>
 
+    <select id="comselectlistdata" resultMap="comremap">
+        SELECT * FROM COMMENT LEFT JOIN commentdata c ON comment.cID = c.cID
+        <where>
+            comment.cID IN
+            <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            AND `cIDreply` = 0
+        </where>
+        ORDER BY cLikeNum-c.cUnLikeNum DESC LIMIT #{next},#{ps}
+    </select>
+
+
     <select id="selectrpid" resultMap="comremap">
         SELECT *,(t2.`cLikeNum`-t2.`cUnLikeNum`) AS aaa FROM `comment` t1 LEFT JOIN `commentdata` t2 ON t1.`cID`=t2.cID
         <where>

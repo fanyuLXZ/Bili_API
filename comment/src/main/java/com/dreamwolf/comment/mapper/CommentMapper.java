@@ -20,6 +20,15 @@ import java.util.List;
 public interface CommentMapper extends BaseMapper<Comment> {
 
     /**
+     * 联表查根据热度查询评论并分页
+     * @param array
+     * @param next
+     * @param ps
+     * @return
+     */
+    public List<Comment> comselectlistdata(Integer[] array,Integer next,Integer ps);
+
+    /**
      * 根据评论id数组去查询数据 并且按照最新时间排序
      * @param array
      * @return

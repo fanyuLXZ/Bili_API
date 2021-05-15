@@ -359,29 +359,28 @@ public class CommentController {
      * @return
      */
     @GetMapping("/commselectcarrlistpage")
-    public ResponseData<List<CommListMap>> commselecarlistpage(Integer id,Integer[] array,Integer next,Integer ps){
-//        Integer[] array = new Integer[]{1,2,3};
+    public ResponseData<List<CommListMap>> commselecarlistpage(Integer id,Integer next,Integer ps){
+        Integer[] array = new Integer[]{1,2,3};
         //  id 1 为热度排序  2 为时间排序
         List<CommListMap> maplist = new ArrayList();
         //热度排序
         if (id == 1) {
             //通过评论id数组查询cIDreply=0的数据
-            List<Comment> list = commentService.commentuidlist(array);
-            List<Integer> comarrlistss = new ArrayList<>();    //评论id数组
-            for (Comment comment : list) {
-                comarrlistss.add(comment.getCID());   //评论id
-            }
-            //根据评论id数组拿到前10条的热度 评论点赞表 分页
-            List<Commentdata> comdatlist = commentdataService.commdatalistpage(comarrlistss.toArray(new Integer[0]),next,ps);
-            List<Integer> clist = new ArrayList<>();
-            //拿到评论点赞表热度前10的id数组
-            for (Commentdata comdatacom : comdatlist) {
-                clist.add(comdatacom.getCID());
-            }
+//            List<Comment> list = commentService.commentuidlist(array);
+//            List<Integer> comarrlistss = new ArrayList<>();    //评论id数组
+//            for (Comment comment : list) {
+//                comarrlistss.add(comment.getCID());   //评论id
+//            }
+//            //根据评论id数组拿到前10条的热度 评论点赞表 分页
+//            List<Commentdata> comdatlist = commentdataService.commdatalistpage(comarrlistss.toArray(new Integer[0]),next,ps);
+//            List<Integer> clist = new ArrayList<>();
+//            //拿到评论点赞表热度前10的id数组
+//            for (Commentdata comdatacom : comdatlist) {
+//                clist.add(comdatacom.getCID());
+//            }
 
-
-            //根据热度前10 cid数组查询评论表数据
-            List<Comment> comlistlist = commentService.comarrlist(clist.toArray(new Integer[0]));
+            //联表查根据热度查询评论并分页
+            List<Comment> comlistlist = commentService.comselectlistdata(array,next-1,ps);
             for (Comment comarrlistlist : comlistlist) {
                 //根据评论id查询评论点赞数据和点踩数据
                 Commentdata commentdata = commentdataService.selectcID(comarrlistlist.getCID());
@@ -405,9 +404,9 @@ public class CommentController {
                     commaplistmap.setLike(null);   //点赞数
                 }
                 ResponseData<Member> menmmap = dvnamicService.memberid(comarrlistlist.getUID());
-                commaplistmap.setMember(menmmap.getData());
+                commaplistmap.setMember(menmmap.getData());//发表人评论id 对象
 //
-//                    commap.put("member", menmmap);   //发表人评论id 对象
+//                    commap.put("member", menmmap);
 
                 List<Comment> comlist = commentService.selelistcIDreply(comarrlistlist.getCID()); //获取当前评论id下面的子评论
                 List<Integer> cidarr = new ArrayList(); //子评论下面的cid集合
@@ -431,8 +430,6 @@ public class CommentController {
                         Messagecontext mm4 = new Messagecontext(commentarr.getCText());
                         commReplies = new CommReplies(mm4,commentarr.getCreateTime(),
                                 commentdataarr.getCLikeNum(),dvmaps.getData());
-//                            Map dvmap=dvnamicService.memberid(commentarr.getUID());
-//                            comdatamap.put("member", dvmap);       //用户id//用户id
                     } else {
                         commReplies = new CommReplies(null,null,null,null);
                     }
@@ -442,7 +439,7 @@ public class CommentController {
                 maplist.add(commaplistmap);
             }
         } else {
-            List<Comment> list = commentService.comdatalisttimepage(array,next,ps); //通过评论id数组查询cIDreply=0的数据
+            List<Comment> list = commentService.comdatalisttimepage(array,next-1,ps); //通过评论id数组查询cIDreply=0的数据
             for (Comment comment : list) {
                 //根据评论id查询评论点赞数据和点踩数据
                 Commentdata commentdata = commentdataService.selectcID(comment.getCID());
@@ -466,9 +463,7 @@ public class CommentController {
                     commaps.setLike(null);   //点赞数
                 }
                 ResponseData<Member> dvmap = dvnamicService.memberid(comment.getUID());
-                commaps.setMember(dvmap.getData());
-//                        Map dvmap = dvnamicService.memberid(comment.getUID());
-//                        commap.put("member", dvmap);   //发表人评论id 对象
+                commaps.setMember(dvmap.getData());//发表人评论id 对象
 
                 List<Comment> comlist = commentService.selelistcIDreply(comment.getCID()); //获取当前评论id下面的子评论
                 List<Integer> cidarr = new ArrayList(); //子评论下面的cid集合
@@ -505,6 +500,7 @@ public class CommentController {
         }
         return new ResponseData(0,"",0,maplist);
     }
+
 
     /**
      * 发表评论

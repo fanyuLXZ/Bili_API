@@ -25,6 +25,11 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     private CommentMapper commentMapper;
 
     @Override
+    public List<Comment> comselectlistdata(Integer[] array, Integer next, Integer ps) {
+        return commentMapper.comselectlistdata(array,next,ps);
+    }
+
+    @Override
     public List<Comment> comdatalisttimepage(Integer[] array, Integer next,Integer ps) {
         return commentMapper.comdatalisttimepage(array,next,ps);
     }
