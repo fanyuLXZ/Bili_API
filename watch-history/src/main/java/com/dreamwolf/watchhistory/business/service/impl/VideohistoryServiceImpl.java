@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -23,6 +24,11 @@ public class VideohistoryServiceImpl extends ServiceImpl<VideohistoryMapper, Vid
 
     @Resource
     private VideohistoryMapper videohistoryMapper;
+
+    @Override
+    public int insertupdate(Integer uid, Integer bvid, LocalTime localTime) {
+        return videohistoryMapper.insertupdate(uid,bvid,localTime);
+    }
 
     @Override
     public List<Videohistory> videohistory(Integer uid, Integer ps, String max, String view_at) {

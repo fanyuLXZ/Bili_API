@@ -24,6 +24,11 @@ public class VideodataServiceImpl extends ServiceImpl<VideodataMapper, Videodata
     private VideodataMapper videodataMapper;
 
     @Override
+    public int insertuidbvidlotime(Integer bvid) {
+        return videodataMapper.insertuidbvidlotime(bvid);
+    }
+
+    @Override
     public List<Videodata> videodatabvid(Integer[] array) {
         return videodataMapper.videodatabvid(array);
     }

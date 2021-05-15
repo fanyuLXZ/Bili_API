@@ -16,6 +16,7 @@ import com.dreamwolf.watchhistory.business.service.UserService;
 import com.dreamwolf.watchhistory.business.service.VideoList;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -36,6 +37,7 @@ import java.util.*;
  */
 @RestController
 public class VideohistoryController {
+
     @Resource
     IVideohistoryService videohistoryService;
 
@@ -46,6 +48,25 @@ public class VideohistoryController {
     UserService userService;
     @Resource
     SafetyService safetyService;
+
+
+    /**
+     * 添加观看历史 存在就修改，不存在就添加
+     * @param bvid
+     * @return
+     */
+    @GetMapping("/insertupdate")
+    public ResponseData<Integer> insertupdate(Integer uid,Integer bvid){
+//        ResponseData<Integer> logon_uid_result = safetyService.logon_uid(TokenUtil.getToken(request));
+//        if(logon_uid_result.getCode()==0){
+            Integer result = videohistoryService.insertupdate(uid,bvid,LocalTime.of(0,0));
+            return new ResponseData(0,"",0,result);
+//        }else {
+//            return new ResponseData(logon_uid_result.getCode(), logon_uid_result.getMessage(), 1, null);
+//        }
+    }
+
+
 
     /*@GetMapping("/cursor2")
     public Map list2(){

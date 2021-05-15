@@ -18,6 +18,13 @@ import java.util.List;
 public interface VideodataMapper extends BaseMapper<Videodata> {
 
     /**
+     * 修改视频数据，观看数+1
+     * @param bvid
+     * @return
+     */
+    public int insertuidbvidlotime(Integer bvid);
+
+    /**
      * 根据视频id数组查询视频数据并按热度查询
      * @param array
      * @return

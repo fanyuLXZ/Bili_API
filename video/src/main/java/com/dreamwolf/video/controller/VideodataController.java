@@ -58,8 +58,35 @@ public class VideodataController {
     @Resource
     private VideofavoriteService videofavoriteService;
 
+    @Resource
+    private WathHisService wathHisService;
 
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    /**
+     * 观看数+1
+     * @param bvid
+     * @param request
+     * @return
+     */
+    @GetMapping("/insetuidbvid")
+    public ResponseData insetuidbvid(Integer bvid,HttpServletRequest request){
+
+        ResponseData<Integer> logon_uid_result = safetyService.logon_uid(TokenUtil.getToken(request));
+        if(logon_uid_result.getCode()==0){
+            Integer result = videodataService.insertuidbvidlotime(bvid); //播放书+1
+            ResponseData<Integer> result2=wathHisService.insertupdate(logon_uid_result.getData(),bvid); //存在就修改，不存在就添加
+           int i=0;
+            if(result>0 && result2.getData()>0){
+                i=1;
+            }else {
+                i=0;
+            }
+            return new ResponseData(0,"",0,i);
+        }else {
+
+        return new ResponseData<>(logon_uid_result.getCode(), logon_uid_result.getMessage(), 1, null);
+
+        }
+    }
 
     @GetMapping(value = "/videodatabvID")
     @SentinelResource(value = "fallback", fallback = "handlerFallback")
@@ -102,13 +129,13 @@ public class VideodataController {
         ResponseData<Integer> logon_uid_result = safetyService.logon_uid(TokenUtil.getToken(request));
         if(logon_uid_result.getCode()==0){
 
-        Integer uid=1; //当前用户id
+//        Integer uid=1; //当前用户id
 //        Videodatainfo videodatainfo = null;
 //        Videodata videodata = videodataService.selectbvID(bvid);    //视频显示对象
         Videodatainfo  videodatainfo = new Videodatainfo();
             videodatainfo.setAid(bvid);  //视频id
             Statinfo statinfo = new Statinfo();
-            Videolike vlike = videolikeService.selestatusuid(bvid,uid);
+            Videolike vlike = videolikeService.selestatusuid(bvid,logon_uid_result.getData());
             boolean isliked = false;
             if(vlike!=null){
                 isliked=true;
@@ -118,7 +145,7 @@ public class VideodataController {
             videodatainfo.setLiked(isliked); //是否点赞
 
             boolean isCollected=false;
-            ResponseData<List<Userfavoritelist>> favlist = favService.selecrfavuid(uid);
+            ResponseData<List<Userfavoritelist>> favlist = favService.selecrfavuid(logon_uid_result.getData());
             Videofavorite vfav = videofavoriteService.selectfavbvid(bvid);
             for(Userfavoritelist f : favlist.getData()){
                 if(f.getFavListID() == vfav.getFavListID()){
@@ -127,7 +154,7 @@ public class VideodataController {
                 }
             }
             videodatainfo.setCollected(isCollected); //是否收藏
-            ResponseData<Boolean> coined=usermapService.coins(uid,bvid);
+            ResponseData<Boolean> coined=usermapService.whethercoin(logon_uid_result.getData(),bvid);
             videodatainfo.setCoined(coined.getData());//是否投币
             //随机数
             Random random = new Random();
@@ -184,7 +211,7 @@ public class VideodataController {
             videoinfo.setPath(video.getBvVideoPath());//路径
             videoinfo.setRank(i);       //排名
         videodatainfo.setVideo(videoinfo);       //视频对象
-        ResponseData<VideoinfoOwnerInfo> videoinfoOwnerInfo= usermapService.video_info(uid,video.getUID());  //当前用户id,用户id
+        ResponseData<VideoinfoOwnerInfo> videoinfoOwnerInfo= usermapService.video_info(logon_uid_result.getData(),video.getUID());  //当前用户id,用户id
         videodatainfo.setOwner(videoinfoOwnerInfo.getData());   //用户对象
         ResponseData<Mainpartition> mainpartition =userpageService.mainpartition(video.getBvChildZoning());
         videodatainfo.setMainpartition(mainpartition.getData());
