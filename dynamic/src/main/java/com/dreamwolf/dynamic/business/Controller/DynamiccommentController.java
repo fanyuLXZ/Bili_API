@@ -3,6 +3,7 @@ package com.dreamwolf.dynamic.business.Controller;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.dreamwolf.entity.dynamic.Page;
 import com.dreamwolf.entity.dynamic.Reply;
 import com.dreamwolf.entity.ResponseData;
@@ -13,10 +14,8 @@ import com.dreamwolf.dynamic.business.service.*;
 import com.dreamwolf.entity.member.*;
 import com.dreamwolf.entity.member.web_interface.Bang;
 import com.dreamwolf.safety.util.TokenUtil;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.jdbc.object.UpdatableSqlQuery;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -178,6 +177,7 @@ public class DynamiccommentController {
         }
         return new ResponseData<Member>(code,message,1,member);
     }
+
 
 }
 

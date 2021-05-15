@@ -2,6 +2,7 @@ package com.dreamwolf.member.business.Controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.dreamwolf.entity.ResponseData;
 import com.dreamwolf.entity.member.*;
 import com.dreamwolf.entity.member.web_interface.*;
@@ -448,5 +449,60 @@ public class UserController {
         }
         return new ResponseData<>(code,message,1,data);
     }
+
+    /**
+     * 修改接口
+     * 昵称 签名 性别 出生日期 头像
+     * 改变昵称 硬币-6 硬币不足返回错误
+     */
+    @PostMapping("/recompose")
+    public ResponseData<Boolean> recompose(User user){
+        int code = 0;
+        String message="";
+        boolean bool = false;
+        if(user!=null){//user不等于空
+            if(user.getNickName()!=null){//判断是否修改name
+                Userdata userdata =userdataService.getById(user.getuID());//获取硬币数
+                if(userdata.getCoinsNum()>=6){
+                    bool=userService.updateById(user);//修改成功
+                    UpdateWrapper<Userdata> updateWrapper=new UpdateWrapper<>();//修改硬币-6参数
+                    updateWrapper.eq("uID",user.getuID()).set("CoinsNum",userdata.getCoinsNum()-6);
+                    userdataService.update(null,updateWrapper);//修改成功
+                }else{
+                    code = 1;
+                    message="硬币数不足";
+                }
+            }else{//未修改name
+                bool=userService.updateById(user);//修改成功
+            }
+        }else{
+            code = 1;
+            message="User为空";
+        }
+        return new ResponseData<>(code,message,1,bool);
+    }
+
+    /**
+     * 修改接口
+     * 投币
+     * 每次调用接口硬币根据参数减 表示投币
+     */
+    @PostMapping("/insert/coins")
+    public ResponseData<Boolean> coins(Integer uID,Integer num){//参数1用户id 2 投币数
+        int code = 0;
+        String message="";
+        boolean bool = false;
+        if (uID!=null && num!=null){//参数不能为空
+            Userdata userdata =userdataService.getById(uID);//获取硬币数
+            UpdateWrapper<Userdata> userdataUpdateWrapper=new UpdateWrapper<>();//投币方法
+            userdataUpdateWrapper.eq("uID",uID).set("CoinsNum",userdata.getCoinsNum()-num);
+            bool=userdataService.update(null,userdataUpdateWrapper);//判断是否投币成功
+        }else{
+            code = 1;
+            message="参数不能为空";
+        }
+        return new ResponseData<>(code,message,1,bool);
+    }
+
 }
 
