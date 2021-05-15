@@ -42,4 +42,14 @@ public class VideodataServiceImpl extends ServiceImpl<VideodataMapper, Videodata
     public List<Videodata> selectlist() {
         return videodataMapper.selectList(null);
     }
+
+    @Override
+    public int updatebvCoinNum(Integer bvid, Integer CoinNum) {
+        return videodataMapper.updatebvCoinNum(bvid,CoinNum);
+    }
+
+    @Override
+    public int updateinse(Integer bvID) {
+        return videodataMapper.updateinse(bvID);
+    }
 }

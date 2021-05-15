@@ -18,7 +18,6 @@ public class Commentinfo {
 
     private Integer id; //评论id
     private Integer rpid;   //回复评论id
-    private CommentPage page;//分页对象
     private Long like;//评论点赞数
     private Long dislike;   //评论点踩数
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")

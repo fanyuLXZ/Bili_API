@@ -17,6 +17,14 @@ import org.apache.ibatis.annotations.Param;
 public interface VideofavoriteMapper extends BaseMapper<Videofavorite> {
 
     /**
+     * 添加操作
+     * @param bvid 视频id
+     * @param favListID 收藏夹id
+     * @return
+     */
+    public int inertfav(Integer bvid,Integer favListID);
+
+    /**
      * 根据视频收藏夹id查询收藏夹下的视频数量
      * @param favListID
      * @return

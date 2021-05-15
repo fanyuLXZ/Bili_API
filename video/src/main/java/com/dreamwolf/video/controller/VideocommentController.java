@@ -78,6 +78,66 @@ public class VideocommentController {
         return new ResponseData(0, "", 0, videoList);
     }
 
+    /**
+     * 视频评论
+     *
+     * @param next 下一页
+     * @param mode 模式 3为热度 2为时间
+     * @param aid  视频id
+     * @return 接口失败 code 可能值
+     * 1 aid为空
+     * 2 模式错误
+     */
+    @GetMapping("/reply/main")
+    public ResponseData<VideoReply> reply(Integer next, Integer mode, Integer aid) {
+        int code = 0;
+        String message = "";
+        VideoReply data = null;
+        if (aid != null) {
+            if (mode == 2 || mode == 3) {
+                if (next == 0) {
+                    next = 1;
+                }
+                // 查询视频评论
+                QueryWrapper<Videocomment> videoCommentQueryWrapper = new QueryWrapper<>();
+                videoCommentQueryWrapper.eq("bvID", aid);
+                List<Videocomment> videoComments = videocommentService.list(videoCommentQueryWrapper);
+                List<CommListMap> replies = null;
+                if (videoComments != null && videoComments.size() != 0) {
+                    List<Integer> videoCommentIds = new ArrayList<>();
+                    for (Videocomment videocomment : videoComments) {
+                        videoCommentIds.add(videocomment.getCID());
+                    }
+                    ResponseData<List<CommListMap>> commListMapResponseData = commselectcarrlist.commselecarlistpage(mode == 3 ? 1 : 2, videoCommentIds.toArray(new Integer[0]),next,20);
+                    if (commListMapResponseData.getCode() == 0) {
+                        replies = commListMapResponseData.getData();
+                    } else {
+                        code = commListMapResponseData.getCode();
+                        message = commListMapResponseData.getMessage();
+                    }
+                }
+                if (code == 0) {
+                    if (replies == null)
+                        replies = new ArrayList<>();
+                    if (videoComments!=null){
+                        int all_count = videoComments.size();
+                        double totalNext = Math.ceil((double)all_count / 20);
+                        data = new VideoReply(new ReplyCursor(all_count, next == 1, next == (totalNext==0?1:totalNext), mode, "", next, next + 1), replies);
+                    }else {
+                        data = new VideoReply(new ReplyCursor(),replies);
+                    }
+                }
+            } else {
+                code = 2;
+                message = "未知模式";
+            }
+        } else {
+            code = 1;
+            message = "空值异常";
+        }
+        return new ResponseData<>(code, message, 1, data);
+    }
+
     @PostMapping("/reply/add")
     public ResponseData<CommListMap> replyAdd(Integer oid, String message, HttpServletRequest request) {
         int code = 0;
@@ -157,5 +217,7 @@ public class VideocommentController {
 
         return new ResponseData<>(code, mess, 1, data);
     }
+
+
 }
 

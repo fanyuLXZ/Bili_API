@@ -31,4 +31,17 @@
         ORDER BY aaa DESC
     </select>
 
+    <update id="updatebvCoinNum" parameterType="int">
+        UPDATE `videodata` SET `bvCoinNum`=`bvCoinNum`+#{CoinNum}
+        <where>
+            `bvID` = #{bvid}
+        </where>
+    </update>
+
+    <update id="updateinse" parameterType="int">
+        UPDATE `videodata` SET `bvLikeNum`=`bvLikeNum`+1
+        <where>
+            `bvID` = #{bvID}
+        </where>
+    </update>
 </mapper>

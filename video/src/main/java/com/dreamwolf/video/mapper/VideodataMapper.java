@@ -39,4 +39,19 @@ public interface VideodataMapper extends BaseMapper<Videodata> {
      */
     public Videodata selectbvid(Integer bvID);
 
+    /**
+     * 修改硬币数 根据原硬币数加上传过来的硬币数
+     * @param bvid
+     * @param CoinNum
+     * @return
+     */
+    public int updatebvCoinNum(Integer bvid,Integer CoinNum);
+
+    /**
+     * 修改视频数据表的点赞数据+1
+     * @param bvID
+     * @return
+     */
+    public int updateinse(Integer bvID);
+
 }

@@ -28,18 +28,18 @@
       <module name="client_demo" target="1.8" />
       <module name="comment" target="1.8" />
       <module name="dynamic" target="1.8" />
-      <module name="entity" target="1.8" />
-      <module name="fav" target="1.8" />
-      <module name="gateway" target="1.8" />
+      <module name="entity" target="8" />
+      <module name="fav" target="8" />
+      <module name="gateway" target="8" />
       <module name="image-resource" target="1.8" />
       <module name="member" target="1.8" />
       <module name="message" target="1.8" />
       <module name="safety" target="1.8" />
       <module name="video" target="1.8" />
-      <module name="video-resource" target="1.8" />
-      <module name="watch-history" target="1.8" />
+      <module name="video-resource" target="8" />
+      <module name="watch-history" target="8" />
       <module name="watch_history" target="1.8" />
-      <module name="web-interface" target="1.8" />
+      <module name="web-interface" target="8" />
       <module name="zoning" target="1.8" />
     </bytecodeTargetLevel>
   </component>

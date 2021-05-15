@@ -13,6 +13,7 @@ import com.dreamwolf.entity.zoning.web_interface.Mainpartition;
 import com.dreamwolf.safety.util.TokenUtil;
 import com.dreamwolf.video.service.*;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -228,6 +229,28 @@ public class VideodataController {
         }
     }
 
+    /**
+     * 修改硬币数 硬币数=硬币数+CoinNum
+     * @param bvid
+     * @param CoinNum 传过来的硬币数
+     * @return
+     */
+    @PostMapping("/updatebvCoinNum")
+    public ResponseData updatebvCoinNum(Integer bvid,Integer CoinNum){
+        int result = videodataService.updatebvCoinNum(bvid,CoinNum);
+        return new ResponseData(0,"",1,result);
+    }
+
+    /**
+     * 修改视频数据表的点赞数据+1
+     * @param bvid
+     * @return
+     */
+    @PostMapping("/updateinse")
+    public ResponseData updateinse(Integer bvid){
+        int result = videodataService.updateinse(bvid);
+        return new ResponseData(0,"",1,result);
+    }
 
 
 

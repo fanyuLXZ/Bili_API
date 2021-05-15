@@ -154,6 +154,7 @@ public class DynamiccommentController {
         return map;
     }
 
+
     //member发表评论人对象 接口调接口
     @GetMapping("/memberid")
     public ResponseData<Member> memberid(Integer id){
