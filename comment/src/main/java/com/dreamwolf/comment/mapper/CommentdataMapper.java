@@ -46,6 +46,6 @@ public interface CommentdataMapper extends BaseMapper<Commentdata> {
      *    next 页码
      * @return
      */
-    public List<Commentdata> commdatalistpage(Integer[] array,Integer next);
+    public List<Commentdata> commdatalistpage(Integer[] array,Integer next,Integer ps);
 
 }

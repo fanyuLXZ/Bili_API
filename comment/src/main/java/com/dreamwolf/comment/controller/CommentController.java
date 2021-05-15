@@ -1,5 +1,6 @@
 package com.dreamwolf.comment.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dreamwolf.comment.service.*;
 import com.dreamwolf.entity.ResponseData;
 import com.dreamwolf.entity.comment.Comment;
@@ -7,16 +8,20 @@ import com.dreamwolf.entity.comment.Commentdata;
 import com.dreamwolf.entity.comment.Commentlike;
 import com.dreamwolf.entity.comment.web_interface.*;
 import com.dreamwolf.entity.member.Member;
+import com.dreamwolf.entity.video.Videocomment;
+import com.dreamwolf.entity.video.Videodata;
+import com.dreamwolf.entity.video.web_interface.ReplyCursor;
+import com.dreamwolf.entity.video.web_interface.VideoReply;
+import com.dreamwolf.safety.util.TokenUtil;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -44,6 +49,9 @@ public class CommentController {
 
     @Resource
     private DvnamicService dvnamicService;
+
+    @Resource
+    private SafetyService safetyService;
 
     /**
      *
@@ -175,11 +183,28 @@ public class CommentController {
                 comarrlistss.add(comment.getCID());   //评论id
             }
             //根据评论id数组拿到前10条的热度 评论点赞表
-            List<Commentdata> comdatlist = commentdataService.commdatalistarr(comarrlistss.toArray(new Integer[0]));
-
+            List<Commentdata> comdatlistNoDefault = commentdataService.commdatalistarr(comarrlistss.toArray(new Integer[0]));
+            List<Commentdata> arraydata = new ArrayList<>();//按热度查
+            // 将没有评论数据的评论加为默认数据
+            if (comdatlistNoDefault.size()!=0){
+                int arraydataNoDefaultIndex = 0;
+                int firstIndexId = comdatlistNoDefault.get(arraydataNoDefaultIndex).getCID();
+                for (Integer i:array){
+                    if (!i.equals(firstIndexId)){
+                        arraydata.add(new Commentdata(i));
+                    }else {
+                        firstIndexId = comdatlistNoDefault.get(arraydataNoDefaultIndex).getCID();
+                        arraydataNoDefaultIndex+=1;
+                    }
+                }
+            }else {
+                for (Integer i:array){
+                    arraydata.add(new Commentdata(i));
+                }
+            }
             //拿到评论点赞表热度前10的id
             List<Integer> clist = new ArrayList<>();
-            for (Commentdata comdatacom : comdatlist) {
+            for (Commentdata comdatacom : arraydata) {
                 clist.add(comdatacom.getCID());
             }
 
@@ -188,8 +213,11 @@ public class CommentController {
             if(comlistlist.size()>0){
 
                 for (Comment comarrlistlist : comlistlist) {
-                    //根据评论id查询评论点赞数据和点踩数据
+                    //根据评论赞数据和点踩数据
                     Commentdata commentdata = commentdataService.selectcID(comarrlistlist.getCID());
+                    if (commentdata==null){
+                        commentdata=new Commentdata();
+                    }
                     CommListMap commaplistmap = new CommListMap();
                     commaplistmap.setRpid(comarrlistlist.getCID());//评论id
                     Integer comcount = commentService.commcountcIDreply(comarrlistlist.getCID());  //子评论数量
@@ -325,17 +353,13 @@ public class CommentController {
         return new ResponseData(0,"",0,maplist);
     }
 
-
-
-
-
     /**
      * 根据cid评论数组并且回复的评论id,cIDreply=0则是视频或者动态 id ：1 为热度排序  2 为时间排序 并分页处理
      * next 页码 int
      * @return
      */
     @GetMapping("/commselectcarrlistpage")
-    public ResponseData<List<CommListMap>> commselecarlistpage(Integer id,Integer[] array,Integer next){
+    public ResponseData<List<CommListMap>> commselecarlistpage(Integer id,Integer[] array,Integer next,Integer ps){
 //        Integer[] array = new Integer[]{1,2,3};
         //  id 1 为热度排序  2 为时间排序
         List<CommListMap> maplist = new ArrayList();
@@ -348,7 +372,7 @@ public class CommentController {
                 comarrlistss.add(comment.getCID());   //评论id
             }
             //根据评论id数组拿到前10条的热度 评论点赞表 分页
-            List<Commentdata> comdatlist = commentdataService.commdatalistpage(comarrlistss.toArray(new Integer[0]),next);
+            List<Commentdata> comdatlist = commentdataService.commdatalistpage(comarrlistss.toArray(new Integer[0]),next,ps);
             List<Integer> clist = new ArrayList<>();
             //拿到评论点赞表热度前10的id数组
             for (Commentdata comdatacom : comdatlist) {
@@ -418,7 +442,7 @@ public class CommentController {
                 maplist.add(commaplistmap);
             }
         } else {
-            List<Comment> list = commentService.comdatalisttimepage(array,next); //通过评论id数组查询cIDreply=0的数据
+            List<Comment> list = commentService.comdatalisttimepage(array,next,ps); //通过评论id数组查询cIDreply=0的数据
             for (Comment comment : list) {
                 //根据评论id查询评论点赞数据和点踩数据
                 Commentdata commentdata = commentdataService.selectcID(comment.getCID());
@@ -482,8 +506,35 @@ public class CommentController {
         return new ResponseData(0,"",0,maplist);
     }
 
+    /**
+     * 发表评论
+     * @param message 内容
+     * @return
+     * error code
+     * 1 空值
+     * 2 数据插入未成功
+     */
+    @PostMapping("/reply/add")
+    public ResponseData<Comment> replyAdd(String message, Integer uid){
+        int code = 0;
+        String mess = "";
+        Comment data = null;
+        if (message!=null&&!message.equals("")){
+            Comment comment = new Comment(uid,0,new Date(),message);
+            if (commentService.save(comment)){
+                mess="发送成功";
+                data=comment;
+            }else {
+                code=2;
+                mess="内部服务器错误";
+            }
+        }else {
+            code=1;
+            mess="空值异常";
+        }
 
-
+        return new ResponseData<>(code,mess,1,data);
+    }
 
 }
 

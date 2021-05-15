@@ -19,5 +19,5 @@ public interface CommentService {
     public ResponseData<Commcidmap> commcidlist(@RequestParam Integer cid);
 
     @GetMapping("/commselectcarrlistpage")
-    public ResponseData<List<CommListMap>> commselecarlistpage(@RequestParam Integer id, @RequestParam Integer[] array, @RequestParam Integer next);
+    public ResponseData<List<CommListMap>> commselecarlistpage(@RequestParam Integer id, @RequestParam Integer[] array, @RequestParam Integer next, @RequestParam Integer ps);
     }

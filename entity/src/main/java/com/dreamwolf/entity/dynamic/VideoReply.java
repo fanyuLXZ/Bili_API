@@ -7,11 +7,11 @@ import java.util.List;
 
 //评论信息
 @Data
-public class Reply {
+public class VideoReply {
     private Page page;//评论分页
     private List<CommListMap> replies;//评论对象集合
 
-    public Reply(Page page, List<CommListMap> commListMaps) {
+    public VideoReply(Page page, List<CommListMap> commListMaps) {
         this.page = page;
         this.replies = commListMaps;
     }

@@ -22,7 +22,7 @@ public interface CommentService extends IService<Comment> {
      * next 页码
      * @return
      */
-    public List<Comment> comdatalisttimepage(Integer[] array,Integer next);
+    public List<Comment> comdatalisttimepage(Integer[] array,Integer next,Integer ps);
 
 
     /**

@@ -24,8 +24,8 @@ public class CommentdataServiceImpl extends ServiceImpl<CommentdataMapper, Comme
     private CommentdataMapper commentdataMapper;
 
     @Override
-    public List<Commentdata> commdatalistpage(Integer[] array, Integer next) {
-        return commentdataMapper.commdatalistpage(array,next);
+    public List<Commentdata> commdatalistpage(Integer[] array, Integer next,Integer ps) {
+        return commentdataMapper.commdatalistpage(array,next,ps);
     }
 
     @Override
