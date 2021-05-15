@@ -2,14 +2,9 @@ package com.dreamwolf.member.business.Controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.dreamwolf.entity.ResponseData;
-import com.dreamwolf.entity.member.User;
-import com.dreamwolf.entity.member.Userdata;
-import com.dreamwolf.entity.member.Vip;
-import com.dreamwolf.entity.member.Label;
-import com.dreamwolf.entity.member.Level_info;
-import com.dreamwolf.entity.member.Member;
-import com.dreamwolf.entity.member.VipStatus;
+import com.dreamwolf.entity.member.*;
 import com.dreamwolf.member.business.service.*;
 import com.dreamwolf.member.business.util.Jisuan;
 import com.dreamwolf.safety.util.TimeUtil;
@@ -18,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.BoundKeyOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -136,6 +132,52 @@ public class UserdataController {
             }
         }
         return new ResponseData<>(code,message,1,data);
+    }
+
+    /**
+     * 关注接口 我关注别人
+     * 修改
+     */
+    @Transactional
+    @PostMapping("/attention")
+    public ResponseData<Boolean> attention(Integer uID){//关注对象id
+        int code = 0;
+        String message="";
+        boolean bool = false;
+        Integer id=1;
+        if(uID!=null){
+            //判断是否已经关注过
+            QueryWrapper<Relations> relationsQueryWrapper=new QueryWrapper<>();
+            relationsQueryWrapper.eq("uID",uID).eq("followUID",id);
+            boolean whether=relationsService.getOne(relationsQueryWrapper)==null;//true表示，表示没有关注过
+            if(whether){
+                //没有关注则关注
+                //添加用户和粉丝关系表
+                Relations relations=new Relations(uID,id);
+                boolean addrela=relationsService.save(relations);
+                if (!addrela){
+                    code = 1;
+                    message="添加用户和粉丝关系失败";
+                    return new ResponseData<Boolean>(code,message,1,bool);
+                }
+                UpdateWrapper<Userdata> updateWrapper=new UpdateWrapper<>();//粉丝数+1
+                updateWrapper.eq("uID",uID).set("CoinsNum","CoinsNum+1");
+                boolean updatauserdata=userdataService.update(null,updateWrapper);//修改成功、
+                if (!updatauserdata){
+                    code = 1;
+                    message="用户和粉丝添加失败";
+                    return new ResponseData<Boolean>(code,message,1,bool);
+                }
+                bool=true;
+            }else{
+                code = 1;
+                message="该用户已关注";
+            }
+        }else{
+            code = 1;
+            message="uID不能为空";
+        }
+        return new ResponseData<Boolean>(code,message,1,bool);
     }
 }
 

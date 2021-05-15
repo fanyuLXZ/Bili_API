@@ -735,7 +735,6 @@
     8. 用户基本信息 /basic-info-by-uid   
         参数：   
         * mid uid int
-        
         返回值：
         * mid uid int
         * name 名称 string
@@ -749,6 +748,7 @@
             - type 会员类型 1大会员  0小会员
             - status 是否是会员
         * following 当前登陆人是否关注查询的用户 boolean
+      
     9. 当前登陆的用户基本信息 /card/info  
        参考链接：https://api.bilibili.com/x/web-interface/card?csrf=7f16078c913c8540075a3d85b52b36e0&mid=433899970&photo=true   
        返回值：
@@ -1347,7 +1347,7 @@
     12. #### id查找对应子分区和父分区信息 /deputydivision
         参数:
         bvChildZoning 分区id
-        返回值:
+        返回值:https://lol.qq.com/act/a20210430msipass/index.html?e_code=500142&area=1
         对象
         id 组件id
         name 组件名
