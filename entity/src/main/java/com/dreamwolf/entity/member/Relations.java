@@ -56,4 +56,12 @@ public class Relations implements Serializable {
     public void setFollowUID(Integer followUID) {
         this.followUID = followUID;
     }
+
+    public Relations() {
+    }
+
+    public Relations(Integer uID, Integer followUID) {
+        this.uID = uID;
+        this.followUID = followUID;
+    }
 }

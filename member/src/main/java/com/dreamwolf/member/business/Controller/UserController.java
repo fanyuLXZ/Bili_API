@@ -497,9 +497,14 @@ public class UserController {
         boolean bool = false;
         if (uID!=null && num!=null){//参数不能为空
             Userdata userdata =userdataService.getById(uID);//获取硬币数
-            UpdateWrapper<Userdata> userdataUpdateWrapper=new UpdateWrapper<>();//投币方法
-            userdataUpdateWrapper.eq("uID",uID).set("CoinsNum",userdata.getCoinsNum()-num);
-            bool=userdataService.update(null,userdataUpdateWrapper);//判断是否投币成功
+            if(userdata.getCoinsNum()>=num){//判断硬币数是否够
+                UpdateWrapper<Userdata> userdataUpdateWrapper=new UpdateWrapper<>();//投币方法
+                userdataUpdateWrapper.eq("uID",uID).set("CoinsNum",userdata.getCoinsNum()-num);
+                bool=userdataService.update(null,userdataUpdateWrapper);//判断是否投币成功
+            }else{
+                code = 1;
+                message="硬币数不足";
+            }
         }else{
             code = 1;
             message="参数不能为空";
