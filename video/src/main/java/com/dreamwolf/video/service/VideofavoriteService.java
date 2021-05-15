@@ -16,6 +16,13 @@ import java.util.List;
 public interface VideofavoriteService extends IService<Videofavorite> {
 
     /**
+     * 根据视频id查询视频收藏夹
+     * @param bvid
+     * @return
+     */
+    public Videofavorite selectfavbvid(Integer bvid);
+
+    /**
      * 根据被收藏的视频id(bvID)查询被收藏在那个收藏夹下
      * @param bvID
      * @return

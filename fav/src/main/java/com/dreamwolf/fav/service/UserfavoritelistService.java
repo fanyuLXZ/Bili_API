@@ -17,6 +17,13 @@ import java.util.List;
 public interface UserfavoritelistService{
 
     /**
+     * 根据用户id查询用户下的收藏夹
+     * @param uid
+     * @return
+     */
+    public List<Userfavoritelist> selectfavuid(Integer uid);
+
+    /**
      * 所有收藏夹对象
      * @return
      */

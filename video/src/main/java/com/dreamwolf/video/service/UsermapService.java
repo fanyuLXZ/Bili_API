@@ -8,10 +8,14 @@ import com.dreamwolf.entity.member.web_interface.VideoinfoOwnerInfo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(name = "member-service")
 public interface UsermapService {
+
+    @PostMapping("/insert/coins")
+    public ResponseData<Boolean> coins(@RequestParam Integer uID,@RequestParam Integer vID);
 
 //    @GetMapping("/User")
 //    public Map user(@RequestParam Integer uid);
