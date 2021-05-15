@@ -19,6 +19,14 @@ import java.util.List;
 public interface UserfavoritelistMapper extends BaseMapper<Userfavoritelist> {
 
     /**
+     * 根据用户id查询用户下的收藏夹
+     * @param uid
+     * @return
+     */
+    public List<Userfavoritelist> selectfavuid(Integer uid);
+
+
+    /**
      * 收藏夹表对象
      * @return
      */

@@ -24,6 +24,11 @@ public class UserfavoritelistServiceImpl implements UserfavoritelistService {
     private UserfavoritelistMapper userfavoritelistMapper;
 
     @Override
+    public List<Userfavoritelist> selectfavuid(Integer uid) {
+        return userfavoritelistMapper.selectfavuid(uid);
+    }
+
+    @Override
     public List<Userfavoritelist> selectlist() {
         return userfavoritelistMapper.selectlistshow();
     }

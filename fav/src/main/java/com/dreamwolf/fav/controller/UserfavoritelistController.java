@@ -43,6 +43,12 @@ public class UserfavoritelistController {
     @Resource
     private UserlistService selectuser;
 
+    @GetMapping("/selecrfavuid")
+    public ResponseData<List<Userfavoritelist>> selecrfavuid(Integer uid){
+        List<Userfavoritelist> list = userfavoritelistService.selectfavuid(uid);
+        return new ResponseData(0,"",0,list);
+    }
+
     @GetMapping("/folder")
     public ResponseData<List> userfavlist(){
 

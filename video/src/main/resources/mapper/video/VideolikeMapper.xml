@@ -9,6 +9,10 @@
         <result column="createTime" property="createTime"/>
     </resultMap>
 
+    <select id="selestatusuid" resultMap="videolikemap">
+        SELECT * FROM `videolike` WHERE `bvID` = #{bvid} AND `uID` = #{uid} AND `status` = 1
+    </select>
+
     <select id="selectbvid" resultMap="videolikemap">
         SELECT * FROM `videolike`
         <where>

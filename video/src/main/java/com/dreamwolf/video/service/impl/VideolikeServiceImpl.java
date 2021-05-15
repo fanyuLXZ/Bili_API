@@ -24,6 +24,11 @@ public class VideolikeServiceImpl extends ServiceImpl<VideolikeMapper, Videolike
     private VideolikeMapper videolikeMapper;
 
     @Override
+    public Videolike selestatusuid(Integer bvid, Integer uid) {
+        return videolikeMapper.selestatusuid(bvid,uid);
+    }
+
+    @Override
     public List<Videolike> selectbvid(Integer bvid) {
         return videolikeMapper.selectbvid(bvid);
     }

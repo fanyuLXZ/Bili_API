@@ -23,4 +23,11 @@ public interface VideofavoriteMapper extends BaseMapper<Videofavorite> {
      */
     public int selectfavListID(@Param("favListID") Integer favListID);
 
+    /**
+     * 根据视频id查询视频收藏夹
+     * @param bvid
+     * @return
+     */
+    public Videofavorite selectfavbvid(Integer bvid);
+
 }

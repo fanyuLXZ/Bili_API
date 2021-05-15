@@ -16,6 +16,14 @@ import java.util.List;
 public interface VideolikeService extends IService<Videolike> {
 
     /**
+     * 查找用户是否点赞了这个视频
+     * @param bvid
+     * @param uid
+     * @return
+     */
+    public Videolike selestatusuid(Integer bvid,Integer uid);
+
+    /**
      * 根据视频id查询视频的点赞用户id
      * @param bvid
      * @return
