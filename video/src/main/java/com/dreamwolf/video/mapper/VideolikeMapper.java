@@ -19,6 +19,16 @@ import java.util.List;
 public interface VideolikeMapper extends BaseMapper<Videolike> {
 
     /**
+     * 判断数据存不存在，存在就修改，不存在就添加
+     * @param bvID 视频id
+     * @param uID 用户id
+     * @return
+     */
+    public int updateinset(Integer bvID,Integer uID);
+
+
+
+    /**
      * 根据视频id查询该视频点赞用户的id
      * @param bvID
      * @return

@@ -123,4 +123,12 @@ public interface CommentMapper extends BaseMapper<Comment> {
      */
     public List<Comment> commselectlistcid(Integer cid);
 
+    /**
+     * 添加子评论
+     * @param uID 用户id
+     * @param cIDreply  父评论id
+     * @param ctext 评论正文
+     * @return
+     */
+    public int insertcid(Integer uID,Integer cIDreply,String ctext);
 }

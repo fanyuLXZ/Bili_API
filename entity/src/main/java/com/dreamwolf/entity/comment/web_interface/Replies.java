@@ -11,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Replies {
 
+    private CommentPage page;//分页对象
     private List<Commentinfo> replies;
 
 }

@@ -9,6 +9,18 @@
         <result column="createTime" property="createTime"/>
     </resultMap>
 
+    <insert id="updateinset" parameterType="int">
+        <selectKey keyProperty="count" resultType="int" order="BEFORE">
+            SELECT COUNT(*) FROM `videolike` WHERE `bvID` = #{bvID} AND `uID` = #{uID} AND `status`!=1
+        </selectKey>
+        <if test="count >0">
+            UPDATE `videolike` SET `status` = 1 WHERE `bvID` = #{bvID} AND `uID` = #{uID}
+        </if>
+        <if test="count==0">
+            UPDATE `videolike` SET `status` = 0 WHERE `bvID` = #{bvID} AND `uID` = #{uID}
+        </if>
+    </insert>
+
     <select id="selectbvid" resultMap="videolikemap">
         SELECT * FROM `videolike`
         <where>

@@ -62,6 +62,18 @@ public class VideofavoriteController {
         return new ResponseData(0,"",0,videoList);
     }
 
+    /**
+     * 添加操作
+     * @param bvid 视频id
+     * @param favid 收藏夹id
+     * @return
+     */
+    @PostMapping("/inserfav")
+    public ResponseData inserfav(Integer bvid,Integer favid){
+        int result = videofavoriteService.inertfav(bvid,favid);
+        return new ResponseData(0,"",1,result);
+    }
+
 
 }
 

@@ -7,10 +7,13 @@ import com.dreamwolf.entity.video.web_interface.VideoList;
 import com.dreamwolf.video.service.VideoService;
 import com.dreamwolf.video.service.VideolikeService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -28,6 +31,21 @@ public class VideolikeController {
 
     @Resource
     private VideoService videoService;
+
+    /**
+     * 修改点赞关系表数据
+     * @param bvid
+     * @param uid
+     * @return
+     */
+    @PostMapping("/updateinsetuid")
+    public ResponseData updateinset(Integer bvid,Integer uid){
+        //点了赞的就修改为没点赞的，没点赞就修改为点了赞的
+        int result = videolikeService.updateinset(bvid,uid);
+        return new ResponseData(0,"",1,result);
+    }
+
+
 
     @GetMapping(value = "/videolikebvid")
     public ResponseData selectbvid(Integer bvid){

@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dreamwolf.video.mapper.VideofavoriteMapper">
 
+    <insert id="inertfav" parameterType="int">
+        INSERT INTO `videofavorite`(`bvID`,`favListID`,`favTime`) VALUES(#{bvid},#{favListID},NOW())
+    </insert>
+
 
     <select id="selectfavListID" resultType="int">
         SELECT COUNT(*) FROM `videofavorite`

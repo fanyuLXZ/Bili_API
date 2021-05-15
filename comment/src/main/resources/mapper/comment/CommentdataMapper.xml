@@ -9,19 +9,19 @@
     </resultMap>
 
     <select id="selectcID" resultMap="comdatemap">
-        SELECT * FROM `commentdata`
+        SELECT * FROM `comment` left join commentdata c on comment.cID = c.cID
         <where>
             <if test="cID!=null">
-                cID=#{cID}
+                comment.cID=#{cID}
             </if>
         </where>
     </select>
 
     <select id="commdatalist" resultMap="comdatemap">
-        SELECT cID,(`cLikeNum`-`cUnLikeNum`) AS aaa FROM `commentdata`
+        SELECT comment.cid,(`cLikeNum`-`cUnLikeNum`) AS aaa FROM `comment` left join commentdata c on comment.cID = c.cID
         <where>
             <if test="array!=null and array.length>0">
-                `cID`IN
+                comment.`cID`IN
                 <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
                     #{item}
                 </foreach>
@@ -32,10 +32,10 @@
 
 
     <select id="commdatalistarr" resultMap="comdatemap">
-        SELECT cID,(`cLikeNum`-`cUnLikeNum`) AS aaa FROM `commentdata`
+        SELECT comment.cid,(`cLikeNum`-`cUnLikeNum`) AS aaa FROM `comment` left join commentdata c on comment.cID = c.cID
         <where>
             <if test="array!=null and array.length>0">
-                `cID`IN
+                comment.`cID`IN
                 <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
                     #{item}
                 </foreach>
@@ -46,10 +46,10 @@
 
 
     <select id="commdatalistpage" resultMap="comdatemap">
-        SELECT cID,(`cLikeNum`-`cUnLikeNum`) AS aaa FROM `commentdata`
+        SELECT comment.cid,(`cLikeNum`-`cUnLikeNum`) AS aaa FROM `comment` left join commentdata c on comment.cID = c.cID
         <where>
             <if test="array!=null and array.length>0">
-                `cID`IN
+                comment.`cID`IN
                 <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
                     #{item}
                 </foreach>
